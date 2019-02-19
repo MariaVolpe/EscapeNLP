@@ -1,0 +1,379 @@
+{
+  "settings": {
+    "languages": [
+      "en"
+    ],
+    "fullSearchWhenGuessed": false,
+    "useNlg": true,
+    "useNeural": true,
+    "useLRC": true
+  },
+  "languages": [
+    "en"
+  ],
+  "intentDomains": {
+    "greetings.bye": "default",
+    "greetings.hello": "default"
+  },
+  "nerManager": {
+    "settings": {},
+    "threshold": 0.8,
+    "builtins": [
+      "Number",
+      "Ordinal",
+      "Percentage",
+      "Age",
+      "Currency",
+      "Dimension",
+      "Temperature",
+      "DateTime",
+      "PhoneNumber",
+      "IpAddress",
+      "Boolean",
+      "Email",
+      "Hashtag",
+      "URL"
+    ],
+    "namedEntities": {}
+  },
+  "slotManager": {},
+  "classifiers": [
+    {
+      "language": "en",
+      "docs": [
+        {
+          "intent": "greetings.bye",
+          "utterance": [
+            "goodby",
+            "for",
+            "now"
+          ]
+        },
+        {
+          "intent": "greetings.bye",
+          "utterance": [
+            "bye",
+            "bye",
+            "take",
+            "care"
+          ]
+        },
+        {
+          "intent": "greetings.bye",
+          "utterance": [
+            "okay",
+            "see",
+            "you",
+            "later"
+          ]
+        },
+        {
+          "intent": "greetings.bye",
+          "utterance": [
+            "bye",
+            "for",
+            "now"
+          ]
+        },
+        {
+          "intent": "greetings.bye",
+          "utterance": [
+            "i",
+            "must",
+            "go"
+          ]
+        },
+        {
+          "intent": "greetings.hello",
+          "utterance": [
+            "hello"
+          ]
+        },
+        {
+          "intent": "greetings.hello",
+          "utterance": [
+            "hi"
+          ]
+        },
+        {
+          "intent": "greetings.hello",
+          "utterance": [
+            "howdi"
+          ]
+        }
+      ],
+      "features": {
+        "goodby": 1,
+        "for": 2,
+        "now": 2,
+        "bye": 3,
+        "take": 1,
+        "care": 1,
+        "okay": 1,
+        "see": 1,
+        "you": 1,
+        "later": 1,
+        "i": 1,
+        "must": 1,
+        "go": 1,
+        "hello": 1,
+        "hi": 1,
+        "howdi": 1
+      },
+      "logistic": {
+        "observations": {
+          "greetings.bye": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4,
+              5
+            ],
+            [
+              6,
+              7,
+              8,
+              9
+            ],
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              10,
+              11,
+              12
+            ]
+          ],
+          "greetings.hello": [
+            [
+              13
+            ],
+            [
+              14
+            ],
+            [
+              15
+            ]
+          ]
+        },
+        "labels": [
+          "greetings.bye",
+          "greetings.hello"
+        ],
+        "observationCount": 8,
+        "theta": [
+          {
+            "elements": [
+              1.437914975659322,
+              2.293877843142641,
+              2.293877843142641,
+              2.5356581155251985,
+              1.679695248041878,
+              1.679695248041878,
+              1.5198259672936458,
+              1.5198259672936458,
+              1.5198259672936458,
+              1.5198259672936458,
+              1.928166145326717,
+              1.928166145326717,
+              1.928166145326717,
+              -2.889600614003626,
+              -2.889600614003626,
+              -2.889600614003626
+            ]
+          },
+          {
+            "elements": [
+              -1.437914975659322,
+              -2.293877843142641,
+              -2.293877843142641,
+              -2.535658115525197,
+              -1.6796952480418788,
+              -1.6796952480418788,
+              -1.5198259672936458,
+              -1.5198259672936458,
+              -1.5198259672936458,
+              -1.5198259672936458,
+              -1.9281661453267172,
+              -1.9281661453267172,
+              -1.9281661453267172,
+              2.8896006140036263,
+              2.8896006140036263,
+              2.8896006140036263
+            ]
+          }
+        ]
+      },
+      "useLRC": true,
+      "useNeural": true,
+      "neuralClassifier": {
+        "settings": {
+          "config": {
+            "activation": "leaky-relu",
+            "hiddenLayers": [],
+            "learningRate": 0.1,
+            "errorThresh": 0.0005,
+            "timeout": 60000
+          }
+        },
+        "classifierMap": {
+          "greetings.bye": {
+            "sizes": [
+              16,
+              1
+            ],
+            "layers": [
+              {
+                "goodby": {},
+                "for": {},
+                "now": {},
+                "bye": {},
+                "take": {},
+                "care": {},
+                "okay": {},
+                "see": {},
+                "you": {},
+                "later": {},
+                "i": {},
+                "must": {},
+                "go": {},
+                "hello": {},
+                "hi": {},
+                "howdi": {}
+              },
+              {
+                "0": {
+                  "bias": 23.99072265625,
+                  "weights": {
+                    "goodby": 21.215009689331055,
+                    "for": 25.706653594970703,
+                    "now": 25.709657669067383,
+                    "bye": 27.68032455444336,
+                    "take": 23.1256046295166,
+                    "care": 22.90479850769043,
+                    "okay": 18.7347412109375,
+                    "see": 18.71977424621582,
+                    "you": 18.967737197875977,
+                    "later": 18.93524932861328,
+                    "i": 24.954204559326172,
+                    "must": 24.944091796875,
+                    "go": 24.889877319335938,
+                    "hello": -22.039703369140625,
+                    "hi": -21.999902725219727,
+                    "howdi": -22.0322265625
+                  }
+                }
+              }
+            ],
+            "outputLookup": false,
+            "inputLookup": true,
+            "activation": "leaky-relu",
+            "trainOpts": {
+              "iterations": 20000,
+              "errorThresh": 0.0005,
+              "log": false,
+              "logPeriod": 10,
+              "learningRate": 0.1,
+              "momentum": 0.1,
+              "callbackPeriod": 10,
+              "timeout": 120000,
+              "beta1": 0.9,
+              "beta2": 0.999,
+              "epsilon": 1e-8
+            }
+          },
+          "greetings.hello": {
+            "sizes": [
+              16,
+              1
+            ],
+            "layers": [
+              {
+                "goodby": {},
+                "for": {},
+                "now": {},
+                "bye": {},
+                "take": {},
+                "care": {},
+                "okay": {},
+                "see": {},
+                "you": {},
+                "later": {},
+                "i": {},
+                "must": {},
+                "go": {},
+                "hello": {},
+                "hi": {},
+                "howdi": {}
+              },
+              {
+                "0": {
+                  "bias": 54.625144958496094,
+                  "weights": {
+                    "goodby": -13.580944061279297,
+                    "for": -19.654769897460938,
+                    "now": -19.621919631958008,
+                    "bye": -21.606447219848633,
+                    "take": -15.602019309997559,
+                    "care": -15.56722640991211,
+                    "okay": -13.184025764465332,
+                    "see": -13.510801315307617,
+                    "you": -13.414488792419434,
+                    "later": -13.426904678344727,
+                    "i": -17.541748046875,
+                    "must": -17.60930633544922,
+                    "go": -17.541349411010742,
+                    "hello": 42.32075881958008,
+                    "hi": 42.25717544555664,
+                    "howdi": 42.342559814453125
+                  }
+                }
+              }
+            ],
+            "outputLookup": false,
+            "inputLookup": true,
+            "activation": "leaky-relu",
+            "trainOpts": {
+              "iterations": 20000,
+              "errorThresh": 0.0005,
+              "log": false,
+              "logPeriod": 10,
+              "learningRate": 0.1,
+              "momentum": 0.1,
+              "callbackPeriod": 10,
+              "timeout": 60000,
+              "beta1": 0.9,
+              "beta2": 0.999,
+              "epsilon": 1e-8
+            }
+          }
+        }
+      }
+    }
+  ],
+  "responses": {
+    "en": {
+      "greetings.bye": [
+        {
+          "response": "Till next time"
+        },
+        {
+          "response": "see you soon!"
+        }
+      ],
+      "greetings.hello": [
+        {
+          "response": "Hey there!"
+        },
+        {
+          "response": "Greetings!"
+        }
+      ]
+    }
+  }
+}
