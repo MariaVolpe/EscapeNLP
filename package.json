@@ -1,0 +1,28 @@
+{
+  "name": "escapenlp-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariaVolpe/EscapeNLP.git"
+  },
+  "author": "EscapeNLP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MariaVolpe/EscapeNLP/issues"
+  },
+  "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
+  "dependencies": {
+    "nodemon": "*",    
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3",
+    "node-nlp": "^2.4.1",
+    "synonyms": "*"
+    
+  }
+}
