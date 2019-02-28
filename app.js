@@ -1,7 +1,10 @@
 const express = require('express');
 const { NlpManager, NlpClassifier } = require('node-nlp');
+const synonyms = require('synonyms');
 const app = express();
 const port = 3000;
+
+// glove (John told me about this) if training doesnt work well
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
@@ -36,6 +39,12 @@ classifier.add('run', 'move');
 classifier.add('jog', 'move');
 classifier.add("toss", 'throw');
 classifier.add('pass', 'throw');
+moveWords = synonyms("move", "v");
+moveWords.push("walk"); // add walk as it is a similar word for us
+for (let i = 0; i < moveWords.length; i++)
+    classifier.add (moveWords[i], "move");
+console.log (synonyms("throw", 'v'));
+
 (async() => {
     await classifier.train(); 
     let tests = [
@@ -47,17 +56,33 @@ classifier.add('pass', 'throw');
         "I toss the ball",
         "I pass the ball"
     ];
-    const classifications = classifier.getClassifications("walk");
-    console.log (classifications);
-    console.log ();
+    //const classifications = classifier.getClassifications("walk");
+    //console.log (classifications);
     for (let i = 0; i < tests.length; i++) {
         var test = tests[i];
-        console.log(test);
+        //console.log(test);
         const classifications = classifier.getClassifications(test);
-        console.log (classifications);
-        console.log ();
+        //console.log (classifications);
+        //console.log ();
     }
+    var c = classifier.getClassifications("move");
+    console.log ("move: ");
+    console.log(c);
+    c = classifier.getClassifications("go");
+    console.log ("go: ");
+    console.log(c);
 })();
 
 
+/*console.log(synonyms("screen", "v"));
+console.log(synonyms("sieve", "v"));
+console.log (synonyms("walk")); // undefined output, no synonyms 
+console.log(synonyms ("go", "v"));
+console.log (synonyms("run", "v"));
+console.log (synonyms("pass", "v"));
+
+console.log (synonyms("move", "v"));*/
+
+
+//console.log (synonyms.dictionary);
 app.listen(port, () => console.log (`EscapeNLP Server listening on port ${port}!`));

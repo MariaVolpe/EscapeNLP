@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "nodemon": "*",    
     "express": "^4.16.4",
+    "body-parser": "^1.18.3",
     "node-nlp": "^2.4.1",
-    "nodemon": "*"
+    "synonyms": "*"
+    
   }
 }
