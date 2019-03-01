@@ -18,21 +18,13 @@
   },
   "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
   "dependencies": {
-<<<<<<< HEAD
-    "nodemon": "*",    
-=======
     "nodemon": "*",
->>>>>>> development
     "express": "^4.16.4",
     "body-parser": "^1.18.3",
     "node-nlp": "^2.4.1",
     "synonyms": "*"
-<<<<<<< HEAD
-    
-=======
   },
   "devDependencies": {
     "eslint": "^5.14.1"
->>>>>>> development
   }
 }
