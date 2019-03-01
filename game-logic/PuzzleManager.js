@@ -1,7 +1,8 @@
 class PuzzleManager {
   constructor() {
-    this.puzzles =[];
+    this.puzzles = [];
     this.puzzleIndex = 0;
   }
 }
+
 export default PuzzleManager;

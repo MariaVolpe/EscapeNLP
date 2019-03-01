@@ -1,8 +1,8 @@
 class Object {
-  constructor () {
+  constructor() {
     this.name = '';
     this.passable = true;
   }
 }
 
-export default object;
+export default Object;

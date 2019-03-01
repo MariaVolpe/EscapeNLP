@@ -1,4 +1,5 @@
 import PuzzleManager from './PuzzleManager';
+import Grid from './Grid';
 
 class GameSession {
   constructor() {

@@ -9,12 +9,12 @@ class Point {
   }
 
   // returns a copy of this object with coordinate information
-  getPoint () {
-    return {x:this.x, y:this.y};
+  getPoint() {
+    return { x: this.x, y: this.y };
   }
 
   // changes coordinate information of this point
-  setPoint (x, y) {
+  setPoint(x, y) {
     this.x = x;
     this.y = y;
   }

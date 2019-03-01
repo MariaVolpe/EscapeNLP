@@ -7,7 +7,7 @@ import Point from './Point';
  */
 
 class PathFinder {
-  constructor (grid) {
+  constructor(grid) {
     this.grid = grid; // PathFinder needs a reference to grid object to see obstacles
   }
 
@@ -20,7 +20,7 @@ class PathFinder {
   // Returns an array of contiguous points illustrating a path | BFS
   getPathByDestination(start, destination) {
     path = [];
-    destinationPoint = {x: 0, y: 0, p: start};
+    destinationPoint = { x: 0, y: 0, p: start };
     queue = [start];
     visited = new Set([]);
 
@@ -28,21 +28,21 @@ class PathFinder {
       p = queue.shift(); // like pop in a queue
       if (p.x < 0 || p.y < 0 || p.y >= grid.size || p.x >= grid[p.y].size)
         continue;
-      if (visited.has (p)) // will this compare by reference or value though?
+      if (visited.has(p)) // will this compare by reference or value though?
         continue;
       if (grid[destination].x == p.x && grid[destination].y == p.y) {
-        destinationPoint = {x: p.x, y: p.y, p: p};
+        destinationPoint = { x: p.x, y: p.y, p: p };
         break;
       }
 
       // push in neighbors //
-      p.push({x: p.x-1, y: p.y, path: p}); // left square
-      p.push({x: p.x+1, y: p.y, path: p}); // right square
-      p.push({x: p.x, y: p.y-1, path: p}); // bottom square
-      p.push({x: p.x, y: p.y+1, path: p}); // top square
+      p.push({ x: p.x-1, y: p.y, path: p }); // left square
+      p.push({ x: p.x+1, y: p.y, path: p }); // right square
+      p.push({ x: p.x, y: p.y-1, path: p }); // bottom square
+      p.push({ x: p.x, y: p.y+1, path: p }); // top square
     }
     while (destinationPoint.path != start) { // track back to beginning
-      path.push (new Point (destinationPoint.x, destinationPoint.y));
+      path.push(new Point(destinationPoint.x, destinationPoint.y));
       destinationPoint = destinationPoint.path;
     }
     path.reverse(); // reverse to get forward order

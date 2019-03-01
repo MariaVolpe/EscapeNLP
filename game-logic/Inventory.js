@@ -1,15 +1,15 @@
 class Inventory {
-  constructor () {
+  constructor() {
     this.items = {};
   }
-  useItem (itemName) {
+  useItem(itemName) {
     // find item in this.items object, get reference to item, use item specific use
     // function
   }
-  dropItem (itemName) {
+  dropItem(itemName) {
 
   }
-  giveItem (itemName) {
+  giveItem(itemName) {
 
   }
 }

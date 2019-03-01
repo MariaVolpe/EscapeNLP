@@ -1,5 +1,6 @@
 
 import Inventory from 'Inventory'; // TODO
+
 class Agent extends Object {
   constructor(startingX, startingY, maxSteps, grid) {
     super(startingX, startingY, maxSteps, grid);
@@ -9,4 +10,5 @@ class Agent extends Object {
     // WE'll FIND OUT HAHAHHAHAHAAHAA
   }
 }
+
 export default Agent;

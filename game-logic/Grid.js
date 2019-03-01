@@ -15,7 +15,7 @@ class Grid {
   }
 
   // Adds an object to the first available position in the matrix
-  add (obj, x, y) {
+  add(obj, x, y) {
     // Adds an object to a specified x y position in the matrix //
     // todo: cleanup
     if (x && y) {
@@ -38,7 +38,7 @@ class Grid {
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
-  moveToDestination (movingObj, destination) {
+  moveToDestination(movingObj, destination) {
     let startPoint = this.positionMap[movingObj];
     let path = this.pathfinder.getPathByDestination(destination);
     for (let i = 0; i < path.length; i++) {
@@ -48,7 +48,7 @@ class Grid {
   }
 
   // given a direction, move towards it
-  moveByDirection (movingObj, direction) {
+  moveByDirection(movingObj, direction) {
     let startPoint = this.positionMap[movingObj];
     path = this.pathfinder.getPathByDirection(direction);
   }
