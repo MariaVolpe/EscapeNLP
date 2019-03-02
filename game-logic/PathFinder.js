@@ -48,9 +48,6 @@ class PathFinder {
     path.reverse(); // reverse to get forward order
     return path;
   }
-
-
-
 }
 
 export default PathFinder;

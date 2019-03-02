@@ -3,20 +3,18 @@
  * Point describes a position on a 2D grid
  */
 class Point {
-  constructor(x = 0, y = 0) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 
-  // returns a copy of this object with coordinate information
-  getPoint() {
+  get point() {
     return { x: this.x, y: this.y };
   }
 
-  // changes coordinate information of this point
-  setPoint(x, y) {
-    this.x = x;
-    this.y = y;
+  set point(position) {
+    this.x = position.x;
+    this.y = position.y;
   }
 }
 
