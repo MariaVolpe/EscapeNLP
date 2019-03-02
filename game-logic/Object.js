@@ -1,7 +1,7 @@
 class Object {
-  constructor() {
-    this.name = '';
-    this.passable = true;
+  constructor(name, id) {
+    this.name = name;
+    this.id = id;
   }
 }
 

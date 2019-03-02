@@ -1,6 +1,8 @@
 class Item extends Object {
-  use() { // will be overridden depending on functionality of the object
-
+  constructor(name, id, useMethod) {
+    super(name, id, useMethod);
+    this.use = useMethod;
+    this.passable = true; // items are passable by default
   }
 }
 

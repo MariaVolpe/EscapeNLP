@@ -9,6 +9,10 @@ class Agent extends Object {
     //grid.add(this, startingX, startingY); <- does this work in javascript?
     // WE'll FIND OUT HAHAHHAHAHAAHAA
   }
+
+  getItem(item) {
+    this.inventory.pickupItem(item);
+  }
 }
 
 export default Agent;
