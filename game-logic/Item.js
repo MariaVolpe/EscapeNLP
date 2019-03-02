@@ -1,8 +1,8 @@
 class Item extends Object {
-  constructor(name, id, useMethod) {
-    super(name, id, useMethod);
+  // items are passable by default
+  constructor(name, id, useMethod, passable = true) {
+    super(name, id, passable);
     this.use = useMethod;
-    this.passable = true; // items are passable by default
   }
 }
 
