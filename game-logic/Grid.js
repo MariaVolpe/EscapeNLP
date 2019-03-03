@@ -1,4 +1,5 @@
-import Point from 'Point';
+import Point from './Point';
+import PathFinder from './PathFinder';
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -11,11 +12,11 @@ import Point from 'Point';
 class Grid {
   constructor(size) {
     this.positionMap = new Map();
-    this.matrix = Array(size).fill(null).positionMap(()=>Array(size).fill(null));
+    this.matrix = new Array(size).fill(0).map(() => new Array(size).fill(0));
   }
 
   // Adds an object to the first available position in the matrix
-  add(obj, x, y) {
+  add(obj, { x, y }) {
     // Adds an object to a specified x y position in the matrix //
     // todo: cleanup
     if (x && y) {
@@ -29,7 +30,8 @@ class Grid {
     for (let i = 0; i < matrix.length && !spotFound; i++) {
       for (let j = 0; j < matrix[i].length && !spotFound; j++)
         if (matrix[i][j] == null /*|| EMPTY SLOT */) {
-          point.x = j; point.y = i;
+          point.x = j;
+          point.y = i;
           spotFound = true;
         }
     }
@@ -56,7 +58,6 @@ class Grid {
   getPosition(obj) {
     return this.positionMap[obj];
   }
-
 }
 
 export default Grid;
