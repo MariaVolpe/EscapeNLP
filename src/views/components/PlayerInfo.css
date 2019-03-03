@@ -1,0 +1,27 @@
+.player-box {
+  border: 5px solid black;
+}
+
+.player-pic {
+  border: 2px solid gray;
+  margin-right: 5px;
+}
+
+.player-name {
+  border: 3px solid silver;
+}
+
+.item {
+  border: 3px solid gray;
+  border-radius: 12px;
+  padding: 7px;
+  background-color: gray;
+  color: white;
+  margin-right: 3px;
+}
+
+.item-group {
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

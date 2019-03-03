@@ -1,0 +1,14 @@
+.player-info {
+  float: left;
+  width: 25%;
+}
+
+.game-info {
+  float: left;
+  width: 35%;
+}
+
+.text-info {
+  float: left;
+  width: 35%;
+}

@@ -1,30 +1,28 @@
 {
-  "name": "escapenlp-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MariaVolpe/EscapeNLP.git"
-  },
-  "author": "EscapeNLP",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MariaVolpe/EscapeNLP/issues"
-  },
-  "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
+  "name": "nlp-frontend",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "nodemon": "*",
-    "express": "^4.16.4",
-    "body-parser": "^1.18.3",
-    "node-nlp": "^2.4.1",
-    "synonyms": "*"
+    "bootstrap": "^4.3.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "reactstrap": "^7.1.0"
   },
-  "devDependencies": {
-    "eslint": "^5.14.1"
-  }
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

@@ -1,0 +1,39 @@
+.game-box {
+  border: 10px solid black;
+}
+
+.row {
+  border: 5px solid black;
+}
+
+.map-space {
+  float: left;
+  width: 80%;
+}
+
+.left-space {
+  float: left;
+  width: 20%;
+}
+
+.right-space {
+  float: left;
+  width: 10%;
+}
+
+.map-point {
+  border: 3px solid gray;
+  padding: 7px;
+  background-color: gray;
+  color: white;
+  margin-right: 3px;
+  border-width: 10px;
+  border-left-width: 20px;
+
+}
+
+.map {
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
