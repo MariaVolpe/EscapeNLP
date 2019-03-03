@@ -1,0 +1,33 @@
+.home-logo {
+  border-radius: 44%;
+  border: 20px solid #981234;
+  padding: 70px;
+  background-color: #981234;
+  color: #231166;
+}
+
+.home-button {
+  transform: rotate(-45deg);
+}
+
+.play-button {
+  position: relative;
+}
+
+.login-button {
+  height: 0;
+  width: 120px;
+  border-left: 80px solid #741212;
+  border-top: 45px solid transparent;
+  border-bottom: 45px solid transparent;
+  padding: 0 8px 0 0;
+}
+
+.signup-button {
+  height: 0;
+  width: 120px;
+  border-right: 80px solid #741212;
+  border-top: 45px solid transparent;
+  border-bottom: 45px solid transparent;
+  padding: 0 8px 0 0;
+}

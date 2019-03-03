@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './views/components/Home.js';
-import Play from './views/components/Play.js';
+import Home from './Home.js';
+import Play from './Play.js';
 import logo from './logo.svg';
 import './App.css';
 
