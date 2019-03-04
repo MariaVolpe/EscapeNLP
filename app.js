@@ -1,5 +1,5 @@
 const express = require('express');
-const { NlpManager, NlpClassifier } = require('node-nlp');
+const { NlpManager, NlpClassifier, NerManager } = require('node-nlp');
 const synonyms = require('synonyms');
 const app = express();
 const port = 3000;
@@ -73,6 +73,18 @@ console.log (synonyms("throw", 'v'));
     console.log(c);
 })();
 
+// NER MANAGER EXAMPLE
+const nerManager = new NerManager({ threshold: 0.8 });
+const fromEntity = nerManager.addNamedEntity('fromEntity', 'trim');
+fromEntity.addBetweenCondition('en', 'from', 'to');
+fromEntity.addAfterLastCondition('en', 'to');
+const toEntity = nerManager.addNamedEntity('toEntity', 'trim');
+fromEntity.addBetweenCondition('en', 'to', 'from');
+fromEntity.addAfterLastCondition('en', 'from');
+nerManager.findEntities(
+  'I want to travel from Barcelona to Madrid',
+  'en',
+).then(entities => console.log(entities));
 
 /*console.log(synonyms("screen", "v"));
 console.log(synonyms("sieve", "v"));
