@@ -1,6 +1,6 @@
-import PuzzleManager from './PuzzleManager';
-import Agent from './Agent';
-import Grid from './Grid';
+let PuzzleManager = require('./PuzzleManager');
+let Agent = require('./Agent');
+let Grid = require('./Grid');
 
 class GameSession {
   constructor() {
@@ -38,4 +38,4 @@ class GameSession {
   }
 }
 
-export default GameSession;
+module.exports = GameSession;

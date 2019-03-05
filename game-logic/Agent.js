@@ -1,4 +1,4 @@
-import Inventory from 'Inventory';
+let Inventory = require('./Inventory');
 
 class Agent extends Object {
   constructor(name) {
@@ -10,4 +10,4 @@ class Agent extends Object {
   }
 }
 
-export default Agent;
+module.exports = Agent;
