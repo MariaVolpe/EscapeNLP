@@ -1,4 +1,4 @@
-class Object {
+class BoardObject {
   constructor(name, id, passable = false) {
     this.name = name;
     this.id = id;
@@ -6,4 +6,4 @@ class Object {
   }
 }
 
-export default Object;
+module.exports = BoardObject;

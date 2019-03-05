@@ -1,4 +1,6 @@
-class Item extends Object {
+let BoardObject = require("./BoardObject.js");
+
+class Item extends BoardObject {
   // items are passable by default
   constructor(name, id, useMethod, passable = true) {
     super(name, id, passable);
@@ -6,4 +8,4 @@ class Item extends Object {
   }
 }
 
-export default Item;
+module.exports = Item;
