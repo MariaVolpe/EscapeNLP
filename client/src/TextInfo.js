@@ -3,46 +3,27 @@ import { Input } from 'reactstrap';
 import './TextInfo.css';
 
 class TextInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "",
-      prevMessages: []
-    }
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      const message = event.target.value;
-      let prevMessages = this.state.prevMessages;
-      prevMessages.push(message);
-      this.setState({message: '', prevMessages});
-    }
-  }
-
-  onChange = (event) => {
-    const message = event.target.value;
-    this.setState({message});
-  }
-
   render() {
 
-    let prevMessages = this.state.prevMessages.map((message, i) =>
-      <div key={i}>
-        <a>{message}</a>
+    let prevMessages = this.props.prevMessages;
+    let length = prevMessages.length;
+
+    let showMessages = prevMessages.map((message, i) =>
+      <div className="text-message" key={i}>
+        <a>{prevMessages[length - i - 1]}</a>
       </div>
     );
 
     return(
       <div>
-        <div>{prevMessages}</div>
+        <div className="text-box">{showMessages}</div>
         <div>
           <Input
-            value={this.state.message}
-            onChange={this.onChange}
-            onKeyPress={this.onKeyPress}
+            value={this.props.message}
+            onChange={this.props.onChange}
+            onKeyPress={this.props.onKeyPress}
+            placeholder="Chat with group"
+            className="talk-input"
           />
         </div>
       </div>

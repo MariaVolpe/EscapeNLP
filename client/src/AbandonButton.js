@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import './Home.css';
 import AbandonModal from './AbandonModal.js';
+import './AbandonButton.css';
 
 class AbandonButton extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class AbandonButton extends Component {
     return(
       <div>
         <AbandonModal isOpen={this.state.isOpen} onToggle={this.onToggle} handleSubmit={this.handleSubmit}/>
-        <Button onClick={this.onToggle}>Abandon Game</Button>
+        <Button onClick={this.onToggle} className="abandon-button">Abandon Game</Button>
       </div>
     )
   }

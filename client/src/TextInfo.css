@@ -1,0 +1,14 @@
+.talk-input {
+  position: fixed;
+  bottom: 10%;
+}
+
+.text-box {
+  border: 1px solid black;
+}
+
+.text-message {
+  color: black;
+  border: 1px solid black;
+  border-bottom: 0px;
+}

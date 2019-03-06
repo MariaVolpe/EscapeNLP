@@ -1,14 +1,17 @@
 .player-box {
   border: 5px solid black;
+  background-color: #293748;
 }
 
 .player-pic {
   border: 2px solid gray;
   margin-right: 5px;
+  background-color: white;
 }
 
 .player-name {
   border: 3px solid silver;
+  background-color: white;
 }
 
 .item {

@@ -1,39 +1,22 @@
-.game-box {
-  border: 10px solid black;
-}
-
-.row {
-  border: 5px solid black;
-}
-
-.map-space {
-  float: left;
-  width: 80%;
-}
-
-.left-space {
-  float: left;
-  width: 20%;
-}
-
-.right-space {
-  float: left;
-  width: 10%;
-}
-
 .map-point {
-  border: 3px solid gray;
-  padding: 7px;
-  background-color: gray;
-  color: white;
-  margin-right: 3px;
-  border-width: 10px;
-  border-left-width: 20px;
-
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin: 1px solid transparent;
 }
 
 .map {
   display: inline-block;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 1px;
+  margin-bottom: -1px;
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  outline-color: gray;
+  outline-style: solid;
+  outline-width: thin;
+}
+
+@media only screen and (max-width: 600px) {
+  .map {
+
+  }
 }

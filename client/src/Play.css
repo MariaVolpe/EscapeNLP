@@ -1,14 +1,21 @@
 .player-info {
   float: left;
-  width: 25%;
+  width: 20%;
 }
 
 .game-info {
   float: left;
-  width: 35%;
+  width: 50%;
 }
 
 .text-info {
   float: left;
-  width: 35%;
+  width: 25%;
+}
+
+.play-page {
+  //background-color: #282c34;
+  //display: flex;
+
+
 }

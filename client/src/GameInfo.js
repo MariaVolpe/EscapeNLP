@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Input } from 'reactstrap';
 import './GameInfo.css';
 
 class GameInfo extends Component {
@@ -11,7 +12,7 @@ class GameInfo extends Component {
 
     map.forEach((row) => {
       mapData[i] = row.map((element, i) =>
-        <div className="map" key={i}>
+        <div className="map col-1" key={i}>
           <a className="map-point">{i}</a>
         </div>
       );
@@ -19,20 +20,11 @@ class GameInfo extends Component {
     });
     console.log(mapData);
 
-    // const map = this.props.map.map((row, i) =>
-    //   <div className="row">
-    //     {row}
-    //   </div>
-    // );
-
-
     return(
       <div>
-        <div className="left-space">-</div>
-        <div className="map-space">
+        <div>
           {mapData}
         </div>
-        <div className="right-space">-</div>
       </div>
     )
   }
