@@ -8,6 +8,10 @@ class Agent extends Object {
     this.inventory = new Inventory();
     this.passable = false; // by default agents will not be passable
   }
+
+  getItem(item) {
+    this.inventory.pickupItem(item);
+  }
 }
 
 module.exports = Agent;
