@@ -98,3 +98,51 @@ console.log (synonyms("move", "v"));*/
 
 //console.log (synonyms.dictionary);
 app.listen(port, () => console.log (`EscapeNLP Server listening on port ${port}!`));
+
+
+// const builder = require('botbuilder');  // install with npm i botbuilder express node-nlp
+// const express = require('express');
+// const fs = require('fs');
+// const { Recognizer } = require('node-nlp');
+
+// const modelName = './model.nlp';
+// const excelName = './model.xls'; 
+
+/*
+    excelName is the excel sheet that contains intents, responses, i.e.
+    I'll push a sample excel sheet soon.
+*/
+
+// // Creates a connector for the chatbot
+// const connector = new builder.ChatConnector({
+//   appId: process.env.BOT_APP_ID,
+//   appPassword: process.env.BOT_APP_PASSWORD,
+// });
+
+// // Creates a node-nlp recognizer for the bot
+// const recognizer = new Recognizer();
+// if (fs.existsSync(modelName)) {
+//   recognizer.load(modelName);
+// } else {
+//   recognizer.loadExcel(excelName);
+//   recognizer.save(modelName);
+// }
+
+// // Creates the bot using a memory storage, with a main dialog that
+// // use the node-nlp recognizer to calculate the answer.
+// const bot = new builder.UniversalBot(connector, session => {
+//   session.send(
+//     `You reached the default message handler. You said '${
+//       session.message.text
+//     }'.`,
+//   );
+// }).set('storage', new builder.MemoryBotStorage());
+
+// recognizer.setBot(bot, true);
+
+// // Creates the express application
+// const app = express();
+// const port = process.env.PORT || 3000;
+// app.post('/api/messages', connector.listen());
+// app.listen(port);
+// console.log(`Chatbot listening on port ${port}`);
