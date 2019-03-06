@@ -1,4 +1,4 @@
-import Point from './Point';
+let Point = require('./Point');
 
 /*
  * PathFinder:
@@ -50,4 +50,4 @@ class PathFinder {
   }
 }
 
-export default PathFinder;
+module.exports = PathFinder;

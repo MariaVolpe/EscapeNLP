@@ -1,14 +1,13 @@
-
-import Inventory from 'Inventory'; // TODO
+let Inventory = require('./Inventory');
 
 class Agent extends Object {
-  constructor(startingX, startingY, maxSteps, grid) {
-    super(startingX, startingY, maxSteps, grid);
+  constructor(name) {
+    // todo: generate id
+    const id = 'set_later';
+    super(name, id);
     this.inventory = new Inventory();
     this.passable = false; // by default agents will not be passable
-    //grid.add(this, startingX, startingY); <- does this work in javascript?
-    // WE'll FIND OUT HAHAHHAHAHAAHAA
   }
 }
 
-export default Agent;
+module.exports = Agent;
