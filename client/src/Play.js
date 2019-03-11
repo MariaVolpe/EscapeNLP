@@ -34,7 +34,7 @@ class Play extends Component {
 
   onMessageKeyPress = (event) => {
     if (event.key === 'Enter') {
-      const message = event.target.value;
+      const message = "You said: `" + event.target.value + "`";
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({message: '', prevMessages});
@@ -47,7 +47,7 @@ class Play extends Component {
   }
 
   onCommandKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target.value.length > 0) {
       const message = "You wanted to: `" + event.target.value + "`";
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
@@ -62,12 +62,24 @@ class Play extends Component {
 
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
+    let players = [];
+    let evenOrOdd = "";
+
+    for (let i=0; i<5; i++) {
+      if (i%2 == 1) {
+        evenOrOdd = "2";
+      }
+      else {
+        evenOrOdd = "";
+      }
+      players.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
+    }
 
     return(
       <div className="play-page" >
         <div className='player-info'>
           Player Info
-          <PlayerInfo playerInfo={this.state.playerInfo} />
+          {players}
           <AbandonButton/>
         </div>
         <div className='game-info'>

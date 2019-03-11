@@ -3,8 +3,15 @@
   bottom: 10%;
 }
 
+.text-container {
+  margin: auto;
+
+}
+
 .text-box {
   border: 1px solid black;
+  margin-top: auto;
+  width: 100%;
 }
 
 .text-message {

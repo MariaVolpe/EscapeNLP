@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Col, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './AbandonModal.css';
 
 class AbandonModal extends Component {
   render() {
@@ -10,13 +11,13 @@ class AbandonModal extends Component {
             <ModalBody>
                 <Form onSubmit={this.props.handleSubmit} >
                     <FormGroup row>
-                      <Label>Do you really want to abandon your teammates?</Label>
+                      <Label className="centered">Do you really want to abandon your teammates?</Label>
 
 
                     </FormGroup>
                     <FormGroup row>
-                      <Button color="success" data-dismiss="modal" onClick={this.props.onToggle}>Cancel</Button>
-                      <Button color="danger" data-dismiss="modal" >Abandon Game</Button>
+                      <Button color="success" data-dismiss="modal" className="centered" onClick={this.props.onToggle}>Cancel</Button>
+                      <Button color="danger" data-dismiss="modal" className="centered" >Abandon Game</Button>
                     </FormGroup>
                 </Form>
             </ModalBody>

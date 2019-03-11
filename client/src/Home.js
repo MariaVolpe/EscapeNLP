@@ -23,9 +23,9 @@ class Home extends Component {
       <div className='App-header'>
           <Button onClick={this.onPlayClick} color='danger' className='play-button'>Play Game</Button>
           <div className="center-buttons">
-            <a onClick={this.onLoginClick} color="danger" className='login-button'>Log-in</a>
+            <Button onClick={this.onLoginClick} color="danger" className='login-button'>Log-in</Button>
             <a className='home-logo'>EscapeNLP</a>
-            <a color='danger' className='signup-button'>Signup</a>
+            <Button color='danger' className='signup-button'>Signup</Button>
           </div>
           <Button onClick={this.onCreateClick}>Create Lobby</Button>
       </div>

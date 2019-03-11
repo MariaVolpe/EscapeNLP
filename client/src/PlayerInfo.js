@@ -14,7 +14,7 @@ class PlayerInfo extends Component {
     );
 
     return(
-      <div className="player-box" >
+      <div className={this.props.style} >
         <div>
           <a className="player-pic">
             {this.props.playerInfo.picture}

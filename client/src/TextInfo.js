@@ -15,7 +15,7 @@ class TextInfo extends Component {
     );
 
     return(
-      <div>
+      <div className="text-container">
         <div className="text-box">{showMessages}</div>
         <div>
           <Input

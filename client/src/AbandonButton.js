@@ -32,7 +32,7 @@ class AbandonButton extends Component {
     return(
       <div>
         <AbandonModal isOpen={this.state.isOpen} onToggle={this.onToggle} handleSubmit={this.handleSubmit}/>
-        <Button onClick={this.onToggle} className="abandon-button">Abandon Game</Button>
+        <Button onClick={this.onToggle} className="abandon-button">Abandon</Button>
       </div>
     )
   }
