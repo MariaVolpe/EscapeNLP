@@ -12,9 +12,9 @@ class Point {
     return { x: this.x, y: this.y };
   }
 
-  set point(position) {
-    this.x = position.x;
-    this.y = position.y;
+  set point({ x, y }) {
+    this.x = x;
+    this.y = y;
   }
 }
 

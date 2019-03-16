@@ -11,32 +11,40 @@ import PathFinder from './PathFinder';
 
 class Grid {
   constructor(size) {
-    this.positionMap = new Map();
-    this.matrix = new Array(size).fill(0).map(() => new Array(size).fill(0));
+    this.boardSize = size;
+    this.positionMap = new Map(); //Keeps coordinates of object in board
+    this.matrix = new Array(size).fill(null).map(() => new Array(size).fill(null));
   }
 
-  // Adds an object to the first available position in the matrix
-  add(obj, { x, y }) {
-    // Adds an object to a specified x y position in the matrix //
-    // todo: cleanup
-    if (x && y) {
-      let p = new Point(x, y);
-      this.positionMap[obj.name] = p;
-      this.matrix[y][x] = obj;
+  /*
+   * Adds an object to the board. Coordinates are assumed to be
+   * from the player's perspective, and are translated to the
+   * proper indices for the matrix.
+   */
+  add(obj, {x, y} = {}) {
+    let p;
+    if (x && y) {// Converts coordinates from player perspective to matrix indices
+      p = new Point(this.boardSize-1-y, x);
     }
+    else{//Add an object to the first available space in the board.
+      p = this.findFreeSpace();
+    }
+    this.positionMap[obj.name] = p;
+    this.matrix[p.x][p.y] = obj;
+  }
 
+  //Finds a free space in the board, returns a point with its indices.
+  findFreeSpace() {
     let p = new Point();
-    let spotFound = false;
-    for (let i = 0; i < matrix.length && !spotFound; i++) {
-      for (let j = 0; j < matrix[i].length && !spotFound; j++)
-        if (matrix[i][j] == null /*|| EMPTY SLOT */) {
-          point.x = j;
-          point.y = i;
-          spotFound = true;
+    for (let i = 0; i < this.matrix.length; i++) {
+      for (let j = 0; j < this.matrix[i].length; j++) {
+        if (this.matrix[i][j] == null /*|| EMPTY SLOT */) {
+          p.x = i;
+          p.y = j;
+          return p;
         }
+      }
     }
-    this.positionMap[obj] = p;
-    this.matrix[p.y][p.x] = obj;
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
@@ -55,9 +63,11 @@ class Grid {
     path = this.pathfinder.getPathByDirection(direction);
   }
 
-  getPosition(obj) {
-    return this.positionMap[obj];
+  //Returns Point representing indices of desired object within the grid.
+  getPosition(objName) {
+    return this.positionMap[objName];
   }
 }
 
 export default Grid;
+
