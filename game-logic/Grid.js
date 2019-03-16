@@ -22,26 +22,27 @@ class Grid {
    * proper indices for the matrix.
    */
   add(obj, {x, y} = {}) {
-    // Adds an object to a specified x y position in the matrix //
-    if (x && y) {
-      let p = new Point(this.boardSize-1-y, x);
-      this.positionMap[obj.name] = p;
-      this.matrix[this.boardSize-1-y][x] = obj;
+    var p;
+    if (x && y) {// Converts coordinates from player perspective to matrix indices
+      var p = new Point(this.boardSize-1-y, x);
     }
-    //Add an object to the first available space in the board.
-    else {
-      let p = new Point();
-      let spotFound = false;
-      for (let i = 0; i < this.matrix.length && !spotFound; i++) {
-        for (let j = 0; j < this.matrix[i].length && !spotFound; j++)
-          if (this.matrix[i][j] == null /*|| EMPTY SLOT */) {
-            p.x = j;
-            p.y = i;
-            spotFound = true;
-          }
-      }
-      this.positionMap[obj] = p;
-      this.matrix[p.y][p.x] = obj; 
+    else{//Add an object to the first available space in the board.
+      var p = this.findFreeSpace();
+    }
+    this.positionMap[obj.name] = p;
+    this.matrix[p.x][p.y] = obj;
+  }
+
+  //Finds a free space in the board, returns a point with its indices.
+  findFreeSpace() {
+    let p = new Point();
+    for (let i = 0; i < this.matrix.length; i++) {
+      for (let j = 0; j < this.matrix[i].length; j++)
+        if (this.matrix[i][j] == null /*|| EMPTY SLOT */) {
+          p.x = i;
+          p.y = j;
+          return p;
+        }
     }
   }
 
