@@ -1,7 +1,11 @@
-class Item extends Object {
-  use() { // will be overridden depending on functionality of the object
+let BoardObject = require("./BoardObject.js");
 
+class Item extends BoardObject {
+  // items are passable by default
+  constructor(name, id, useMethod, passable = true) {
+    super(name, id, passable);
+    this.use = useMethod;
   }
 }
 
-export default Item;
+module.exports = Item;

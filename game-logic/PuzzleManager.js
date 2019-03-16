@@ -5,4 +5,4 @@ class PuzzleManager {
   }
 }
 
-export default PuzzleManager;
+module.exports = PuzzleManager;
