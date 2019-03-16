@@ -22,12 +22,12 @@ class Grid {
    * proper indices for the matrix.
    */
   add(obj, {x, y} = {}) {
-    var p;
+    let p;
     if (x && y) {// Converts coordinates from player perspective to matrix indices
-      var p = new Point(this.boardSize-1-y, x);
+      p = new Point(this.boardSize-1-y, x);
     }
     else{//Add an object to the first available space in the board.
-      var p = this.findFreeSpace();
+      p = this.findFreeSpace();
     }
     this.positionMap[obj.name] = p;
     this.matrix[p.x][p.y] = obj;
@@ -37,12 +37,13 @@ class Grid {
   findFreeSpace() {
     let p = new Point();
     for (let i = 0; i < this.matrix.length; i++) {
-      for (let j = 0; j < this.matrix[i].length; j++)
+      for (let j = 0; j < this.matrix[i].length; j++) {
         if (this.matrix[i][j] == null /*|| EMPTY SLOT */) {
           p.x = i;
           p.y = j;
           return p;
         }
+      }
     }
   }
 
