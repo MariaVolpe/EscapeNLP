@@ -22,6 +22,7 @@ class Grid {
    * proper indices for the matrix.
    */
   add(obj, coordinates) {
+
     // Adds an object to a specified x y position in the matrix //
     if (typeof coordinates == 'object') {
       let p = new Point(this.boardSize-1-coordinates.y, coordinates.x);
