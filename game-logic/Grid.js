@@ -21,13 +21,13 @@ class Grid {
    * from the player's perspective, and are translated to the
    * proper indices for the matrix.
    */
-  add(obj, {x, y} = {}) {
+  add(obj, {x,y} = {}) {
     let p;
-    if (x && y) {// Converts coordinates from player perspective to matrix indices
-      p = new Point(this.boardSize-1-y, x);
+    if (x === undefined || y === undefined) {// Converts coordinates from player perspective to matrix indices
+        p = this.findFreeSpace();
     }
     else{//Add an object to the first available space in the board.
-      p = this.findFreeSpace();
+      p = new Point(this.boardSize-1-y, x);
     }
     this.positionMap[obj.name] = p;
     this.matrix[p.x][p.y] = obj;
