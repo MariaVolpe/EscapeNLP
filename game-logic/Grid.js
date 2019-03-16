@@ -21,12 +21,12 @@ class Grid {
    * from the player's perspective, and are translated to the
    * proper indices for the matrix.
    */
-  add(obj, coordinates) {
+  add(obj, {x, y} = {}) {
     // Adds an object to a specified x y position in the matrix //
-    if (typeof coordinates == 'object') {
-      let p = new Point(this.boardSize-1-coordinates.y, coordinates.x);
+    if (x && y) {
+      let p = new Point(this.boardSize-1-y, x);
       this.positionMap[obj.name] = p;
-      this.matrix[this.boardSize-1-coordinates.y][coordinates.x] = obj;
+      this.matrix[this.boardSize-1-y][x] = obj;
     }
     //Add an object to the first available space in the board.
     else {
@@ -35,8 +35,8 @@ class Grid {
       for (let i = 0; i < this.matrix.length && !spotFound; i++) {
         for (let j = 0; j < this.matrix[i].length && !spotFound; j++)
           if (this.matrix[i][j] == null /*|| EMPTY SLOT */) {
-            point.x = j;
-            point.y = i;
+            p.x = j;
+            p.y = i;
             spotFound = true;
           }
       }
