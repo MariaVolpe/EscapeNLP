@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import './Lobby.css';
+import './styles/Lobby.css';
 
 class Lobby extends Component {
 

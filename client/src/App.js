@@ -4,7 +4,7 @@ import Home from './Home.js';
 import Play from './Play.js';
 import Lobby from './Lobby.js';
 import Browser from './Browser.js';
-import './App.css';
+import './styles/App.css';
 
 class App extends Component {
   render() {

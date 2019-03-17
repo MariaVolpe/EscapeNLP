@@ -5,7 +5,7 @@ import PlayerInfo from './PlayerInfo.js';
 import GameInfo from './GameInfo.js';
 import Commands from './Commands.js';
 import TextInfo from './TextInfo.js';
-import './Play.css';
+import './styles/Play.css';
 
 class Play extends Component {
   constructor(props) {

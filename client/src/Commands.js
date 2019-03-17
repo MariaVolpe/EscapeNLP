@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import './Commands.css';
+import './styles/Commands.css';
 
 class Commands extends Component {
 
