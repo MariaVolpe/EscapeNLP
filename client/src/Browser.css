@@ -1,0 +1,39 @@
+.lobby-browser {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.filter-group {
+  float: left;
+  width: 18%;
+  height: 100%;
+  border: 3px solid black;
+  margin-right: 1%;
+  margin-left: 1%;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #283942;
+  color: white;
+  min-height: 100%;
+}
+
+.right-side {
+  float: right;
+  left: 80%;
+  width: 18%;
+  height: 98%;
+  border: 3px solid black;
+  border-radius: 10px;
+  margin-left: 1%;
+  margin-top: 0.5%;
+  padding: 5px;
+  background-color: #283942;
+  color: white;
+  min-height: 98%;
+  position: fixed;
+}
+
+.middle {
+  float: left;
+  width: 60%;
+}

@@ -21,6 +21,7 @@
   //border-top: 45px solid transparent;
   //border-bottom: 45px solid transparent;
   padding: 0 8px 0 0;
+  shape-inside: polygon(0 0, 100% 0, 100% 100%, 30% 100%);
 }
 
 .signup-button {
