@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
 class ErrorModal extends Component {

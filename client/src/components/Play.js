@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton';
-import AbandonButton from './AbandonButton';
 import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import Commands from './Commands';

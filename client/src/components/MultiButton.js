@@ -35,7 +35,6 @@ class MultiButton extends Component {
   render() {
 
     let buttonType = this.props.type;
-    let buttonName = "Button";
     let buttonUsage;
 
     if (buttonType === "abandon-button") {
