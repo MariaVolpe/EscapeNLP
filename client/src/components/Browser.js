@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './styles/Browser.css';
+import '../styles/Browser.css';
 
 class Browser extends Component {
   render() {

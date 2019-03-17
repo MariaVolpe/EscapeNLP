@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import './styles/GameInfo.css';
+import '../styles/GameInfo.css';
 
 class GameInfo extends Component {
 

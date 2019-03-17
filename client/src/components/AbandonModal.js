@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Col, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import './styles/AbandonModal.css';
+import '../styles/AbandonModal.css';
 
 class AbandonModal extends Component {
   render() {

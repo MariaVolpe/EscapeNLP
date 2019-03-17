@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import './styles/TextInfo.css';
+import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
   render() {

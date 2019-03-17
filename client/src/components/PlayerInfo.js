@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import AbandonButon from './AbandonButton.js';
-import './styles/PlayerInfo.css';
+import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
 
