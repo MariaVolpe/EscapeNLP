@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Col, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import './ConfirmModal.css';
+import '../styles/ConfirmModal.css';
 
 class ErrorModal extends Component {
   render() {

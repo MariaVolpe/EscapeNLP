@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import ConfirmModal from './ConfirmModal.js';
-import './MultiButton.css';
+import '../styles/MultiButton.css';
 
 class MultiButton extends Component {
   constructor(props) {

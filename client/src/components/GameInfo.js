@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD:client/src/GameInfo.js
-import './GameInfo.css';
-=======
-import { Input } from 'reactstrap';
 import '../styles/GameInfo.css';
->>>>>>> d5483488e454366dc1bbd43eeb8b4966562f39ea:client/src/components/GameInfo.js
 
 class GameInfo extends Component {
 
