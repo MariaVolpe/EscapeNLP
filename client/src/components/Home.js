@@ -20,11 +20,19 @@ class Home extends Component {
 
   render() {
     return <div className="App-header">
-        <Button onClick={this.onPlayClick} color="danger" className="play-button">
+        <Button
+          onClick={this.onPlayClick}
+          color="danger"
+          className="play-button"
+        >
           Play Game
         </Button>
         <div className="center-buttons">
-          <Button onClick={this.onLoginClick} color="danger" className="login-button">
+          <Button
+            onClick={this.onLoginClick}
+            color="danger"
+            className="login-button"
+          >
             Log-in
           </Button>
           <a className="home-logo">EscapeNLP</a>

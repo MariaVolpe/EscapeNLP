@@ -9,10 +9,10 @@ class MultiButton extends Component {
     this.state = {
       isOpen: false,
       confirmInfo: {
-        title: "Abandon Game?",
-        text: "Do you really want to abandon your teammates?",
-        confirm: "Abandon",
-        cancel: "Cancel"
+        title: 'Abandon Game?',
+        text: 'Do you really want to abandon your teammates?',
+        confirm: 'Abandon',
+        cancel: 'Cancel',
       }
     };
 
@@ -42,8 +42,18 @@ class MultiButton extends Component {
 
     if (buttonType === "abandon-button") {
       buttonUsage = <div>
-                      <ConfirmModal isOpen={this.state.isOpen} onToggle={this.onToggle} handleSubmit={this.handleSubmit} confirmInfo={this.state.confirmInfo}/>
-                      <Button onClick={this.onToggle} className={this.props.type}>Abandon</Button>
+                      <ConfirmModal
+                        isOpen={this.state.isOpen}
+                        onToggle={this.onToggle}
+                        handleSubmit={this.handleSubmit}
+                        confirmInfo={this.state.confirmInfo}
+                      />
+                      <Button
+                        onClick={this.onToggle}
+                        className={this.props.type}
+                      >
+                        Abandon
+                      </Button>
                     </div>;
     }
     else if (buttonType === "ready-button") {
@@ -53,7 +63,12 @@ class MultiButton extends Component {
     }
     else if (buttonType === "leave-button") {
       buttonUsage = <div>
-                      <ConfirmModal isOpen={this.state.isOpen} onToggle={this.onToggle} handleSubmit={this.handleSubmit} confirmInfo={this.state.confirmInfo}/>
+                      <ConfirmModal
+                        isOpen={this.state.isOpen}
+                        onToggle={this.onToggle}
+                        handleSubmit={this.handleSubmit}
+                        confirmInfo={this.state.confirmInfo}
+                      />
                       <Button onClick={this.onToggle} className={this.props.type}>Leave</Button>
                     </div>;
     }

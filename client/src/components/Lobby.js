@@ -11,10 +11,10 @@ class Lobby extends Component {
       errorOpen: false,
       confirmOpen: false,
       confirmInfo: {
-        title: "Join Game?",
-        text: "Do you want to join the lobby?",
-        confirm: "Join",
-        cancel: "Cancel"
+        title: 'Join Game?',
+        text: 'Do you want to join the lobby?',
+        confirm: 'Join',
+        cancel: 'Cancel',
       }
     }
   }
@@ -55,7 +55,12 @@ class Lobby extends Component {
           </Col>
           <Col>
             <ErrorModal isOpen={this.state.errorOpen} handleSubmit={this.onErrorSubmit}/>
-            <ConfirmModal isOpen={this.state.confirmOpen} handleSubmit={this.onConfirmSubmit} onToggle={this.onConfirmToggle} confirmInfo={this.state.confirmInfo} />
+            <ConfirmModal
+              isOpen={this.state.confirmOpen}
+              handleSubmit={this.onConfirmSubmit}
+              onToggle={this.onConfirmToggle}
+              confirmInfo={this.state.confirmInfo}
+            />
             <Button onClick={this.onJoinClick}>Join</Button>
           </Col>
         </Row>

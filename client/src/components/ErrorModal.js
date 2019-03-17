@@ -12,11 +12,15 @@ class ErrorModal extends Component {
                 <Form onSubmit={this.props.handleSubmit} >
                     <FormGroup row>
                       <Label className="centered">Unable to join the lobby</Label>
-
-
                     </FormGroup>
                     <FormGroup row>
-                      <Button color="danger" data-dismiss="modal" className="centered" >OK</Button>
+                      <Button
+                        color="danger"
+                        data-dismiss="modal"
+                        className="centered"
+                      >
+                        OK
+                      </Button>
                     </FormGroup>
                 </Form>
             </ModalBody>

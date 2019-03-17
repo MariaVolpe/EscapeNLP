@@ -36,7 +36,7 @@ class Play extends Component {
 
   onMessageKeyPress = (event) => {
     if (event.key === 'Enter') {
-      const message = "You said: `" + event.target.value + "`";
+      const message = 'You said: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({message: '', prevMessages});
@@ -52,7 +52,7 @@ class Play extends Component {
 
   onCommandKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
-      const message = "You wanted to: `" + event.target.value + "`";
+      const message = 'You wanted to: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({command: '', prevMessages});
@@ -122,7 +122,12 @@ class Play extends Component {
         {gameInfo}
         <div className='text-info'>
           text and stuff
-          <TextInfo message={this.state.message} prevMessages={this.state.prevMessages} onKeyPress={this.onMessageKeyPress} onChange={this.onMessageChange}/>
+          <TextInfo
+            message={this.state.message}
+            prevMessages={this.state.prevMessages}
+            onKeyPress={this.onMessageKeyPress}
+            onChange={this.onMessageChange}
+          />
         </div>
       </div>
     )
