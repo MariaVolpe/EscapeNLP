@@ -12,10 +12,17 @@
   border: 1px solid black;
   margin-top: auto;
   width: 100%;
+  max-height: 84vh;
+  overflow: scroll;
 }
 
-.text-message {
+.text-list {
   color: black;
   border: 1px solid black;
   border-bottom: 0px;
+  text-align: left;
+}
+
+.text-message {
+  
 }

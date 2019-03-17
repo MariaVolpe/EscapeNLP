@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import {Col, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import './AbandonModal.css';
+import './ConfirmModal.css';
 
-class AbandonModal extends Component {
+class ErrorModal extends Component {
   render() {
     return (
       <div>
         <Modal isOpen={this.props.isOpen} onToggle={this.props.onToggle} >
-            <ModalHeader onToggle={this.props.onToggle}>Abandon Game?</ModalHeader>
+            <ModalHeader onToggle={this.props.onToggle}>Full Lobby</ModalHeader>
             <ModalBody>
                 <Form onSubmit={this.props.handleSubmit} >
                     <FormGroup row>
-                      <Label className="centered">Do you really want to abandon your teammates?</Label>
+                      <Label className="centered">Unable to join the lobby</Label>
 
 
                     </FormGroup>
                     <FormGroup row>
-                      <Button color="success" data-dismiss="modal" className="centered" onClick={this.props.onToggle}>Cancel</Button>
-                      <Button color="danger" data-dismiss="modal" className="centered" >Abandon Game</Button>
+                      <Button color="danger" data-dismiss="modal" className="centered" >OK</Button>
                     </FormGroup>
                 </Form>
             </ModalBody>
@@ -27,4 +26,4 @@ class AbandonModal extends Component {
   }
 }
 
-export default AbandonModal;
+export default ErrorModal;

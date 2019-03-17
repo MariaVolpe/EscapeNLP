@@ -9,8 +9,8 @@ class TextInfo extends Component {
     let length = prevMessages.length;
 
     let showMessages = prevMessages.map((message, i) =>
-      <div className="text-message" key={i}>
-        <a>{prevMessages[length - i - 1]}</a>
+      <div className="text-list" key={i}>
+        <a className="test-box">{prevMessages[i]}</a>
       </div>
     );
 

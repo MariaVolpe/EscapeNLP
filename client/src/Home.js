@@ -6,7 +6,7 @@ class Home extends Component {
 
   onPlayClick = (event) => {
     console.log('Play the game!');
-    window.location.replace('/play');
+    window.location.replace('/browser');
   }
 
   onLoginClick = (event) => {
@@ -15,7 +15,7 @@ class Home extends Component {
 
   onCreateClick = (event) => {
     console.log('Create a room');
-    window.location.replace('/lobby');
+    window.location.replace('/play');
   }
 
   render() {
