@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD:client/src/Lobby.js
 import { Row, Col, Button } from 'reactstrap';
 import './Lobby.css';
 import ErrorModal from './ErrorModal.js';
 import ConfirmModal from './ConfirmModal.js';
+=======
+import { Button } from 'reactstrap';
+import '../styles/Lobby.css';
+>>>>>>> d5483488e454366dc1bbd43eeb8b4966562f39ea:client/src/components/Lobby.js
 
 class Lobby extends Component {
   constructor(props) {

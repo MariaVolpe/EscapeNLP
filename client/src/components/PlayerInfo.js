@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD:client/src/PlayerInfo.js
 import './PlayerInfo.css';
+=======
+import { Button } from 'reactstrap';
+import AbandonButon from './AbandonButton';
+import '../styles/PlayerInfo.css';
+>>>>>>> d5483488e454366dc1bbd43eeb8b4966562f39ea:client/src/components/PlayerInfo.js
 
 class PlayerInfo extends Component {
 

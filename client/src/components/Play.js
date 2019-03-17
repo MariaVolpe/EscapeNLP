@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD:client/src/Play.js
 import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton.js';
 import PlayerInfo from './PlayerInfo.js';
@@ -6,6 +7,15 @@ import GameInfo from './GameInfo.js';
 import Commands from './Commands.js';
 import TextInfo from './TextInfo.js';
 import './Play.css';
+=======
+import { Button } from 'reactstrap';
+import AbandonButton from './AbandonButton';
+import PlayerInfo from './PlayerInfo';
+import GameInfo from './GameInfo';
+import Commands from './Commands';
+import TextInfo from './TextInfo';
+import '../styles/Play.css';
+>>>>>>> d5483488e454366dc1bbd43eeb8b4966562f39ea:client/src/components/Play.js
 
 class Play extends Component {
   constructor(props) {

@@ -25,6 +25,6 @@
     "synonyms": "*"
   },
   "devDependencies": {
-    "eslint": "^5.14.1"
+    "eslint": "5.12.0"
   }
 }

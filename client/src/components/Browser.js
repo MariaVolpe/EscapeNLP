@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD:client/src/Browser.js
 import Lobby from './Lobby.js';
 import './Browser.css';
+=======
+import '../styles/Browser.css';
+>>>>>>> d5483488e454366dc1bbd43eeb8b4966562f39ea:client/src/components/Browser.js
 
 class Browser extends Component {
 
