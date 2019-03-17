@@ -1,0 +1,21 @@
+.player-info {
+  float: left;
+  width: 20%;
+}
+
+.game-info {
+  float: left;
+  width: 50%;
+}
+
+.text-info {
+  float: left;
+  width: 30%;
+}
+
+.play-page {
+  //background-color: #282c34;
+  //display: flex;
+
+
+}
