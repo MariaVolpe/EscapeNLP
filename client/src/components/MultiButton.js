@@ -64,7 +64,7 @@ class MultiButton extends Component {
                         isOpen={this.state.isOpen}
                         onToggle={this.onToggle}
                         handleSubmit={this.handleSubmit}
-                        confirmInfo={this.state.confirmInfo}
+                        confirmInfo={this.confirmInfo}
                       />
                       <Button onClick={this.onToggle} className={this.props.type}>Leave</Button>
                     </div>;
