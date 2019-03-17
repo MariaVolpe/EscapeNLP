@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import AbandonButton from './AbandonButton.js';
-import PlayerInfo from './PlayerInfo.js';
-import GameInfo from './GameInfo.js';
-import Commands from './Commands.js';
-import TextInfo from './TextInfo.js';
+import AbandonButton from './AbandonButton';
+import PlayerInfo from './PlayerInfo';
+import GameInfo from './GameInfo';
+import Commands from './Commands';
+import TextInfo from './TextInfo';
 import '../styles/Play.css';
 
 class Play extends Component {

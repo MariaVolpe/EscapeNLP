@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import AbandonModal from './AbandonModal.js';
+import AbandonModal from './AbandonModal';
 import '../styles/AbandonButton.css';
 
 class AbandonButton extends Component {

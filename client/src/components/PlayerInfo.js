@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import AbandonButon from './AbandonButton.js';
+import AbandonButon from './AbandonButton';
 import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
