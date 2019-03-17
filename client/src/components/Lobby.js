@@ -10,28 +10,28 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
-      confirmInfo: {
-        title: 'Join Game?',
-        text: 'Do you want to join the lobby?',
-        confirm: 'Join',
-        cancel: 'Cancel',
-      }
     }
+    this.confirmInfo = {
+      title: 'Join Game?',
+      text: 'Do you want to join the lobby?',
+      confirm: 'Join',
+      cancel: 'Cancel',
+    };
   }
 
   onJoinClick = (event) => {
     if (this.props.playerCount < 5) {
       console.log('Join a room');
       //window.location.replace('/play');
-      this.setState({confirmOpen: !this.state.confirmOpen});
+      this.setState({ confirmOpen: !this.state.confirmOpen });
     }
     else {
-      this.setState({errorOpen: !this.state.errorOpen});
+      this.setState({ errorOpen: !this.state.errorOpen });
     }
   }
 
   onErrorSubmit = (event) => {
-    this.setState({errorOpen: !this.state.errorOpen});
+    this.setState({ errorOpen: !this.state.errorOpen});
     event.preventDefault();
   }
 
@@ -41,7 +41,7 @@ class Lobby extends Component {
   }
 
   onConfirmToggle = (event) => {
-    this.setState({confirmOpen: !this.state.confirmOpen});
+    this.setState({ confirmOpen: !this.state.confirmOpen });
   }
 
   render() {
@@ -59,7 +59,7 @@ class Lobby extends Component {
               isOpen={this.state.confirmOpen}
               handleSubmit={this.onConfirmSubmit}
               onToggle={this.onConfirmToggle}
-              confirmInfo={this.state.confirmInfo}
+              confirmInfo={this.confirmInfo}
             />
             <Button onClick={this.onJoinClick}>Join</Button>
           </Col>

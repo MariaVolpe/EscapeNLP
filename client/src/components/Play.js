@@ -13,18 +13,18 @@ class Play extends Component {
     super(props);
     this.state = {
       playerInfo: {
-        name: "Nicky Cen",
+        name: 'Nicky Cen',
         inventory: {
-          key: "doorKey",
-          weapon: "sword"
+          key: 'doorKey',
+          weapon: 'sword',
         },
-        picture: "[pic]"
+        picture: '[pic]',
       },
       map: [],
-      message: "",
+      message: '',
       prevMessages: [],
-      command: "",
-      allPlayersReady: false
+      command: '',
+      allPlayersReady: false,
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -39,14 +39,14 @@ class Play extends Component {
       const message = 'You said: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
-      this.setState({message: '', prevMessages});
+      this.setState({ message: '', prevMessages });
     }
   }
 
   onMessageChange = (event) => {
     const message = event.target.value;
     if (message.length <= 50) {
-      this.setState({message});
+      this.setState({ message });
     }
   }
 
@@ -55,17 +55,17 @@ class Play extends Component {
       const message = 'You wanted to: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
-      this.setState({command: '', prevMessages});
+      this.setState({ command: '', prevMessages });
     }
   }
 
   onCommandChange = (event) => {
     const command = event.target.value;
-    this.setState({command});
+    this.setState({ command });
   }
 
   readyUp = (event) => {
-    this.setState({allPlayersReady: !this.state.allPlayersReady});
+    this.setState({ allPlayersReady: !this.state.allPlayersReady });
   }
 
   render() {

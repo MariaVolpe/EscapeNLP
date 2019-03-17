@@ -8,12 +8,12 @@ class MultiButton extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      confirmInfo: {
-        title: 'Abandon Game?',
-        text: 'Do you really want to abandon your teammates?',
-        confirm: 'Abandon',
-        cancel: 'Cancel',
-      }
+    };
+    this.confirmInfo = {
+      title: 'Abandon Game?',
+      text: 'Do you really want to abandon your teammates?',
+      confirm: 'Abandon',
+      cancel: 'Cancel',
     };
 
     this.onToggle = this.onToggle.bind(this);
@@ -23,9 +23,7 @@ class MultiButton extends Component {
   onToggle = (event) => {
     //console.log('You abandoned your teammates!');
     //window.location.replace('/');
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   handleSubmit = (event) => {
@@ -46,7 +44,7 @@ class MultiButton extends Component {
                         isOpen={this.state.isOpen}
                         onToggle={this.onToggle}
                         handleSubmit={this.handleSubmit}
-                        confirmInfo={this.state.confirmInfo}
+                        confirmInfo={this.confirmInfo}
                       />
                       <Button
                         onClick={this.onToggle}
