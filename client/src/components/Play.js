@@ -13,56 +13,64 @@ class Play extends Component {
     super(props);
     this.state = {
       playerInfo: {
-        name: "Nicky Cen",
+        name: 'Nicky Cen',
         inventory: {
-          key: "doorKey",
-          weapon: "sword"
+          key: 'doorKey',
+          weapon: 'sword'
         },
-        picture: "[pic]"
+        picture: '[pic]'
       },
       map: [],
-      message: "",
+      message: '',
       prevMessages: [],
+<<<<<<< HEAD
+      command: '',
+    };
+=======
       command: "",
       allPlayersReady: false
     }
+>>>>>>> 83d17f1171cc007d8501ff49014c5236329427f5
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
     this.onCommandKeyPress = this.onCommandKeyPress.bind(this);
     this.onCommandChange = this.onCommandChange.bind(this);
+<<<<<<< HEAD
+=======
     this.readyUp = this.readyUp.bind(this);
+>>>>>>> 83d17f1171cc007d8501ff49014c5236329427f5
   }
 
-  onMessageKeyPress = (event) => {
+  onMessageKeyPress = event => {
     if (event.key === 'Enter') {
-      const message = "You said: `" + event.target.value + "`";
+      const message = 'You said: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
-      this.setState({message: '', prevMessages});
+      this.setState({ message: '', prevMessages });
     }
-  }
+  };
 
-  onMessageChange = (event) => {
+  onMessageChange = event => {
     const message = event.target.value;
     if (message.length <= 50) {
-      this.setState({message});
+      this.setState({ message });
     }
   }
 
-  onCommandKeyPress = (event) => {
+  onCommandKeyPress = event => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
-      const message = "You wanted to: `" + event.target.value + "`";
+      const message = 'You wanted to: `' + event.target.value + '`';
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
-      this.setState({command: '', prevMessages});
+      this.setState({ command: '', prevMessages });
     }
-  }
+  };
 
-  onCommandChange = (event) => {
+  onCommandChange = event => {
     const command = event.target.value;
-    this.setState({command});
-  }
+    this.setState({ command });
+  };
 
   readyUp = (event) => {
     this.setState({allPlayersReady: !this.state.allPlayersReady});
@@ -71,18 +79,50 @@ class Play extends Component {
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     let players = [];
-    let evenOrOdd = "";
+    let evenOrOdd = '';
 
+<<<<<<< HEAD
+    for (let i = 0; i < 5; i++) {
+      if (i % 2 === 1) {
+        evenOrOdd = '2';
+      } else {
+        evenOrOdd = '';
+=======
     for (let i=0; i<5; i++) {
       if (i%2 === 1) {
         evenOrOdd = "2";
       }
       else {
         evenOrOdd = "";
+>>>>>>> 83d17f1171cc007d8501ff49014c5236329427f5
       }
-      players.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
+      players.push(
+        <PlayerInfo
+          playerInfo={this.state.playerInfo}
+          style={"player-box" + evenOrOdd}
+        />
+      );
     }
 
+<<<<<<< HEAD
+    return (
+      <div className="play-page">
+        <div className="player-info">
+          Player Info
+          {players}
+          <AbandonButton />
+        </div>
+        <div className="game-info">
+          map view
+          <GameInfo map={map} />
+          <Commands
+            command={this.state.command}
+            onKeyPress={this.onCommandKeyPress}
+            onChange={this.onCommandChange}
+          />
+        </div>
+        <div className="text-info">
+=======
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
@@ -121,11 +161,17 @@ class Play extends Component {
         {playerInfo}
         {gameInfo}
         <div className='text-info'>
+>>>>>>> 83d17f1171cc007d8501ff49014c5236329427f5
           text and stuff
-          <TextInfo message={this.state.message} prevMessages={this.state.prevMessages} onKeyPress={this.onMessageKeyPress} onChange={this.onMessageChange}/>
+          <TextInfo
+            message={this.state.message}
+            prevMessages={this.state.prevMessages}
+            onKeyPress={this.onMessageKeyPress}
+            onChange={this.onMessageChange}
+          />
         </div>
       </div>
-    )
+    );
   }
 }
 

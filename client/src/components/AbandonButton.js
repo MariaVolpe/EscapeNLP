@@ -7,7 +7,7 @@ class AbandonButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
 
     this.onToggle = this.onToggle.bind(this);
@@ -15,11 +15,7 @@ class AbandonButton extends Component {
   }
 
   onToggle = (event) => {
-    //console.log('You abandoned your teammates!');
-    //window.location.replace('/');
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   handleSubmit = (event) => {
@@ -31,7 +27,11 @@ class AbandonButton extends Component {
   render() {
     return(
       <div>
-        <AbandonModal isOpen={this.state.isOpen} onToggle={this.onToggle} handleSubmit={this.handleSubmit}/>
+        <AbandonModal
+          isOpen={this.state.isOpen}
+          onToggle={this.onToggle}
+          handleSubmit={this.handleSubmit}
+        />
         <Button onClick={this.onToggle} className="abandon-button">Abandon</Button>
       </div>
     )
