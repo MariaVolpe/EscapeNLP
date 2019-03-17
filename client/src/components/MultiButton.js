@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import ConfirmModal from './ConfirmModal.js';
+import ConfirmModal from './ConfirmModal';
 import '../styles/MultiButton.css';
 
 class MultiButton extends Component {
