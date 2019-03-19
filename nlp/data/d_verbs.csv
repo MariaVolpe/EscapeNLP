@@ -1,0 +1,27 @@
+move,look,take,give,destroy,attack,throw,jump
+move,look,take,give,destroy,attack,throw,jump
+walk,investigate,grab,pass,break,shoot,toss,leap
+run,inspect,hold,reach,smash,stab,switch,hop
+go to,look at,obtain,hand,evicerate,slash,flip,drop down
+bring,read,steal,turn over,tear apart,fire,shed,jump off
+visit,seem,use up,pass on,split apart,assault,cast off,bound
+travel,appear,occupy,consecrate,fracture,punch,cast,spring
+go,search,accept,dedicate,rupture,kick,shake off,startle
+locomote,,have,devote,ruin,drop kick,throw away,start
+displace,,claim,commit,destruct,aggress,throw off,chute
+,,exact,grant,put down,assail,drop,parachute
+,,admit,present,demolish,set on,thrust,
+,,take on,gift,,,,
+,,remove,sacrifice,,,,
+,,take away,yield,,,,
+,,withdraw,afford,,,,
+,,assume,impart,,,,
+,,adopt,leave,,,,
+,,acquire,throw,,,,
+,,,contribute,,,,
+,,,chip in,,,,
+,,,kick in,,,,
+,,,pay,,,,
+,,,apply,,,,
+,,,open,,,,
+,,,render,,,,

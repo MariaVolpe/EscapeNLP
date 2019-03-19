@@ -1,6 +1,6 @@
 {
     "env": {
-        "browser": true,
+        "node": true,
         "es6": true
     },
     "extends": "eslint:recommended",
@@ -63,16 +63,16 @@
             "unix"
         ],
         "no-console": [
-            "warn"
+            "off"
         ],
         "no-trailing-spaces": [
-            "error"
+            "warn"
         ],
         "no-undef": [
             "error"
         ],
         "no-unused-vars": [
-            "error"
+            "warn"
         ],
         "object-curly-spacing": [
             "error",

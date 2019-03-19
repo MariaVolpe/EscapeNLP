@@ -1,0 +1,152 @@
+[
+    {
+        "text": "move",
+        "pos": "verb",
+        "types": [
+            "motion"
+        ],
+        "synonyms": [
+            "walk",
+            "run",
+            "go to",
+            "bring",
+            "visit"
+        ],
+        "ignore": [
+
+        ]
+    },
+    {
+        "text": "look",
+        "pos": "verb",
+        "types": [
+            "perception"
+        ],
+        "synonyms": [
+            "investigate",
+            "inspect",
+            "look at",
+            "read"
+        ],
+        "ignore": [
+            "appear"
+        ]
+    },
+    {
+        "text": "take",
+        "pos": "verb",
+        "types": [
+            "possession",
+            "consume",
+            "change",
+            "communication"
+        ],
+        "synonyms": [
+            "grab",
+            "hold",
+            "obtain",
+            "steal"
+        ],
+        "ignore": [
+            "use up",
+            "occupy",
+            "take on",
+            "lease",
+            "hire",
+            "rent",
+            "charter",
+            "film",
+            "shoot",
+            "subscribe",
+            "subscribe to"
+        ]
+    },
+    {
+        "text": "give",
+        "pos": "verb",
+        "types": [
+            "communication",
+            "possession"
+        ],
+        "synonyms": [
+            "pass"
+        ],
+        "ignore": [
+
+        ]
+    },
+    {
+        "text": "destroy",
+        "pos": "verb",
+        "types": [
+            "contact",
+            "creation",
+            "competition"
+        ],
+        "synonyms": [
+            "break",
+            "smash",
+            "evicerate",
+            "tear apart",
+            "split apart",
+            "fracture",
+            "rupture"
+        ],
+        "ignore": [
+
+        ]
+    },
+    {
+        "text": "attack",
+        "pos": "verb",
+        "types": [
+            "competition"
+        ],
+        "synonyms": [
+            "shoot",
+            "stab",
+            "slash",
+            "fire",
+            "assault",
+            "punch",
+            "kick",
+            "drop kick"
+        ],
+        "ignore": [
+
+        ]
+    },
+    {
+        "text": "throw",
+        "pos": "verb",
+        "types": [
+            "motion",
+            "contact"
+        ],
+        "synonyms": [
+            "toss"
+        ],
+        "ignore": [
+            "switch",
+            "flip"
+        ]
+    },
+    {
+        "text": "jump",
+        "pos": "verb",
+        "types": [
+            "motion",
+            "contact"
+        ],
+        "synonyms": [
+            "leap",
+            "hop",
+            "drop down"
+        ],
+        "ignore": [
+            "jumpstart",
+            "jump-start",
+            "derail"
+        ]
+    }
+]
