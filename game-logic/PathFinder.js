@@ -4,11 +4,14 @@ let Point = require('./Point');
  * PathFinder:
     1) given a direction finds a suitable path to move along said direction
     2) given a destination finds a suitable path to reach said destination
+
+    Note that this class doesn't do any translation of coordinates from
+    player perspective to matrix indices.
  */
 
 class PathFinder {
-  constructor(grid) {
-    this.grid = grid; // PathFinder needs a reference to grid object to see obstacles
+  constructor(matrix) {
+    this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
   }
 
   // TODO: PathFinding Algorithms Go Here
@@ -17,37 +20,68 @@ class PathFinder {
     path = [];
     return path;
   }
-  // Returns an array of contiguous points illustrating a path | BFS
-  getPathByDestination(start, destination) {
-    path = [];
-    destinationPoint = { x: 0, y: 0, p: start };
-    queue = [start];
-    visited = new Set([]);
 
-    while (queue.size > 0) {
-      p = queue.shift(); // like pop in a queue
-      if (p.x < 0 || p.y < 0 || p.y >= grid.size || p.x >= grid[p.y].size)
-        continue;
-      if (visited.has(p)) // will this compare by reference or value though?
-        continue;
-      if (grid[destination].x == p.x && grid[destination].y == p.y) {
-        destinationPoint = { x: p.x, y: p.y, p: p };
+  // Returns an array with directions on how to reach the destination
+  // from the starting coordinate. Returns an empty array if no path exists.
+  getPathByDestination(start, destination) {
+    let queue = [start];
+    let visited = new Set([]);
+    let pathList = [];
+    let pathExists = false;
+    let p;
+
+    while (queue.length > 0) {
+      p = queue.shift();
+      if (p.x == destination.x && p.y == destination.y) {
+        pathExists = true;
         break;
       }
 
-      // push in neighbors //
-      p.push({ x: p.x-1, y: p.y, path: p }); // left square
-      p.push({ x: p.x+1, y: p.y, path: p }); // right square
-      p.push({ x: p.x, y: p.y-1, path: p }); // bottom square
-      p.push({ x: p.x, y: p.y+1, path: p }); // top square
+      visited.add(this.stringifyCoordinates(p.x,p.y));
+      let neighbors = this.getNeighbors(p, visited, p);
+      queue.push(...neighbors);
     }
-    while (destinationPoint.path != start) { // track back to beginning
-      path.push(new Point(destinationPoint.x, destinationPoint.y));
-      destinationPoint = destinationPoint.path;
+
+    if (pathExists) {
+      while (p != start) {
+        pathList.push(new Point(p.x, p.y));
+        p = p.pathHistory;
+      }
+      pathList.reverse();
     }
-    path.reverse(); // reverse to get forward order
-    return path;
+    return pathList;
   }
+
+  getNeighbors(p, visited){
+    let neighbors = [];
+    if (!visited.has(this.stringifyCoordinates(p.x-1,p.y)) && this.isValidPoint({ x: p.x-1, y :p.y })) {
+      neighbors.push({ x: p.x-1, y: p.y , pathHistory: p});
+    }
+    if (!visited.has(this.stringifyCoordinates(p.x+1,p.y)) && this.isValidPoint({ x: p.x+1,y: p.y })) {
+      neighbors.push({ x: p.x+1, y: p.y  , pathHistory: p});
+    }
+    if (!visited.has(this.stringifyCoordinates(p.x,p.y-1)) && this.isValidPoint({ x: p.x, y: p.y-1 })) {
+      neighbors.push({ x: p.x, y: p.y-1  , pathHistory: p});
+    }
+    if (!visited.has(this.stringifyCoordinates(p.x,p.y+1)) && this.isValidPoint({ x: p.x, y: p.y+1 })) {
+      neighbors.push({ x: p.x, y: p.y+1  , pathHistory: p});
+    }
+    return neighbors;
+  }
+
+  isValidPoint({ x,y }) {
+    if (x < 0 || y < 0 || x >= this.matrix.length ||  y >= this.matrix[0].length){
+      return false;
+    }
+    else if ( this.matrix[x][y] == null || this.matrix[x][y].isPassable() ) {
+      return true;
+    }
+    return false;
+  }
+
+  stringifyCoordinates(x, y){
+    return `${x},${y}`;
+  }  
 }
 
 module.exports = PathFinder;
