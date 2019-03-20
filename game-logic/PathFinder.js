@@ -31,7 +31,7 @@ class PathFinder {
 
     while (queue.length > 0) {
       p = queue.shift();
-      if (p.x == destination.x && p.y == destination.y) {
+      if (p.x === destination.x && p.y === destination.y) {
         pathExists = true;
         break;
       }
@@ -56,7 +56,7 @@ class PathFinder {
     let validNeighbors = [];
     neighbors.forEach( (pt) => {
       if (!visited.has(this.stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
-        validNeighbors.push({ x: pt.x, y: pt.y , pathHistory: p })
+        validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
     });
     return validNeighbors;
@@ -74,7 +74,7 @@ class PathFinder {
 
   stringifyCoordinates(x, y) {
     return `${x},${y}`;
-  }  
+  }
 }
 
 module.exports = PathFinder;
