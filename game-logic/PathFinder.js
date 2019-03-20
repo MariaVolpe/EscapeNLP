@@ -51,10 +51,10 @@ class PathFinder {
     return pathList;
   }
 
-  getNeighbors(p, visited){
-    let neighbors = [{ x: p.x-1, y: p.y },{ x: p.x+1, y: p.y },{ x: p.x, y: p.y-1 },{ x: p.x, y: p.y+1 }];
+  getNeighbors(p, visited) {
+    let neighbors = [{ x: p.x-1, y: p.y }, { x: p.x+1, y: p.y }, { x: p.x, y: p.y-1 }, { x: p.x, y: p.y+1 }];
     let validNeighbors = [];
-    neighbors.forEach( (pt) => {
+    neighbors.forEach(pt => {
       if (!visited.has(this.stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
         validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
