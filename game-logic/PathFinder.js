@@ -38,7 +38,7 @@ class PathFinder {
       }
 
       visited.add(this.stringifyCoordinates(p.x,p.y));
-      let neighbors = this.getNeighbors(p, visited, p);
+      let neighbors = this.getNeighbors(p, visited);
       queue.push(...neighbors);
     }
 
@@ -55,22 +55,22 @@ class PathFinder {
   getNeighbors(p, visited){
     let neighbors = [];
     if (!visited.has(this.stringifyCoordinates(p.x-1,p.y)) && this.isValidPoint({ x: p.x-1, y :p.y })) {
-      neighbors.push({ x: p.x-1, y: p.y , pathHistory: p});
+      neighbors.push({ x: p.x-1, y: p.y , pathHistory: p });
     }
     if (!visited.has(this.stringifyCoordinates(p.x+1,p.y)) && this.isValidPoint({ x: p.x+1,y: p.y })) {
-      neighbors.push({ x: p.x+1, y: p.y  , pathHistory: p});
+      neighbors.push({ x: p.x+1, y: p.y  , pathHistory: p });
     }
     if (!visited.has(this.stringifyCoordinates(p.x,p.y-1)) && this.isValidPoint({ x: p.x, y: p.y-1 })) {
-      neighbors.push({ x: p.x, y: p.y-1  , pathHistory: p});
+      neighbors.push({ x: p.x, y: p.y-1  , pathHistory: p });
     }
     if (!visited.has(this.stringifyCoordinates(p.x,p.y+1)) && this.isValidPoint({ x: p.x, y: p.y+1 })) {
-      neighbors.push({ x: p.x, y: p.y+1  , pathHistory: p});
+      neighbors.push({ x: p.x, y: p.y+1  , pathHistory: p });
     }
     return neighbors;
   }
 
   isValidPoint({ x,y }) {
-    if (x < 0 || y < 0 || x >= this.matrix.length ||  y >= this.matrix[0].length){
+    if (x < 0 || y < 0 || x >= this.matrix.length ||  y >= this.matrix[0].length) {
       return false;
     }
     else if ( this.matrix[x][y] == null || this.matrix[x][y].isPassable() ) {
