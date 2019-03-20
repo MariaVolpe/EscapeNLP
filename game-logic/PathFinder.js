@@ -14,14 +14,13 @@ class PathFinder {
     this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
   }
 
-  // TODO: PathFinding Algorithms Go Here
   // Returns an array of contiguous points illustrating a path
   getPathByDirection(start, direction) {
     path = [];
     return path;
   }
 
-  // Returns an array with directions on how to reach the destination
+  // Returns an array of Points, whih are directions on how to reach the destination
   // from the starting coordinate. Returns an empty array if no path exists.
   getPathByDestination(start, destination) {
     let queue = [start];
@@ -53,23 +52,17 @@ class PathFinder {
   }
 
   getNeighbors(p, visited){
-    let neighbors = [];
-    if (!visited.has(this.stringifyCoordinates(p.x-1,p.y)) && this.isValidPoint({ x: p.x-1, y :p.y })) {
-      neighbors.push({ x: p.x-1, y: p.y , pathHistory: p });
-    }
-    if (!visited.has(this.stringifyCoordinates(p.x+1,p.y)) && this.isValidPoint({ x: p.x+1,y: p.y })) {
-      neighbors.push({ x: p.x+1, y: p.y  , pathHistory: p });
-    }
-    if (!visited.has(this.stringifyCoordinates(p.x,p.y-1)) && this.isValidPoint({ x: p.x, y: p.y-1 })) {
-      neighbors.push({ x: p.x, y: p.y-1  , pathHistory: p });
-    }
-    if (!visited.has(this.stringifyCoordinates(p.x,p.y+1)) && this.isValidPoint({ x: p.x, y: p.y+1 })) {
-      neighbors.push({ x: p.x, y: p.y+1  , pathHistory: p });
-    }
-    return neighbors;
+    let neighbors = [{ x: p.x-1, y: p.y },{ x: p.x+1, y: p.y },{ x: p.x, y: p.y-1 },{ x: p.x, y: p.y+1 }];
+    let validNeighbors = [];
+    neighbors.forEach( (pt) => {
+      if (!visited.has(this.stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
+        validNeighbors.push({ x: pt.x, y: pt.y , pathHistory: p })
+      }
+    });
+    return validNeighbors;
   }
 
-  isValidPoint({ x,y }) {
+  isValidPoint({ x, y }) {
     if (x < 0 || y < 0 || x >= this.matrix.length ||  y >= this.matrix[0].length) {
       return false;
     }
