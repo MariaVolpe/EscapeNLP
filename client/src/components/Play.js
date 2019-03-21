@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton';
+import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
@@ -19,11 +20,14 @@ class Play extends Component {
         },
         picture: '[pic]',
       },
+      allPlayers: [],
       map: [],
       message: '',
       prevMessages: [],
       command: '',
       allPlayersReady: false,
+      setName: false,
+      playerName: ""
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -67,9 +71,27 @@ class Play extends Component {
     this.setState({ allPlayersReady: !this.state.allPlayersReady });
   }
 
-  render() {
-    const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
-    let players = [];
+  onNameSubmit = (event) => {
+    const playerName = this.state.playerName;
+    if (playerName.length > 0) {
+      let playerInfo = this.state.playerInfo;
+      playerInfo["name"] = playerName;
+      let allPlayers = this.state.allPlayers;
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
+      this.setState({allPlayers, playerInfo, setName: !this.state.setName});
+    }
+    event.preventDefault();
+  }
+
+  onNameChange = (event) => {
+    const playerName = event.target.value;
+    if (playerName.length > 0 && playerName.length < 25) {
+      this.setState({playerName});
+    }
+  }
+
+  componentDidMount = () => {
+    let allPlayers = [];
     let evenOrOdd = "";
 
     for (let i=0; i<5; i++) {
@@ -79,8 +101,15 @@ class Play extends Component {
       else {
         evenOrOdd = "";
       }
-      players.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
     }
+    this.setState({allPlayers});
+  }
+
+  render() {
+    const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
+    const allPlayers = this.state.allPlayers;
+    console.log(allPlayers);
 
     let gameInfo;
     let playerInfo;
@@ -92,7 +121,7 @@ class Play extends Component {
                   </div>;
       playerInfo = <div className='player-info'>
                       Player Info
-                      {players}
+                      {allPlayers}
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
@@ -103,7 +132,7 @@ class Play extends Component {
                   </div>;
       playerInfo = <div className='player-info'>
                     Player Info
-                    {players}
+                    {allPlayers}
                     <Row>
                       <Col>
                         <MultiButton type="leave-button"/>
@@ -115,10 +144,13 @@ class Play extends Component {
                   </div>;
     }
 
+    const setName = this.state.setName;
+
     return(
       <div className="play-page" >
         {playerInfo}
         {gameInfo}
+        <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>
         <div className='text-info'>
           text and stuff
           <TextInfo

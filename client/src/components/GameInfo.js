@@ -27,8 +27,6 @@ class GameInfo extends Component {
       }
     }
 
-    console.log(mapData);
-
     return(
       <div>
         <div>
