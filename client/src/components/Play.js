@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton';
 import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
+import PlayerList from './PlayerList';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
 import TextInfo from './TextInfo';
@@ -12,7 +13,7 @@ class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerInfo: {
+      playerOneInfo: {
         name: 'Nicky Cen',
         inventory: {
           key: 'doorKey',
@@ -20,7 +21,38 @@ class Play extends Component {
         },
         picture: '[pic]',
       },
-      allPlayers: [],
+      playerTwoInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerThreeInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerFourInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerFiveInfo: {
+        name: '',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
       map: [],
       message: '',
       prevMessages: [],
@@ -74,11 +106,11 @@ class Play extends Component {
   onNameSubmit = (event) => {
     const playerName = this.state.playerName;
     if (playerName.length > 0) {
-      let playerInfo = this.state.playerInfo;
-      playerInfo["name"] = playerName;
-      let allPlayers = this.state.allPlayers;
-      allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
-      this.setState({allPlayers, playerInfo, setName: !this.state.setName});
+      let playerFiveInfo = this.state.playerFiveInfo;
+      playerFiveInfo["name"] = playerName;
+      //let allPlayers = this.state.allPlayers;
+      //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
+      this.setState({playerFiveInfo, setName: !this.state.setName});
     }
     event.preventDefault();
   }
@@ -91,25 +123,34 @@ class Play extends Component {
   }
 
   componentDidMount = () => {
-    let allPlayers = [];
-    let evenOrOdd = "";
+    // let allPlayers = [];
+    // let evenOrOdd = "";
 
-    for (let i=0; i<5; i++) {
-      if (i%2 === 1) {
-        evenOrOdd = "2";
-      }
-      else {
-        evenOrOdd = "";
-      }
-      allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
-    }
-    this.setState({allPlayers});
+    // for (let i=0; i<5; i++) {
+    //   if (i%2 === 1) {
+    //     evenOrOdd = "2";
+    //   }
+    //   else {
+    //     evenOrOdd = "";
+    //   }
+    //   allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
+    // }allPlayers,
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
+    // this.setState({allPlayers});
   }
 
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
-    const allPlayers = this.state.allPlayers;
-    console.log(allPlayers);
+    const allPlayers = [];
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
 
     let gameInfo;
     let playerInfo;
@@ -143,8 +184,6 @@ class Play extends Component {
                     </Row>
                   </div>;
     }
-
-    const setName = this.state.setName;
 
     return(
       <div className="play-page" >
