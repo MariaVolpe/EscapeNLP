@@ -63,18 +63,18 @@ class PathFinder {
     const validNeighbors = [];
 
     neighbors.forEach((pt) => {
-      if (!visited.has(stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
+      if (!visited.has(stringifyCoordinates(pt.x, pt.y)) && this.isPassablePoint(pt)) {
         validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
     });
     return validNeighbors;
   }
 
-  isValidPoint({ x, y }) {
+  isPassablePoint({ x, y }) {
     if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
-    if (this.matrix[x][y] == null || this.matrix[x][y].isPassable()) {
+    if (this.matrix[x][y] === null || this.matrix[x][y].isPassable()) {
       return true;
     }
     return false;

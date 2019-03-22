@@ -38,7 +38,7 @@ class Grid {
     const p = new Point();
     for (let i = 0; i < this.matrix.length; i++) {
       for (let j = 0; j < this.matrix[i].length; j++) {
-        if (this.matrix[i][j] == null /* || EMPTY SLOT */) {
+        if (this.matrix[i][j] === null /* || EMPTY SLOT */) {
           p.x = i;
           p.y = j;
           return p;
