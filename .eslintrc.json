@@ -3,5 +3,10 @@
         "linebreak-style": "off",
         "no-plusplus": "off"
     },
+    "settings": {
+        "react": {
+            "version": "latest"
+        }
+    },
     "extends": "airbnb-base"
 }
