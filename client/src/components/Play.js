@@ -46,7 +46,7 @@ class Play extends Component {
         picture: '[pic]',
       },
       playerFiveInfo: {
-        name: '',
+        name: '__________',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -105,7 +105,7 @@ class Play extends Component {
 
   onNameSubmit = (event) => {
     const playerName = this.state.playerName;
-    if (playerName.length > 0) {
+    if (playerName.length > 2) {
       let playerFiveInfo = this.state.playerFiveInfo;
       playerFiveInfo["name"] = playerName;
       //let allPlayers = this.state.allPlayers;
