@@ -12,8 +12,8 @@ const Point = require('./Point');
 const stringifyCoordinates = (x, y) => `${x},${y}`;
 
 class PathFinder {
-  constructor(matrix) {
-    this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
+  constructor(grid) {
+    this.grid = grid; // PathFinder needs a reference to grid object to see obstacles
   }
 
   // Returns an array of contiguous points illustrating a path
