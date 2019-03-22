@@ -9,6 +9,8 @@ const Point = require('./Point');
     player perspective to matrix indices.
  */
 
+const stringifyCoordinates = (x, y) => `${x},${y}`;
+
 class PathFinder {
   constructor(matrix) {
     this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
@@ -36,13 +38,13 @@ class PathFinder {
         break;
       }
 
-      visited.add(this.stringifyCoordinates(p.x, p.y));
+      visited.add(stringifyCoordinates(p.x, p.y));
       const neighbors = this.getNeighbors(p, visited);
       queue.push(...neighbors);
     }
 
     if (pathExists) {
-      while (p != start) {
+      while (p !== start) {
         pathList.push(new Point(p.x, p.y));
         p = p.pathHistory;
       }
@@ -52,10 +54,15 @@ class PathFinder {
   }
 
   getNeighbors(p, visited) {
-    const neighbors = [{ x: p.x - 1, y: p.y }, { x: p.x + 1, y: p.y }, { x: p.x, y: p.y - 1 }, { x: p.x, y: p.y + 1 }];
+    const neighbors = [
+      { x: p.x - 1, y: p.y },
+      { x: p.x + 1, y: p.y },
+      { x: p.x, y: p.y - 1 },
+      { x: p.x, y: p.y + 1 },
+    ];
     const validNeighbors = [];
     neighbors.forEach((pt) => {
-      if (!visited.has(this.stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
+      if (!visited.has(stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
         validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
     });
@@ -70,10 +77,6 @@ class PathFinder {
       return true;
     }
     return false;
-  }
-
-  stringifyCoordinates(x, y) {
-    return `${x},${y}`;
   }
 }
 

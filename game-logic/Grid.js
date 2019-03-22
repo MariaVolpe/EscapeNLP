@@ -23,7 +23,8 @@ class Grid {
    */
   add(obj, { x, y } = {}) {
     let p;
-    if (x === undefined || y === undefined) { // Converts coordinates from player perspective to matrix indices
+    // Converts coordinates from player perspective to matrix indices
+    if (x === undefined || y === undefined) {
       p = this.findFreeSpace();
     } else { // Add an object to the first available space in the board.
       p = new Point(this.boardSize - 1 - y, x);
@@ -49,7 +50,7 @@ class Grid {
   // Given a destination object, call pathfinder to find a suitable path towards it
   moveToDestination(movingObj, destination) {
     const startPoint = this.positionMap[movingObj];
-    const path = this.pathfinder.getPathByDestination(destination);
+    const path = PathFinder.getPathByDestination(startPoint, destination);
     for (let i = 0; i < path.length; i++) {
       this.point = path[i]; // update current position
       // update grid | TODO: whenever that class gets written
@@ -59,7 +60,7 @@ class Grid {
   // given a direction, move towards it
   moveByDirection(movingObj, direction) {
     const startPoint = this.positionMap[movingObj];
-    path = this.pathfinder.getPathByDirection(direction);
+    const path = PathFinder.getPathByDirection(startPoint, direction);
   }
 
   // Returns Point representing indices of desired object within the grid.
