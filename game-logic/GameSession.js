@@ -1,6 +1,6 @@
-let PuzzleManager = require('./PuzzleManager');
-let Agent = require('./Agent');
-let Grid = require('./Grid');
+const PuzzleManager = require('./PuzzleManager');
+const Agent = require('./Agent');
+const Grid = require('./Grid');
 
 class GameSession {
   constructor() {
@@ -16,6 +16,7 @@ class GameSession {
   dropPlayerFromGameSession() {
     // todo: slice
   }
+
   // right now, it makes sense to generate the game AFTER all players have joined
   // to make sure the game is calibrated for the right number of players
   // however if the performance on this is poor, we can optimize by adding puzzles
