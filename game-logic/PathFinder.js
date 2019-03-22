@@ -1,4 +1,4 @@
-let Point = require('./Point');
+const Point = require('./Point');
 
 /*
  * PathFinder:
@@ -23,9 +23,9 @@ class PathFinder {
   // Returns an array of Points, whih are directions on how to reach the destination
   // from the starting coordinate. Returns an empty array if no path exists.
   getPathByDestination(start, destination) {
-    let queue = [start];
-    let visited = new Set([]);
-    let pathList = [];
+    const queue = [start];
+    const visited = new Set([]);
+    const pathList = [];
     let pathExists = false;
     let p;
 
@@ -36,8 +36,8 @@ class PathFinder {
         break;
       }
 
-      visited.add(this.stringifyCoordinates(p.x,p.y));
-      let neighbors = this.getNeighbors(p, visited);
+      visited.add(this.stringifyCoordinates(p.x, p.y));
+      const neighbors = this.getNeighbors(p, visited);
       queue.push(...neighbors);
     }
 
@@ -52,9 +52,9 @@ class PathFinder {
   }
 
   getNeighbors(p, visited) {
-    let neighbors = [{ x: p.x-1, y: p.y }, { x: p.x+1, y: p.y }, { x: p.x, y: p.y-1 }, { x: p.x, y: p.y+1 }];
-    let validNeighbors = [];
-    neighbors.forEach(pt => {
+    const neighbors = [{ x: p.x - 1, y: p.y }, { x: p.x + 1, y: p.y }, { x: p.x, y: p.y - 1 }, { x: p.x, y: p.y + 1 }];
+    const validNeighbors = [];
+    neighbors.forEach((pt) => {
       if (!visited.has(this.stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
         validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
@@ -63,10 +63,10 @@ class PathFinder {
   }
 
   isValidPoint({ x, y }) {
-    if (x < 0 || y < 0 || x >= this.matrix.length ||  y >= this.matrix[0].length) {
+    if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
-    else if ( this.matrix[x][y] == null || this.matrix[x][y].isPassable() ) {
+    if (this.matrix[x][y] == null || this.matrix[x][y].isPassable()) {
       return true;
     }
     return false;

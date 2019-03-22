@@ -1,4 +1,4 @@
-let BoardObject = require("./BoardObject.js");
+const BoardObject = require('./BoardObject.js');
 
 class Item extends BoardObject {
   // items are passable by default

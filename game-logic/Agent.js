@@ -1,4 +1,4 @@
-let Inventory = require('./Inventory');
+const Inventory = require('./Inventory');
 
 class Agent extends Object {
   constructor(name) {
