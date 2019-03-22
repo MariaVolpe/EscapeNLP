@@ -18,11 +18,11 @@ class PathFinder {
 
   // Returns an array of contiguous points illustrating a path
   getPathByDirection(start, direction) {
-    path = [];
+    const path = [];
     return path;
   }
 
-  // Returns an array of Points, whih are directions on how to reach the destination
+  // Returns an array of contiguous Points illustrating a path to reach the destination
   // from the starting coordinate. Returns an empty array if no path exists.
   getPathByDestination(start, destination) {
     const queue = [start];
@@ -61,6 +61,7 @@ class PathFinder {
       { x: p.x, y: p.y + 1 },
     ];
     const validNeighbors = [];
+
     neighbors.forEach((pt) => {
       if (!visited.has(stringifyCoordinates(pt.x, pt.y)) && this.isValidPoint(pt)) {
         validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
