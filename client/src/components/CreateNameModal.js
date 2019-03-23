@@ -13,7 +13,12 @@ class CreateNameModal extends Component {
           <ModalBody>
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup row>
-                <Input className="centered" value={this.props.value} onChange={this.props.onNameChange} placeholder="Type in a screenname"/>
+                <Input
+                  className="centered"
+                  value={this.props.value}
+                  onChange={this.props.onNameChange}
+                  placeholder="Type in a screenname"
+                />
               </FormGroup>
               <FormGroup row>
                 <Button
