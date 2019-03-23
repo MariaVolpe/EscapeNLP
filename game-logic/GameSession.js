@@ -4,7 +4,8 @@ const Grid = require('./Grid');
 
 class GameSession {
   constructor() {
-    this.puzzleManager = new PuzzleManager();
+    this.puzzleManager = null;
+    this.grid = null;
     this.agents = [];
   }
 
@@ -30,16 +31,23 @@ class GameSession {
   generateGame() {
     const size = 12;
     this.grid = new Grid(size);
-    // possible steps: todo: generate puzzles therefore map
+    this.puzzleManager = new PuzzleManager(this.grid, this.agents.length);
     // todo: generate player starting locations
-    const positions = [];
-    this.addAgentsToMap(positions);
+    this.addAgentsToMap();
   }
 
   // drop everyone onto map AFTER game starts, again unless performance is poor
   addAgentsToMap(positions) {
-    positions.forEach((position, index) => {
-      this.grid.add(this.agents[index], position);
+    if (positions) {
+      positions.forEach((position, index) => {
+        this.grid.add(this.agents[index], position);
+      });
+      return;
+    }
+
+    // simple demo logic: drop agents onto first available space
+    this.agents.forEach((agent) => {
+      this.grid.add(agent);
     });
   }
 }
