@@ -8,8 +8,8 @@ class GameSession {
     this.agents = [];
   }
 
-  addPlayerToGameSession(name) {
-    const agent = new Agent(name);
+  addPlayerToGameSession(id) {
+    const agent = new Agent(id);
     this.agents.push(agent);
   }
 
@@ -22,7 +22,7 @@ class GameSession {
   // however if the performance on this is poor, we can optimize by adding puzzles
   // as each player joins, and if players leave, attempt to regen some parts
   generateGame() {
-    const size = 5; // todo: figure out how to establish size
+    const size = 12;
     this.grid = new Grid(size);
     // possible steps: todo: generate puzzles therefore map
     // todo: generate player starting locations
