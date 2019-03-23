@@ -13,8 +13,14 @@ class GameSession {
     this.agents.push(agent);
   }
 
-  dropPlayerFromGameSession() {
-    // todo: slice
+  dropPlayerFromGameSession(id) {
+    const newAgents = [];
+    this.agents.forEach((agent) => {
+      if (agent.id !== id) {
+        newAgents.push(agent);
+      }
+    });
+    this.agents = newAgents;
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
