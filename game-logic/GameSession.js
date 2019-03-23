@@ -10,8 +10,7 @@ class GameSession {
   }
 
   addPlayerToGameSession(id) {
-    const agent = new Agent(id);
-    this.agents.push(agent);
+    this.agents.push(new Agent(id));
   }
 
   dropPlayerFromGameSession(id) {
