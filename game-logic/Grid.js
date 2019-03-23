@@ -5,7 +5,7 @@ import PathFinder from './PathFinder';
  * 1) encapsulates positions of agents, items, walls in the environment
  *
  * Variables:
- *  positionMap: used to match the name of an object to its position within the grid
+ *  positionMap: used to match the id of an object to its position within the grid
  *      using the position the object can be found
  */
 
@@ -45,6 +45,7 @@ class Grid {
         }
       }
     }
+    // todo: handle if board is full
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
