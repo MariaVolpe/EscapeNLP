@@ -27,10 +27,9 @@ class GameInfo extends Component {
       }
     }
 
-    console.log(mapData);
-
     return(
       <div>
+        <h3 class="ui dividing header">Map View</h3>
         <div>
           {mapData}
         </div>

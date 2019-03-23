@@ -1,37 +1,32 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Input, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
-class ConfirmModal extends Component {
+class CreateNameModal extends Component {
   render() {
     return (
       <div>
         <Modal isOpen={this.props.isOpen} onToggle={this.props.onToggle}>
           <ModalHeader onToggle={this.props.onToggle}>
-            {this.props.confirmInfo.title}
+            Create a Player Name
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup row>
-                <Label className="centered">
-                  {this.props.confirmInfo.text}
-                </Label>
+                <Input
+                  className="centered"
+                  value={this.props.value}
+                  onChange={this.props.onNameChange}
+                  placeholder="Type in a screenname"
+                />
               </FormGroup>
               <FormGroup row>
                 <Button
                   color="success"
                   data-dismiss="modal"
                   className="centered"
-                  onClick={this.props.onToggle}
                 >
-                  {this.props.confirmInfo.cancel}
-                </Button>
-                <Button
-                  color="danger"
-                  data-dismiss="modal"
-                  className="centered"
-                >
-                  {this.props.confirmInfo.confirm}
+                  Ok
                 </Button>
               </FormGroup>
             </Form>
@@ -42,4 +37,4 @@ class ConfirmModal extends Component {
   }
 }
 
-export default ConfirmModal;
+export default CreateNameModal;
