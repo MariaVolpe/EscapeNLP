@@ -3,7 +3,6 @@ import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton';
 import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
-import PlayerList from './PlayerList';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
 import TextInfo from './TextInfo';
@@ -156,23 +155,21 @@ class Play extends Component {
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info'>
-                    map view
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                     <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} />
                   </div>;
       playerInfo = <div className='player-info'>
-                      Player Info
+                      <h3 class="ui dividing header">Players</h3>
                       {allPlayers}
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
       gameInfo = <div className='game-info'>
-                    map view
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info'>
-                    Player Info
+                    <h3 class="ui dividing header">Players</h3>
                     {allPlayers}
                     <Row>
                       <Col>
@@ -191,7 +188,6 @@ class Play extends Component {
         {gameInfo}
         <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>
         <div className='text-info'>
-          text and stuff
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}

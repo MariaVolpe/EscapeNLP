@@ -9,13 +9,16 @@ class TextInfo extends Component {
     let length = prevMessages.length;
 
     let showMessages = prevMessages.map((message, i) =>
-      <div className="text-list content" key={i}>
-        <a className="text">{prevMessages[i]}</a>
+      <div className="text-box" >
+        <div className="text-list content" key={i}>
+          <a className="text">{prevMessages[i]}</a>
+        </div>
       </div>
     );
 
     return(
       <div className="text-container ui comments">
+        <h3 class="ui dividing header">Chat Box</h3>
         <div className="text-box comment">{showMessages}</div>
         <div>
           <Input

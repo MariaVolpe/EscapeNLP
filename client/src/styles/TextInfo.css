@@ -1,6 +1,6 @@
 .talk-input {
   position: fixed;
-  bottom: 10%;
+  bottom: 9vh;
 }
 
 .text-container {
@@ -9,7 +9,9 @@
 }
 
 .text-box {
-  border: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
   margin-top: auto;
   width: 100%;
   max-height: 84vh;
@@ -18,11 +20,15 @@
 
 .text-list {
   color: black;
-  border: 1px solid black;
-  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  margin: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
+  line-height: 10px;
 }
 
-.text-message {
-  
+.between-text {
+  border-bottom: 1px solid black;
 }
