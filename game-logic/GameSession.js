@@ -40,7 +40,6 @@ class GameSession {
   addAgentsToMap(positions) {
     positions.forEach((position, index) => {
       this.grid.add(this.agents[index], position);
-      // drop onto map at position
     });
   }
 }

@@ -29,7 +29,7 @@ class Grid {
     } else { // Add an object to the first available space in the board.
       p = new Point(this.boardSize - 1 - y, x);
     }
-    this.positionMap[obj.name] = p;
+    this.positionMap[obj.id] = p;
     this.matrix[p.x][p.y] = obj;
   }
 
@@ -64,8 +64,8 @@ class Grid {
   }
 
   // Returns Point representing indices of desired object within the grid.
-  getPosition(objName) {
-    return this.positionMap[objName];
+  getPosition(objId) {
+    return this.positionMap[objId];
   }
 }
 
