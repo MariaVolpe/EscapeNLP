@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './Home';
 import Play from './Play';
 import Browser from './Browser';
+import HowTo from './HowTo'
 import '../styles/App.css';
 
 class App extends Component {
@@ -26,6 +27,12 @@ class App extends Component {
             <Route path ="/browser" exact render = {
               () => {
                 return (<Browser />);
+              }
+            }/>
+
+            <Route path="/howto" exact render = {
+              () => {
+                return (<HowTo />);
               }
             }/>
           </div>

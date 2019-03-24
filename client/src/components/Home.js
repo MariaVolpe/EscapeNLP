@@ -36,7 +36,7 @@ class Home extends Component {
 
   onHowToClick = (event) => {
     console.log('How To');
-    window.location.replace('/HowTo');
+    window.location.replace('/howto');
   }
 
   handleCreateSubmit = (event) => {
