@@ -9,7 +9,7 @@ const parseAction = (req, res, next) => {
   next();
 };
 
-const fail = (req, res) => {
+const checkForFailure = (req, res) => {
   if (!res.headersSent) {
     res.sendStatus(500);
   }
@@ -28,8 +28,7 @@ router.post('/', (req, res) => {
 router.delete('/:gameId', (req, res) => {
   GameContainer.removeGame(req.params.gameId, (err) => {
     if (err) {
-      // todo
-      res.sendStatus(404);
+      res.sendStatus(err.status);
     }
   });
   res.sendStatus(204);
@@ -42,8 +41,7 @@ router.post('/:gameId/player', (req, res) => {
   // else for guests...:
   GameContainer.addPlayerToSession(req.params.gameId, playerId, (err, id) => {
     if (err) {
-      // todo
-      res.sendStatus(404);
+      res.sendStatus(err.status);
     }
     playerId = id;
   });
@@ -53,8 +51,7 @@ router.post('/:gameId/player', (req, res) => {
 router.delete('/:gameId/player/:playerId', (req, res) => {
   GameContainer.dropPlayerFromSession(req.params.gameId, req.params.playerId, (err) => {
     if (err) {
-      // todo
-      res.sendStatus(404);
+      res.sendStatus(err.status);
     }
   });
   res.sendStatus(204);
@@ -63,8 +60,7 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
 router.post('/:gameId/start', (req, res) => {
   GameContainer.startGame(req.params.gameId, (err) => {
     if (err) {
-      // todo
-      res.sendStatus(404);
+      res.sendStatus(err.status);
     }
   });
   res.sendStatus(204);

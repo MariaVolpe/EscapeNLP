@@ -19,8 +19,7 @@ class GameSessionsContainer {
 
   removeGame(id, callback) {
     if (!this.games.has(id)) {
-      // todo: do we need to do anything here?
-      return callback('requested gameId doesnt exist');
+      return callback({ status: 404 });
     }
     this.games.delete(id);
     return callback(null);
@@ -28,8 +27,7 @@ class GameSessionsContainer {
 
   startGame(id, callback) {
     if (!this.games.has(id)) {
-      // todo: do we need to do anything here?
-      return callback('requested gameId doesnt exist');
+      return callback({ status: 404 });
     }
     this.games.get(id).generateGame();
     return callback(null);
@@ -37,7 +35,7 @@ class GameSessionsContainer {
 
   addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
     if (!this.games.has(gameId)) {
-      return callback('requested gameId doesnt exist');
+      return callback({ status: 404 });
     }
     const playerId = loggedInPlayerId || this.playerIdCounter;
     this.games.get(gameId).addPlayerToGameSession(playerId);
@@ -47,7 +45,7 @@ class GameSessionsContainer {
 
   dropPlayerFromSession(gameId, playerId, callback) {
     if (!this.games.has(gameId)) {
-      return callback('requested gameId doesnt exist');
+      return callback({ status: 404 });
     }
     this.games.get(gameId).dropPlayerFromSession(playerId);
     return callback(null);
