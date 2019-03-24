@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import CreateLobbyModal from './CreateLobbyModal';
 import '../styles/Home.css';
 
 class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      createLobbyIsOpen: false
+    }
+
+    this.onPlayClick = this.onPlayClick.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
+    this.onCreateClick = this.onCreateClick.bind(this);
+    this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
+  }
 
   onPlayClick = (event) => {
     console.log('Play the game!');
@@ -15,7 +28,14 @@ class Home extends Component {
 
   onCreateClick = (event) => {
     console.log('Create a room');
+    this.setState({createLobbyIsOpen: !this.state.createLobbyIsOpen});
+    event.preventDefault();
+    //window.location.replace('/play');
+  }
+
+  handleCreateSubmit = (event) => {
     window.location.replace('/play');
+    event.preventDefault();
   }
 
   render() {
@@ -25,7 +45,7 @@ class Home extends Component {
           color="danger"
           className="play-button"
         >
-          Play Game
+          Find Game
         </Button>
         <div className="center-buttons">
           <Button
@@ -37,9 +57,10 @@ class Home extends Component {
           </Button>
           <a className="home-logo">EscapeNLP</a>
           <Button color="danger" className="signup-button">
-            Signup
+            How To
           </Button>
         </div>
+        <CreateLobbyModal isOpen={this.state.createLobbyIsOpen} onToggle={this.onCreateClick} handleSubmit={this.handleCreateSubmit}/>
         <Button onClick={this.onCreateClick}>Create Lobby</Button>
       </div>;
   }

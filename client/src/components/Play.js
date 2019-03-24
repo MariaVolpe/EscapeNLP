@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import MultiButton from './MultiButton';
+import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
@@ -11,8 +12,40 @@ class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerInfo: {
+      playerOneInfo: {
         name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerTwoInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerThreeInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerFourInfo: {
+        name: 'Nicky Cen',
+        inventory: {
+          key: 'doorKey',
+          weapon: 'sword',
+        },
+        picture: '[pic]',
+      },
+      playerFiveInfo: {
+        name: '__________',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -24,6 +57,8 @@ class Play extends Component {
       prevMessages: [],
       command: '',
       allPlayersReady: false,
+      setName: false,
+      playerName: ""
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -67,43 +102,75 @@ class Play extends Component {
     this.setState({ allPlayersReady: !this.state.allPlayersReady });
   }
 
+  onNameSubmit = (event) => {
+    const playerName = this.state.playerName;
+    if (playerName.length > 2) {
+      let playerFiveInfo = this.state.playerFiveInfo;
+      playerFiveInfo["name"] = playerName;
+      //let allPlayers = this.state.allPlayers;
+      //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
+      this.setState({playerFiveInfo, setName: !this.state.setName});
+    }
+    event.preventDefault();
+  }
+
+  onNameChange = (event) => {
+    const playerName = event.target.value;
+    if (playerName.length > 0 && playerName.length < 25) {
+      this.setState({playerName});
+    }
+  }
+
+  componentDidMount = () => {
+    // let allPlayers = [];
+    // let evenOrOdd = "";
+
+    // for (let i=0; i<5; i++) {
+    //   if (i%2 === 1) {
+    //     evenOrOdd = "2";
+    //   }
+    //   else {
+    //     evenOrOdd = "";
+    //   }
+    //   allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
+    // }allPlayers,
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
+    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
+    // this.setState({allPlayers});
+  }
+
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
-    let players = [];
-    let evenOrOdd = "";
-
-    for (let i=0; i<5; i++) {
-      if (i%2 === 1) {
-        evenOrOdd = "2";
-      }
-      else {
-        evenOrOdd = "";
-      }
-      players.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
-    }
+    const allPlayers = [];
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
 
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info'>
-                    map view
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                     <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} />
                   </div>;
       playerInfo = <div className='player-info'>
-                      Player Info
-                      {players}
+                      <h3 class="ui dividing header">Players</h3>
+                      {allPlayers}
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
       gameInfo = <div className='game-info'>
-                    map view
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info'>
-                    Player Info
-                    {players}
+                    <h3 class="ui dividing header">Players</h3>
+                    {allPlayers}
                     <Row>
                       <Col>
                         <MultiButton type="leave-button"/>
@@ -119,8 +186,8 @@ class Play extends Component {
       <div className="play-page" >
         {playerInfo}
         {gameInfo}
+        <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>
         <div className='text-info'>
-          text and stuff
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}

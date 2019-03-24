@@ -1,37 +1,44 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Input, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
-class ConfirmModal extends Component {
+class CreateLobbyModal extends Component {
   render() {
     return (
       <div>
         <Modal isOpen={this.props.isOpen} onToggle={this.props.onToggle}>
           <ModalHeader onToggle={this.props.onToggle}>
-            {this.props.confirmInfo.title}
+            Create a Lobby
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup row>
-                <Label className="centered">
-                  {this.props.confirmInfo.text}
-                </Label>
+                <div clasName="col-3" >
+                  Lobby Name:
+                </div>
+                <Input className="col-8 centered" />
               </FormGroup>
               <FormGroup row>
-                <Button
-                  color="success"
-                  data-dismiss="modal"
-                  className="centered"
-                  onClick={this.props.onToggle}
-                >
-                  {this.props.confirmInfo.cancel}
-                </Button>
+                <div clasName="col-3" >
+                  Password:
+                </div>
+                <Input className="col-8 centered" />
+              </FormGroup>
+              <FormGroup row>
                 <Button
                   color="danger"
                   data-dismiss="modal"
                   className="centered"
+                  onClick={this.props.onToggle}
                 >
-                  {this.props.confirmInfo.confirm}
+                  Cancel
+                </Button>
+                <Button
+                  color="success"
+                  data-dismiss="modal"
+                  className="centered"
+                >
+                  Create
                 </Button>
               </FormGroup>
             </Form>
@@ -42,4 +49,4 @@ class ConfirmModal extends Component {
   }
 }
 
-export default ConfirmModal;
+export default CreateLobbyModal;
