@@ -5,7 +5,7 @@ import PathFinder from './PathFinder';
  * 1) encapsulates positions of agents, items, walls in the environment
  *
  * Variables:
- *  positionMap: used to match the name of an object to its position within the grid
+ *  positionMap: used to match the id of an object to its position within the grid
  *      using the position the object can be found
  */
 
@@ -23,13 +23,13 @@ class Grid {
    */
   add(obj, { x, y } = {}) {
     let p;
-    // Converts coordinates from player perspective to matrix indices
     if (x === undefined || y === undefined) {
       p = this.findFreeSpace();
-    } else { // Add an object to the first available space in the board.
+    } else {
+      // Converts coordinates from player perspective to matrix indices
       p = new Point(this.boardSize - 1 - y, x);
     }
-    this.positionMap[obj.name] = p;
+    this.positionMap[obj.id] = p;
     this.matrix[p.x][p.y] = obj;
   }
 
@@ -45,6 +45,7 @@ class Grid {
         }
       }
     }
+    // todo: handle if board is full
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
@@ -64,8 +65,8 @@ class Grid {
   }
 
   // Returns Point representing indices of desired object within the grid.
-  getPosition(objName) {
-    return this.positionMap[objName];
+  getPosition(objId) {
+    return this.positionMap[objId];
   }
 }
 
