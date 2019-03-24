@@ -13,7 +13,7 @@ class GameSessionsContainer {
   // that it returns the id
   addGame() {
     const game = new GameSession(this.gameCount);
-    this.games.add(game);
+    this.games.set(this.gameCount, game);
     return this.gameCount++;
   }
 
