@@ -22,7 +22,7 @@ class GameSessionsContainer {
       return callback({ status: 404 });
     }
     this.games.delete(id);
-    return callback(null);
+    callback(null);
   }
 
   startGame(id, callback) {
@@ -30,7 +30,7 @@ class GameSessionsContainer {
       return callback({ status: 404 });
     }
     this.games.get(id).generateGame();
-    return callback(null);
+    callback(null);
   }
 
   addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
@@ -40,7 +40,7 @@ class GameSessionsContainer {
     const playerId = loggedInPlayerId || this.playerIdCounter;
     this.games.get(gameId).addPlayerToGameSession(playerId);
     this.playerIdCounter++;
-    return callback(null, playerId);
+    callback(null, playerId);
   }
 
   dropPlayerFromSession(gameId, playerId, callback) {
@@ -48,7 +48,7 @@ class GameSessionsContainer {
       return callback({ status: 404 });
     }
     this.games.get(gameId).dropPlayerFromSession(playerId);
-    return callback(null);
+    callback(null);
   }
 }
 
