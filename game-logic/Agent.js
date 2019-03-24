@@ -1,10 +1,10 @@
+const BoardObject = require('./BoardObject');
 const Inventory = require('./Inventory');
 
-class Agent extends Object {
+class Agent extends BoardObject {
   constructor(id) {
-    super(null, id);
+    super(null, id, false);
     this.inventory = new Inventory();
-    this.passable = false;
   }
 
   getItem(item) {
