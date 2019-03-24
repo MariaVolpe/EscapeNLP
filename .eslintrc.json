@@ -1,7 +1,8 @@
 {
     "rules": {
         "linebreak-style": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "consistent-return": "off"
     },
     "settings": {
         "react": {

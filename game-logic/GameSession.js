@@ -3,10 +3,11 @@ const Agent = require('./Agent');
 const Grid = require('./Grid');
 
 class GameSession {
-  constructor() {
+  constructor(id) {
     this.puzzleManager = null;
     this.grid = null;
     this.agents = [];
+    this.id = id;
   }
 
   addPlayerToGameSession(id) {

@@ -20,10 +20,11 @@
   },
   "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
   "dependencies": {
-    "nodemon": "*",
-    "express": "^4.16.4",
     "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
     "node-nlp": "^2.4.1",
+    "nodemon": "*",
     "synonyms": "*"
   },
   "devDependencies": {
