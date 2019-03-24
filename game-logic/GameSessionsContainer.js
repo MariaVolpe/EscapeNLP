@@ -8,10 +8,12 @@ class GameSessionsContainer {
     this.gameCount = 0;
   }
 
+  // rename b/c there's nothing about this that would indicate
+  // that it returns the id
   addGame() {
     const game = new GameSession(this.gameCount);
     this.games.add(game);
-    this.gameCount++;
+    return this.gameCount++;
   }
 
   removeGame(id) {
