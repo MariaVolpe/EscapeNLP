@@ -23,10 +23,10 @@ class Grid {
    */
   add(obj, { x, y } = {}) {
     let p;
-    // Converts coordinates from player perspective to matrix indices
     if (x === undefined || y === undefined) {
       p = this.findFreeSpace();
-    } else { // Add an object to the first available space in the board.
+    } else {
+      // Converts coordinates from player perspective to matrix indices
       p = new Point(this.boardSize - 1 - y, x);
     }
     this.positionMap[obj.id] = p;
