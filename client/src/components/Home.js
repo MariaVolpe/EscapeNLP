@@ -67,7 +67,6 @@ class Home extends Component {
             color="danger" 
             className="signup-button"
           >
-          <Button color="danger" className="signup-button">
             How To
           </Button>
         </div>
