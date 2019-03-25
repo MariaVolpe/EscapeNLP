@@ -38,7 +38,7 @@ class Home extends Component {
     console.log('How To');
     window.location.replace('/howto');
   }
-
+  
   handleCreateSubmit = (event) => {
     window.location.replace('/play');
     event.preventDefault();
@@ -67,6 +67,7 @@ class Home extends Component {
             color="danger" 
             className="signup-button"
           >
+          <Button color="danger" className="signup-button">
             How To
           </Button>
         </div>

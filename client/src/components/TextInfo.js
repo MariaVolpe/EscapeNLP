@@ -6,7 +6,6 @@ class TextInfo extends Component {
   render() {
 
     let prevMessages = this.props.prevMessages;
-    let length = prevMessages.length;
 
     let showMessages = prevMessages.map((message, i) =>
       <div className="text-box" >
