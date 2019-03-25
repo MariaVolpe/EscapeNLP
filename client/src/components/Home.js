@@ -14,6 +14,7 @@ class Home extends Component {
     this.onPlayClick = this.onPlayClick.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onCreateClick = this.onCreateClick.bind(this);
+    this.onHowToClick = this.onHowToClick.bind(this);
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
   }
 
@@ -33,6 +34,11 @@ class Home extends Component {
     //window.location.replace('/play');
   }
 
+  onHowToClick = (event) => {
+    console.log('How To');
+    window.location.replace('/howto');
+  }
+  
   handleCreateSubmit = (event) => {
     window.location.replace('/play');
     event.preventDefault();
@@ -56,6 +62,11 @@ class Home extends Component {
             Log-in
           </Button>
           <a className="home-logo">EscapeNLP</a>
+          <Button 
+            onClick={this.onHowToClick}
+            color="danger" 
+            className="signup-button"
+          >
           <Button color="danger" className="signup-button">
             How To
           </Button>
