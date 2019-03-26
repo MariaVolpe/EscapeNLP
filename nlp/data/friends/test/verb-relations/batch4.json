@@ -1,0 +1,28 @@
+{
+    "move": [
+        "being in a move"
+    ],
+    "look": [
+        "look at another guy i",
+        "look at you"
+    ],
+    "take": [
+        "grab the berry",
+        "take it",
+        "take the northern",
+        "hold it"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "tell the guy"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": [
+        "use the ladies"
+    ]
+}

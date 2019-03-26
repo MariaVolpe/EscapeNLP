@@ -1,0 +1,28 @@
+{
+    "move": [
+        "go of my hair my head",
+        "go down that road",
+        "take a leave",
+        "leave the dollar"
+    ],
+    "look": [
+        "look at you"
+    ],
+    "take": [
+        "grab a spoon",
+        "hold your hand",
+        "take my",
+        "remove you"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "say that you"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

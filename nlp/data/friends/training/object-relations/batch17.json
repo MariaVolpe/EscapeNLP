@@ -1,0 +1,28 @@
+{
+    "ambiance": [
+        "ruin the ambiance"
+    ],
+    "shower": [
+        "take the shower",
+        "take a shower"
+    ],
+    "word": [
+        "say a word"
+    ],
+    "back": [
+        "take these back"
+    ],
+    "news": [
+        "pass the news"
+    ],
+    "me": [
+        "grab me",
+        "take me"
+    ],
+    "undefined": [
+        "take a message"
+    ],
+    "marriage": [
+        "give the marriage"
+    ]
+}

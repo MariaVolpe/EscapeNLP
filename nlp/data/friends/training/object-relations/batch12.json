@@ -1,0 +1,25 @@
+{
+    "whoops": [
+        "take off...oh whoops"
+    ],
+    "me": [
+        "move on me"
+    ],
+    "her": [
+        "look at her"
+    ],
+    "there": [
+        "go out there",
+        "go down there"
+    ],
+    "you": [
+        "look at you",
+        "go down there you"
+    ],
+    "undefined": [
+        "take a break"
+    ],
+    "care": [
+        "take care"
+    ]
+}

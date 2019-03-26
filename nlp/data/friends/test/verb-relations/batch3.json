@@ -1,0 +1,27 @@
+{
+    "move": [],
+    "look": [
+        "look at that time's",
+        "look at them they're",
+        "look at it"
+    ],
+    "take": [
+        "take that bet",
+        "take a moment",
+        "take it"
+    ],
+    "give": [
+        "pass that information",
+        "give a check"
+    ],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "say that there"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

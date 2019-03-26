@@ -1,0 +1,30 @@
+{
+    "bowl": [
+        "move the bowl"
+    ],
+    "you": [
+        "take you",
+        "remove you"
+    ],
+    "detectors": [
+        "go unhook the smoke detectors"
+    ],
+    "undefined": [
+        "take a look"
+    ],
+    "there": [
+        "go down there"
+    ],
+    "care": [
+        "take care"
+    ],
+    "limb": [
+        "go out on a limb"
+    ],
+    "side": [
+        "take his side"
+    ],
+    "me": [
+        "look at me"
+    ]
+}

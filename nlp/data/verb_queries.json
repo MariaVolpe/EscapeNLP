@@ -8,12 +8,25 @@
         "synonyms": [
             "walk",
             "run",
+            "go",
             "go to",
-            "bring",
-            "visit"
+            "bring myself",
+            "visit",
+            "go towards",
+            "move towards",
+            "push",
+            "pull",
+            "take a trip",
+            "make a trip",
+            "leave",
+            "come to"
         ],
         "ignore": [
 
+        ],
+        "regex": [
+            "#Verb #Noun? #Preposition? #Determiner? #Noun+",
+            "#Verb #Noun? #Preposition? #Determiner #Noun+"
         ]
     },
     {
@@ -30,6 +43,9 @@
         ],
         "ignore": [
             "appear"
+        ],
+        "regex": [
+            "#Verb #Preposition #Determiner? #Noun+"
         ]
     },
     {
@@ -45,7 +61,8 @@
             "grab",
             "hold",
             "obtain",
-            "steal"
+            "steal",
+            "snatch"
         ],
         "ignore": [
             "use up",
@@ -58,7 +75,15 @@
             "film",
             "shoot",
             "subscribe",
-            "subscribe to"
+            "subscribe to",
+            "have",
+            "had",
+            "admit",
+            "assume"
+        ],
+        "regex": [
+            "#Verb #Determiner #Noun",
+            "#Verb #Noun+"
         ]
     },
     {
@@ -69,10 +94,17 @@
             "possession"
         ],
         "synonyms": [
-            "pass"
+            "pass",
+            "bring you",
+            "bring him",
+            "bring her"
         ],
         "ignore": [
-
+            "leave",
+            "open"
+        ],
+        "regex": [
+            "#Verb #Determiner #Noun"
         ]
     },
     {
@@ -93,7 +125,10 @@
             "rupture"
         ],
         "ignore": [
-
+            "put down"
+        ],
+        "regex": [
+            "#Verb #Determiner #Noun"
         ]
     },
     {
@@ -105,30 +140,43 @@
         "synonyms": [
             "shoot",
             "stab",
+            "stabbed",
             "slash",
             "fire",
             "assault",
             "punch",
             "kick",
-            "drop kick"
+            "drop kick",
+            "kill"
         ],
         "ignore": [
 
+        ],
+        "regex": [
+            "#Verb #Determiner #Noun"
         ]
     },
     {
-        "text": "throw",
+        "text": "place",
         "pos": "verb",
         "types": [
-            "motion",
+            "possession",
             "contact"
         ],
         "synonyms": [
-            "toss"
+            "toss",
+            "send",
+            "throw",
+            "put it down",
+            "drop"
         ],
         "ignore": [
             "switch",
-            "flip"
+            "flip",
+            "commit"
+        ],
+        "regex": [
+            "#Verb #Preposition #Determiner? #Noun+"
         ]
     },
     {
@@ -146,7 +194,91 @@
         "ignore": [
             "jumpstart",
             "jump-start",
-            "derail"
+            "derail",
+            "start",
+            "startle"
+        ],
+        "regex": [
+            "#Verb+ #Noun? #Preposition? #Determiner #Noun"
+        ]
+    },
+    {
+        "text": "speak",
+        "pos": "verb",
+        "types": [
+            "communication"
+        ],
+        "synonyms": [
+            "say",
+            "speak",
+            "communicate",
+            "utter",
+            "tell",
+            "told",
+            "yell",
+            "scream"
+        ],
+        "ignore": [
+
+        ],
+        "regex": [
+            "#Verb #Determiner #Noun"
+        ]
+    },
+    {
+        "text": "activate",
+        "pos": "verb",
+        "types": [
+            "change",
+            "creation"
+        ],
+        "synonyms": [
+            "turn on",
+            "open"
+        ],
+        "ignore": [
+            "aerate"
+        ],
+        "regex": [
+            "#Verb #Preposition? #Determiner #Noun"
+        ]
+    },
+    {
+        "text": "deactivate",
+        "pos": "verb",
+        "types": [
+            "change"
+        ],
+        "synonyms": [
+            "turn off",
+            "close",
+            "inactivate"
+        ],
+        "ignore": [
+
+        ],
+        "regex": [
+            "#Verb #Preposition? #Determiner #Noun"
+        ]
+    },
+    {
+        "text": "use",
+        "pos": "verb",
+        "types": [
+            "consumption",
+            "social"
+        ],
+        "synonyms": [
+            "utilize",
+            "expend",
+            "consume"
+        ],
+        "ignore": [
+            "practice"
+        ],
+        "regex": [
+            "#Gerund #Determiner? #Noun+",
+            "#Verb #Determiner #Noun"
         ]
     }
 ]
