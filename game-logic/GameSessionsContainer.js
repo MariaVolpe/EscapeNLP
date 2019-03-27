@@ -34,10 +34,6 @@ class GameSessionsContainer {
   }
 
   addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
-    console.log(this.games.has(gameId));
-    console.log()
-    console.log(gameId);
-    
     if (!this.games.has(gameId)) {
       return callback({ status: 404 });
     }
@@ -47,11 +43,11 @@ class GameSessionsContainer {
     callback(null, playerId);
   }
 
-  dropPlayerFromSession(gameId, playerId, callback) {
+  dropPlayerFromGameSession(gameId, playerId, callback) {
     if (!this.games.has(gameId)) {
       return callback({ status: 404 });
     }
-    this.games.get(gameId).dropPlayerFromSession(playerId);
+    this.games.get(gameId).dropPlayerFromGameSession(playerId);
     callback(null);
   }
 }
