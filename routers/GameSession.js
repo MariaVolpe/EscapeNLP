@@ -15,6 +15,10 @@ const checkForFailure = (req, res) => {
   }
 };
 
+router.get('/', (req, res) => {
+  res.json({ place: 'holder' });
+});
+
 router.get('/:gameId', (req, res) => {
   // todo: fetch game updates ?
   res.json({ place: 'holder' });

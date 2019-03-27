@@ -15,19 +15,13 @@ class GameSession {
   }
 
   dropPlayerFromGameSession(id, callback) {
-    const newAgents = [];
-    let err = { status: 404, source: 'playerId' };
-
-    this.agents.forEach((agent) => {
-      if (agent.id !== id) {
-        newAgents.push(agent);
-      } else {
-        err = null;
-      }
-    });
+    const newAgents = this.agents.filter(agent => agent.id !== id);
+    if (newAgents.length === this.agents.length) {
+      return callback({ status: 404, source: 'playerId' });
+    }
 
     this.agents = newAgents;
-    callback(err);
+    callback(null);
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
