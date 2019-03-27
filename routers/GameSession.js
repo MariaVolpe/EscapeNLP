@@ -28,10 +28,10 @@ router.post('/', (req, res) => {
 router.delete('/:gameId', (req, res) => {
   GameContainer.removeGame(req.params.gameId, (err) => {
     if (err) {
-      res.sendStatus(err.status);
+      return res.sendStatus(err.status);
     }
+    res.sendStatus(204);
   });
-  res.sendStatus(204);
 });
 
 router.post('/:gameId/player', (req, res) => {
@@ -39,31 +39,31 @@ router.post('/:gameId/player', (req, res) => {
   // todo: check if user is logged in
   // if so grab from database
   // else for guests...:
-  GameContainer.addPlayerToSession(req.params.gameId, playerId, (err, id) => {
+  GameContainer.addPlayerToGameSession(req.params.gameId, playerId, (err, id) => {
     if (err) {
-      res.sendStatus(err.status);
+      return res.sendStatus(err.status);
     }
     playerId = id;
+    res.json({ playerId });
   });
-  res.json({ playerId });
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
   GameContainer.dropPlayerFromSession(req.params.gameId, req.params.playerId, (err) => {
     if (err) {
-      res.sendStatus(err.status);
+      return res.sendStatus(err.status);
     }
+    res.sendStatus(204);
   });
-  res.sendStatus(204);
 });
 
 router.post('/:gameId/start', (req, res) => {
   GameContainer.startGame(req.params.gameId, (err) => {
     if (err) {
-      res.sendStatus(err.status);
+      return res.sendStatus(err.status);
     }
+    res.sendStatus(204);
   });
-  res.sendStatus(204);
 });
 
 router.post('/:gameId/action', parseAction, (req, res) => {

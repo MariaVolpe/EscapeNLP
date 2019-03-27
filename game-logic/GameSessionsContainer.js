@@ -12,9 +12,9 @@ class GameSessionsContainer {
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame() {
-    const game = new GameSession(this.gameCount);
-    this.games.set(this.gameCount, game);
-    return this.gameCount++;
+    const game = new GameSession(this.gameIdCounter);
+    this.games.set(this.gameIdCounter, game);
+    return this.gameIdCounter++;
   }
 
   removeGame(id, callback) {
@@ -34,6 +34,10 @@ class GameSessionsContainer {
   }
 
   addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
+    console.log(this.games.has(gameId));
+    console.log()
+    console.log(gameId);
+    
     if (!this.games.has(gameId)) {
       return callback({ status: 404 });
     }
