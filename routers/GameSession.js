@@ -22,7 +22,7 @@ router.get('/:gameId', (req, res) => {
 
 router.post('/', (req, res) => {
   const gameId = GameContainer.addGame();
-  res.json({ gameId });
+  res.status(201).json({ gameId });
 });
 
 router.delete('/:gameId', (req, res) => {
@@ -47,7 +47,7 @@ router.post('/:gameId/player', (req, res) => {
         return res.sendStatus(err.status);
       }
       playerId = id;
-      res.json({ playerId });
+      res.status(201).json({ playerId });
     },
   );
 });
