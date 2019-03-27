@@ -10,11 +10,11 @@ class GameSession {
     this.id = id;
   }
 
-  addPlayerToGameSession(id) {
+  addPlayerToSession(id) {
     this.agents.push(new Agent(id));
   }
 
-  dropPlayerFromGameSession(id, callback) {
+  dropPlayerFromSession(id, callback) {
     const newAgents = this.agents.filter(agent => agent.id !== id);
     if (newAgents.length === this.agents.length) {
       return callback({ status: 404, source: 'playerId' });

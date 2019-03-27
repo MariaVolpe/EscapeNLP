@@ -33,21 +33,21 @@ class GameSessionsContainer {
     callback(null);
   }
 
-  addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
+  addPlayerToSession(gameId, loggedInPlayerId, callback) {
     if (!this.games.has(gameId)) {
       return callback({ status: 404 });
     }
     const playerId = loggedInPlayerId || this.playerIdCounter;
-    this.games.get(gameId).addPlayerToGameSession(playerId);
+    this.games.get(gameId).addPlayerToSession(playerId);
     this.playerIdCounter++;
     callback(null, playerId);
   }
 
-  dropPlayerFromGameSession(gameId, playerId, callback) {
+  dropPlayerFromSession(gameId, playerId, callback) {
     if (!this.games.has(gameId)) {
       return callback({ status: 404, source: 'gameId' });
     }
-    this.games.get(gameId).dropPlayerFromGameSession(playerId, callback);
+    this.games.get(gameId).dropPlayerFromSession(playerId, callback);
     callback(null);
   }
 }

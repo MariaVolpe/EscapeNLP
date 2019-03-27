@@ -43,7 +43,7 @@ router.post('/:gameId/player', (req, res) => {
   // todo: check if user is logged in
   // if so grab from database
   // else for guests...:
-  GameContainer.addPlayerToGameSession(
+  GameContainer.addPlayerToSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
     (err, id) => {
@@ -57,7 +57,7 @@ router.post('/:gameId/player', (req, res) => {
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
-  GameContainer.dropPlayerFromGameSession(
+  GameContainer.dropPlayerFromSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
     (err) => {
