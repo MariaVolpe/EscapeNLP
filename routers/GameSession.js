@@ -58,7 +58,7 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
     parseInt(req.params.playerId, 10),
     (err) => {
       if (err) {
-        return res.sendStatus(err.status);
+        return res.status(err.status).json(err);
       }
       res.sendStatus(204);
     },

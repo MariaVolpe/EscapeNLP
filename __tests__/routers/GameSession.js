@@ -63,14 +63,14 @@ describe('Game Session Router', () => {
       const response = await request(app).delete('/game/5/player/1');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body).toEqual({});
+      expect(response.body.source).toEqual('gameId');
     });
 
     it('should return handle player not found', async () => {
       const response = await request(app).delete('/game/0/player/5');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body).toEqual({});
+      expect(response.body.source).toEqual('playerId');
     });
 
     it('should delete a player from a session', async () => {

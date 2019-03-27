@@ -45,9 +45,9 @@ class GameSessionsContainer {
 
   dropPlayerFromGameSession(gameId, playerId, callback) {
     if (!this.games.has(gameId)) {
-      return callback({ status: 404 });
+      return callback({ status: 404, source: 'gameId' });
     }
-    this.games.get(gameId).dropPlayerFromGameSession(playerId);
+    this.games.get(gameId).dropPlayerFromGameSession(playerId, callback);
     callback(null);
   }
 }
