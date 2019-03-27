@@ -13,9 +13,7 @@ class Browser extends Component {
     return (
       <div>
         <Navigation />
-        <div className="filter-group">
-          some filters, have to wait for backend
-        </div>
+
         <div className="middle">
           <div clasName="lobby-browser">
             <Lobby lobbyName="puzzle solvers" playerCount={4} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
@@ -31,9 +29,7 @@ class Browser extends Component {
             <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
           </div>
         </div>
-        <div className="right-side">
-          right side stuff
-        </div>
+
       </div>
     );
   }

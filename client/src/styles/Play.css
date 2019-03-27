@@ -5,17 +5,10 @@
 
 .game-info {
   float: left;
-  width: 50%;
+  width: 60%;
 }
 
 .text-info {
   float: left;
-  width: 30%;
-}
-
-.play-page {
-  //background-color: #282c34;
-  //display: flex;
-
-
+  width: 20%;
 }

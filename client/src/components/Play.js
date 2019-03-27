@@ -19,6 +19,7 @@ class Play extends Component {
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerTwoInfo: {
         name: 'Nicky Cen',
@@ -27,6 +28,7 @@ class Play extends Component {
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerThreeInfo: {
         name: 'Nicky Cen',
@@ -35,6 +37,7 @@ class Play extends Component {
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerFourInfo: {
         name: 'Nicky Cen',
@@ -43,14 +46,16 @@ class Play extends Component {
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerFiveInfo: {
-        name: '__________',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: false
       },
       map: [],
       message: '',
@@ -79,7 +84,7 @@ class Play extends Component {
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 50) {
+    if (message.length <= 34) {
       this.setState({ message });
     }
   }
@@ -99,7 +104,13 @@ class Play extends Component {
   }
 
   readyUp = (event) => {
-    this.setState({ allPlayersReady: !this.state.allPlayersReady });
+    let playerFiveInfo = this.state.playerFiveInfo;
+    playerFiveInfo.ready = true;
+    let playerOneInfo = this.state.playerOneInfo;
+    let playerTwoInfo = this.state.playerTwoInfo;
+    let playerThreeInfo = this.state.playerThreeInfo;
+    let playerFourInfo = this.state.playerFourInfo;
+    this.setState({ allPlayersReady: (playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready), playerFiveInfo});
   }
 
   onNameSubmit = (event) => {
@@ -121,46 +132,33 @@ class Play extends Component {
     }
   }
 
-  componentDidMount = () => {
-    // let allPlayers = [];
-    // let evenOrOdd = "";
-
-    // for (let i=0; i<5; i++) {
-    //   if (i%2 === 1) {
-    //     evenOrOdd = "2";
-    //   }
-    //   else {
-    //     evenOrOdd = "";
-    //   }
-    //   allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
-    // }allPlayers,
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
-    // this.setState({allPlayers});
-  }
-
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} className="row" />);
+    allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} className="row" />);
+    allPlayers.push(<div className="list"/>);
+    if (this.state.allPlayersReady) {
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
+    }
+    else {
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
+    }
 
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info'>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
-                    <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} />
+                    <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} className="command-box" />
                   </div>;
       playerInfo = <div className='player-info'>
-                      <h3 class="ui dividing header">Players</h3>
-                      {allPlayers}
+                      <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
@@ -169,8 +167,7 @@ class Play extends Component {
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info'>
-                    <h3 class="ui dividing header">Players</h3>
-                    {allPlayers}
+                    <div className="ui list">{allPlayers}</div>
                     <Row>
                       <Col>
                         <MultiButton type="leave-button"/>
@@ -184,6 +181,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
+        <h1 class="ui dividing header">EscapeNLP</h1>
         {playerInfo}
         {gameInfo}
         <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>

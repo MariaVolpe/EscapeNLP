@@ -15,7 +15,7 @@ class GameInfo extends Component {
       map.forEach((row) => {
         mapData[i] = row.map((element, i) =>
           <div className="map col-1" key={i}>
-            <a className="map-point">{i}</a>
+            <a>{i}</a>
           </div>
         );
         i++;
@@ -29,7 +29,6 @@ class GameInfo extends Component {
 
     return(
       <div>
-        <h3 class="ui dividing header">Map View</h3>
         <div>
           {mapData}
         </div>

@@ -12,6 +12,7 @@ class Commands extends Component {
           onChange={this.props.onChange}
           onKeyPress={this.props.onKeyPress}
           placeholder="Enter commands here"
+          className="command-box"
         />
       </div>
     )
