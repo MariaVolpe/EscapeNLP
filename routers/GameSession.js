@@ -2,7 +2,7 @@ const express = require('express');
 const GameSessionsContainer = require('../game-logic/GameSessionsContainer');
 
 const router = express.Router();
-const GameContainer = new GameSessionsContainer();
+const gameContainer = new GameSessionsContainer();
 
 const parseAction = (req, res, next) => {
   // NLP parse
@@ -15,8 +15,11 @@ const checkForFailure = (req, res) => {
   }
 };
 
+// to do: rename route? this only returns the bare minimum of session info
+// will not be consistent with what is returned from GET /game/:id
 router.get('/', (req, res) => {
-  res.json({ place: 'holder' });
+  const games = gameContainer.getAllSessions();
+  res.json(games);
 });
 
 router.get('/:gameId', (req, res) => {
@@ -25,12 +28,12 @@ router.get('/:gameId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const gameId = GameContainer.addGame();
+  const gameId = gameContainer.addGame();
   res.status(201).json({ gameId });
 });
 
 router.delete('/:gameId', (req, res) => {
-  const err = GameContainer.removeGame(parseInt(req.params.gameId, 10));
+  const err = gameContainer.removeGame(parseInt(req.params.gameId, 10));
   if (err) {
     return res.sendStatus(err.status);
   }
@@ -41,7 +44,7 @@ router.post('/:gameId/player', (req, res) => {
   // todo: check if user is logged in
   // if so grab from database
   // else for guests...:
-  const results = GameContainer.addPlayerToSession(
+  const results = gameContainer.addPlayerToSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
   );
@@ -53,7 +56,7 @@ router.post('/:gameId/player', (req, res) => {
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
-  const err = GameContainer.dropPlayerFromSession(
+  const err = gameContainer.dropPlayerFromSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
   );
@@ -64,7 +67,7 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
 });
 
 router.post('/:gameId/start', (req, res) => {
-  const err = GameContainer.startGame(parseInt(req.params.gameId, 10));
+  const err = gameContainer.startGame(parseInt(req.params.gameId, 10));
   if (err) {
     return res.sendStatus(err.status);
   }

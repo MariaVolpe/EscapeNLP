@@ -9,6 +9,14 @@ class GameSessionsContainer {
     this.playerIdCounter = 0;
   }
 
+  getAllSessions() {
+    const games = [];
+    this.games.forEach((game, gameId) => {
+      games.push({ gameId, playerCount: game.playerCount });
+    });
+    return games;
+  }
+
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame() {

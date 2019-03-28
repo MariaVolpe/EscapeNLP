@@ -58,6 +58,20 @@ describe('Game Session Router', () => {
     });
   });
 
+  describe('GET /game', () => {
+    it('should get all games in session and their player counts', async () => {
+      const response = await request(app).get('/game');
+
+      const expected = [{
+        gameId: 0,
+        playerCount: 2,
+      }];
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual(expected);
+    });
+  });
+
   describe('DELETE /game/:gameId/player/:playerId', () => {
     it('should return handle session not found', async () => {
       const response = await request(app).delete('/game/5/player/1');

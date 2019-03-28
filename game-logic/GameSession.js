@@ -49,6 +49,10 @@ class GameSession {
       this.grid.add(agent);
     });
   }
+
+  get playerCount() {
+    return this.agents.length;
+  }
 }
 
 module.exports = GameSession;
