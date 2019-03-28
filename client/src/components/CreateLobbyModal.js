@@ -13,13 +13,13 @@ class CreateLobbyModal extends Component {
           <ModalBody>
             <Form onSubmit={this.props.handleSubmit}>
               <FormGroup row>
-                <div clasName="col-3" >
+                <div clasName="col-3" style={{marginLeft: '5%',  marginRight: '0%'}}>
                   Lobby Name:
                 </div>
                 <Input className="col-8 centered" />
               </FormGroup>
               <FormGroup row>
-                <div clasName="col-3" >
+                <div clasName="col-3" style={{marginLeft: '5%',  marginRight: '3.5%'}}>
                   Password:
                 </div>
                 <Input className="col-8 centered" />
