@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav } from 'reactstrap';
 import '../styles/Browser.css';
 
 class Navigation extends Component {

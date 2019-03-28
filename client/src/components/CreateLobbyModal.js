@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Input, Form, FormGroup, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
 class CreateLobbyModal extends Component {

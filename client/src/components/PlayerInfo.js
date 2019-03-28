@@ -25,10 +25,12 @@ class PlayerInfo extends Component {
                    </div>
     }
 
+    // real icon will be decided later, this serves as a temp
+
     return(
       <div className="card">
         <div className="content">
-          <img className="left floated mini ui image" src="/"/>
+          <img className="left floated mini ui image" src="https://openclipart.org/download/247324/abstract-user-flat-1.svg" alt="user icon"/>
           <div className="right floated ui header">
             {this.props.playerInfo.name}
           </div>
