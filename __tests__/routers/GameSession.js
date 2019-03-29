@@ -31,7 +31,6 @@ describe('Game Session Router', () => {
 
       expect(response.statusCode).toBe(204);
       expect(response.body).toEqual({});
-      // check games exist
     });
   });
 
