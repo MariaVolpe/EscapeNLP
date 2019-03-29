@@ -59,7 +59,7 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: ['','','','','','','','','','','','','','','','','',''],
+      prevMessages: [],
       command: '',
       allPlayersReady: false,
       setName: false,
