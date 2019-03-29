@@ -59,7 +59,7 @@ describe('Game Session Router', () => {
   });
 
   describe('GET /game', () => {
-    it('should get all games in session and their player counts', async () => {
+    it('should return all games in session and their player counts', async () => {
       const response = await request(app).get('/game');
 
       const expected = [{
@@ -69,6 +69,25 @@ describe('Game Session Router', () => {
 
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual(expected);
+    });
+  });
+
+  describe('GET /game/:gameId', () => {
+    it('should handle not found', async () => {
+      const response = await request(app).get('/game/5');
+
+      expect(response.statusCode).toBe(404);
+      expect(response.body).toEqual({});
+    });
+
+    it('should return game', async () => {
+      const response = await request(app).get('/game/0');
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.game.id).toEqual(0);
+      expect(response.body.game.grid).toBeDefined();
+      expect(response.body.game.players).toBeInstanceOf(Array);
+      expect(response.body.game.players.length).toEqual(2);
     });
   });
 

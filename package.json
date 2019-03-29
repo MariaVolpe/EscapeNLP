@@ -2,12 +2,12 @@
   "name": "escapenlp-server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "lint": "eslint . --fix",
     "lint-nofix": "eslint .",
     "test": "Jest",
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

@@ -9,6 +9,13 @@ class GameSessionsContainer {
     this.playerIdCounter = 0;
   }
 
+  getGame(id) {
+    if (!this.games.has(id)) {
+      return { error: { status: 404 } };
+    }
+    return { game: this.games.get(id).getGame() };
+  }
+
   getAllSessions() {
     const games = [];
     this.games.forEach((game, gameId) => {

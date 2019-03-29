@@ -23,8 +23,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:gameId', (req, res) => {
-  // todo: fetch game updates ?
-  res.json({ place: 'holder' });
+  const results = gameContainer.getGame(parseInt(req.params.gameId, 10));
+  if (results.error) {
+    return res.sendStatus(results.error.status);
+  }
+  const { game } = results;
+  res.json({ game });
 });
 
 router.post('/', (req, res) => {
