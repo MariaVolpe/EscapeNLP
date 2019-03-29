@@ -5,7 +5,8 @@
 
 .text-container {
   margin: auto;
-
+  position: absolute;
+  bottom: -27vh;
 }
 
 .text-box {
@@ -16,7 +17,8 @@
   margin-top: auto;
   bottom: 18px;
   width: 100%;
-  max-height: 83.7vh;
+  max-height: 82vh;
+  min-height: 82vh;
   overflow: scroll;
 }
 

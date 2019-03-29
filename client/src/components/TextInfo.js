@@ -8,17 +8,19 @@ class TextInfo extends Component {
     let prevMessages = this.props.prevMessages;
 
     let showMessages = prevMessages.map((message, i) =>
-      <div className="text-box" >
-        <div className="text-list content" key={i}>
+      <div className="content" >
+        <div className="text" key={i}>
           {prevMessages[i]}
         </div>
       </div>
     );
 
     return(
-      <div className="text-container ui comments">
+      <div className="ui minimal comments">
         <h3 class="ui dividing header">Chat Box</h3>
-        <div className="text-box comment">{showMessages}</div>
+        <div className="text-box">
+          <div className="comment text-container">{showMessages}</div>
+        </div>
         <div>
           <Input
             value={this.props.message}
