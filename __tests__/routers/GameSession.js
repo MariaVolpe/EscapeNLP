@@ -23,7 +23,8 @@ describe('Game Session Router', () => {
       const response = await request(app).delete('/game/5');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body).toEqual({});
+      expect(response.body.error).toBeDefined();
+      expect(response.body.data).toBeNull();
     });
 
     it('should delete a game by ID', async () => {
@@ -39,7 +40,8 @@ describe('Game Session Router', () => {
       const response = await request(app).post('/game/5/player');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body).toEqual({});
+      expect(response.body.error).toBeDefined();
+      expect(response.body.data).toBeNull();
     });
 
     it('should add a new player to the session', async () => {
@@ -76,7 +78,8 @@ describe('Game Session Router', () => {
       const response = await request(app).get('/game/5');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body).toEqual({});
+      expect(response.body.error).toBeDefined();
+      expect(response.body.data).toBeNull();
     });
 
     it('should return game', async () => {
@@ -97,14 +100,16 @@ describe('Game Session Router', () => {
       const response = await request(app).delete('/game/5/player/1');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body.source).toEqual('gameId');
+      expect(response.body.error.source).toEqual('gameId');
+      expect(response.body.data).toBeNull();
     });
 
     it('should handle player not found', async () => {
       const response = await request(app).delete('/game/0/player/5');
 
       expect(response.statusCode).toBe(404);
-      expect(response.body.source).toEqual('playerId');
+      expect(response.body.error.source).toEqual('playerId');
+      expect(response.body.data).toBeNull();
     });
 
     it('should delete a player from a session', async () => {
@@ -112,7 +117,6 @@ describe('Game Session Router', () => {
 
       expect(response.statusCode).toBe(204);
       expect(response.body).toEqual({});
-      // check games exist
     });
   });
 });

@@ -20,28 +20,30 @@ const checkForFailure = (req, res) => {
 router.get('/', (req, res) => {
   const results = gameContainer.getAllSessions();
   const { data } = results;
-  res.json({ data });
+  res.json({ error: null, data });
 });
 
 router.get('/:gameId', (req, res) => {
   const results = gameContainer.getGame(parseInt(req.params.gameId, 10));
   if (results.error) {
-    return res.sendStatus(results.error.status);
+    const { error } = results;
+    return res.status(error.status).json({ error, data: null });
   }
   const { data } = results;
-  res.json({ data });
+  res.json({ error: null, data });
 });
 
 router.post('/', (req, res) => {
   const results = gameContainer.addGame();
   const { data } = results;
-  res.status(201).json({ data });
+  res.status(201).json({ error: null, data });
 });
 
 router.delete('/:gameId', (req, res) => {
   const results = gameContainer.removeGame(parseInt(req.params.gameId, 10));
   if (results.error) {
-    return res.sendStatus(results.error.status);
+    const { error } = results;
+    return res.status(error.status).json({ error, data: null });
   }
   res.sendStatus(204);
 });
@@ -55,10 +57,11 @@ router.post('/:gameId/player', (req, res) => {
     parseInt(req.params.playerId, 10),
   );
   if (results.error) {
-    return res.sendStatus(results.error.status);
+    const { error } = results;
+    return res.status(error.status).json({ error, data: null });
   }
   const { data } = results;
-  res.status(201).json({ data });
+  res.status(201).json({ error: null, data });
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
@@ -67,7 +70,8 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
     parseInt(req.params.playerId, 10),
   );
   if (results.error) {
-    return res.status(results.error.status).json(results.error);
+    const { error } = results;
+    return res.status(error.status).json({ error, data: null });
   }
   res.sendStatus(204);
 });
@@ -75,8 +79,8 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
 router.post('/:gameId/start', (req, res) => {
   const results = gameContainer.startGame(parseInt(req.params.gameId, 10));
   if (results.error) {
-    const err = results.error;
-    return res.status(err.status);
+    const { error } = results;
+    return res.status(error.status).json({ error, data: null });
   }
   res.sendStatus(204);
 });
