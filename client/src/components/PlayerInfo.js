@@ -37,7 +37,6 @@ class PlayerInfo extends Component {
 
         </div>
         <div className="floated">{readyCheck}</div>
-        <div className="ui divider"/>
         <div className="extra content">
             {items}
         </div>

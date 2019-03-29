@@ -9,11 +9,11 @@ class Navigation extends Component {
       <div>
         <Navbar color="dark">
           <Nav>
-
+            <i className="cog large icon" style={{color: 'white'}}></i>
           </Nav>
-          <NavbarBrand href='/'>EscapeNLP</NavbarBrand>
+          <NavbarBrand href='/' style={{color: 'white'}}>EscapeNLP</NavbarBrand>
           <Nav>
-
+            <i className="bars large icon" style={{color: 'white'}}></i>
           </Nav>
         </Navbar>
       </div>

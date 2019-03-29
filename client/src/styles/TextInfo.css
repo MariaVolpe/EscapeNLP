@@ -1,6 +1,5 @@
 .talk-input {
-  position: fixed;
-  bottom: 9vh;
+  margin-top: -7.5%;
 }
 
 .text-container {
@@ -12,21 +11,21 @@
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-top: 1px solid black;
+  border-bottom: 1px solid black;
   margin-top: auto;
+  bottom: 18px;
   width: 100%;
-  max-height: 84vh;
+  max-height: 846px;
   overflow: scroll;
 }
 
 .text-list {
   color: black;
-  border-left: 0px;
-  border-right: 0px;
   margin: 1px solid black;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 4%;
+  margin-bottom: 10% solid black;
   text-align: left;
-  line-height: 10px;
+  height: 2vh;
 }
 
 .between-text {
