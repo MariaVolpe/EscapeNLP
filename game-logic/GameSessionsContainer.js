@@ -18,8 +18,8 @@ class GameSessionsContainer {
 
   getAllSessions() {
     const games = [];
-    this.games.forEach((game, gameId) => {
-      games.push({ gameId, playerCount: game.playerCount });
+    this.games.forEach(({ playerCount }, gameId) => {
+      games.push({ gameId, playerCount });
     });
     return { data: games };
   }

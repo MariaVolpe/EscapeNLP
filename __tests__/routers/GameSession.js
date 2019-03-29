@@ -19,7 +19,7 @@ describe('Game Session Router', () => {
   });
 
   describe('DELETE /game', () => {
-    it('should return handle not found', async () => {
+    it('should handle not found', async () => {
       const response = await request(app).delete('/game/5');
 
       expect(response.statusCode).toBe(404);
@@ -36,7 +36,7 @@ describe('Game Session Router', () => {
   });
 
   describe('POST /game/:gameId/player', () => {
-    it('should return handle not found', async () => {
+    it('should handle not found', async () => {
       const response = await request(app).post('/game/5/player');
 
       expect(response.statusCode).toBe(404);
@@ -94,14 +94,14 @@ describe('Game Session Router', () => {
   });
 
   describe('DELETE /game/:gameId/player/:playerId', () => {
-    it('should return handle session not found', async () => {
+    it('should handle session not found', async () => {
       const response = await request(app).delete('/game/5/player/1');
 
       expect(response.statusCode).toBe(404);
       expect(response.body.source).toEqual('gameId');
     });
 
-    it('should return handle player not found', async () => {
+    it('should handle player not found', async () => {
       const response = await request(app).delete('/game/0/player/5');
 
       expect(response.statusCode).toBe(404);

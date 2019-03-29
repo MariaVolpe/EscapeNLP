@@ -12,8 +12,8 @@ class GameSession {
 
   getGame() {
     const players = [];
-    this.agents.forEach((player) => {
-      players.push({ inventory: player.inventory, id: player.id });
+    this.agents.forEach(({ inventory, id }) => {
+      players.push({ inventory, id });
     });
     return { id: this.id, grid: this.grid, players };
   }
