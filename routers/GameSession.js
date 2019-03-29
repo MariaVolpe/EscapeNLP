@@ -18,8 +18,9 @@ const checkForFailure = (req, res) => {
 // to do: rename route? this only returns the bare minimum of session info
 // will not be consistent with what is returned from GET /game/:id
 router.get('/', (req, res) => {
-  const games = gameContainer.getAllSessions();
-  res.json(games);
+  const results = gameContainer.getAllSessions();
+  const { data } = results;
+  res.json({ data });
 });
 
 router.get('/:gameId', (req, res) => {
@@ -27,19 +28,20 @@ router.get('/:gameId', (req, res) => {
   if (results.error) {
     return res.sendStatus(results.error.status);
   }
-  const { game } = results;
-  res.json({ game });
+  const { data } = results;
+  res.json({ data });
 });
 
 router.post('/', (req, res) => {
-  const gameId = gameContainer.addGame();
-  res.status(201).json({ gameId });
+  const results = gameContainer.addGame();
+  const { data } = results;
+  res.status(201).json({ data });
 });
 
 router.delete('/:gameId', (req, res) => {
-  const err = gameContainer.removeGame(parseInt(req.params.gameId, 10));
-  if (err) {
-    return res.sendStatus(err.status);
+  const results = gameContainer.removeGame(parseInt(req.params.gameId, 10));
+  if (results.error) {
+    return res.sendStatus(results.error.status);
   }
   res.sendStatus(204);
 });
@@ -55,25 +57,26 @@ router.post('/:gameId/player', (req, res) => {
   if (results.error) {
     return res.sendStatus(results.error.status);
   }
-  const { playerId } = results;
-  res.status(201).json({ playerId });
+  const { data } = results;
+  res.status(201).json({ data });
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
-  const err = gameContainer.dropPlayerFromSession(
+  const results = gameContainer.dropPlayerFromSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
   );
-  if (err) {
-    return res.status(err.status).json(err);
+  if (results.error) {
+    return res.status(results.error.status).json(results.error);
   }
   res.sendStatus(204);
 });
 
 router.post('/:gameId/start', (req, res) => {
-  const err = gameContainer.startGame(parseInt(req.params.gameId, 10));
-  if (err) {
-    return res.sendStatus(err.status);
+  const results = gameContainer.startGame(parseInt(req.params.gameId, 10));
+  if (results.error) {
+    const err = results.error;
+    return res.status(err.status);
   }
   res.sendStatus(204);
 });

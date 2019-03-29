@@ -13,7 +13,7 @@ class GameSessionsContainer {
     if (!this.games.has(id)) {
       return { error: { status: 404 } };
     }
-    return { game: this.games.get(id).getGame() };
+    return { data: this.games.get(id).getGame() };
   }
 
   getAllSessions() {
@@ -21,7 +21,7 @@ class GameSessionsContainer {
     this.games.forEach((game, gameId) => {
       games.push({ gameId, playerCount: game.playerCount });
     });
-    return games;
+    return { data: games };
   }
 
   // rename b/c there's nothing about this that would indicate
@@ -29,19 +29,20 @@ class GameSessionsContainer {
   addGame() {
     const game = new GameSession(this.gameIdCounter);
     this.games.set(this.gameIdCounter, game);
-    return this.gameIdCounter++;
+    return { data: { gameId: this.gameIdCounter++ } };
   }
 
   removeGame(id) {
     if (!this.games.has(id)) {
-      return { status: 404 };
+      return { error: { status: 404 } };
     }
     this.games.delete(id);
+    return { error: null };
   }
 
   startGame(id) {
     if (!this.games.has(id)) {
-      return { status: 404 };
+      return { error: { status: 404 } };
     }
     this.games.get(id).generateGame();
   }
@@ -53,12 +54,12 @@ class GameSessionsContainer {
     const playerId = loggedInPlayerId || this.playerIdCounter;
     this.games.get(gameId).addPlayerToSession(playerId);
     this.playerIdCounter++;
-    return { playerId };
+    return { data: { playerId } };
   }
 
   dropPlayerFromSession(gameId, playerId) {
     if (!this.games.has(gameId)) {
-      return { status: 404, source: 'gameId' };
+      return { error: { status: 404, source: 'gameId' } };
     }
     return this.games.get(gameId).dropPlayerFromSession(playerId);
   }

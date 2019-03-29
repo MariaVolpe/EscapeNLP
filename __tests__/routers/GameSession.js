@@ -7,14 +7,14 @@ describe('Game Session Router', () => {
       const response = await request(app).post('/game');
 
       expect(response.statusCode).toBe(201);
-      expect(response.body).toEqual({ gameId: 0 });
+      expect(response.body.data).toEqual({ gameId: 0 });
     });
 
     it('should create a second game and return game ID', async () => {
       const response = await request(app).post('/game');
 
       expect(response.statusCode).toBe(201);
-      expect(response.body).toEqual({ gameId: 1 });
+      expect(response.body.data).toEqual({ gameId: 1 });
     });
   });
 
@@ -47,14 +47,14 @@ describe('Game Session Router', () => {
       const response = await request(app).post('/game/0/player');
 
       expect(response.statusCode).toBe(201);
-      expect(response.body).toEqual({ playerId: 0 });
+      expect(response.body.data).toEqual({ playerId: 0 });
     });
 
     it('should add a second player to the session', async () => {
       const response = await request(app).post('/game/0/player');
 
       expect(response.statusCode).toBe(201);
-      expect(response.body).toEqual({ playerId: 1 });
+      expect(response.body.data).toEqual({ playerId: 1 });
     });
   });
 
@@ -68,7 +68,7 @@ describe('Game Session Router', () => {
       }];
 
       expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual(expected);
+      expect(response.body.data).toEqual(expected);
     });
   });
 
@@ -83,11 +83,13 @@ describe('Game Session Router', () => {
     it('should return game', async () => {
       const response = await request(app).get('/game/0');
 
+      const { data } = response.body;
+
       expect(response.statusCode).toBe(200);
-      expect(response.body.game.id).toEqual(0);
-      expect(response.body.game.grid).toBeDefined();
-      expect(response.body.game.players).toBeInstanceOf(Array);
-      expect(response.body.game.players.length).toEqual(2);
+      expect(data.id).toEqual(0);
+      expect(data.grid).toBeDefined();
+      expect(data.players).toBeInstanceOf(Array);
+      expect(data.players.length).toEqual(2);
     });
   });
 
