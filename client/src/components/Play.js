@@ -59,7 +59,7 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: [],
+      prevMessages: [["Nicky Cen", "11:42:27", "Let's solve a puzzle"]],
       command: '',
       allPlayersReady: false,
       setName: false,
@@ -74,9 +74,12 @@ class Play extends Component {
   }
 
   onMessageKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target.value.length > 0) {
+      let commenter = this.state.playerName;
       let date = new Date();
-      const message = ' (' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ') You said: `' + event.target.value + '`';
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      let mess = '"' + event.target.value + '"';
+      const message = [commenter, time, mess];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ message: '', prevMessages });
@@ -85,15 +88,18 @@ class Play extends Component {
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 25) {
+    if (message.length <= 43) {
       this.setState({ message });
     }
   }
 
   onCommandKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
+      let commenter = this.state.playerName;
       let date = new Date();
-      const message = '(' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ') You wanted to: `' + event.target.value + '`';
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      let mess = '"' + event.target.value + '"';
+      const message = [commenter, time, mess];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ command: '', prevMessages });
@@ -193,6 +199,7 @@ class Play extends Component {
             prevMessages={this.state.prevMessages}
             onKeyPress={this.onMessageKeyPress}
             onChange={this.onMessageChange}
+            currPlayer={this.state.playerName}
           />
         </div>
       </div>
