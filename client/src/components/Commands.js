@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import '../styles/Commands.css';
+import '../styles/TextInfo.css';
 
 class Commands extends Component {
 
   render() {
     return(
-      <div>
+      <div className="talk-input">
         <Input
           value={this.props.command}
           onChange={this.props.onChange}
           onKeyPress={this.props.onKeyPress}
           placeholder="Enter commands here"
-          className="command-box"
         />
       </div>
     )

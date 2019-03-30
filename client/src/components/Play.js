@@ -59,11 +59,12 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Cen", "11:42:27", "Let's solve a puzzle"]],
+      prevMessages: [["Nicky Cen", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
       command: '',
       allPlayersReady: false,
       setName: false,
-      playerName: ""
+      playerName: '',
+      chatOption: '0'
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -98,7 +99,7 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = '"' + event.target.value + '"';
+      let mess = 'You wanted to: "' + event.target.value + '"';
       const message = [commenter, time, mess];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
@@ -140,6 +141,11 @@ class Play extends Component {
     }
   }
 
+  onChatOptionChange = (event) => {
+    const chatOption = event.target.value;
+    this.setState({chatOption});
+  }
+
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
@@ -163,7 +169,7 @@ class Play extends Component {
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info'>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
-                    <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} className="command-box" />
+
                   </div>;
       playerInfo = <div className='player-info'>
                       <div className="ui list">{allPlayers}</div>
@@ -200,6 +206,11 @@ class Play extends Component {
             onKeyPress={this.onMessageKeyPress}
             onChange={this.onMessageChange}
             currPlayer={this.state.playerName}
+            chatOption={this.state.chatOption}
+            onChatOptionChange={this.onChatOptionChange}
+            command={this.state.command}
+            onCommandKeyPress={this.onCommandKeyPress}
+            onCommandChange={this.onCommandChange}
           />
         </div>
       </div>

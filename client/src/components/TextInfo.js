@@ -1,13 +1,43 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
+import Commands from './Commands';
 import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
+
+  componentDidMount = () => {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate = () => {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    let scrollElement = document.getElementsByClassName("text-box");
+    scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
+  }
+
   render() {
 
-    let prevMessages = this.props.prevMessages;
-    let currPlayer = this.props.currPlayer;
+    const prevMessages = this.props.prevMessages;
+    const currPlayer = this.props.currPlayer;
     let comments = [];
+    const chatOption = this.props.chatOption;
+    var chatBox;
+
+    if (chatOption === '0') {
+      chatBox = <div className="talk-input">
+                  <Input
+                      value={this.props.message}
+                      onChange={this.props.onChange}
+                      onKeyPress={this.props.onKeyPress}
+                      placeholder="Chat with group"
+                  />
+                </div>}
+    else {
+      chatBox = <Commands command={this.props.command} onKeyPress={this.props.onCommandKeyPress} onChange={this.props.onCommandChange} />
+    }
 
     prevMessages.forEach((message) => {
       if (message[0] === currPlayer) {
@@ -41,17 +71,15 @@ class TextInfo extends Component {
     return(
       <div className="ui minimal comments">
         <h3 class="ui dividing header">Chat Box</h3>
-        <div className="text-box">
-          <div className="comment text-container">{comments}</div>
+        <div className="text-box" >
+          <div className="comment text-container" >{comments}</div>
         </div>
         <div>
-          <Input
-            value={this.props.message}
-            onChange={this.props.onChange}
-            onKeyPress={this.props.onKeyPress}
-            placeholder="Chat with group"
-            className="talk-input"
-          />
+            <select class="dropdown chat-change" onChange={this.props.onChatOptionChange}>
+            <option class="menu item" value="0">Chat</option>
+            <option class="menu item" value="1">Action</option>
+            </select>
+            {chatBox}
         </div>
       </div>
     )

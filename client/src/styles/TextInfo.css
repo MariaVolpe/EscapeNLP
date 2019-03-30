@@ -1,12 +1,18 @@
 .talk-input {
-  top: 90vh;
-  position: fixed;
+  float: left;
+  width: 80%;
+}
+
+.chat-change {
+  float: left;
+  width: 20%;
+  height: 3.7vh;
 }
 
 .text-container {
   margin: auto;
   position: absolute;
-  bottom: -77vh;
+  bottom: -74.5vh;
 }
 
 .text-box {
@@ -17,8 +23,8 @@
   margin-top: auto;
   bottom: 18px;
   width: 100%;
-  max-height: 82vh;
-  min-height: 82vh;
+  max-height: 80.7vh;
+  min-height: 80.7vh;
   overflow: scroll;
 }
 
