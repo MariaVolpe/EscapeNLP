@@ -61,7 +61,7 @@ class Lobby extends Component {
               onToggle={this.onConfirmToggle}
               confirmInfo={this.confirmInfo}
             />
-            <Button onClick={this.onJoinClick}>Join</Button>
+            <Button onClick={this.onJoinClick} color="success">Join</Button>
           </Col>
         </Row>
         <Row>

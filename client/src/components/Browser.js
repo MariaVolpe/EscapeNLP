@@ -3,7 +3,7 @@ import Lobby from './Lobby';
 import Navigation from './Navigation';
 import CreateLobbyModal from './CreateLobbyModal';
 import { Button } from 'reactstrap';
-import '../styles/Browser.css';
+// import '../styles/Browser.css';
 
 class Browser extends Component {
   constructor(props){
@@ -34,26 +34,55 @@ class Browser extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{background: '#283942', height: 'auto'}}>
         <Navigation />
 
-        <div className="middle">
-          <div clasName="lobby-browser">
+        <h1 style={{textAlign: "center", marginTop: '3%', color: 'white'}}>Current Lobbies</h1>
+
+        <div className="ui grid" style={{marginTop: '3%', marginLeft: '3%', width: '100%'}}>
+          <div className="five wide column">
             <Lobby lobbyName="puzzle solvers" playerCount={4} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
             <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
           </div>
-          <CreateLobbyModal isOpen={this.state.createLobbyIsOpen} onToggle={this.onCreateClick} handleSubmit={this.handleCreateSubmit}/>
-          <Button onClick={this.onCreateClick}>Create Lobby</Button>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
+          <div className="five wide column">
+            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+          </div>
         </div>
+        <CreateLobbyModal isOpen={this.state.createLobbyIsOpen} onToggle={this.onCreateClick} handleSubmit={this.handleCreateSubmit}/>
+        <Button
+          onClick={this.onCreateClick}
+          color="success"
+          style={{marginTop: '3%'}}
+        >
+          <i class="plus icon"></i> Create Lobby 
+        </Button>
+        <br /><br /><br /><br /><br /><br />
       </div>
     );
   }

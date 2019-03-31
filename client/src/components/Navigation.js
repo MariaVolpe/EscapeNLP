@@ -7,14 +7,10 @@ class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="dark">
-          <Nav>
-            <i className="cog large icon" style={{color: 'white'}}></i>
-          </Nav>
+        <Navbar color="danger">
+          <Nav />
           <NavbarBrand href='/' style={{color: 'white'}}>EscapeNLP</NavbarBrand>
-          <Nav>
-            <i className="bars large icon" style={{color: 'white'}}></i>
-          </Nav>
+          <Nav />
         </Navbar>
       </div>
     );
