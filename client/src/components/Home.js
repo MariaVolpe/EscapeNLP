@@ -39,7 +39,7 @@ class Home extends Component {
               color="danger"
               className="button"
             >
-              How To
+              About
             </Button>
           </div>
         </div>
