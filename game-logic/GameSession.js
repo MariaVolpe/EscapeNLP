@@ -37,6 +37,8 @@ class GameSession {
   generateGame() {
     const size = 12;
     this.grid = new Grid(size);
+    this.grid.initializeBoard();
+
     // todo: generate player starting locations
     this.addAgentsToMap();
   }

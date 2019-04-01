@@ -18,6 +18,13 @@ class Grid {
     this.puzzleManager = new PuzzleManager();
   }
 
+  initializeBoard() {
+    const items = this.puzzleManager.getItemPlacement();
+    items.forEach(({ item, coordinates }) => {
+      this.add(item, coordinates);
+    });
+  }
+
   /*
    * Adds an object to the board. Coordinates are assumed to be
    * from the player's perspective, and are translated to the
