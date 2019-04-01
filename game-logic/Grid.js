@@ -1,3 +1,4 @@
+const PuzzleManager = require('./PuzzleManager');
 const Point = require('./Point');
 const PathFinder = require('./PathFinder');
 /*
@@ -14,6 +15,7 @@ class Grid {
     this.boardSize = size;
     this.positionMap = new Map(); // Keeps coordinates of object in board
     this.matrix = new Array(size).fill(null).map(() => new Array(size).fill(null));
+    this.puzzleManager = new PuzzleManager();
   }
 
   /*
