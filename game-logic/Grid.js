@@ -1,5 +1,5 @@
-import Point from './Point';
-import PathFinder from './PathFinder';
+const Point = require('./Point');
+const PathFinder = require('./PathFinder');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -70,4 +70,4 @@ class Grid {
   }
 }
 
-export default Grid;
+module.exports = Grid;

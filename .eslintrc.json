@@ -9,5 +9,8 @@
             "version": "latest"
         }
     },
+    "env": {
+        "jest": true
+    },
     "extends": "airbnb-base"
 }

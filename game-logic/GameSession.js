@@ -10,18 +10,26 @@ class GameSession {
     this.id = id;
   }
 
-  addPlayerToGameSession(id) {
+  getGame() {
+    const players = [];
+    this.agents.forEach(({ inventory, id }) => {
+      players.push({ inventory, id });
+    });
+    return { id: this.id, grid: this.grid, players };
+  }
+
+  addPlayerToSession(id) {
     this.agents.push(new Agent(id));
   }
 
-  dropPlayerFromGameSession(id) {
-    const newAgents = [];
-    this.agents.forEach((agent) => {
-      if (agent.id !== id) {
-        newAgents.push(agent);
-      }
-    });
+  dropPlayerFromSession(id) {
+    const newAgents = this.agents.filter(agent => agent.id !== id);
+    if (newAgents.length === this.agents.length) {
+      return { error: { status: 404, source: 'playerId' } };
+    }
+
     this.agents = newAgents;
+    return { error: null };
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
@@ -49,6 +57,10 @@ class GameSession {
     this.agents.forEach((agent) => {
       this.grid.add(agent);
     });
+  }
+
+  get playerCount() {
+    return this.agents.length;
   }
 }
 

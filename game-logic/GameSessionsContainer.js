@@ -9,46 +9,59 @@ class GameSessionsContainer {
     this.playerIdCounter = 0;
   }
 
+  getGame(id) {
+    if (!this.games.has(id)) {
+      return { error: { status: 404 } };
+    }
+    return { data: this.games.get(id).getGame() };
+  }
+
+  getAllSessions() {
+    const games = [];
+    this.games.forEach(({ playerCount }, gameId) => {
+      games.push({ gameId, playerCount });
+    });
+    return { data: games };
+  }
+
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame() {
-    const game = new GameSession(this.gameCount);
-    this.games.set(this.gameCount, game);
-    return this.gameCount++;
+    const game = new GameSession(this.gameIdCounter);
+    this.games.set(this.gameIdCounter, game);
+    return { data: { gameId: this.gameIdCounter++ } };
   }
 
-  removeGame(id, callback) {
+  removeGame(id) {
     if (!this.games.has(id)) {
-      return callback({ status: 404 });
+      return { error: { status: 404 } };
     }
     this.games.delete(id);
-    callback(null);
+    return { error: null };
   }
 
-  startGame(id, callback) {
+  startGame(id) {
     if (!this.games.has(id)) {
-      return callback({ status: 404 });
+      return { error: { status: 404 } };
     }
     this.games.get(id).generateGame();
-    callback(null);
   }
 
-  addPlayerToGameSession(gameId, loggedInPlayerId, callback) {
+  addPlayerToSession(gameId, loggedInPlayerId) {
     if (!this.games.has(gameId)) {
-      return callback({ status: 404 });
+      return { error: { status: 404 } };
     }
     const playerId = loggedInPlayerId || this.playerIdCounter;
-    this.games.get(gameId).addPlayerToGameSession(playerId);
+    this.games.get(gameId).addPlayerToSession(playerId);
     this.playerIdCounter++;
-    callback(null, playerId);
+    return { data: { playerId } };
   }
 
-  dropPlayerFromSession(gameId, playerId, callback) {
+  dropPlayerFromSession(gameId, playerId) {
     if (!this.games.has(gameId)) {
-      return callback({ status: 404 });
+      return { error: { status: 404, source: 'gameId' } };
     }
-    this.games.get(gameId).dropPlayerFromSession(playerId);
-    callback(null);
+    return this.games.get(gameId).dropPlayerFromSession(playerId);
   }
 }
 
