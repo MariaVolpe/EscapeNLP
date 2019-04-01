@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './Home';
 import Play from './Play';
 import Browser from './Browser';
-import HowTo from './HowTo'
+import HowTo from './HowTo';
 import '../styles/App.css';
 
 class App extends Component {

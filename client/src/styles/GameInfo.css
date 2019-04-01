@@ -9,4 +9,7 @@
   outline-width: thin;
   top: -1.5vh;
   height: 7.9vh;
+  background-image: url('../images/tile.png');
+  background-size: 100%;
+  color: white;
 }

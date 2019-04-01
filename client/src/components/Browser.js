@@ -34,7 +34,7 @@ class Browser extends Component {
 
   render() {
     return (
-      <div style={{background: '#283942', height: 'auto'}}>
+      <div style={{background: '#283942', height: '100vh'}}>
         <Navigation />
 
         <h1 style={{textAlign: "center", marginTop: '3%', color: 'white'}}>Current Lobbies</h1>
@@ -80,7 +80,7 @@ class Browser extends Component {
           color="success"
           style={{marginTop: '3%'}}
         >
-          <i class="plus icon"></i> Create Lobby 
+          <i class="plus icon"></i> Create Lobby
         </Button>
         <br /><br /><br /><br /><br /><br />
       </div>

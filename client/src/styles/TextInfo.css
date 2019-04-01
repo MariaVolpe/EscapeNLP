@@ -6,7 +6,8 @@
 .chat-change {
   float: left;
   width: 20%;
-  height: 3.7vh;
+  height: 35px;
+  font-size: 1.5vh;
 }
 
 .text-container {
@@ -20,7 +21,7 @@
   border-right: 1px solid black;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  margin-top: auto;
+  margin-top: -13.5px;
   bottom: 18px;
   width: 100%;
   max-height: 80.7vh;

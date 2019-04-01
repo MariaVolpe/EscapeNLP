@@ -13,7 +13,7 @@ class Play extends Component {
     super(props);
     this.state = {
       playerOneInfo: {
-        name: 'Nicky Cen',
+        name: 'Nicky Ken',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -22,7 +22,7 @@ class Play extends Component {
         ready: true
       },
       playerTwoInfo: {
-        name: 'Nicky Cen',
+        name: 'Brian Camper',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -31,7 +31,7 @@ class Play extends Component {
         ready: true
       },
       playerThreeInfo: {
-        name: 'Nicky Cen',
+        name: 'Ismail Clear',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -40,7 +40,7 @@ class Play extends Component {
         ready: true
       },
       playerFourInfo: {
-        name: 'Nicky Cen',
+        name: 'John Green',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
@@ -59,12 +59,13 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Cen", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
+      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
       command: '',
       allPlayersReady: false,
       setName: false,
       playerName: '',
-      chatOption: '0'
+      chatOption: '0',
+      warningOpen: false
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -124,12 +125,16 @@ class Play extends Component {
 
   onNameSubmit = (event) => {
     const playerName = this.state.playerName;
-    if (playerName.length > 2) {
+    let takenName = playerName === this.state.playerOneInfo.name || playerName === this.state.playerTwoInfo.name || playerName === this.state.playerThreeInfo.name || playerName === this.state.playerFourInfo.name;
+    if (playerName.length > 2 && !takenName) {
       let playerFiveInfo = this.state.playerFiveInfo;
       playerFiveInfo["name"] = playerName;
       //let allPlayers = this.state.allPlayers;
       //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
       this.setState({playerFiveInfo, setName: !this.state.setName});
+    }
+    else if (takenName || playerName.length <= 2) {
+      this.setState({warningOpen: !this.state.warningOpen});
     }
     event.preventDefault();
   }
@@ -144,6 +149,10 @@ class Play extends Component {
   onChatOptionChange = (event) => {
     const chatOption = event.target.value;
     this.setState({chatOption});
+  }
+
+  onWarningClose = (event) => {
+    this.setState({warningOpen: !this.state.warningOpen});
   }
 
   render() {
@@ -198,7 +207,14 @@ class Play extends Component {
         <h1 class="ui dividing header">EscapeNLP</h1>
         {playerInfo}
         {gameInfo}
-        <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>
+        <CreateNameModal
+          isOpen={!this.state.setName}
+          handleSubmit={this.onNameSubmit}
+          value={this.state.playerName}
+          onNameChange={this.onNameChange}
+          warningOpen={this.state.warningOpen}
+          onWarningClose={this.onWarningClose}
+        />
         <div className='text-info'>
           <TextInfo
             message={this.state.message}

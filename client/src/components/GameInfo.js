@@ -10,28 +10,37 @@ class GameInfo extends Component {
     const map = this.props.map;
     let i = 0;
     let mapData = [];
+    map.forEach((row) => {
+      mapData[i] = row.map((element, i) =>
+        <div className="map col-1" key={i}>
+          {i}
+        </div>
+      );
+      i++;
+    });
+
+    var visibleMap;
+    let hiddenMap = [];
 
     if (ready) {
+      visibleMap = mapData;
+    }
+    else {
+      i = 0;
       map.forEach((row) => {
-        mapData[i] = row.map((element, i) =>
+        hiddenMap[i] = row.map((element, i) =>
           <div className="map col-1" key={i}>
-            {i}
+            !
           </div>
         );
         i++;
       });
-    }
-    else {
-      for (let i=0; i<5; i++) {
-        mapData[i] = <div className="col-12">Filter {i}</div>;
-      }
+      visibleMap = hiddenMap;
     }
 
     return(
       <div>
-        <div>
-          {mapData}
-        </div>
+        {visibleMap}
       </div>
     )
   }
