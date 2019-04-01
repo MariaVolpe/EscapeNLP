@@ -1,0 +1,13 @@
+{
+    "name": "switch",
+    "items_required": [
+        {
+            "name": "switch",
+            "id": "switch",
+            "coordinates": {
+                "x": 4,
+                "y": 6
+            }
+        }
+    ]
+}

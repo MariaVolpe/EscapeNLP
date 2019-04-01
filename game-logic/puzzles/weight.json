@@ -1,0 +1,36 @@
+{
+    "name": "weight",
+    "items_required": [
+        {
+            "name": "weight",
+            "id": "weight A",
+            "coordinates": {
+                "x": 5,
+                "y": 2
+            }
+        },
+        {
+            "name": "weight",
+            "id": "weight B",
+            "coordinates": {
+                "x": 1,
+                "y": 2
+            }
+        },
+        {
+            "name": "floor_switch",
+            "id": "weight C",
+            "coordinates": {
+                "x": 1,
+                "y": 5
+            }
+        },
+        {
+            "name": "floor_switch",
+            "coordinates": {
+                "x": 5,
+                "y": 5
+            }
+        }
+    ]
+}

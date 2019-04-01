@@ -1,0 +1,13 @@
+{
+    "name": "exit",
+    "items_required": [
+        {
+            "name": "door",
+            "id": "door",
+            "coordinates": {
+                "x": 3,
+                "y": 6
+            }
+        }
+    ]
+}
