@@ -5,6 +5,13 @@ import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      textHeight: 74.5
+    }
+  }
+
   componentDidMount = () => {
     this.scrollToBottom();
   }
@@ -68,11 +75,16 @@ class TextInfo extends Component {
       }
     });
 
+    let textHeight = this.state.textHeight;
+    let totalMessages = textHeight / 17 * (prevMessages.length - 1);
+    let heightDiff = textHeight - totalMessages;
+
+
     return(
       <div className="ui minimal comments">
         <h3 class="ui dividing header">Chat Box</h3>
-        <div className="text-box" >
-          <div className="comment text-container" >{comments}</div>
+        <div className="text-box"  >
+          <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
         <div>
             <select class="dropdown chat-change" onChange={this.props.onChatOptionChange}>

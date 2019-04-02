@@ -120,20 +120,29 @@ class Play extends Component {
     let playerTwoInfo = this.state.playerTwoInfo;
     let playerThreeInfo = this.state.playerThreeInfo;
     let playerFourInfo = this.state.playerFourInfo;
-    this.setState({ allPlayersReady: (playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready), playerFiveInfo});
+    let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
+    this.setState({ allPlayersReady, playerFiveInfo});
   }
 
   onNameSubmit = (event) => {
-    const playerName = this.state.playerName;
+    let playerName = this.state.playerName;
+    while(playerName[0] === ' ') {
+      playerName = playerName.slice(1);
+      this.setState({playerName});
+    }
+    while(playerName[playerName.length - 1] === ' ') {
+      playerName = playerName.slice(0, playerName.length - 1);
+      this.setState({playerName});
+    }
     let takenName = playerName === this.state.playerOneInfo.name || playerName === this.state.playerTwoInfo.name || playerName === this.state.playerThreeInfo.name || playerName === this.state.playerFourInfo.name;
-    if (playerName.length > 2 && !takenName) {
+    if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       let playerFiveInfo = this.state.playerFiveInfo;
       playerFiveInfo["name"] = playerName;
       //let allPlayers = this.state.allPlayers;
       //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
       this.setState({playerFiveInfo, setName: !this.state.setName});
     }
-    else if (takenName || playerName.length <= 2) {
+    else {
       this.setState({warningOpen: !this.state.warningOpen});
     }
     event.preventDefault();
