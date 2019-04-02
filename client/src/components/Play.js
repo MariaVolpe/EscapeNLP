@@ -143,14 +143,14 @@ class Play extends Component {
       this.setState({playerFiveInfo, setName: !this.state.setName});
     }
     else {
-      this.setState({warningOpen: !this.state.warningOpen});
+      this.setState({warningOpen: true});
     }
     event.preventDefault();
   }
 
   onNameChange = (event) => {
     const playerName = event.target.value;
-    if (playerName.length > 0 && playerName.length < 25) {
+    if (playerName.length < 25) {
       this.setState({playerName});
     }
   }
