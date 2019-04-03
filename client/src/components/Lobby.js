@@ -4,6 +4,8 @@ import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
 import '../styles/Lobby.css';
 
+const axios = require('axios');
+
 class Lobby extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +25,10 @@ class Lobby extends Component {
     if (this.props.playerCount < 5) {
       console.log('Join a room');
       //window.location.replace('/play');
+      axios.post('/game/0/player')
+        .then((res) => {
+          console.log(res);
+        });
       this.setState({ confirmOpen: !this.state.confirmOpen });
     }
     else {
@@ -61,7 +67,7 @@ class Lobby extends Component {
               onToggle={this.onConfirmToggle}
               confirmInfo={this.confirmInfo}
             />
-            <Button onClick={this.onJoinClick}>Join</Button>
+            <Button onClick={this.onJoinClick} color="success">Join</Button>
           </Col>
         </Row>
         <Row>

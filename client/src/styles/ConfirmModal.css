@@ -2,3 +2,13 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+.name-input {
+  width: 90%;
+}
+
+.left-side {
+  width: 11%;
+  float: left;
+  visibility: hidden;
+}

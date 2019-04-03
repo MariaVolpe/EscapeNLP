@@ -1,8 +1,8 @@
 .lobby-box {
-  border: 3px solid black;
+  border: 3px solid #D93649;
   border-radius: 10px;
   padding: 5px;
-  background-color: #283942;
-  color: white;
+  background-color: white;
+  color: black;
   margin-bottom: 5px;
 }

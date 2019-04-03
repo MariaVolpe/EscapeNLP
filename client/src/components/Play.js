@@ -13,52 +13,59 @@ class Play extends Component {
     super(props);
     this.state = {
       playerOneInfo: {
-        name: 'Nicky Cen',
+        name: 'Nicky Ken',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerTwoInfo: {
-        name: 'Nicky Cen',
+        name: 'Brian Camper',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerThreeInfo: {
-        name: 'Nicky Cen',
+        name: 'Ismail Clear',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerFourInfo: {
-        name: 'Nicky Cen',
+        name: 'John Green',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: true
       },
       playerFiveInfo: {
-        name: '__________',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
+        ready: false
       },
       map: [],
       message: '',
-      prevMessages: [],
+      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
       command: '',
       allPlayersReady: false,
       setName: false,
-      playerName: ""
+      playerName: '',
+      chatOption: '0',
+      warningOpen: false
     }
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -69,8 +76,12 @@ class Play extends Component {
   }
 
   onMessageKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      const message = 'You said: `' + event.target.value + '`';
+    if (event.key === 'Enter' && event.target.value.length > 0) {
+      let commenter = this.state.playerName;
+      let date = new Date();
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      let mess = '"' + event.target.value + '"';
+      const message = [commenter, time, mess];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ message: '', prevMessages });
@@ -79,14 +90,18 @@ class Play extends Component {
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 50) {
+    if (message.length <= 43) {
       this.setState({ message });
     }
   }
 
   onCommandKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
-      const message = 'You wanted to: `' + event.target.value + '`';
+      let commenter = this.state.playerName;
+      let date = new Date();
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      let mess = 'You wanted to: "' + event.target.value + '"';
+      const message = [commenter, time, mess];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ command: '', prevMessages });
@@ -99,68 +114,83 @@ class Play extends Component {
   }
 
   readyUp = (event) => {
-    this.setState({ allPlayersReady: !this.state.allPlayersReady });
+    let playerFiveInfo = this.state.playerFiveInfo;
+    playerFiveInfo.ready = true;
+    let playerOneInfo = this.state.playerOneInfo;
+    let playerTwoInfo = this.state.playerTwoInfo;
+    let playerThreeInfo = this.state.playerThreeInfo;
+    let playerFourInfo = this.state.playerFourInfo;
+    let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
+    this.setState({ allPlayersReady, playerFiveInfo});
   }
 
   onNameSubmit = (event) => {
-    const playerName = this.state.playerName;
-    if (playerName.length > 2) {
+    let playerName = this.state.playerName;
+    while(playerName[0] === ' ') {
+      playerName = playerName.slice(1);
+      this.setState({playerName});
+    }
+    while(playerName[playerName.length - 1] === ' ') {
+      playerName = playerName.slice(0, playerName.length - 1);
+      this.setState({playerName});
+    }
+    let takenName = playerName === this.state.playerOneInfo.name || playerName === this.state.playerTwoInfo.name || playerName === this.state.playerThreeInfo.name || playerName === this.state.playerFourInfo.name;
+    if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       let playerFiveInfo = this.state.playerFiveInfo;
       playerFiveInfo["name"] = playerName;
       //let allPlayers = this.state.allPlayers;
       //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
       this.setState({playerFiveInfo, setName: !this.state.setName});
     }
+    else {
+      this.setState({warningOpen: true});
+    }
     event.preventDefault();
   }
 
   onNameChange = (event) => {
     const playerName = event.target.value;
-    if (playerName.length > 0 && playerName.length < 25) {
+    if (playerName.length < 25) {
       this.setState({playerName});
     }
   }
 
-  componentDidMount = () => {
-    // let allPlayers = [];
-    // let evenOrOdd = "";
+  onChatOptionChange = (event) => {
+    const chatOption = event.target.value;
+    this.setState({chatOption});
+  }
 
-    // for (let i=0; i<5; i++) {
-    //   if (i%2 === 1) {
-    //     evenOrOdd = "2";
-    //   }
-    //   else {
-    //     evenOrOdd = "";
-    //   }
-    //   allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box" + evenOrOdd} />)
-    // }allPlayers,
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
-    // allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
-    // this.setState({allPlayers});
+  onWarningClose = (event) => {
+    this.setState({warningOpen: !this.state.warningOpen});
   }
 
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} />)
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} />)
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row" />);
+    //allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} className="row" />);
+    //allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} className="row" />);
+    //allPlayers.push(<div className="list"/>);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} className="row" />);
+    //allPlayers.push(<div className="list"/>);
+    if (this.state.allPlayersReady) {
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
+    }
+    else {
+      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
+    }
 
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info'>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
-                    <Commands command={this.state.command} onKeyPress={this.onCommandKeyPress} onChange={this.onCommandChange} />
+
                   </div>;
       playerInfo = <div className='player-info'>
-                      <h3 class="ui dividing header">Players</h3>
-                      {allPlayers}
+                      <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
@@ -169,8 +199,7 @@ class Play extends Component {
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info'>
-                    <h3 class="ui dividing header">Players</h3>
-                    {allPlayers}
+                    <div className="ui list">{allPlayers}</div>
                     <Row>
                       <Col>
                         <MultiButton type="leave-button"/>
@@ -184,15 +213,29 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
+        <h1 class="ui dividing header">EscapeNLP</h1>
         {playerInfo}
         {gameInfo}
-        <CreateNameModal isOpen={!this.state.setName} handleSubmit={this.onNameSubmit} value={this.state.playerName} onNameChange={this.onNameChange}/>
+        <CreateNameModal
+          isOpen={!this.state.setName}
+          handleSubmit={this.onNameSubmit}
+          value={this.state.playerName}
+          onNameChange={this.onNameChange}
+          warningOpen={this.state.warningOpen}
+          onWarningClose={this.onWarningClose}
+        />
         <div className='text-info'>
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}
             onKeyPress={this.onMessageKeyPress}
             onChange={this.onMessageChange}
+            currPlayer={this.state.playerName}
+            chatOption={this.state.chatOption}
+            onChatOptionChange={this.onChatOptionChange}
+            command={this.state.command}
+            onCommandKeyPress={this.onCommandKeyPress}
+            onCommandChange={this.onCommandChange}
           />
         </div>
       </div>
