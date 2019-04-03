@@ -4,6 +4,7 @@
         {
             "name": "weight",
             "id": "weight A",
+            "manage" : false,
             "coordinates": {
                 "x": 5,
                 "y": 2
@@ -12,6 +13,7 @@
         {
             "name": "weight",
             "id": "weight B",
+            "manage" : false,
             "coordinates": {
                 "x": 1,
                 "y": 2
@@ -19,7 +21,8 @@
         },
         {
             "name": "floor_switch",
-            "id": "weight C",
+            "id": "switch A",
+            "manage" : true,
             "coordinates": {
                 "x": 1,
                 "y": 5
@@ -27,6 +30,8 @@
         },
         {
             "name": "floor_switch",
+            "id" : "switch B",
+            "manage" : true,
             "coordinates": {
                 "x": 5,
                 "y": 5

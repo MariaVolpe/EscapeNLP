@@ -11,6 +11,7 @@ class PuzzleManager {
     this.puzzles = [];
     this.puzzleIndex = 0;
     this.grid = grid;
+    this.puzzleProgress = new Map();
 
     this.findPuzzles();
   }

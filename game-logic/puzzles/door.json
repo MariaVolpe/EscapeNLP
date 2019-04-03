@@ -4,6 +4,7 @@
         {
             "name": "door",
             "id": "door",
+            "manage" : true,
             "coordinates": {
                 "x": 3,
                 "y": 6
