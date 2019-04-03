@@ -1,5 +1,5 @@
 const Puzzle = require('./Puzzle');
-const Item = require('./Item');
+const BoardObject = require('./BoardObject');
 
 // todo: ...dont do it this way, since its not arbitrary puzzles but a random get
 const Weight = require('./puzzles/weight');
@@ -17,20 +17,24 @@ class PuzzleManager {
   }
 
   addPuzzlesToBoard() { //Should this also set the activation management?
-    const items = this.getItemPlacement();
-    items.forEach(({ item, coordinates }) => {
-      this.grid.add(item, coordinates);
+    const boardObs = this.getBoardObjectPlacement();
+    boardObs.forEach(({ obj, coordinates }) => {
+      this.grid.add(obj, coordinates);
     });
   }
 
-  getItemPlacement() {
-    const itemsArr = [];
+  getBoardObjectPlacement() {
+    const boardObjArr = [];
     this.puzzles.forEach((puzzle) => {
-      puzzle.items_required.forEach((item) => {
-        itemsArr.push({ item: new Item(item.name, item.id), coordinates: item.coordinates });
+      puzzle.items_required.forEach((obj) => {
+        boardObjArr.push({ obj: new BoardObject(obj.name, obj.id), coordinates: obj.coordinates });
       })
     });
-    return itemsArr;
+    return boardObjArr;
+  }
+
+  populateProgressMap(){
+
   }
 
   // todo: set puzzles on this.puzzles, dynamically
