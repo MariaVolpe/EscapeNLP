@@ -31,7 +31,7 @@ class TextInfo extends Component {
     const currPlayer = this.props.currPlayer;
     let comments = [];
     const chatOption = this.props.chatOption;
-    var chatBox;
+    let chatBox;
 
     if (chatOption === '0') {
       chatBox = <div className="talk-input">

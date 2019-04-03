@@ -11,7 +11,7 @@ class PlayerInfo extends Component {
       </div>
     );
 
-    var readyCheck;
+    let readyCheck;
     if (this.props.playerInfo.ready === true) {
       readyCheck = <div className="ui disabled checked checkbox">
                       <input type="checkbox" disabled="disabled" checked="checked"/>
