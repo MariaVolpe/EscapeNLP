@@ -57,8 +57,16 @@ class PuzzleManager {
     }
   }
 
-  evaluatePuzzleStatus() {
-
+  evaluatePuzzleStatus(puzzleType) {
+    switch(puzzleType) {
+      case "weight":
+        break;
+      case "switch":
+        break;
+      case "goal":
+        break;
+      default:
+    }
   }
 
 }
