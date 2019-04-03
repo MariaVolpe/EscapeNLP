@@ -1,5 +1,5 @@
 {
-    "name": "weight",
+    "puzzle_type": "weight",
     "items_required": [
         {
             "name": "weight",

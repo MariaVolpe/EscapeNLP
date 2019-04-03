@@ -1,10 +1,12 @@
 const Agent = require('./Agent');
 const Grid = require('./Grid');
+const PuzzleManager = require('./PuzzleManager');
 
 class GameSession {
   constructor(id) {
     this.grid = null;
     this.agents = [];
+    this.puzzleManager = null;
     this.id = id;
   }
 
@@ -37,7 +39,8 @@ class GameSession {
   generateGame() {
     const size = 12;
     this.grid = new Grid(size);
-    this.grid.initializeBoard();
+    this.puzzleManager = new PuzzleManager(this.grid);
+    this.puzzleManager.addPuzzlesToBoard();
 
     // todo: generate player starting locations
     this.addAgentsToMap();

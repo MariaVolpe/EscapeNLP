@@ -7,21 +7,29 @@ const Switch = require('./puzzles/switch');
 const Door = require('./puzzles/door');
 
 class PuzzleManager {
-  constructor() {
+  constructor(grid) {
     this.puzzles = [];
     this.puzzleIndex = 0;
+    this.grid = grid;
 
     this.findPuzzles();
   }
 
+  addPuzzlesToBoard() { //Should this also set the activation management?
+    const items = this.getItemPlacement();
+    items.forEach(({ item, coordinates }) => {
+      this.grid.add(item, coordinates);
+    });
+  }
+
   getItemPlacement() {
-    const arr = [];
+    const itemsArr = [];
     this.puzzles.forEach((puzzle) => {
       puzzle.items_required.forEach((item) => {
-        arr.push({ item: new Item(item.name, item.id), coordinates: item.coordinates });
+        itemsArr.push({ item: new Item(item.name, item.id), coordinates: item.coordinates });
       })
     });
-    return arr;
+    return itemsArr;
   }
 
   // todo: set puzzles on this.puzzles, dynamically
