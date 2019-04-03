@@ -50,10 +50,10 @@ class PuzzleManager {
 
   addToProgressMap(puzzleType, obj) {
     if(this.puzzleProgress.has(puzzleType)) {
-      this.puzzleProgress[puzzleType].append(obj);
+      this.puzzleProgress.get(puzzleType).push(obj);
     }
     else{
-      this.puzzleProgress[puzzleType] = [obj];
+      this.puzzleProgress.set(puzzleType, [obj]);
     }
   }
 
