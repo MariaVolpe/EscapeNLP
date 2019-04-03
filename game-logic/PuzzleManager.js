@@ -16,33 +16,51 @@ class PuzzleManager {
     this.findPuzzles();
   }
 
-  addPuzzlesToBoard() { //Should this also set the activation management?
-    const boardObs = this.getBoardObjectPlacement();
-    boardObs.forEach(({ obj, coordinates }) => {
-      this.grid.add(obj, coordinates);
-    });
-  }
-
-  getBoardObjectPlacement() {
-    const boardObjArr = [];
-    this.puzzles.forEach((puzzle) => {
-      puzzle.items_required.forEach((obj) => {
-        boardObjArr.push({ obj: new BoardObject(obj.name, obj.id), coordinates: obj.coordinates });
-      })
-    });
-    return boardObjArr;
-  }
-
-  populateProgressMap(){
-
-  }
-
   // todo: set puzzles on this.puzzles, dynamically
   findPuzzles() {
     this.puzzles.push(Weight);
     this.puzzles.push(Switch);
     this.puzzles.push(Door);
   }
+
+  addPuzzlesToBoard() {
+    const boardObs = this.getBoardObjectDetails();
+    boardObs.forEach(({ obj, coordinates, manage, puzzleType }) => {
+      this.grid.add(obj, coordinates);
+      if(manage){
+        this.addToProgressMap(puzzleType, obj);
+      }
+    });
+  }
+
+  getBoardObjectDetails() {
+    const boardObjArr = [];
+    this.puzzles.forEach((puzzle) => {
+      puzzle.items_required.forEach((obj) => {
+        boardObjArr.push({ 
+          obj: new BoardObject(obj.name, obj.id), 
+          coordinates: obj.coordinates, 
+          manage: obj.manage, 
+          puzzleType: puzzle.puzzle_type 
+        });
+      })
+    });
+    return boardObjArr;
+  }
+
+  addToProgressMap(puzzleType, obj) {
+    if(this.puzzleProgress.has(puzzleType)) {
+      this.puzzleProgress[puzzleType].append(obj);
+    }
+    else{
+      this.puzzleProgress[puzzleType] = [obj];
+    }
+  }
+
+  evaluatePuzzleStatus() {
+
+  }
+
 }
 
 module.exports = PuzzleManager;
