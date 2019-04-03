@@ -5,13 +5,6 @@ import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      textHeight: 74.5
-    }
-  }
-
   componentDidMount = () => {
     this.scrollToBottom();
   }
@@ -23,6 +16,12 @@ class TextInfo extends Component {
   scrollToBottom = () => {
     let scrollElement = document.getElementsByClassName("text-box");
     scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
+  }
+
+  findHeightDifference = () => {
+    let totalMessages = 74.5 / 17 * ((this.props.prevMessages.length - 1) * 1.1);
+    let heightDiff = 74.5 - totalMessages;
+    return heightDiff;
   }
 
   render() {
@@ -75,9 +74,7 @@ class TextInfo extends Component {
       }
     });
 
-    let textHeight = this.state.textHeight;
-    let totalMessages = textHeight / 17 * (prevMessages.length - 1);
-    let heightDiff = textHeight - totalMessages;
+    let heightDiff = this.findHeightDifference();
 
 
     return(
