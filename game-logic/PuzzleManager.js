@@ -9,7 +9,6 @@ const Door = require('./puzzles/door');
 class PuzzleManager {
   constructor(grid) {
     this.puzzles = [];
-    this.puzzleIndex = 0;
     this.grid = grid;
     this.puzzleProgress = new Map();
 
@@ -25,10 +24,10 @@ class PuzzleManager {
 
   addPuzzlesToBoard() {
     const boardObs = this.getBoardObjectDetails();
-    boardObs.forEach(({ obj, coordinates, manage, puzzleType }) => {
+    boardObs.forEach(({ obj, coordinates, manage }) => {
       this.grid.add(obj, coordinates);
       if(manage){
-        this.addToProgressMap(puzzleType, obj);
+        this.addToProgressMap(obj.puzzleType, obj);
       }
     });
   }
@@ -38,10 +37,9 @@ class PuzzleManager {
     this.puzzles.forEach((puzzle) => {
       puzzle.items_required.forEach((obj) => {
         boardObjArr.push({ 
-          obj: new BoardObject(obj.name, obj.id), 
+          obj: new BoardObject(obj.name, obj.id, puzzle.puzzle_type), 
           coordinates: obj.coordinates, 
-          manage: obj.manage, 
-          puzzleType: puzzle.puzzle_type 
+          manage: obj.manage
         });
       })
     });
