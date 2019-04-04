@@ -218,7 +218,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <h1 class="ui dividing header">EscapeNLP</h1>
+        <h2 class="ui dividing header bg-danger text-white logo">EscapeNLP</h2>
         {playerInfo}
         {gameInfo}
         <CreateNameModal
