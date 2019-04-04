@@ -3,8 +3,7 @@ import { Row, Col, Button } from 'reactstrap';
 import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
 import '../styles/Lobby.css';
-
-const axios = require('axios');
+import axios from 'axios';
 
 class Lobby extends Component {
   constructor(props) {

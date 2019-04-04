@@ -3,13 +3,26 @@ import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
 
+  responsiveColumns = (length) => {
+    let colSize = Math.floor(12/(length)-1);
+    if (colSize > 5) {
+      colSize = 5;
+    }
+    return colSize;
+  }
+
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
-    const items = itemsList.map((slot, i) =>
-      <div className="ui item basic button" key={i}>
-        {slot[i]}
-      </div>
-    );
+    let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
+    let columns = "col-" + numOfCols + " ui item mini button";
+
+    let items = [];
+    console.log(itemsList.length);
+    for (let i=0; i<itemsList.length; i++) {
+      items.push(<div className={columns}>
+                  {itemsList[i][0]}
+                 </div>);
+    }
 
     let readyCheck;
     if (this.props.playerInfo.ready === true) {
@@ -28,7 +41,7 @@ class PlayerInfo extends Component {
     // real icon will be decided later, this serves as a temp
 
     return(
-      <div className="card">
+      <div className="card player-box">
         <div className="content">
           <img className="left floated mini ui image" src="https://openclipart.org/download/247324/abstract-user-flat-1.svg" alt="user icon"/>
           <div className="right floated ui header">
@@ -37,10 +50,10 @@ class PlayerInfo extends Component {
 
         </div>
         <div className="floated">{readyCheck}</div>
-        <div className="extra content">
-            {items}
+        <div className="ui horizontal divider" >inventory</div>
+        <div className="item-box">
+          {items}
         </div>
-        <div className="list"/>
       </div>
 
     )

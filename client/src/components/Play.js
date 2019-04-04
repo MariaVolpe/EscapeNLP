@@ -16,7 +16,9 @@ class Play extends Component {
         name: 'Nicky Ken',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey',
+          bk: 'sword'
         },
         picture: '[pic]',
         ready: true
@@ -25,7 +27,8 @@ class Play extends Component {
         name: 'Brian Camper',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey'
         },
         picture: '[pic]',
         ready: true
@@ -34,7 +37,7 @@ class Play extends Component {
         name: 'Ismail Clear',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: true
@@ -43,7 +46,7 @@ class Play extends Component {
         name: 'John Green',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: true
@@ -52,14 +55,16 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          wep: 'sword',
         },
         picture: '[pic]',
         ready: false
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
+      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"],
+                     ["guy", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "There is no puzzle"]
+                    ],
       command: '',
       allPlayersReady: false,
       setName: false,
@@ -80,8 +85,8 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = '"' + event.target.value + '"';
-      const message = [commenter, time, mess];
+      let mess = event.target.value;
+      const message = [commenter, time, mess, 0];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ message: '', prevMessages });
@@ -100,8 +105,8 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = 'You wanted to: "' + event.target.value + '"';
-      const message = [commenter, time, mess];
+      let mess = 'You wanted to: ' + event.target.value;
+      const message = [commenter, time, mess, 1];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ command: '', prevMessages });
@@ -167,7 +172,7 @@ class Play extends Component {
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row player-box" />);
     //allPlayers.push(<div className="list"/>);
     allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} className="row" />);
     //allPlayers.push(<div className="list"/>);
