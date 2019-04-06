@@ -1,4 +1,4 @@
-const BoardObject = require('./BoardObject');
+const Structure = require('./Structure');
 
 // todo: ...dont do it this way, since its not arbitrary puzzles but a random get
 const Weight = require('./puzzles/weight');
@@ -36,7 +36,7 @@ class PuzzleManager {
     this.puzzles.forEach((puzzle) => {
       puzzle.items_required.forEach((obj) => {
         boardObjArr.push({
-          obj: new BoardObject(obj.name, obj.id, puzzle.puzzle_type),
+          obj: new Structure(obj.name, obj.id, puzzle.puzzle_type),
           coordinates: obj.coordinates,
           manage: obj.manage
         });
