@@ -27,14 +27,18 @@ class BoardObject {
   	usable, passable, inspectable, destructable, puzzleType) {
     this.name = name;
     this.id = id;
- 	this.moveable = moveable;
- 	this.possesable = possesable;
- 	this.transferable = transferable;
- 	this.usable = usable;
+ 	  this.moveable = moveable;
+ 	  this.possesable = possesable;
+ 	  this.transferable = transferable;
+ 	  this.usable = usable;
     this.passable = passable;
     this.inspectable = inspectable;
     this.puzzleType = puzzleType;
     this.destructable = destructable;
+  }
+
+  isPassable() {
+  	return this.passable;
   }
 }
 

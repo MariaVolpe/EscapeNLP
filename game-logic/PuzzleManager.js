@@ -22,8 +22,8 @@ class PuzzleManager {
   }
 
   addPuzzlesToBoard() {
-    const boardObs = this.getBoardObjectDetails();
-    boardObs.forEach(({ obj, coordinates, manage }) => {
+    const structures = this.getStructureDetails();
+    structures.forEach(({ obj, coordinates, manage }) => {
       this.grid.add(obj, coordinates);
       if (manage) {
         this.addToProgressMap(obj.puzzleType, obj);
@@ -31,18 +31,18 @@ class PuzzleManager {
     });
   }
 
-  getBoardObjectDetails() {
-    const boardObjArr = [];
+  getStructureDetails() {
+    const structureArr = [];
     this.puzzles.forEach((puzzle) => {
       puzzle.items_required.forEach((obj) => {
-        boardObjArr.push({
+        structureArr.push({
           obj: new Structure(obj.name, obj.id, puzzle.puzzle_type),
           coordinates: obj.coordinates,
           manage: obj.manage
         });
       });
     });
-    return boardObjArr;
+    return structureArr;
   }
 
   addToProgressMap(puzzleType, obj) {
