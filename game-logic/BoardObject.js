@@ -13,6 +13,7 @@
  * Usable: Can the object be used?
  * Passable: Can agents pass through the object while moving?
  * Inspectable: Can agents get a description of the item?
+ * Desctructable: Can the object be destroyed?
  * Puzzle Type: What puzzle does the object belong to?
  * 
  * This class defines properties. 
@@ -23,7 +24,7 @@
 
 class BoardObject {
   constructor(name, id, moveable, possesable, transferable, 
-  	usable, passable, inspectable, puzzleType) {
+  	usable, passable, inspectable, destructable, puzzleType) {
     this.name = name;
     this.id = id;
  	this.moveable = moveable;
@@ -33,6 +34,7 @@ class BoardObject {
     this.passable = passable;
     this.inspectable = inspectable;
     this.puzzleType = puzzleType;
+    this.destructable = destructable;
   }
 }
 
