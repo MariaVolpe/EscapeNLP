@@ -26,8 +26,7 @@ class Grid {
     if (x === undefined || y === undefined) {
       p = this.findFreeSpace();
     } else {
-      // Converts coordinates from player perspective to matrix indices
-      p = new Point(this.boardSize - 1 - y, x);
+      p = new Point(x,y);
     }
     this.positionMap[obj.id] = p;
     this.matrix[p.x][p.y] = obj;
