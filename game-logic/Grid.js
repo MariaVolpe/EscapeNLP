@@ -26,7 +26,7 @@ class Grid {
     if (x === undefined || y === undefined) {
       p = this.findFreeSpace();
     } else {
-      p = new Point(x,y);
+      p = new Point(x, y);
     }
     this.positionMap[obj.id] = p;
     this.matrix[p.x][p.y] = obj;

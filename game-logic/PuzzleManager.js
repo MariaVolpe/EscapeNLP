@@ -1,4 +1,3 @@
-const Puzzle = require('./Puzzle');
 const BoardObject = require('./BoardObject');
 
 // todo: ...dont do it this way, since its not arbitrary puzzles but a random get
@@ -26,7 +25,7 @@ class PuzzleManager {
     const boardObs = this.getBoardObjectDetails();
     boardObs.forEach(({ obj, coordinates, manage }) => {
       this.grid.add(obj, coordinates);
-      if(manage){
+      if (manage) {
         this.addToProgressMap(obj.puzzleType, obj);
       }
     });
@@ -36,37 +35,36 @@ class PuzzleManager {
     const boardObjArr = [];
     this.puzzles.forEach((puzzle) => {
       puzzle.items_required.forEach((obj) => {
-        boardObjArr.push({ 
-          obj: new BoardObject(obj.name, obj.id, puzzle.puzzle_type), 
-          coordinates: obj.coordinates, 
+        boardObjArr.push({
+          obj: new BoardObject(obj.name, obj.id, puzzle.puzzle_type),
+          coordinates: obj.coordinates,
           manage: obj.manage
         });
-      })
+      });
     });
     return boardObjArr;
   }
 
   addToProgressMap(puzzleType, obj) {
-    if(this.puzzleProgress.has(puzzleType)) {
+    if (this.puzzleProgress.has(puzzleType)) {
       this.puzzleProgress.get(puzzleType).push(obj);
     }
-    else{
+    else {
       this.puzzleProgress.set(puzzleType, [obj]);
     }
   }
 
   evaluatePuzzleStatus(puzzleType) {
-    switch(puzzleType) {
-      case "weight":
+    switch (puzzleType) {
+      case 'weight':
         break;
-      case "switch":
+      case 'switch':
         break;
-      case "goal":
+      case 'goal':
         break;
       default:
     }
   }
-
 }
 
 module.exports = PuzzleManager;
