@@ -1,0 +1,36 @@
+{
+    "move": [
+        "go out with her"
+    ],
+    "look": [
+        "look for them",
+        "look at you",
+        "look at him"
+    ],
+    "take": [
+        "grab the berry",
+        "take care",
+        "hold it",
+        "take it",
+        "take her back",
+        "take the northern"
+    ],
+    "give": [
+        "doesn't that give"
+    ],
+    "destroy": [],
+    "attack": [
+        "shoot this duck"
+    ],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "have a talk"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": [
+        "use the ladies",
+        "use a guy"
+    ]
+}

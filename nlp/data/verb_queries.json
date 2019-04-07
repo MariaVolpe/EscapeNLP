@@ -11,6 +11,7 @@
             "go",
             "go to",
             "bring myself",
+            "bring it",
             "visit",
             "go towards",
             "move towards",
@@ -39,7 +40,10 @@
             "investigate",
             "inspect",
             "look at",
-            "read"
+            "read",
+            "take a look",
+            "take a peek",
+            "stare"
         ],
         "ignore": [
             "appear"
@@ -101,7 +105,9 @@
         ],
         "ignore": [
             "leave",
-            "open"
+            "open",
+            "kick in",
+            "kick"
         ],
         "regex": [
             "#Verb #Determiner #Noun"

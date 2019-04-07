@@ -1,0 +1,17 @@
+[
+    {
+        "text": "up",
+        "pos": "preposition",
+        "types": [
+        ],
+        "synonyms": [
+            "forward",
+            "onwards"
+        ],
+        "ignore": [
+
+        ],
+        "regex": [
+        ]
+    }
+]

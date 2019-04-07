@@ -40,7 +40,6 @@ class DataLabeler {
     this.fs = new DataFileManager();
     this.verbRelations = new Map();
     this.objectRelations = new Map();
-    this.similar = new SimilarSearch({ normalize: true });
     for (let i = 0; i < words.length; i++)
       this.verbRelations.set(words[i], new Set());
     if (doLabel)
@@ -95,7 +94,6 @@ class DataLabeler {
   // collects uses of words from nlp-corpus //
   collectUses(batchSize, fromBeginning=false) {
     const friends = corpus.friends.array();
-    this.printSnapshot(this.verbRelations);
     const keys = Array.from(this.verbRelations.keys()).map(v => v.text);
     const trainingBatcher = new Batcher({
       keys: keys, maxSize: batchSize, batchPath: './nlp/data/friends/training/',
@@ -106,8 +104,10 @@ class DataLabeler {
     });
     const verbRegex = Array.from(this.verbRelations.keys()).map( w => new VerbRegex({
       word: w, synonyms: this.verbRelations.get(w), regExps: w.regex } ));
+    if (fromBeginning) this.fs.flushData('./nlp/data/friends/');
     let record = this.fs.readRecord('./nlp/data/friends/record.json');
     let start = { s1: 0, s2: 0 };
+    
     if (!fromBeginning && Object.keys(record).length != 0) { // if there was a previous record
       start.s1 = record.s1;
       start.s2 = record.s2;
@@ -121,7 +121,7 @@ class DataLabeler {
           const matches = r.match(line);
           if (!matches.size) continue;
           for (let m of matches) {
-            if (Math.random() <= 0.2)
+            if (Math.random() <= 0.3)
               testBatcher.addRelations({ verb: r.word.text, match: m, i: i, l: l });
             else
               trainingBatcher.addRelations({ verb: r.word.text, match: m, i: i, l: l });

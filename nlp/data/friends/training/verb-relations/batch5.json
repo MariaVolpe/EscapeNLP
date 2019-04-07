@@ -1,0 +1,33 @@
+{
+    "move": [
+        "walk in on me",
+        "move on me",
+        "go out there",
+        "go down there",
+        "go down there you"
+    ],
+    "look": [
+        "look at her",
+        "look at another guy i",
+        "look at you"
+    ],
+    "take": [
+        "take you",
+        "take it",
+        "grab a cup",
+        "take a break",
+        "take care"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "tell the guy",
+        "say that i"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

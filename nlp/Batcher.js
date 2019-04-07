@@ -6,14 +6,13 @@ class Batcher {
     this.keys = Array.from(keys);
     this.fileManager = new DataFileManager();
     this.verbRelations = new Map();
-    //this.verbRelations = !initialData ? new Map(keys) : this.stripRelations(initialData);
     if (initialData) this.verbRelations = this.stripRelations(initialData);
     else keys.map(k => this.verbRelations.set(k, new Set()));
     this.objectRelations = new Map();
     this.batchSize = { verbs: 0, objects: 0 };
     this.batchPath = batchPath;
     this.maxSize = maxSize;
-    this.addTenses(this.verbRelations);
+    this.addTenses();
   }
 
   addRelations({ verb, match, i, l }) {
@@ -59,7 +58,9 @@ class Batcher {
         tenses.push(conjugation[0].gerund);
         tenses.push(conjugation[0].infinitive);
       }
-      tenses.map((tense)=>this.verbRelations.get(key).add(tense));
+      tenses.map((tense)=> {
+        if (tense) this.verbRelations.get(key).add(tense);
+      });
     }
   }
   // strips this.verbRelations to text to text object relations //

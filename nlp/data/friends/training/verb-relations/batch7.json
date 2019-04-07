@@ -1,0 +1,34 @@
+{
+    "move": [
+        "go with simmons",
+        "run in the chapel"
+    ],
+    "look": [
+        "look at you"
+    ],
+    "take": [
+        "hold her head",
+        "take these drops",
+        "take a couple",
+        "take you",
+        "steal your jackpot",
+        "take it",
+        "take him",
+        "take a moment",
+        "take your protein pills"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [
+        "invest in movies"
+    ],
+    "jump": [],
+    "speak": [
+        "say that you",
+        "say whatever you"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

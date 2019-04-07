@@ -65,9 +65,25 @@ class DataFileManager {
     return obj;
   }
 
-  // flushes the data in a directory 
+  // Recursively flushes the data in a directory 
   flushData(path) {
-    
+    let items = fs.readdirSync(path);
+    for (let item of items) {
+      let stats = fs.lstatSync(path+item);
+      if (stats.isFile()) fs.unlinkSync(path+item);
+      else this.flushData(path+item+'/');
+    }
+  }
+
+  getFilesInDir(path) {
+    return fs.readdirSync(path);
+  }
+
+  fileToObj(path) {
+    if (!fs.existsSync(path)) {
+      console.log('No such file: ' + path);
+      return;
+    } return JSON.parse(fs.readFileSync(path));
   }
 
 }
