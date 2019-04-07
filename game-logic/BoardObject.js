@@ -33,8 +33,8 @@ class BoardObject {
  	  this.usable = usable;
     this.passable = passable;
     this.inspectable = inspectable;
-    this.puzzleType = puzzleType;
     this.destructable = destructable;
+    this.puzzleType = puzzleType;
   }
 
   isPassable() {
