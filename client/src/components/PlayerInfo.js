@@ -32,7 +32,7 @@ class PlayerInfo extends Component {
                    </div>
     }
     else {
-      readyCheck = <div className="ui disabled checked checkbox right floated">
+      readyCheck = <div className="ui disabled checked checkbox">
                       <input type="checkbox" disabled="disabled"/>
                       <label>Ready</label>
                    </div>
@@ -49,8 +49,8 @@ class PlayerInfo extends Component {
           </div>
 
         </div>
-        <div className="floated">{readyCheck}</div>
-        <div className="ui horizontal divider" >inventory</div>
+        <div className="floated ready">{readyCheck}</div>
+        <div className="ui horizontal divider inventory" >inventory</div>
         <div className="item-box">
           {items}
         </div>
