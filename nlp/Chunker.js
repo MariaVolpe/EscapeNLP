@@ -35,7 +35,9 @@ class Chunker {
       if (word == 'i') { // if we see i, assume the next word is a verb
         if (c != '') {
           chunks.push(c);
-          c = '';
+          c = 'i ' + words[++i] + ' ';
+        } else {
+          c = 'i ' + words[++i] + ' ';
         }
         continue;
       }
@@ -88,7 +90,6 @@ class Chunker {
     let directObjs = [];
     let indirectObjs = [];
     let direct = true;
-    let switched = false; // used to ensure only 1 switch occurs
     let i = 0;
     //Give - I give the key and bag to fred
     for (; i < words.length; i++) {
@@ -98,11 +99,23 @@ class Chunker {
         i = i+1;
         continue;
       }
-      if (tags.has('Conjunction') && word != 'and') {
-        if (!switched) { direct = !direct; switched = !switched; }
+      
+      if (tags.has('Determiner')) { // then the next word will be treated as a noun
+        let result = words[++i];
+        if (direct)
+          directObjs.push(result);
+        else
+          indirectObjs.push(result);
+        let nextTags = this.stripTags(words[i+1]);
+        if (direct &&  !((nextTags.has('Conjunction') && words[i+1] == 'and')
+         || nextTags.has('Noun'))) { direct = !direct; }
+        continue;
       }
-      if (tags.has('Preposition'))
-        if (!switched) { direct = !direct; switched = !switched; }
+      if (tags.has('Conjunction') && word != 'and' && directObjs.length) {
+        if (direct) { direct = !direct; }
+      }
+      if (tags.has('Preposition') && directObjs.length)
+        if (direct) { direct = !direct; }
       if (tags.has('Noun')) {
         if (direct)
           directObjs.push(word);
