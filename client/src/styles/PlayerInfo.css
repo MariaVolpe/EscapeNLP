@@ -8,15 +8,17 @@
   margin-left: 3vh;
 }
 
+@media only screen and (max-width: 1700px) {
+  .ready {
+    margin-left: 65.5%;
+    margin-top: 10%;
+    position: absolute;
+  }
+}
+
 @media only screen and (max-width: 1600px) {
   .inventory {
     visibility: hidden;
-    position: absolute;
-  }
-
-  .ready {
-    margin-left: 65.5%;
-    margin-top: 8.5%;
     position: absolute;
   }
 }
