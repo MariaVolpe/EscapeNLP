@@ -13,7 +13,7 @@ class Play extends Component {
     super(props);
     this.state = {
       playerOneInfo: {
-        name: 'Nicky Ken',
+        name: 'Nikki Ken',
         inventory: {
           key: 'doorKey',
           itm: 'sword',
@@ -24,7 +24,7 @@ class Play extends Component {
         ready: true
       },
       playerTwoInfo: {
-        name: 'Brian Camper',
+        name: 'Brain Camper',
         inventory: {
           key: 'doorKey',
           itm: 'sword',
@@ -34,7 +34,7 @@ class Play extends Component {
         ready: true
       },
       playerThreeInfo: {
-        name: 'Ismail Clear',
+        name: 'Issac Clear',
         inventory: {
           key: 'doorKey',
           itm: 'sword',
@@ -43,7 +43,7 @@ class Play extends Component {
         ready: true
       },
       playerFourInfo: {
-        name: 'John Green',
+        name: 'Jonny Green',
         inventory: {
           key: 'doorKey',
           itm: 'sword',
@@ -170,7 +170,7 @@ class Play extends Component {
   }
 
   render() {
-    const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
+    const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const allPlayers = [];
     allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row player-box" />);
     //allPlayers.push(<div className="list"/>);
