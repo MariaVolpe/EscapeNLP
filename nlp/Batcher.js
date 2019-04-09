@@ -6,7 +6,7 @@ class Batcher {
     this.keys = Array.from(keys);
     this.fileManager = new DataFileManager();
     this.verbRelations = new Map();
-    if (initialData) this.verbRelations = this.stripRelations(initialData);
+    if (initialData) { this.verbRelations = this.stripRelations(initialData); }
     else keys.map(k => this.verbRelations.set(k, new Set()));
     this.objectRelations = new Map();
     this.batchSize = { verbs: 0, objects: 0 };
