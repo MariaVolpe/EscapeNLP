@@ -1,0 +1,15 @@
+.map {
+  display: inline-block;
+  margin-top: 0.1vh;
+  margin-bottom: -0.1vh;
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  outline-color: gray;
+  outline-style: solid;
+  outline-width: thin;
+  top: -1.5vh;
+  height: 7.9vh;
+  background-image: url('../images/tile.png');
+  background-size: 100%;
+  color: white;
+}

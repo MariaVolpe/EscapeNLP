@@ -1,6 +1,15 @@
 const express = require('express');
-const NLP = require('./nlp/NLP');
-const app = express();
-const port = process.env.PORT || 3000;
+const helmet = require('helmet');
+const gameSessionRouter = require('./routers/GameSession');
 
-app.listen(port, () => console.log(`EscapeNLP Server listening on port ${port}!`));
+const app = express();
+
+app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/game', gameSessionRouter);
+
+app.get('/', (req, res) => res.send('Hello World! This is a test.'));
+
+module.exports = app;

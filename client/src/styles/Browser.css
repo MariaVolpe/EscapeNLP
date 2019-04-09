@@ -1,0 +1,45 @@
+.lobby-browser {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.filter-group {
+  float: left;
+  width: 18%;
+  border: 3px solid black;
+  margin-right: 1%;
+  margin-left: 1%;
+  margin-top: 0.5%;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #283942;
+  color: white;
+  min-height: 92vh;
+  position: fixed;
+}
+
+.right-side {
+  float: right;
+  left: 80%;
+  width: 18%;
+  border: 3px solid black;
+  border-radius: 10px;
+  margin-left: 1%;
+  margin-top: 0.5%;
+  padding: 5px;
+  background-color: #283942;
+  color: white;
+  min-height: 92vh;
+  position: fixed;
+}
+
+.middle {
+  float: left;
+  width: 60%;
+  margin-top: 0.5%;
+  left: 20%;
+  position: fixed;
+  max-height: 92vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

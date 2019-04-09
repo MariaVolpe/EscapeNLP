@@ -1,12 +1,10 @@
-let Inventory = require('./Inventory');
+const BoardObject = require('./BoardObject');
+const Inventory = require('./Inventory');
 
-class Agent extends Object {
-  constructor(name) {
-    // todo: generate id
-    const id = 'set_later';
-    super(name, id);
+class Agent extends BoardObject {
+  constructor(id) {
+    super(null, id, null, false);
     this.inventory = new Inventory();
-    this.passable = false; // by default agents will not be passable
   }
 
   getItem(item) {
