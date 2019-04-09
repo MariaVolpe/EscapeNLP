@@ -13,7 +13,7 @@ class NLP {
     this.dataLabeler = new DataLabeler(queries, true);
     this.chunker = new Chunker();
     this.tester = new Tester();
-    this.actionClassifier.load();
+    this.actionClassifier.load('./nlp/classifier-model.nlp');
   }
 
   runTests() {
