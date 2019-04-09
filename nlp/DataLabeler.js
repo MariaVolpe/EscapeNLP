@@ -1,22 +1,19 @@
-const { SimilarSearch } = require('node-nlp');
 const compromise = require('compromise');
 const wnjs = require('wordnetjs');
-const wn = require('wordnet');
 const corpus = require('nlp-corpus');
-const { PythonShell } = require('python-shell');
-const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 const DataFileManager = require('./DataFileManager');
 const VerbRegex  = require('./Regex');
 const Batcher = require('./Batcher');
 
 /*
-
+  Labels to find
   Give
   Use - wrapper function for item use
   Place/replaces throw
   Take
   Attack
   Move
+  Jump
   Speak
   Activate
   Deactivate

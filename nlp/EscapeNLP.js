@@ -58,10 +58,6 @@ class EscapeNLP {
     }
   }
 
-  enqueueAction() {
-
-  }
-
 }
 
 module.exports = EscapeNLP;

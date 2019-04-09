@@ -1,25 +1,7 @@
 const compromise = require('compromise');
 
-
-
 class Chunker {
   constructor() { }
-
-  /*
-    Give - I give the key and bag to fred
-
-    stk: key, 
-    Use - I use the potion and bandaid on my teammate
-    Place - 
-    Take
-    Attack - I attack the dragon and zombies with my sword
-    Move
-    Speak
-    Activate
-    Deactivate
-    Look
-    otherwise no result 
- */
   
   // Returns a chunked version of the input given as verb phrases
   chunkInput(input) {
@@ -33,12 +15,9 @@ class Chunker {
       const tags = this.stripTags(word);
 
       if (word == 'i') { // if we see i, assume the next word is a verb
-        if (c != '') {
+        if (c != '')
           chunks.push(c);
-          c = 'i ' + words[++i] + ' ';
-        } else {
-          c = 'i ' + words[++i] + ' ';
-        }
+        c = 'i ' + words[++i] + ' ';
         continue;
       }
       if (tags.has('Determiner')) { // then the next word will be treated as a noun
@@ -57,12 +36,6 @@ class Chunker {
     if (c != '') chunks.push(c);
     return chunks;
   }
-
-  // if the word i is seen we treat the next word as a verb 
-  /*iRule(words, i) {
-    let substr = words[++i] + ' ';
-    return { string: substr, i: i };
-  }*/
 
   // treats words following determiners (a, the, my, her etc) as a noun
   determinerRule(words, i) {
@@ -91,7 +64,7 @@ class Chunker {
     let indirectObjs = [];
     let direct = true;
     let i = 0;
-    //Give - I give the key and bag to fred
+
     for (; i < words.length; i++) {
       const word = words[i];
       let tags = this.stripTags(word);
@@ -148,8 +121,6 @@ class Chunker {
   preprocessInput(input) {
     input = input.toLowerCase();
     input = input.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,'');// remove punctuation
-    //input = input.replace(/ i/i, ''); // remove I from sentences
-    //input = input.replace(/i /i, '');
     return input;
   }
 

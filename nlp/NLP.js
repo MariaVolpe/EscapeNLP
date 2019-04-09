@@ -9,17 +9,11 @@ class NLP {
   constructor(){
     this.fs = new DataFileManager();
     this.actionClassifier = new NlpClassifier({ language: 'en' });
-    this.objectClassifier = new NlpClassifier({ language: 'en' });
     const queries = this.fs.readQueryFile('./nlp/data/verb_queries.json');
-
     this.dataLabeler = new DataLabeler(queries, true);
     this.chunker = new Chunker();
     this.tester = new Tester();
-    //this.getActions('Running quickly, I move from the door');
-    //this.dataLabeler.collectUses(15, false);
-    //this.trainNetwork();
     this.actionClassifier.load();
-    this.runTests();
   }
 
   runTests() {
@@ -49,7 +43,7 @@ class NLP {
     let actionObjects = [];
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      let classifications = this.getAction(chunk);
+      let classifications = this.actionClassifier.getClassifications(chunk);
       let ret = this.chunker.getObjectsOfSentence(chunk);
       let directObjects = ret.directObjs;
       let indirectObjects = ret.indirectObjs;
@@ -62,8 +56,6 @@ class NLP {
         directObjects,
         indirectObjects });
     }
-    console.log(chunks);
-    console.log(actionObjects);
     return actionObjects;
   }
 
@@ -71,39 +63,21 @@ class NLP {
     // TODO grab verb and object training batches and sequentially run train 
     let path = './nlp/data/friends/training/verb-relations/';
     let batches = this.fs.getFilesInDir(path);
-    console.log('Training');
     for (let batchFile of batches) {
       let batch = this.fs.fileToObj(path+batchFile);
       for (let key in batch)
         for (let val of batch[key])
           this.actionClassifier.add(val, key);
-      
       await this.actionClassifier.train(); // train by each batch
-      console.log('Saving');
       this.actionClassifier.save();
     }
   }
 
   saveNetworks() {
     this.nlpManager.save();
+    this.actionClassifier.save();
   }
 
-  classify(input) {
-    return { // just returns the highest probability action/object for now
-      actions: this.getAction(input),
-      objects: this.getObject(input),
-    };
-  }
-
-  getAction(input) {
-    return this.actionClassifier.getClassifications(input);
-  }
-
-  getObjects(input) {
-    return this.objectClassifier.getClassifications(input);
-  }
-
-  
 }
 
 module.exports = NLP;
