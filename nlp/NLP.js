@@ -1,6 +1,5 @@
 const { NlpManager, NlpClassifier, NerManager } = require('node-nlp');
 const compromise = require('compromise');
-const synonyms = require('synonyms');
 const DataLabeler = require('./DataLabeler');
 const DataFileManager = require('./DataFileManager');
 const Chunker = require('./Chunker');
@@ -14,7 +13,7 @@ class NLP {
     const queries = this.fs.readQueryFile('./nlp/data/verb_queries.json');
 
     this.dataLabeler = new DataLabeler(queries, true);
-    this.chunker = new Chunker(this.queries);
+    this.chunker = new Chunker();
     this.tester = new Tester();
     //this.getActions('Running quickly, I move from the door');
     //this.dataLabeler.collectUses(15, false);
@@ -33,14 +32,12 @@ class NLP {
       'look': ['I read the book for my son and put him to bed after'],
       'take': ['I grab the stone and set it down on the platform'],
       'destroy': ['I break the wall'],
-      'attack': ['I slash at the dragon'],
+      'attack': ['I slash at the dragon', 'I attack the dragon and zombies with my sword'],
       'jump': ['I leap over the edge and grab the trinkets then i assemble the artifact'],
       'speak': ['I tell the dragon the answer and attack him after'] };
     let accuracy = this.tester.testNetwork(tests, this.actionClassifier);
-    //this.tester.printTest();
     this.tester.testNetworkByDirectory('./nlp/data/friends/test/verb-relations/', this.actionClassifier);
-    //this.tester.printTest();
-    //console.log(compromise('up').out('tags'));
+    this.tester.printTest();
     this.getActions('I give the key and bag to fred');
     for (let key in tests)
       for (let t of tests[key])
@@ -57,12 +54,11 @@ class NLP {
       let directObjects = ret.directObjs;
       let indirectObjects = ret.indirectObjs;
       let adverb = compromise(chunk).match('#Adverb').out('array');
-      let objects = compromise(chunk).match('#Noun').out('array');
       let prepositions = compromise(chunk).match('#Preposition').out('array');
-      let determiners = compromise(chunk).match('#Determiner').out('array');
       actionObjects.push({
         classifications,
-        //adverb,
+        adverb,
+        prepositions,
         directObjects,
         indirectObjects });
     }
