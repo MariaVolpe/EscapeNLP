@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const gameSessionRouter = require('./routers/GameSession');
+const EscapeNLP = require('./nlp/EscapeNLP');
 
 const app = express();
 
@@ -11,5 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/game', gameSessionRouter);
 
 app.get('/', (req, res) => res.send('Hello World! This is a test.'));
+
+// initialize EscapeNLP logic object
+const escapeNLP = new EscapeNLP();
 
 module.exports = app;

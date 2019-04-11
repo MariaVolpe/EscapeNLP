@@ -1,7 +1,6 @@
 {
     "move": [
         "go with her",
-        "leave this stuff here til",
         "pull of baby doll"
     ],
     "look": [
@@ -24,7 +23,8 @@
     ],
     "attack": [],
     "place": [
-        "set on our day"
+        "set on our day",
+        "leave this stuff here"
     ],
     "jump": [],
     "speak": [

@@ -21,10 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const NlpUtil = require('./nlp-util');
 const LogisticRegressionClassifier = require('../classifiers/logistic-regression-classifier');
 const BinaryNeuralNetworkClassifier = require('../classifiers/binary-neural-network-classifier');
-const fs = require('fs');
 
 /**
  * Class for the NLP Classifier.
@@ -78,9 +78,9 @@ class NlpClassifier {
   tokenizeAndStem(utterance) {
     return typeof utterance === 'string'
       ? this.settings.stemmer.tokenizeAndStem(
-          utterance,
-          this.settings.keepStopWords
-        )
+        utterance,
+        this.settings.keepStopWords,
+      )
       : utterance;
   }
 
@@ -96,8 +96,8 @@ class NlpClassifier {
     for (let i = 0; i < this.docs.length; i += 1) {
       const doc = this.docs[i];
       if (
-        doc.utterance.join(' ') === utteranceStr &&
-        (!intent || doc.intent === intent)
+        doc.utterance.join(' ') === utteranceStr
+        && (!intent || doc.intent === intent)
       ) {
         return i;
       }
@@ -134,7 +134,7 @@ class NlpClassifier {
     }
     const doc = { intent, utterance };
     this.docs.push(doc);
-    utterance.forEach(token => {
+    utterance.forEach((token) => {
       this.features[token] = (this.features[token] || 0) + 1;
     });
   }
@@ -156,7 +156,7 @@ class NlpClassifier {
     const pos = this.posUtterance(utterance, intent);
     if (pos !== -1) {
       this.docs.splice(pos, 1);
-      utterance.forEach(token => {
+      utterance.forEach((token) => {
         this.features[token] = this.features[token] - 1;
         if (this.features[token] <= 0) {
           delete this.features[token];
@@ -179,7 +179,7 @@ class NlpClassifier {
       : this.tokenizeAndStem(srcUtterance);
     const keys = Object.keys(this.features);
     const result = [];
-    keys.forEach(key => {
+    keys.forEach((key) => {
       result.push(utterance.indexOf(key) > -1 ? 1 : 0);
     });
     return result;
@@ -206,11 +206,11 @@ class NlpClassifier {
   async train() {
     if (this.settings.useLRC) {
       this.settings.classifier.clear();
-      this.docs.forEach(doc => {
+      this.docs.forEach((doc) => {
         const tokens = this.tokenizeAndStem(doc.utterance);
         this.settings.classifier.addObservation(
           this.textToFeatures(tokens),
-          doc.intent
+          doc.intent,
         );
       });
       if (this.settings.classifier.observationCount > 0) {
@@ -219,7 +219,7 @@ class NlpClassifier {
     }
     if (this.settings.useNeural) {
       const corpus = [];
-      this.docs.forEach(doc => {
+      this.docs.forEach((doc) => {
         const tokens = this.tokenizeAndStem(doc.utterance);
         corpus.push({
           input: this.tokensToNeural(tokens),
@@ -266,7 +266,7 @@ class NlpClassifier {
     const tokens = this.tokenizeAndStem(utterance);
     if (this.settings.useLRC) {
       const classificationLRC = this.settings.classifier.getClassifications(
-        this.textToFeatures(tokens)
+        this.textToFeatures(tokens),
       );
       if (!this.settings.useNeural) {
         return classificationLRC;
@@ -277,8 +277,8 @@ class NlpClassifier {
       const classificationNeural = this.normalizeNeural(
         this.settings.neuralClassifier.classify(
           this.tokensToNeural(tokens),
-          true
-        )
+          true,
+        ),
       );
       if (classificationLRC[0].label === classificationNeural[0].label) {
         if (classificationNeural[0].value < classificationLRC[0].value) {
@@ -290,7 +290,7 @@ class NlpClassifier {
     if (this.settings.useNeural) {
       const classification = this.settings.neuralClassifier.classify(
         this.tokensToNeural(tokens),
-        true
+        true,
       );
       if (this.isEqualClassification(classification)) {
         return classification;
@@ -331,12 +331,12 @@ class NlpClassifier {
       const { neuralClassifier } = classifier.settings;
       neuralClassifier.settings = classifierClone.neuralClassifier.settings;
       Object.keys(classifierClone.neuralClassifier.classifierMap).forEach(
-        label => {
+        (label) => {
           neuralClassifier.addTrainer(label);
           neuralClassifier.classifierMap[label].fromJSON(
-            classifierClone.neuralClassifier.classifierMap[label]
+            classifierClone.neuralClassifier.classifierMap[label],
           );
-        }
+        },
       );
     }
     if (classifier.settings.useLRC) {
@@ -349,7 +349,7 @@ class NlpClassifier {
           // Create a array filled with as many zeros as features
           const features = Array(classifier.features.length).fill(0);
           // Set the features for the positions stored with 1. The others remains as zero.
-          row.forEach(featPosition => {
+          row.forEach((featPosition) => {
             features[featPosition] = 1;
           });
           lrc.observations[label][rowIndex] = features;
@@ -373,7 +373,7 @@ class NlpClassifier {
     classifierClone.language = classifier.settings.language;
     classifierClone.docs = classifier.docs;
     classifierClone.features = classifier.features;
-    classifierClone.logistic = {}; 
+    classifierClone.logistic = {};
     const { logistic } = classifierClone;
     const lrc = classifier.settings.classifier;
     classifierClone.useLRC = classifier.settings.useLRC;
@@ -383,7 +383,7 @@ class NlpClassifier {
       classifierClone.neuralClassifier = {};
       classifierClone.neuralClassifier.settings = neuralClassifier.settings;
       classifierClone.neuralClassifier.classifierMap = {};
-      Object.keys(neuralClassifier.classifierMap).forEach(key => {
+      Object.keys(neuralClassifier.classifierMap).forEach((key) => {
         classifierClone.neuralClassifier.classifierMap[
           key
         ] = neuralClassifier.classifierMap[key].toJSON();
