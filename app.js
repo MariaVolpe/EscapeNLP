@@ -13,7 +13,4 @@ app.use('/game', gameSessionRouter);
 
 app.get('/', (req, res) => res.send('Hello World! This is a test.'));
 
-// initialize EscapeNLP logic object
-const escapeNLP = new EscapeNLP();
-
 module.exports = app;
