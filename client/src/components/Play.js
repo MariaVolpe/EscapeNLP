@@ -63,8 +63,7 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"],
-                     ["guy", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "There is no puzzle"]
+      prevMessages: [["Nikki Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]
                     ],
       command: '',
       allPlayersReady: false,
