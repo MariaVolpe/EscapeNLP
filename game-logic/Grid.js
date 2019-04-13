@@ -39,7 +39,9 @@ class Grid {
   }
 
   /* Removes an object from the board */
-  remove({ obj, id, name, x, y, defaultMatrix = false }) {
+  remove({
+    obj, id, name, x, y, defaultMatrix = false,
+  }) {
     let NAME;
     let ID;
     let object;
@@ -52,13 +54,13 @@ class Grid {
       this.objectMap.delete(obj);
       this.positionMap.delete(id);
     } else if (id) { // if the id was passed in
-      let p = this.positionMap.get(id);
+      const p = this.positionMap.get(id);
       object = matrix[p.x][p.y];
       NAME = object.name;
       ID = id;
     } else if (name) { // if the name was passed in
       ID = this.nameMap.get(name);
-      let p = this.positionMap.get(ID);
+      const p = this.positionMap.get(ID);
       object = matrix[p.x][p.y];
       NAME = object.name;
     } else { // if the coordinates were passed in
