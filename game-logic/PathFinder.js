@@ -12,8 +12,8 @@ const BoardObject = require('./BoardObject');
 const stringifyCoordinates = (x, y) => `${x},${y}`;
 
 class PathFinder {
-  constructor(grid) {
-    this.grid = grid; // PathFinder needs a reference to grid object to see obstacles
+  constructor(matrix) {
+    this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
   }
 
   // Returns an array of contiguous points illustrating a path
@@ -71,14 +71,14 @@ class PathFinder {
   }
 
   isPassablePoint({ x, y }) {
-    if (x < 0 || y < 0 || x >= this.grid.matrix.length || y >= this.grid.matrix[0].length) {
+    if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
-    if (this.grid.matrix[x][y] === 1) {
+    if (this.matrix[x][y] === 1) {
       return false;
     }
-    if (this.grid.matrix[x][y] === null || !(this.grid.matrix[x][y] instanceof BoardObject)
-      || this.grid.matrix[x][y].isPassable()) {
+    if (this.matrix[x][y] === null || !(this.matrix[x][y] instanceof BoardObject)
+      || this.matrix[x][y].isPassable()) {
       return true;
     }
     return false;
