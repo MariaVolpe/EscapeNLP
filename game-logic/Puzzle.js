@@ -1,5 +1,30 @@
 class Puzzle {
-  // detail elements of puzzle here
+  constructor(num) {
+    // demo logic: for every number passed in, set a different puzzle
+    this.puzzle = this.generatePuzzle(num);
+    this.itemsRequired = [];
+  }
+
+  setPuzzle(num) {
+    switch (num) {
+      case 1:
+        // switch puzzle
+        break;
+      case 2:
+        // weight puzzle
+        break;
+      case 3:
+        // maze
+        break;
+      case 4:
+        // activation
+        break;
+      case 5:
+        // monster
+        break;
+      default:
+    }
+  }
 }
 
-export default Puzzle;
+module.exports = Puzzle;

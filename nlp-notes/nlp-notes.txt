@@ -1,0 +1,20 @@
+1) To get sentences from input
+    compromise:
+    example_text = "Hello Mr. Smith, how are you doing today? The weather is great and python is awesome. The sky is pinkish-blue, you should not eat cardboard"
+    sentences = nlp(example_text).sentences().out('array')
+    output:
+    ["Hello Mr. Smith, how are you doing today? The weather is great and python is awesome.",
+    "The sky is pinkish-blue, you should not eat cardboard"]
+
+2) To get named entities
+    compromise:
+    doc = nlp('the opera about richard nixon visiting china')
+    doc.topics().data()
+    // [
+    //   { text: 'richard nixon' },
+    //   { text: 'china' }
+    // ]
+
+3) To get verbs
+    compromise:
+    do - nlp('').sentences().verbs() // i think?

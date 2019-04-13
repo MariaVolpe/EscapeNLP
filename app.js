@@ -1,11 +1,15 @@
 const express = require('express');
+const helmet = require('helmet');
+const gameSessionRouter = require('./routers/GameSession');
+
 const app = express();
-const port = 3000;
 
-// glove (John told me about this) if training doesnt work well
+app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use('/game', gameSessionRouter);
 
-app.listen(port, () => {
-  console.log(`EscapeNLP Server listening on port ${port}!`); // eslint-disable-line no-console
-});
+app.get('/', (req, res) => res.send('Hello World! This is a test.'));
+
+module.exports = app;

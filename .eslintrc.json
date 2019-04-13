@@ -1,93 +1,16 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
     "rules": {
-        "brace-style": [
-            "error",
-            "1tbs",
-            {
-                "allowSingleLine": true
-            }
-        ],
-        "comma-dangle": [
-            "error",
-            {
-                "arrays": "always-multiline",
-                "objects": "always-multiline",
-                "imports": "always-multiline",
-                "exports": "always-multiline",
-                "functions": "ignore"
-            }
-        ],
-        "eol-last": [
-            "error"
-        ],
-        "func-call-spacing": [
-            "error",
-            "never"
-        ],
-        "function-paren-newline": [
-            "error",
-            "never"
-        ],
-        "indent": [
-            "error",
-            2
-        ],
-        "key-spacing": [
-            "error",
-            {
-                "beforeColon": false
-            }
-        ],
-        "keyword-spacing": [
-            "error",
-            {
-                "before": true,
-                "after": true
-            }
-        ],
-        "linebreak-style": [
-            "off",
-            "unix"
-        ],
-        "no-console": [
-            "warn"
-        ],
-        "no-trailing-spaces": [
-            "error"
-        ],
-        "no-undef": [
-            "error"
-        ],
-        "no-unused-vars": [
-            "error"
-        ],
-        "object-curly-spacing": [
-            "error",
-            "always"
-        ],
-        "prefer-arrow-callback": [
-            "error"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
+        "linebreak-style": "off",
+        "no-plusplus": "off",
+        "consistent-return": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "latest"
+        }
+    },
+    "env": {
+        "jest": true
+    },
+    "extends": "airbnb-base"
 }

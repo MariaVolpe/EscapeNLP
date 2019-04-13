@@ -1,0 +1,16 @@
+.buttons {
+  border-radius: 20px;
+  border: 5px solid #D93649;
+  padding: 15px;
+  background-color: white;
+  color: #231166;
+  width: 20%;
+  height: auto;
+}
+
+.button {
+  position: relative;
+  right: 7px;
+  width: 100%;
+  margin: 7px;
+}
