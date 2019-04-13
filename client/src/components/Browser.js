@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
 import Lobby from './Lobby';
 import Navigation from './Navigation';
 import CreateLobbyModal from './CreateLobbyModal';
@@ -9,11 +10,29 @@ class Browser extends Component {
   constructor(props){
     super(props);
     this.state = {
-      createLobbyIsOpen: false
+      createLobbyIsOpen: false,
+      lobbies: []
     }
+
+    this.socket = socketIOClient('http://localhost:8000');
+
+    this.socket.on('getAllRooms', (allRooms) => {
+      let lobbies = [];
+      for (let i=0; i<allRooms.length; i++) {
+        lobbies.push( <div className="five wide column">
+                        <Lobby lobbyName={allRooms[i]} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+                      </div>);
+      }
+      this.setState({lobbies});
+    })
 
     this.onCreateClick = this.onCreateClick.bind(this);
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
+  }
+
+  componentDidMount = () => {
+    this.socket.emit('getAllRooms');
+    this.socket.emit('lobbyBrowser');
   }
 
   onLobbyClick = (event) => {
@@ -28,6 +47,8 @@ class Browser extends Component {
   }
 
   handleCreateSubmit = (event) => {
+    //console.log(event.target[0].value);
+    window.sessionStorage.setItem('roomId', event.target[0].value);
     window.location.replace('/play');
     event.preventDefault();
   }
@@ -40,39 +61,7 @@ class Browser extends Component {
         <h1 style={{textAlign: "center", marginTop: '3%', color: 'white'}}>Current Lobbies</h1>
 
         <div className="ui grid" style={{marginTop: '3%', marginLeft: '3%', width: '100%'}}>
-          <div className="five wide column">
-            <Lobby lobbyName="puzzle solvers" playerCount={4} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
-          <div className="five wide column">
-            <Lobby lobbyName="new people only" playerCount={5} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
-          </div>
+          {this.state.lobbies}
         </div>
         <CreateLobbyModal isOpen={this.state.createLobbyIsOpen} onToggle={this.onCreateClick} handleSubmit={this.handleCreateSubmit}/>
         <Button

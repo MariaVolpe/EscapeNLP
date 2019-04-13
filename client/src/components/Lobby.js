@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'reactstrap';
+import socketIOClient from 'socket.io-client';
 import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
 import '../styles/Lobby.css';
@@ -12,6 +13,7 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
+      roomSize: 0
     }
     this.confirmInfo = {
       title: 'Join Game?',
@@ -19,21 +21,41 @@ class Lobby extends Component {
       confirm: 'Join',
       cancel: 'Cancel',
     };
+    this.socket = socketIOClient('http://localhost:8000');
+
+    this.socket.on('canJoin', (isJoinable) => {
+      if (isJoinable === true) {
+        console.log('Join a room');
+        //window.location.replace('/play');
+        axios.post('/game/0/player')
+          .then((res) => {
+            console.log(res);
+          });
+        if (!this.state.confirmOpen) {
+          this.setState({ confirmOpen: !this.state.confirmOpen });
+        }
+      }
+      else {
+        if (this.state.confirmOpen) {
+          this.setState({ confirmOpen: !this.state.confirmOpen });
+        }
+        this.setState({ errorOpen: !this.state.errorOpen });
+      }
+    });
+
+    this.socket.on('checkRoomSize', (roomSize) => {
+      this.setState({roomSize});
+    });
+
+  }
+
+  componentDidMount = () => {
+    this.socket.emit('checkRoomSize', (this.props.lobbyName));
+    this.socket.emit('lobbyBrowser');
   }
 
   onJoinClick = (event) => {
-    if (this.props.playerCount < 5) {
-      console.log('Join a room');
-      //window.location.replace('/play');
-      axios.post('/game/0/player')
-        .then((res) => {
-          console.log(res);
-        });
-      this.setState({ confirmOpen: !this.state.confirmOpen });
-    }
-    else {
-      this.setState({ errorOpen: !this.state.errorOpen });
-    }
+    this.socket.emit('canJoin', this.props.lobbyName);
   }
 
   onErrorSubmit = (event) => {
@@ -42,7 +64,11 @@ class Lobby extends Component {
   }
 
   onConfirmSubmit = (event) => {
-    window.location.replace('/play');
+    this.socket.emit('canJoin', this.props.lobbyName);
+    if (this.state.confirmOpen) {
+      window.sessionStorage.setItem('roomId', this.props.lobbyName);
+      window.location.replace('/play');
+    }
     event.preventDefault();
   }
 
@@ -75,7 +101,7 @@ class Lobby extends Component {
             Lobby Info
           </Col>
           <Col>
-            Player Count: {this.props.playerCount}/5
+            Player Count: {this.state.roomSize}/5
           </Col>
         </Row>
       </a>

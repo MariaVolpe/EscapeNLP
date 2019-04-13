@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
+import socketIOClient from 'socket.io-client';
 import MultiButton from './MultiButton';
 import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
@@ -13,40 +14,40 @@ class Play extends Component {
     super(props);
     this.state = {
       playerOneInfo: {
-        name: 'Nicky Ken',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
-        ready: true
+        ready: false
       },
       playerTwoInfo: {
-        name: 'Brian Camper',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
-        ready: true
+        ready: false
       },
       playerThreeInfo: {
-        name: 'Ismail Clear',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
-        ready: true
+        ready: false
       },
       playerFourInfo: {
-        name: 'John Green',
+        name: '',
         inventory: {
           key: 'doorKey',
           weapon: 'sword',
         },
         picture: '[pic]',
-        ready: true
+        ready: false
       },
       playerFiveInfo: {
         name: '',
@@ -59,7 +60,7 @@ class Play extends Component {
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
+      prevMessages: [],
       command: '',
       allPlayersReady: false,
       setName: false,
@@ -68,6 +69,46 @@ class Play extends Component {
       warningOpen: false
     }
 
+    this.socket = socketIOClient('http://localhost:8000');
+
+    this.socket.on('chatMessage', (mess) => {
+      let prevMessages = this.state.prevMessages;
+      prevMessages.push(mess);
+      this.setState({ message: '', command: '', prevMessages });
+    });
+
+    this.socket.on('setNames', (players) => {
+      let playerOneInfo = this.state.playerOneInfo;
+      let playerTwoInfo = this.state.playerTwoInfo;
+      let playerThreeInfo = this.state.playerThreeInfo;
+      let playerFourInfo = this.state.playerFourInfo;
+      let playerFiveInfo = this.state.playerFiveInfo;
+      console.log(players);
+      if (players[0] !== undefined) {
+        playerOneInfo['name'] = players[0][0];
+        playerOneInfo['ready'] = players[0][1];
+      }
+      if (players[1] !== undefined) {
+        playerTwoInfo['name'] = players[1][0];
+        playerTwoInfo['ready'] = players[1][1];
+      }
+      if (players[2] !== undefined) {
+        playerThreeInfo['name'] = players[2][0];
+        playerThreeInfo['ready'] = players[2][1];
+      }
+      if (players[3] !== undefined) {
+        playerFourInfo['name'] = players[3][0];
+        playerFourInfo['ready'] = players[3][1];
+      }
+      if (players[4] !== undefined) {
+        playerFiveInfo['name'] = players[4][0];
+        playerFiveInfo['ready'] = players[4][1];
+      }
+      let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
+
+      this.setState({playerOneInfo, playerTwoInfo, playerThreeInfo, playerFourInfo, playerFiveInfo, allPlayersReady});
+    });
+
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
     this.onCommandKeyPress = this.onCommandKeyPress.bind(this);
@@ -75,16 +116,18 @@ class Play extends Component {
     this.readyUp = this.readyUp.bind(this);
   }
 
+  componentDidMount = () => {
+    this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
+  }
+
   onMessageKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = '"' + event.target.value + '"';
+      let mess = event.target.value;
       const message = [commenter, time, mess];
-      let prevMessages = this.state.prevMessages;
-      prevMessages.push(message);
-      this.setState({ message: '', prevMessages });
+      this.socket.emit('chatMessage', message);
     }
   }
 
@@ -100,11 +143,9 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = 'You wanted to: "' + event.target.value + '"';
+      let mess = 'You wanted to: ' + event.target.value;
       const message = [commenter, time, mess];
-      let prevMessages = this.state.prevMessages;
-      prevMessages.push(message);
-      this.setState({ command: '', prevMessages });
+      this.socket.emit('chatMessage', message);
     }
   }
 
@@ -114,14 +155,7 @@ class Play extends Component {
   }
 
   readyUp = (event) => {
-    let playerFiveInfo = this.state.playerFiveInfo;
-    playerFiveInfo.ready = true;
-    let playerOneInfo = this.state.playerOneInfo;
-    let playerTwoInfo = this.state.playerTwoInfo;
-    let playerThreeInfo = this.state.playerThreeInfo;
-    let playerFourInfo = this.state.playerFourInfo;
-    let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
-    this.setState({ allPlayersReady, playerFiveInfo});
+    this.socket.emit('readyToggle');
   }
 
   onNameSubmit = (event) => {
@@ -136,11 +170,12 @@ class Play extends Component {
     }
     let takenName = playerName === this.state.playerOneInfo.name || playerName === this.state.playerTwoInfo.name || playerName === this.state.playerThreeInfo.name || playerName === this.state.playerFourInfo.name;
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      let playerFiveInfo = this.state.playerFiveInfo;
-      playerFiveInfo["name"] = playerName;
+      // let playerFiveInfo = this.state.playerFiveInfo;
+      // playerFiveInfo["name"] = playerName;
       //let allPlayers = this.state.allPlayers;
       //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
-      this.setState({playerFiveInfo, setName: !this.state.setName});
+      this.socket.emit('getName', [playerName, false]);
+      this.setState({setName: !this.state.setName});
     }
     else {
       this.setState({warningOpen: true});

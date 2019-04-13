@@ -9,19 +9,6 @@ import '../styles/App.css';
 
 class App extends Component {
 
-  send = () => {
-    const socket = socketIOClient('/game');
-    socket.emit('change color', 'it works') // change 'red' to this.state.color
-  }
-
-  componentDidMount = () => {
-    const socket = socketIOClient('/game');
-    setInterval(this.send(), 1000);
-    socket.on('messageFromServer', (col) => {
-      
-        console.log(col);
-    })
-}
 
   render() {
     return (
