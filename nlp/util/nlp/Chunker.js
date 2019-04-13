@@ -93,14 +93,7 @@ class Chunker {
     return { directObjs, indirectObjs };
   }
 
-  nextNoun(words, i) {
-    for (;i < words.length; i++) {
-      const word = words[i];
-      const tags = this.stripTags(word);
-      if (tags.has('Noun')) return i;
-    } return i;
-  }
-
+  // returns a set of the part of speech tags a word possesses
   stripTags(word) {
     const tagArr = compromise(word).out('tags').map(t => t.tags);
     const tags = new Set();
@@ -108,6 +101,7 @@ class Chunker {
     return tags;
   }
 
+  // Removes punctuation from input
   preprocessInput(input) {
     input = input.toLowerCase();
     input = input.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');// remove punctuation

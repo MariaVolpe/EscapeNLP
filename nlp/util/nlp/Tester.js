@@ -55,8 +55,9 @@ class Tester {
         }
       }
     }
-    this.lastTest = { errorRate: errors / total, incorrect };
-    return this.lastTest;
+    const errorPercent = errors / total;
+    this.lastTest = { errorRate: errorPercent, incorrect };
+    return errorPercent;
   }
 
   // Uses customBatch of test data passed by user to evaluate error rate of model

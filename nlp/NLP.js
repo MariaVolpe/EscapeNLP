@@ -14,7 +14,6 @@ class NLP {
     this.chunker = new Chunker();
     this.tester = new Tester();
     this.actionClassifier.load('./nlp/classifier-model.nlp');
-    this.runTests();
   }
 
   runTests() {
@@ -59,7 +58,6 @@ class NLP {
         indirectObjects,
       });
     }
-    console.log(actionObjects);
     return actionObjects;
   }
 
