@@ -43,17 +43,17 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
       const obj = movingObjects[i];
-      if (!this.objectMap.has(obj)) // include pronoun caching later
+      if (!this.boardObjects.has(obj) || !this.boardObjects.get(obj).isMovable()) // include pronoun caching later
       { return false; }
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      if (!this.objectMap.has(obj))// include pronoun caching later
+      if (!this.boardObjects.has(obj))// include pronoun caching later
       { return false; }
     }
 
-    for (let i = 0; i < destinations.length; i++) for (let i = 0; i < movingObjects.length; i++) this.grid.moveToDestination(movingObjects, destinations[i]);
+    for (let i = 0; i < destinations.length; i++) for (let j = 0; j < movingObjects.length; j++) this.grid.moveByDestination(movingObjects[j], destinations[i]);
     return true;
   }
 
