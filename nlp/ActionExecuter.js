@@ -37,8 +37,8 @@ class ActionExecuter {
       destinations = data.indirectObjects;
       movingObjects = data.directObjects;
     } else // if there are only direct objects, use those as the destination
-      destinations = data.directObjects;
-    
+    { destinations = data.directObjects; }
+
 
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
@@ -53,9 +53,7 @@ class ActionExecuter {
       { return false; }
     }
 
-    for (let i = 0; i < destinations.length; i++)
-      for (let i = 0; i < movingObjects.length; i++)
-        this.grid.moveToDestination(movingObjects, destinations[i]);
+    for (let i = 0; i < destinations.length; i++) for (let i = 0; i < movingObjects.length; i++) this.grid.moveToDestination(movingObjects, destinations[i]);
     return true;
   }
 
