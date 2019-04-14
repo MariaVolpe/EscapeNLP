@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('getAllRooms', gameRooms);
   });
 
-  socket.on('canJoin', (roomInfo) => {
+  socket.on('attemptJoin', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
       socket.emit('canJoin', false);
     }
@@ -47,12 +47,12 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('secondCanJoin', (roomInfo) => {
+  socket.on('confirmJoin', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
-      socket.emit('secondCanJoin', false);
+      socket.emit('confirmJoin', false);
     }
     else {
-      socket.emit('secondCanJoin', true);
+      socket.emit('confirmJoin', true);
     }
   });
 

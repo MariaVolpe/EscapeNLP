@@ -23,8 +23,8 @@ class Lobby extends Component {
     };
     this.socket = socketIOClient('http://localhost:8000');
 
-    this.socket.on('canJoin', (isJoinable) => {
-      if (isJoinable === true) {
+    this.socket.on('canJoin', (isJoinable) => {     
+      if (isJoinable) {
         console.log('Join a room');
         //window.location.replace('/play');
         axios.post('/game/0/player')
@@ -38,7 +38,7 @@ class Lobby extends Component {
       }
     });
 
-    this.socket.on('secondCanJoin', (isJoinable) => {
+    this.socket.on('confirmJoin', (isJoinable) => {
       if (isJoinable) {
         window.sessionStorage.setItem('roomId', this.props.lobbyName);
         window.location.replace('/play');
@@ -60,7 +60,7 @@ class Lobby extends Component {
   }
 
   onJoinClick = (event) => {
-    this.socket.emit('canJoin', this.props.lobbyName);
+    this.socket.emit('attemptJoin', this.props.lobbyName);
   }
 
   onErrorSubmit = (event) => {
@@ -69,7 +69,7 @@ class Lobby extends Component {
   }
 
   onConfirmSubmit = (event) => {
-    this.socket.emit('secondCanJoin', this.props.lobbyName);
+    this.socket.emit('confirmJoin', this.props.lobbyName);
     event.preventDefault();
   }
 
