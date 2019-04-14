@@ -13,7 +13,7 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
-      roomSize: 0
+      roomSize: 0,
     }
     this.confirmInfo = {
       title: 'Join Game?',
@@ -25,26 +25,25 @@ class Lobby extends Component {
 
     this.socket.on('canJoin', (isJoinable) => {     
       if (isJoinable) {
-        console.log('Join a room');
-        //window.location.replace('/play');
-        axios.post('/game/0/player')
-          .then((res) => {
-            console.log(res);
-          });
-        this.setState({ confirmOpen: !this.state.confirmOpen });
-      }
-      else {
-        this.setState({ errorOpen: !this.state.errorOpen });
+        this.setState({ confirmOpen: true });
+      } else {
+        this.setState({ errorOpen: true });
       }
     });
 
     this.socket.on('confirmJoin', (isJoinable) => {
       if (isJoinable) {
-        window.sessionStorage.setItem('roomId', this.props.lobbyName);
-        window.location.replace('/play');
-      }
-      else {
-        this.setState({ confirmOpen: !this.state.confirmOpen, errorOpen: !this.state.errorOpen });
+        window.sessionStorage.setItem("roomId", this.props.lobbyName);
+        window.location.replace("/play");
+
+        axios.post("/game/0/player").then(res => {
+          console.log(res);
+        });
+      } else {
+        this.setState({
+          confirmOpen: !this.state.confirmOpen,
+          errorOpen: !this.state.errorOpen,
+        });
       }
     });
 
