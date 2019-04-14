@@ -32,7 +32,6 @@ class Browser extends Component {
 
   componentDidMount = () => {
     this.socket.emit('getAllRooms');
-    this.socket.emit('lobbyBrowser');
   }
 
   onLobbyClick = (event) => {
