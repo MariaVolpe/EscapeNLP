@@ -24,8 +24,8 @@ io.on('connection', (socket) => {
 
   var currentRoom;
 
-  socket.on('joinRoom', (roomInfo) => {
-    socket.join(roomInfo);
+  socket.on('joinRoom', (roomId) => {
+    socket.join(roomId);
     currentRoom = Object.keys( io.sockets.adapter.sids[socket.id] )[1];
     let allRooms = Object.keys(io.sockets.adapter.rooms);
     let gameRooms = [];

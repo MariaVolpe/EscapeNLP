@@ -33,10 +33,11 @@ class Lobby extends Component {
 
     this.socket.on('confirmJoin', (isJoinable) => {
       if (isJoinable) {
-        window.sessionStorage.setItem("roomId", this.props.lobbyName);
+        window.sessionStorage.setItem("roomName", this.props.lobbyName);
+        window.sessionStorage.setItem("roomId", this.props.lobbyId);        
         window.location.replace("/play");
 
-        axios.post("/game/0/player").then(res => {
+        axios.post(`/game/${this.props.lobbyId}/player`).then(res => {
           console.log(res);
         });
       } else {

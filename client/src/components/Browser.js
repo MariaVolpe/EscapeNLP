@@ -4,6 +4,8 @@ import Lobby from './Lobby';
 import Navigation from './Navigation';
 import CreateLobbyModal from './CreateLobbyModal';
 import { Button } from 'reactstrap';
+import axios from 'axios';
+
 // import '../styles/Browser.css';
 
 class Browser extends Component {
@@ -47,9 +49,14 @@ class Browser extends Component {
 
   handleCreateSubmit = (event) => {
     //console.log(event.target[0].value);
-    window.sessionStorage.setItem('roomId', event.target[0].value);
-    window.location.replace('/play');
     event.preventDefault();
+    window.sessionStorage.setItem('roomName', event.target[0].value);
+
+    axios.post(`/game`).then(res => {
+      console.log(res);
+      window.sessionStorage.setItem('roomId', res.data.gameId);
+      window.location.replace('/play');
+    });
   }
 
   render() {
