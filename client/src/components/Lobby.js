@@ -31,15 +31,20 @@ class Lobby extends Component {
           .then((res) => {
             console.log(res);
           });
-        if (!this.state.confirmOpen) {
-          this.setState({ confirmOpen: !this.state.confirmOpen });
-        }
+        this.setState({ confirmOpen: !this.state.confirmOpen });
       }
       else {
-        if (this.state.confirmOpen) {
-          this.setState({ confirmOpen: !this.state.confirmOpen });
-        }
         this.setState({ errorOpen: !this.state.errorOpen });
+      }
+    });
+
+    this.socket.on('secondCanJoin', (isJoinable) => {
+      if (isJoinable) {
+        window.sessionStorage.setItem('roomId', this.props.lobbyName);
+        window.location.replace('/play');
+      }
+      else {
+        this.setState({ confirmOpen: !this.state.confirmOpen, errorOpen: !this.state.errorOpen });
       }
     });
 
@@ -64,11 +69,7 @@ class Lobby extends Component {
   }
 
   onConfirmSubmit = (event) => {
-    this.socket.emit('canJoin', this.props.lobbyName);
-    if (this.state.confirmOpen) {
-      window.sessionStorage.setItem('roomId', this.props.lobbyName);
-      window.location.replace('/play');
-    }
+    this.socket.emit('secondCanJoin', this.props.lobbyName);
     event.preventDefault();
   }
 
