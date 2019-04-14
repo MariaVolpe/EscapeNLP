@@ -27,6 +27,15 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', (roomInfo) => {
     socket.join(roomInfo);
     currentRoom = Object.keys( io.sockets.adapter.sids[socket.id] )[1];
+    let allRooms = Object.keys(io.sockets.adapter.rooms);
+    let gameRooms = [];
+    for (let i=0; i<allRooms.length; i++) {
+      //every socket is automatically put into a hashed room of length 20
+      if (allRooms[i].length < 20) {
+        gameRooms.push(allRooms[i]);
+      }
+    }
+    socket.broadcast.emit('getAllRooms', gameRooms);
   });
 
   socket.on('canJoin', (roomInfo) => {
@@ -35,6 +44,15 @@ io.on('connection', (socket) => {
     }
     else {
       socket.emit('canJoin', true);
+    }
+  });
+
+  socket.on('secondCanJoin', (roomInfo) => {
+    if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
+      socket.emit('secondCanJoin', false);
+    }
+    else {
+      socket.emit('secondCanJoin', true);
     }
   });
 
