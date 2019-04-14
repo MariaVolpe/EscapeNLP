@@ -1,5 +1,5 @@
 const socketio = require('socket.io');
-const app = require('./app');
+const { app, gameContainer } = require('./app');
 
 const PORT = 8000;
 
