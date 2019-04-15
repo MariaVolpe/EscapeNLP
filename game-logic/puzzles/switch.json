@@ -1,0 +1,14 @@
+{
+    "puzzle_type": "switch",
+    "items_required": [
+        {
+            "name": "switch",
+            "id": "switch",
+            "manage" : true,
+            "coordinates": {
+                "x": 4,
+                "y": 6
+            }
+        }
+    ]
+}

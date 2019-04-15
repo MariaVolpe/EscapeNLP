@@ -45,6 +45,7 @@ class GameSessionsContainer {
       return { error: { status: 404 } };
     }
     this.games.get(id).generateGame();
+    return { error: null };
   }
 
   addPlayerToSession(gameId, loggedInPlayerId) {

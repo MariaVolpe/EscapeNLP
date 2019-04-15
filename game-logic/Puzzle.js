@@ -2,6 +2,7 @@ class Puzzle {
   constructor(num) {
     // demo logic: for every number passed in, set a different puzzle
     this.puzzle = this.generatePuzzle(num);
+    this.itemsRequired = [];
   }
 
   setPuzzle(num) {
