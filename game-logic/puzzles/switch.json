@@ -2,7 +2,7 @@
     "puzzle_type": "switch",
     "items_required": [
         {
-            "name": "switch",
+            "name": "door_switch",
             "id": "switch",
             "manage" : true,
             "coordinates": {
