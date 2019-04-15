@@ -7,19 +7,20 @@ class ActionExecuter {
   }
 
   createFunctionMap() {
-    const functionMap = {};
-    functionMap['move'] = this.executeMove;
-    functionMap['look'] = this.executeLook;
-    functionMap['take'] = this.executeTake;
-    functionMap['give'] = this.executeGive;
-    functionMap['destroy'] = this.executeDestroy;
-    functionMap['attack'] = this.executeAttack;
-    functionMap['place'] = this.executePlace;
-    functionMap['jump'] = this.executeJump;
-    functionMap['speak'] = this.executeSpeak;
-    functionMap['activate'] = this.executeActivate;
-    functionMap['deactivate'] = this.executeDeactivate;
-    functionMap['use'] = this.executeUse;
+    const functionMap = {
+      move: this.executeMove,
+      look: this.executeLook,
+      take: this.executeTake,
+      give: this.executeGive,
+      destroy: this.executeDestroy,
+      attack: this.executeAttack,
+      place: this.executePlace,
+      jump: this.executeJump,
+      speak: this.executeSpeak,
+      activate: this.executeActivate,
+      deactivate: this.executeDeactivate,
+      use: this.executeUse
+    };
     return functionMap;
   }
 
