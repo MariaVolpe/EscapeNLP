@@ -20,7 +20,7 @@ class Lobby extends Component {
       confirm: 'Join',
       cancel: 'Cancel',
     };
-    this.socket = socketIOClient('http://localhost:8000');
+    this.socket = socketIOClient('');
 
     this.socket.on('canJoin', (isJoinable) => {     
       if (isJoinable) {

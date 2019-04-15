@@ -69,7 +69,7 @@ class Play extends Component {
       warningOpen: false
     }
 
-    this.socket = socketIOClient('http://localhost:8000');
+    this.socket = socketIOClient('');
 
     this.socket.on('chatMessage', (mess) => {
       let prevMessages = this.state.prevMessages;

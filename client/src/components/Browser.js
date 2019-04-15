@@ -14,7 +14,7 @@ class Browser extends Component {
       lobbies: [],
     }
 
-    this.socket = socketIOClient('http://localhost:8000');
+    this.socket = socketIOClient('');
 
     this.socket.on('refreshRoomsReceived', (allRooms) => {
       const lobbies = allRooms.map(({ gameName, gameId }) => {
