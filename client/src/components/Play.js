@@ -118,6 +118,7 @@ class Play extends Component {
 
   componentDidMount = () => {
     this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
+    this.socket.emit('getName', '');
   }
 
   onMessageKeyPress = (event) => {
