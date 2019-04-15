@@ -8,28 +8,28 @@ class ActionExecuter {
 
   createFunctionMap() {
     const functionMap = {};
-    functionMap['move'] = this.doMove;
-    functionMap['look'] = this.doLook;
-    functionMap['take'] = this.doTake;
-    functionMap['give'] = this.doGive;
-    functionMap['destroy'] = this.doDestroy;
-    functionMap['attack'] = this.doAttack;
-    functionMap['place'] = this.doPlace;
-    functionMap['jump'] = this.doJump;
-    functionMap['speak'] = this.doSpeak;
-    functionMap['activate'] = this.doActivate;
-    functionMap['deactivate'] = this.doDeactivate;
-    functionMap['use'] = this.doUse;
+    functionMap['move'] = this.executeMove;
+    functionMap['look'] = this.executeLook;
+    functionMap['take'] = this.executeTake;
+    functionMap['give'] = this.executeGive;
+    functionMap['destroy'] = this.executeDestroy;
+    functionMap['attack'] = this.executeAttack;
+    functionMap['place'] = this.executePlace;
+    functionMap['jump'] = this.executeJump;
+    functionMap['speak'] = this.executeSpeak;
+    functionMap['activate'] = this.executeActivate;
+    functionMap['deactivate'] = this.executeDeactivate;
+    functionMap['use'] = this.executeUse;
     return functionMap;
   }
 
   // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction() //
   executeAction(user, actionType, data) {
-    return this.functionMap.get(actionType)(user, data);
+    return this.functionMap[actionType](user, data);
   }
 
   // Executes a move action if data is valid //
-  doMove(user, data) {
+  executeMove(user, data) {
     // Check for all the direct objects, then indirect
     let destinations = [];
     let movingObjects = [];
@@ -57,58 +57,47 @@ class ActionExecuter {
     return true;
   }
 
-  // Executes a look action if data is valid //
-  doLook(user, data) {
+  executeLook(user, data) {
 
   }
 
-  // Executes a take action if data is valid //
-  doTake(data) {
+  executeTake(data) {
 
   }
 
-  // Executes a give action if data is valid //
-  doGive(data) {
+  executeGive(data) {
+
+  }
+  
+  executeDestroy(data) {
 
   }
 
-  // Executes a destroy action if data is valid //
-  doDestroy(data) {
+  executeAttack(data) {
 
   }
 
-  // Executes an attack action if data is valid //
-  doAttack(data) {
+  executePlace(data) {
 
   }
 
-  // Executes a place action if data is valid //
-  doPlace(data) {
+  executeJump(data) {
 
   }
 
-  // Executes a jump action if data is valid //
-  doJump(data) {
+  executeSpeak(data) {
 
   }
 
-  // Executes a speak action if data is valid //
-  doSpeak(data) {
+  executeActivate(data) {
 
   }
 
-  // Executes a activate action if data is valid //
-  doActivate(data) {
+  executeDeactivate(data) {
 
   }
 
-  // Executes a deactivate action if data is valid //
-  doDeactivate(data) {
-
-  }
-
-  // Executes a use action if data is valid //
-  doUse(data) {
+  executeUse(data) {
 
   }
 }
