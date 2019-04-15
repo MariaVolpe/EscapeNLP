@@ -21,8 +21,9 @@ class Browser extends Component {
     this.socket.on('getAllRooms', (allRooms) => {
       let lobbies = [];
       for (let i=0; i<allRooms.length; i++) {
+        console.log(allRooms[i].gameName, ' ', allRooms[i]);
         lobbies.push( <div className="five wide column">
-                        <Lobby lobbyName={allRooms[i]} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+                        <Lobby lobbyName={allRooms[i].gameName} lobbyId={allRooms[i].gameId} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
                       </div>);
       }
       this.setState({lobbies});
@@ -50,9 +51,10 @@ class Browser extends Component {
   handleCreateSubmit = (event) => {
     //console.log(event.target[0].value);
     event.preventDefault();
-    window.sessionStorage.setItem('roomName', event.target[0].value);
+    const name = event.target[0].value;
+    window.sessionStorage.setItem('roomName', name);
 
-    axios.post(`/game`).then(res => {
+    axios.post('/game', { gameName: name }).then(res => {
       console.log(res);
       window.sessionStorage.setItem('roomId', res.data.gameId);
       window.location.replace('/play');

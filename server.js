@@ -14,6 +14,11 @@ const server = app.listen(PORT, () => {
 
 const io = socketio(server);
 
+const getGames = () => {
+  const { data } = gameContainer.getAllSessions();
+  return data;
+};
+
 io.on('connection', (socket) => {
   console.log('connection established');
   socket.emit('messageFromServer', { data: 'welcome' });
@@ -26,16 +31,7 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
-    currentRoom = Object.keys( io.sockets.adapter.sids[socket.id] )[1];
-    let allRooms = Object.keys(io.sockets.adapter.rooms);
-    let gameRooms = [];
-    for (let i=0; i<allRooms.length; i++) {
-      //every socket is automatically put into a hashed room of length 20
-      if (allRooms[i].length < 20) {
-        gameRooms.push(allRooms[i]);
-      }
-    }
-    socket.broadcast.emit('getAllRooms', gameRooms);
+    socket.broadcast.emit('getAllRooms', getGames());
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -65,16 +61,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('getAllRooms', () => {
-    let allRooms = Object.keys(io.sockets.adapter.rooms);
-    let gameRooms = [];
-    for (let i=0; i<allRooms.length; i++) {
-      //every socket is automatically put into a hashed room of length 20
-      if (allRooms[i].length < 20) {
-        gameRooms.push(allRooms[i]);
-      }
-    }
-    console.log(gameRooms);
-    socket.emit('getAllRooms', gameRooms);
+    socket.emit('getAllRooms', getGames());
   });
 
   socket.on('chatMessage', (dataFromClient) => {

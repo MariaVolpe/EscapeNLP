@@ -32,7 +32,7 @@ router.get('/:gameId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const results = req.gameContainer.addGame();
+  const results = req.gameContainer.addGame(req.body.gameName);
   const { data } = results;
   res.status(201).json({ error: null, data });
 });
