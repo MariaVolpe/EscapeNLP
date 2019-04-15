@@ -27,8 +27,7 @@ class ActionExecuter {
   executeAction(user, actionType, data) {
     return this.functionMap[actionType](user, data);
   }
-
-  // Executes a move action if data is valid //
+  
   executeMove(user, data) {
     // Check for all the direct objects, then indirect
     let destinations = [];
