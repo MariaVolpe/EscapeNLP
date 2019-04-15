@@ -54,11 +54,16 @@ class Browser extends Component {
     const name = event.target[0].value;
     window.sessionStorage.setItem('roomName', name);
 
-    axios.post('/game', { gameName: name }).then(res => {
-      console.log(res);
-      window.sessionStorage.setItem('roomId', res.data.gameId);
-      window.location.replace('/play');
-    });
+    axios.post('/game', { gameName: name })
+      .then(res => {
+        console.log(res);
+        const id = res.data.data.gameId;
+        window.sessionStorage.setItem('roomId', id);
+        axios.post(`/game/${id}/player`).then(res => {
+          console.log(res);
+          window.location.replace('/play');
+        });
+      });
   }
 
   render() {

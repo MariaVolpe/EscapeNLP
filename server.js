@@ -19,6 +19,8 @@ const getGames = () => {
   return data;
 };
 
+var currentRoom;
+
 io.on('connection', (socket) => {
   console.log('connection established');
   socket.emit('messageFromServer', { data: 'welcome' });
@@ -27,10 +29,9 @@ io.on('connection', (socket) => {
     console.log(dataFromClient);
   });
 
-  var currentRoom;
-
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
+    currentRoom = roomId;
     socket.broadcast.emit('getAllRooms', getGames());
   });
 

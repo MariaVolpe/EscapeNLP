@@ -33,9 +33,9 @@ class Lobby extends Component {
 
     this.socket.on('confirmJoin', (isJoinable) => {
       if (isJoinable) {
-        window.sessionStorage.setItem("roomName", this.props.lobbyName);
-        window.sessionStorage.setItem("roomId", this.props.lobbyId);        
-        window.location.replace("/play");
+        window.sessionStorage.setItem('roomName', this.props.lobbyName);
+        window.sessionStorage.setItem('roomId', this.props.lobbyId);        
+        window.location.replace('/play');
 
         axios.post(`/game/${this.props.lobbyId}/player`).then(res => {
           console.log(res);
@@ -55,12 +55,12 @@ class Lobby extends Component {
   }
 
   componentDidMount = () => {
-    this.socket.emit('checkRoomSize', (this.props.lobbyName));
+    this.socket.emit('checkRoomSize', this.props.lobbyId);
     this.socket.emit('lobbyBrowser');
   }
 
   onJoinClick = (event) => {
-    this.socket.emit('attemptJoin', this.props.lobbyName);
+    this.socket.emit('attemptJoin', this.props.lobbyId);
   }
 
   onErrorSubmit = (event) => {
@@ -69,7 +69,7 @@ class Lobby extends Component {
   }
 
   onConfirmSubmit = (event) => {
-    this.socket.emit('confirmJoin', this.props.lobbyName);
+    this.socket.emit('confirmJoin', this.props.lobbyId);
     event.preventDefault();
   }
 
