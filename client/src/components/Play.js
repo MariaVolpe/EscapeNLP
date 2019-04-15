@@ -87,22 +87,37 @@ class Play extends Component {
       if (players[0] !== undefined) {
         playerOneInfo['name'] = players[0][0];
         playerOneInfo['ready'] = players[0][1];
+      } else {
+        playerOneInfo['name'] = '';
+        playerOneInfo['ready'] = false;
       }
       if (players[1] !== undefined) {
         playerTwoInfo['name'] = players[1][0];
         playerTwoInfo['ready'] = players[1][1];
+      } else {
+        playerTwoInfo['name'] = '';
+        playerTwoInfo['ready'] = false;
       }
       if (players[2] !== undefined) {
         playerThreeInfo['name'] = players[2][0];
         playerThreeInfo['ready'] = players[2][1];
+      } else {
+        playerThreeInfo['name'] = '';
+        playerThreeInfo['ready'] = false;
       }
       if (players[3] !== undefined) {
         playerFourInfo['name'] = players[3][0];
         playerFourInfo['ready'] = players[3][1];
+      } else {
+        playerFourInfo['name'] = '';
+        playerFourInfo['ready'] = false;
       }
       if (players[4] !== undefined) {
         playerFiveInfo['name'] = players[4][0];
         playerFiveInfo['ready'] = players[4][1];
+      } else {
+        playerFiveInfo['name'] = '';
+        playerFiveInfo['ready'] = false;
       }
       let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
 
