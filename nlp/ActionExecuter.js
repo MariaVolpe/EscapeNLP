@@ -19,7 +19,7 @@ class ActionExecuter {
       speak: this.executeSpeak,
       activate: this.executeActivate,
       deactivate: this.executeDeactivate,
-      use: this.executeUse
+      use: this.executeUse,
     };
     return functionMap;
   }
