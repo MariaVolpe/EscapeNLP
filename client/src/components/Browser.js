@@ -6,32 +6,32 @@ import CreateLobbyModal from './CreateLobbyModal';
 import { Button } from 'reactstrap';
 import axios from 'axios';
 
-// import '../styles/Browser.css';
-
 class Browser extends Component {
   constructor(props){
     super(props);
     this.state = {
       createLobbyIsOpen: false,
-      lobbies: []
+      lobbies: [],
     }
 
     this.socket = socketIOClient('http://localhost:8000');
 
-    this.socket.on('getAllRooms', (allRooms) => {
-      let lobbies = [];
-      for (let i=0; i<allRooms.length; i++) {
-        lobbies.push( <div className="five wide column">
-                        <Lobby
-                          lobbyName={allRooms[i].gameName}
-                          lobbyId={allRooms[i].gameId}
-                          className="lobby-box"
-                          onLobbyClick={this.onLobbyClick}
-                        />
-                      </div>);
-      }
+    this.socket.on('refreshRoomsReceived', (allRooms) => {
+      const lobbies = [];
+      allRooms.forEach(({ gameName, gameId }) => {
+        lobbies.push(
+          <div className="five wide column">
+            <Lobby
+              lobbyName={gameName}
+              lobbyId={gameId}
+              className="lobby-box"
+              onLobbyClick={this.onLobbyClick}
+            />
+          </div>
+        );
+      });
       this.setState({lobbies});
-    })
+    });
 
     this.onCreateClick = this.onCreateClick.bind(this);
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);

@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
     currentRoom = roomId;
-    socket.broadcast.emit('getAllRooms', getGames());
+    socket.broadcast.emit('refreshRoomsReceived', getGames());
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('getAllRooms', () => {
-    socket.emit('getAllRooms', getGames());
+    socket.emit('refreshRoomsReceived', getGames());
   });
 
   socket.on('chatMessage', (dataFromClient) => {
