@@ -4,7 +4,7 @@
         {
             "name": "door_switch",
             "id": "switch",
-            "manage" : true,
+            "isManaged" : true,
             "coordinates": {
                 "x": 4,
                 "y": 6
