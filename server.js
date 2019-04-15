@@ -19,15 +19,10 @@ const getGames = () => {
   return data;
 };
 
-var currentRoom;
+let currentRoom;
 
 io.on('connection', (socket) => {
   console.log('connection established');
-  socket.emit('messageFromServer', { data: 'welcome' });
-
-  socket.on('messageToServer', (dataFromClient) => {
-    console.log(dataFromClient);
-  });
 
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
@@ -38,8 +33,7 @@ io.on('connection', (socket) => {
   socket.on('attemptJoin', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
       socket.emit('canJoin', false);
-    }
-    else {
+    } else {
       socket.emit('canJoin', true);
     }
   });
@@ -47,16 +41,14 @@ io.on('connection', (socket) => {
   socket.on('confirmJoin', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
       socket.emit('confirmJoin', false);
-    }
-    else {
+    } else {
       socket.emit('confirmJoin', true);
     }
   });
 
   socket.on('checkRoomSize', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo]) {
-      let roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
-      console.log('room size: ' + roomSize);
+      const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
       socket.emit('checkRoomSize', roomSize);
     }
   });
@@ -66,7 +58,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (dataFromClient) => {
-    console.log(dataFromClient);
     io.in(currentRoom).emit('chatMessage', dataFromClient);
   });
 
@@ -78,9 +69,7 @@ io.on('connection', (socket) => {
       let player = io.sockets.connected[playerId];
       if (player.playerInfo !== undefined) {
         allPlayerNames.push(player.playerInfo);
-
       }
-      console.log(allPlayerNames);
     }
 
     io.in(currentRoom).emit('setNames', allPlayerNames);
@@ -96,17 +85,8 @@ io.on('connection', (socket) => {
         allPlayerNames.push(player.playerInfo);
 
       }
-      console.log(allPlayerNames);
     }
 
     io.in(currentRoom).emit('setNames', allPlayerNames);
-  });
-});
-
-io.of('/game').on('connect', (socket) => {
-  console.log('welcome to the game');
-  socket.emit('messageFromServer', { data: 'welcome' });
-  socket.on('messageToServer', (dataFromClient) => {
-    console.log(dataFromClient);
   });
 });

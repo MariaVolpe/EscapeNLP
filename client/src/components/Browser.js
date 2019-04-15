@@ -21,9 +21,13 @@ class Browser extends Component {
     this.socket.on('getAllRooms', (allRooms) => {
       let lobbies = [];
       for (let i=0; i<allRooms.length; i++) {
-        console.log(allRooms[i].gameName, ' ', allRooms[i]);
         lobbies.push( <div className="five wide column">
-                        <Lobby lobbyName={allRooms[i].gameName} lobbyId={allRooms[i].gameId} className="lobby-box" onLobbyClick={this.onLobbyClick}/>
+                        <Lobby
+                          lobbyName={allRooms[i].gameName}
+                          lobbyId={allRooms[i].gameId}
+                          className="lobby-box"
+                          onLobbyClick={this.onLobbyClick}
+                        />
                       </div>);
       }
       this.setState({lobbies});
@@ -42,25 +46,20 @@ class Browser extends Component {
   }
 
   onCreateClick = (event) => {
-    console.log('Create a room');
     this.setState({createLobbyIsOpen: !this.state.createLobbyIsOpen});
     event.preventDefault();
-    //window.location.replace('/play');
   }
 
   handleCreateSubmit = (event) => {
-    //console.log(event.target[0].value);
     event.preventDefault();
     const name = event.target[0].value;
     window.sessionStorage.setItem('roomName', name);
 
     axios.post('/game', { gameName: name })
       .then(res => {
-        console.log(res);
         const id = res.data.data.gameId;
         window.sessionStorage.setItem('roomId', id);
         axios.post(`/game/${id}/player`).then(res => {
-          console.log(res);
           window.location.replace('/play');
         });
       });

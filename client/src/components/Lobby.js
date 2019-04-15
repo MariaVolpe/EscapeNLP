@@ -3,9 +3,8 @@ import { Row, Col, Button } from 'reactstrap';
 import socketIOClient from 'socket.io-client';
 import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
+import axios from 'axios';
 import '../styles/Lobby.css';
-
-const axios = require('axios');
 
 class Lobby extends Component {
   constructor(props) {
@@ -37,9 +36,7 @@ class Lobby extends Component {
         window.sessionStorage.setItem('roomId', this.props.lobbyId);        
         window.location.replace('/play');
 
-        axios.post(`/game/${this.props.lobbyId}/player`).then(res => {
-          console.log(res);
-        });
+        axios.post(`/game/${this.props.lobbyId}/player`);
       } else {
         this.setState({
           confirmOpen: !this.state.confirmOpen,

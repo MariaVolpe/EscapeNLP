@@ -83,7 +83,7 @@ class Play extends Component {
       let playerThreeInfo = this.state.playerThreeInfo;
       let playerFourInfo = this.state.playerFourInfo;
       let playerFiveInfo = this.state.playerFiveInfo;
-      console.log(players);
+
       if (players[0] !== undefined) {
         playerOneInfo['name'] = players[0][0];
         playerOneInfo['ready'] = players[0][1];
