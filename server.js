@@ -61,32 +61,27 @@ io.on('connection', (socket) => {
     io.in(currentRoom).emit('chatMessage', dataFromClient);
   });
 
-  socket.on('getName', (playerInfo) => {
-    socket.playerInfo = playerInfo;
-    let allPlayerNames = [];
-    let allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
-    for (let playerId in allPlayers) {
-      let player = io.sockets.connected[playerId];
-      if (player.playerInfo !== undefined) {
+  const update = () => {
+    const allPlayerNames = [];
+    const allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
+
+    Object.keys(allPlayers).forEach((playerId) => {
+      const player = io.sockets.connected[playerId];
+      if (player.playerInfo) {
         allPlayerNames.push(player.playerInfo);
       }
-    }
+    });
 
     io.in(currentRoom).emit('setNames', allPlayerNames);
+  };
+
+  socket.on('getName', (playerInfo) => {
+    socket.playerInfo = playerInfo;
+    update();
   });
 
   socket.on('readyToggle', () => {
     socket.playerInfo[1] = !socket.playerInfo[1];
-    let allPlayerNames = [];
-    let allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
-    for (let playerId in allPlayers) {
-      let player = io.sockets.connected[playerId];
-      if (player.playerInfo !== undefined) {
-        allPlayerNames.push(player.playerInfo);
-
-      }
-    }
-
-    io.in(currentRoom).emit('setNames', allPlayerNames);
+    update();
   });
 });
