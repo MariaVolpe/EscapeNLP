@@ -38,7 +38,7 @@ class PuzzleManager {
         structureArr.push({
           obj: new Structure(obj.name, obj.id, puzzle.puzzle_type),
           coordinates: obj.coordinates,
-          manage: obj.manage
+          manage: obj.manage,
         });
       });
     });
@@ -48,8 +48,7 @@ class PuzzleManager {
   addToProgressMap(puzzleType, obj) {
     if (this.puzzleProgress.has(puzzleType)) {
       this.puzzleProgress.get(puzzleType).push(obj);
-    }
-    else {
+    } else {
       this.puzzleProgress.set(puzzleType, [obj]);
     }
   }

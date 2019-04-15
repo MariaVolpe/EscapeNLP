@@ -5,7 +5,5 @@ class Item extends BoardObject {
     super(name, id, false, true, true, true, true, true, false, null);
     this.use = useMethod;
   }
-
 }
-
 module.exports = Item;
