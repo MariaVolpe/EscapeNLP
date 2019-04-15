@@ -1,0 +1,41 @@
+{
+    "hand": [
+        "hold your hand"
+    ],
+    "there": [
+        "say that there"
+    ],
+    "you": [
+        "look at you"
+    ],
+    "story": [
+        "tell this story"
+    ],
+    "it": [
+        "take it"
+    ],
+    "my": [
+        "take my"
+    ],
+    "y'know": [
+        "go for something y'know"
+    ],
+    "it's": [
+        "say that it's"
+    ],
+    "office": [
+        "look in my office"
+    ],
+    "undefined": [
+        "take a leave"
+    ],
+    "time": [
+        "take time"
+    ],
+    "money": [
+        "take the money"
+    ],
+    "dollar": [
+        "leave the dollar"
+    ]
+}
