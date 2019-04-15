@@ -1,7 +1,7 @@
-const NLP = require('./NLP');
+const NLAnalyzer = require('./NLAnalyzer');
 const ActionExecuter = require('./ActionExecuter');
 
-class EscapeNLP {
+class NLInterpreter {
   /*
     EscapeNLP receives user input, analyzes it, and executes actions on the game state
     @params
@@ -12,7 +12,7 @@ class EscapeNLP {
     this.grid = grid;
     this.agents = agents;
     this.actionQueue = []; // queue object that holds actions to be executed | MAY NOT NEED THIS IF TURN BASED
-    this.nlp = new NLP();
+    this.nlp = new NLAnalyzer();
     this.actionExecuter = new ActionExecuter(grid, boardObjects);
   }
 
@@ -36,4 +36,4 @@ class EscapeNLP {
   }
 }
 
-module.exports = EscapeNLP;
+module.exports = NLInterpreter;

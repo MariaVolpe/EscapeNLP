@@ -1,7 +1,7 @@
-const NLP = require('../../nlp/NLP.js');
+const NLAnalyzer = require('../../nlp/NLAnalyzer.js');
 
 describe('Natural Language Processing Tests', () => {
-  const nlp = new NLP();
+  const nlp = new NLAnalyzer();
   describe('Action classifier Test Accuracy', () => {
     it('Action classifier test error rate should be below 15%', async () => {
       const errorRate = nlp.tester.testNetworkByDirectory('./nlp/data/friends/test/verb-relations/',

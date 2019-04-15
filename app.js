@@ -12,5 +12,4 @@ app.use('/game', gameSessionRouter);
 
 app.get('/', (req, res) => res.send('Hello World! This is a test.'));
 
-
 module.exports = app;

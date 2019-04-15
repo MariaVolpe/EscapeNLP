@@ -5,7 +5,7 @@ const DataFileManager = require('./util/data/DataFileManager');
 const Chunker = require('./util/nlp/Chunker');
 const Tester = require('./util/nlp/Tester');
 
-class NLP {
+class NLAnalyzer {
   constructor() {
     this.fs = new DataFileManager();
     this.actionClassifier = new NlpClassifier({ language: 'en' });
@@ -79,4 +79,4 @@ class NLP {
   }
 }
 
-module.exports = NLP;
+module.exports = NLAnalyzer;
