@@ -50,9 +50,6 @@ class Grid {
       NAME = obj.name;
       ID = this.objectMap.get(obj);
       object = obj;
-      this.nameMap.delete(name);
-      this.objectMap.delete(obj);
-      this.positionMap.delete(id);
     } else if (id) { // if the id was passed in
       const p = this.positionMap.get(id);
       object = matrix[p.x][p.y];
@@ -94,17 +91,15 @@ class Grid {
     const startPoint = this.getPosition(movingObj);
     const destinationPoint = this.getPosition(destination);
     const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
-    for (let i = 0; i < path.length; i++) {
-      const currentPoint = this.getPosition(movingObj); // get current point
-      const nextPoint = path[i]; // get next point in path
-      // move object to next point in path
-      this.updateMatrix(nextPoint.x, nextPoint.y, this.matrix[currentPoint.x][currentPoint.y]);
-      // set current point to default grid object
-      this.updateMatrix(currentPoint.x, currentPoint.y,
-        this.defaultMatrix[currentPoint.x][currentPoint.y]);
-      this.getPosition(movingObj).x = nextPoint.x; // update this.positionMap
-      this.getPosition(movingObj).y = nextPoint.y;
-    }
+    const lastPoint = path[path.length - 1];
+    // update matrix @ current point //
+    this.updateMatrix(lastPoint.x, lastPoint.y, this.matrix[startPoint.x][startPoint.y]);
+    // update matrix @ previous point //
+    this.updateMatrix(startPoint.x, startPoint.y, this.defaultMatrix[startPoint.x][startPoint.y]);
+    // update position of object
+    this.getPosition(movingObj).x = lastPoint.x;
+    this.getPosition(movingObj).y = lastPoint.y;
+    return { movingObject: movingObj, position: this.getPosition(movingObj), pathTaken: path };
   }
 
   // given a direction, move towards it

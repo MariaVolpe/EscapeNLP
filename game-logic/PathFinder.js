@@ -16,11 +16,24 @@ class PathFinder {
     this.matrix = matrix; // PathFinder needs a reference to matrix object to see obstacles
   }
 
-  // Returns an array of contiguous points illustrating a path
+  /*
+    Returns an array of contiguous points illustrating a path
+    Direction is a point object that details the vector direction something can go in
+  */
   getPathByDirection(start, direction) {
-    const path = [];
+    const pathList = [];
+    const queue = [start];
+    let p;
+    while (queue.length > 0) {
+      p = queue.shift();
+      if (!this.isPassablePoint(p)) {
+        continue;
+      }
+      
+    }
     return path;
   }
+
 
   // Returns an array of contiguous Points illustrating a path to reach the destination
   // from the starting coordinate. Returns an empty array if no path exists.
@@ -68,6 +81,25 @@ class PathFinder {
       }
     });
     return validNeighbors;
+  }
+
+  /* Gets neighbors filtered by a direction vector */
+  getNeighborsByDirection(p, direction) {
+    const neighbors = [];
+    const magnitude = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2));
+    if (magnitude === 0) {
+      return neighbors;
+    }
+    
+    if (magnitude === 1) { // movement along only 1 axis
+      let d = new Point(p.x, p.y);
+      d.x = d.x + direction.x;
+      d.y = d.y + direction.y;
+      neighbors.push(d);
+    } else { // movement along 2 axis
+      let d = new Point(p.x, p.y);
+      d.x 
+    } return neighbors;
   }
 
   isPassablePoint({ x, y }) {
