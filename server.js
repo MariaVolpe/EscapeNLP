@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
     io.in(currentRoom).emit('chatMessage', dataFromClient);
   });
 
-  const update = () => {
+  const updatePlayers = () => {
     const allPlayerNames = [];
     const allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
 
@@ -77,11 +77,11 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
-    update();
+    updatePlayers();
   });
 
   socket.on('readyToggle', () => {
     socket.playerInfo[1] = !socket.playerInfo[1];
-    update();
+    updatePlayers();
   });
 });
