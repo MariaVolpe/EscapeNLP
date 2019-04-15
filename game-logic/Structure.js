@@ -1,5 +1,5 @@
 const BoardObject = require('./BoardObject');
-const StruLib = require('./board-object-library/structure-library');
+const StructLib = require('./board-object-library/structure-library');
 
 /*
  * Class for BoardObjects that are part of a puzzle.
@@ -20,14 +20,14 @@ const StruLib = require('./board-object-library/structure-library');
 class Structure extends BoardObject {
   constructor(name, id, puzzleType ) {
     // moveable, passable, usable,
-    super(name, id, StruLib[name].moveable, false,
-      false, StruLib[name].usable, StruLib[name].passable, true,
-      StruLib[name].destructable, puzzleType );
+    super(name, id, StructLib[name].moveable, false,
+      false, StructLib[name].usable, StructLib[name].passable, true,
+      StructLib[name].destructable, puzzleType );
     this.activated = false;
-    this.inspectTextInactive = StruLib[name].inspectTextInactive;
-    this.inspectTextActive = StruLib[name].inspectTextActive;
-    this.useTextUsed = StruLib[name].useTextUsed;
-    this.useTextNotUsable = StruLib[name].useTextNotUsable;
+    this.inspectTextInactive = StructLib[name].inspectTextInactive;
+    this.inspectTextActive = StructLib[name].inspectTextActive;
+    this.useTextUsed = StructLib[name].useTextUsed;
+    this.useTextNotUsable = StructLib[name].useTextNotUsable;
 
     this.useFunction = null;
   }
