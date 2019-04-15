@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
-import { Input, Form, FormGroup, Label, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Input, Form, FormGroup, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
 class CreateNameModal extends Component {
+
+
   render() {
+
+    let warningOpen = this.props.warningOpen;
+    var warningLabel;
+
+    if (warningOpen) {
+      warningLabel = <div class="ui negative message">
+                        <i class="close icon" onClick={this.props.onWarningClose}></i>
+                        <div class="header">
+                          Name has already been taken or is too short!
+                        </div>
+                      </div>
+    }
+
     return (
       <div>
         <Modal isOpen={this.props.isOpen} onToggle={this.props.onToggle}>
@@ -12,9 +27,10 @@ class CreateNameModal extends Component {
           </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.props.handleSubmit}>
-              <FormGroup row>
+              {warningLabel}
+              <FormGroup className="left-side" row/>
+              <FormGroup className="name-input" row>
                 <Input
-                  className="centered"
                   value={this.props.value}
                   onChange={this.props.onNameChange}
                   placeholder="Type in a screenname"

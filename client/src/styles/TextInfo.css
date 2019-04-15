@@ -1,32 +1,41 @@
 .talk-input {
-  position: fixed;
-  bottom: 9vh;
+  float: left;
+  width: 80%;
+}
+
+.chat-change {
+  float: left;
+  width: 20%;
+  height: 35px;
+  font-size: 1.5vh;
 }
 
 .text-container {
   margin: auto;
-
+  position: absolute;
+  bottom: -74.5vh;
 }
 
 .text-box {
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-top: 1px solid black;
-  margin-top: auto;
+  border-bottom: 1px solid black;
+  margin-top: -13.5px;
+  bottom: 18px;
   width: 100%;
-  max-height: 84vh;
+  max-height: 80.7vh;
+  min-height: 80.7vh;
   overflow: scroll;
 }
 
 .text-list {
   color: black;
-  border-left: 0px;
-  border-right: 0px;
   margin: 1px solid black;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 4%;
+  margin-bottom: 10% solid black;
   text-align: left;
-  line-height: 10px;
+  height: 2vh;
 }
 
 .between-text {
