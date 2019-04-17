@@ -23,8 +23,8 @@
  */
 
 class BoardObject {
-  constructor(name, id, moveable, possesable, transferable, 
-    usable, passable, inspectable, destructable, puzzleType) {
+  constructor({ name, id, moveable, possesable, transferable, 
+    usable, passable, inspectable, destructable, puzzleType }) {
     this.name = name;
     this.id = id;
     this.moveable = moveable;

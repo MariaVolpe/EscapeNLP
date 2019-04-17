@@ -20,9 +20,9 @@ const StructLib = require('./board-object-library/structure-library');
 class Structure extends BoardObject {
   constructor(name, id, puzzleType ) {
     // moveable, passable, usable,
-    super(name, id, StructLib[name].moveable, false,
-      false, StructLib[name].usable, StructLib[name].passable, true,
-      StructLib[name].destructable, puzzleType );
+    super({name: name, id: id, moveable: StructLib[name].moveable, possesable: false,
+      transferable: false, usable: StructLib[name].usable, passable: StructLib[name].passable,
+      inspectbale: true, destructable: StructLib[name].destructable, puzzleType: puzzleType });
     this.activated = false;
     this.inspectTextInactive = StructLib[name].inspectTextInactive;
     this.inspectTextActive = StructLib[name].inspectTextActive;

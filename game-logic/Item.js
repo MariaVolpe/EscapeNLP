@@ -2,7 +2,9 @@ const BoardObject = require('./BoardObject.js');
 
 class Item extends BoardObject {
   constructor(name, id, useMethod) {
-    super(name, id, false, true, true, true, true, true, false, null);
+    super({ name: name, id: id, moveable: false, possesable: true,
+      transferable: true, usable: true, passable: true, inspectable: true,
+      destructable: false, puzzleType: null });
     this.use = useMethod;
   }
 }
