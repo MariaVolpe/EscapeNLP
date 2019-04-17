@@ -22,7 +22,8 @@ class Structure extends BoardObject {
     // moveable, passable, usable,
     super({name: name, id: id, moveable: StructLib[name].moveable, possesable: false,
       transferable: false, usable: StructLib[name].usable, passable: StructLib[name].passable,
-      inspectbale: true, destructable: StructLib[name].destructable, puzzleType: puzzleType });
+      inspectbale: true, destructable: StructLib[name].destructable, puzzleType: puzzleType,
+      objectType: "Structure" });
     this.activated = false;
     this.inspectTextInactive = StructLib[name].inspectTextInactive;
     this.inspectTextActive = StructLib[name].inspectTextActive;

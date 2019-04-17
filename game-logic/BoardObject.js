@@ -24,7 +24,7 @@
 
 class BoardObject {
   constructor({ name, id, moveable, possesable, transferable, 
-    usable, passable, inspectable, destructable, puzzleType }) {
+    usable, passable, inspectable, destructable, puzzleType, objectType }) {
     this.name = name;
     this.id = id;
     this.moveable = moveable;
@@ -35,6 +35,7 @@ class BoardObject {
     this.inspectable = inspectable;
     this.destructable = destructable;
     this.puzzleType = puzzleType;
+    this.objectType = objectType;
   }
 
   isPassable() {
