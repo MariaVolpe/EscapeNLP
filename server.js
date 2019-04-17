@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('readyToggle', () => {
-    socket.playerInfo[1] = !socket.playerInfo[1];
+    socket.playerInfo['ready'] = !socket.playerInfo['ready'];
     updatePlayers();
   });
 
@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
     if (io.nsps['/'].adapter.rooms[currentRoom] && socket.playerInfo) {
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = socket.playerInfo[0] + ' has disconnected';
+      let mess = socket.playerInfo['name'] + ' has disconnected';
       const message = ['', time, mess];
       io.in(currentRoom).emit('chatMessage', message);
       updatePlayers();

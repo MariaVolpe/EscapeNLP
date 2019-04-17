@@ -13,7 +13,7 @@ class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerOneInfo: {
+      allPlayers: [{
         name: '',
         inventory: {
           key: 'doorKey',
@@ -22,7 +22,7 @@ class Play extends Component {
         picture: '[pic]',
         ready: false
       },
-      playerTwoInfo: {
+      {
         name: '',
         inventory: {
           key: 'doorKey',
@@ -31,7 +31,7 @@ class Play extends Component {
         picture: '[pic]',
         ready: false
       },
-      playerThreeInfo: {
+      {
         name: '',
         inventory: {
           key: 'doorKey',
@@ -40,7 +40,7 @@ class Play extends Component {
         picture: '[pic]',
         ready: false
       },
-      playerFourInfo: {
+      {
         name: '',
         inventory: {
           key: 'doorKey',
@@ -49,7 +49,7 @@ class Play extends Component {
         picture: '[pic]',
         ready: false
       },
-      playerFiveInfo: {
+      {
         name: '',
         inventory: {
           key: 'doorKey',
@@ -57,7 +57,7 @@ class Play extends Component {
         },
         picture: '[pic]',
         ready: false
-      },
+      }],
       map: [],
       message: '',
       prevMessages: [],
@@ -78,50 +78,24 @@ class Play extends Component {
     });
 
     this.socket.on('setNames', (players) => {
-      let playerOneInfo = this.state.playerOneInfo;
-      let playerTwoInfo = this.state.playerTwoInfo;
-      let playerThreeInfo = this.state.playerThreeInfo;
-      let playerFourInfo = this.state.playerFourInfo;
-      let playerFiveInfo = this.state.playerFiveInfo;
+      let allPlayers = this.state.allPlayers;
+      for (let i=0; i<players.length; i++) {
+        allPlayers[i]['name'] = players[i]['name'];
+        allPlayers[i]['ready'] = players[i]['ready'];
+      }
+      for (let i=players.length; i<5; i++) {
+        allPlayers[i]['name'] = '';
+        allPlayers[i]['ready'] = false;
+      }
+      let allReady = [];
+      allReady[0] = allPlayers[0].ready || (!allPlayers[0].ready && allPlayers[0].name === '');
+      allReady[1] = allPlayers[1].ready || (!allPlayers[1].ready && allPlayers[1].name === '');
+      allReady[2] = allPlayers[2].ready || (!allPlayers[2].ready && allPlayers[2].name === '');
+      allReady[3] = allPlayers[3].ready || (!allPlayers[3].ready && allPlayers[3].name === '');
+      allReady[4] = allPlayers[4].ready || (!allPlayers[4].ready && allPlayers[4].name === '');
+      let allPlayersReady = allReady[0] && allReady[1] && allReady[2] && allReady[3] && allReady[4];
 
-      if (players[0] !== undefined) {
-        playerOneInfo['name'] = players[0][0];
-        playerOneInfo['ready'] = players[0][1];
-      } else {
-        playerOneInfo['name'] = '';
-        playerOneInfo['ready'] = false;
-      }
-      if (players[1] !== undefined) {
-        playerTwoInfo['name'] = players[1][0];
-        playerTwoInfo['ready'] = players[1][1];
-      } else {
-        playerTwoInfo['name'] = '';
-        playerTwoInfo['ready'] = false;
-      }
-      if (players[2] !== undefined) {
-        playerThreeInfo['name'] = players[2][0];
-        playerThreeInfo['ready'] = players[2][1];
-      } else {
-        playerThreeInfo['name'] = '';
-        playerThreeInfo['ready'] = false;
-      }
-      if (players[3] !== undefined) {
-        playerFourInfo['name'] = players[3][0];
-        playerFourInfo['ready'] = players[3][1];
-      } else {
-        playerFourInfo['name'] = '';
-        playerFourInfo['ready'] = false;
-      }
-      if (players[4] !== undefined) {
-        playerFiveInfo['name'] = players[4][0];
-        playerFiveInfo['ready'] = players[4][1];
-      } else {
-        playerFiveInfo['name'] = '';
-        playerFiveInfo['ready'] = false;
-      }
-      let allPlayersReady = playerOneInfo.ready && playerTwoInfo.ready && playerThreeInfo.ready && playerFourInfo.ready && playerFiveInfo.ready;
-
-      this.setState({playerOneInfo, playerTwoInfo, playerThreeInfo, playerFourInfo, playerFiveInfo, allPlayersReady});
+      this.setState({allPlayers, allPlayersReady});
     });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -184,13 +158,10 @@ class Play extends Component {
       playerName = playerName.slice(0, playerName.length - 1);
       this.setState({playerName});
     }
-    let takenName = playerName === this.state.playerOneInfo.name || playerName === this.state.playerTwoInfo.name || playerName === this.state.playerThreeInfo.name || playerName === this.state.playerFourInfo.name;
+    let takenName = playerName === this.state.allPlayers[0].name || playerName === this.state.allPlayers[1].name || playerName === this.state.allPlayers[2].name || playerName === this.state.allPlayers[3].name || playerName === this.state.allPlayers[4].name;
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      // let playerFiveInfo = this.state.playerFiveInfo;
-      // playerFiveInfo["name"] = playerName;
-      //let allPlayers = this.state.allPlayers;
-      //allPlayers.push(<PlayerInfo playerInfo={this.state.playerInfo} style={"player-box2"} />);
-      this.socket.emit('getName', [playerName, false]);
+      const playerInfo = {name: playerName, ready: false};
+      this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
     else {
@@ -218,20 +189,15 @@ class Play extends Component {
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[0]} style={"player-box"} className="row" />);
     //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[1]} style={"player-box2"} className="row" />);
     //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerThreeInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[2]} style={"player-box"} className="row" />);
     //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerFourInfo} style={"player-box2"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[3]} style={"player-box2"} className="row" />);
     //allPlayers.push(<div className="list"/>);
-    if (this.state.allPlayersReady) {
-      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
-    }
-    else {
-      allPlayers.push(<PlayerInfo playerInfo={this.state.playerFiveInfo} style={"player-box"} className="row" />);
-    }
+    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[4]} style={"player-box"} className="row" />);
 
     let gameInfo;
     let playerInfo;
