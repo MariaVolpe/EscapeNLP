@@ -88,11 +88,9 @@ class Play extends Component {
         allPlayers[i]['ready'] = false;
       }
       let allReady = [];
-      allReady[0] = allPlayers[0].ready || (!allPlayers[0].ready && allPlayers[0].name === '');
-      allReady[1] = allPlayers[1].ready || (!allPlayers[1].ready && allPlayers[1].name === '');
-      allReady[2] = allPlayers[2].ready || (!allPlayers[2].ready && allPlayers[2].name === '');
-      allReady[3] = allPlayers[3].ready || (!allPlayers[3].ready && allPlayers[3].name === '');
-      allReady[4] = allPlayers[4].ready || (!allPlayers[4].ready && allPlayers[4].name === '');
+      for (let i=0; i<allPlayers.length; i++) {
+        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '');
+      }
       let allPlayersReady = allReady[0] && allReady[1] && allReady[2] && allReady[3] && allReady[4];
 
       this.setState({allPlayers, allPlayersReady});
@@ -150,6 +148,7 @@ class Play extends Component {
 
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
+    let allPlayers = this.state.allPlayers;
     while(playerName[0] === ' ') {
       playerName = playerName.slice(1);
       this.setState({playerName});
@@ -158,7 +157,7 @@ class Play extends Component {
       playerName = playerName.slice(0, playerName.length - 1);
       this.setState({playerName});
     }
-    let takenName = playerName === this.state.allPlayers[0].name || playerName === this.state.allPlayers[1].name || playerName === this.state.allPlayers[2].name || playerName === this.state.allPlayers[3].name || playerName === this.state.allPlayers[4].name;
+    let takenName = playerName === allPlayers[0].name || playerName === allPlayers[1].name || playerName === allPlayers[2].name || playerName === allPlayers[3].name || playerName === allPlayers[4].name;
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       const playerInfo = {name: playerName, ready: false};
       this.socket.emit('getName', playerInfo);
@@ -189,15 +188,9 @@ class Play extends Component {
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[0]} style={"player-box"} className="row" />);
-    //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[1]} style={"player-box2"} className="row" />);
-    //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[2]} style={"player-box"} className="row" />);
-    //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[3]} style={"player-box2"} className="row" />);
-    //allPlayers.push(<div className="list"/>);
-    allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[4]} style={"player-box"} className="row" />);
+    for (let i=0; i<this.state.allPlayers.length; i++) {
+      allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[i]} style={"player-box"} className="row" />);
+    }
 
     let gameInfo;
     let playerInfo;

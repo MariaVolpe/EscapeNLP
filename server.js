@@ -61,11 +61,14 @@ io.on('connection', (socket) => {
     io.in(currentRoom).emit('chatMessage', dataFromClient);
   });
 
-  const updatePlayers = () => {
+  const updatePlayers = (reason) => {
     const allPlayerNames = [];
     const allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
 
     Object.keys(allPlayers).forEach((playerId) => {
+      if (reason === 'disconnected') {
+        io.sockets.connected[playerId].playerInfo.ready = false;
+      }
       const player = io.sockets.connected[playerId];
       if (player.playerInfo) {
         allPlayerNames.push(player.playerInfo);
@@ -77,22 +80,22 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
-    updatePlayers();
+    updatePlayers('');
   });
 
   socket.on('readyToggle', () => {
-    socket.playerInfo['ready'] = !socket.playerInfo['ready'];
-    updatePlayers();
+    socket.playerInfo.ready = !socket.playerInfo.ready;
+    updatePlayers('');
   });
 
   socket.on('disconnect', () => {
     if (io.nsps['/'].adapter.rooms[currentRoom] && socket.playerInfo) {
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = socket.playerInfo['name'] + ' has disconnected';
+      let mess = socket.playerInfo.name + ' has disconnected';
       const message = ['', time, mess];
       io.in(currentRoom).emit('chatMessage', message);
-      updatePlayers();
+      updatePlayers('disconnected');
     }
   });
 });
