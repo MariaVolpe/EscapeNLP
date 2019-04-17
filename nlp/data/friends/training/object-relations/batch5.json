@@ -1,0 +1,37 @@
+{
+    "you": [
+        "take you",
+        "look at you",
+        "go down there you"
+    ],
+    "it": [
+        "take it"
+    ],
+    "guy": [
+        "tell the guy"
+    ],
+    "i": [
+        "say that i",
+        "look at another guy i"
+    ],
+    "me": [
+        "walk in on me",
+        "move on me"
+    ],
+    "cup": [
+        "grab a cup"
+    ],
+    "her": [
+        "look at her"
+    ],
+    "there": [
+        "go out there",
+        "go down there"
+    ],
+    "undefined": [
+        "take a break"
+    ],
+    "care": [
+        "take care"
+    ]
+}

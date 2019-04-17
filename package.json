@@ -21,12 +21,20 @@
   "homepage": "https://github.com/MariaVolpe/EscapeNLP#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "compromise": "*",
     "express": "^4.16.4",
-    "helmet": "^3.16.0",
+    "nlp-corpus": "*",
     "node-nlp": "^2.4.1",
     "nodemon": "*",
-    "supertest": "^4.0.2",
-    "synonyms": "*"
+    "python-shell": "*",
+    "synonyms": "*",
+    "wndb-with-exceptions": "^3.0.2",
+    "wordnet": "*",
+    "wordnetjs": "*",
+    "node-word2vec": "*",
+    "csv-writer": "*",
+    "helmet": "^3.16.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^13.1.1",
