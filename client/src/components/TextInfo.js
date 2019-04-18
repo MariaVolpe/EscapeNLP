@@ -5,13 +5,6 @@ import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      textHeight: 74.5
-    }
-  }
-
   componentDidMount = () => {
     this.scrollToBottom();
   }
@@ -23,6 +16,16 @@ class TextInfo extends Component {
   scrollToBottom = () => {
     let scrollElement = document.getElementsByClassName("text-box");
     scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
+  }
+
+  findHeightDifference = (samePlayerMessages) => {
+    let change = 1.1;
+    if (samePlayerMessages > 0) {
+      change = 0.6;
+    }
+    let totalMessages = 74.5 / 17 * ((this.props.prevMessages.length - 1) * (change));
+    let heightDiff = 74.5 - totalMessages;
+    return heightDiff;
   }
 
   render() {
@@ -46,38 +49,77 @@ class TextInfo extends Component {
       chatBox = <Commands command={this.props.command} onKeyPress={this.props.onCommandKeyPress} onChange={this.props.onCommandChange} />
     }
 
+    let sameName = false;
+    let prevName = "";
+    let numOfSames = 0;
+    let textType = "text";
+
     prevMessages.forEach((message) => {
-      if (message[0] === currPlayer) {
-        comments.push(<div className="content" >
-                          <a class="author">
-                            {"You"}
-                          </a>
-                          <div className="metadata">
-                            <span className="date">{message[1]}</span>
-                          </div>
-                          <div className="text" >
-                            {message[2]}
-                          </div>
-                        </div>);
+      if (message[3] === 1) {
+        textType = "text command";
       }
       else {
-        comments.push(<div className="content" >
-                          <a class="author">
-                            {message[0]}
-                          </a>
-                          <div className="metadata">
-                            <span className="date">{message[1]}</span>
-                          </div>
-                          <div className="text" >
-                            {message[2]}
-                          </div>
-                        </div>);
+        textType = "text";
       }
+      if (!sameName && prevName !== message[0]) {
+        prevName = message[0];
+      }
+      else if (!sameName && prevName === message[0]) {
+        sameName = true;
+        numOfSames += 1;
+      }
+      else if (sameName && prevName !== message[0]) {
+        sameName = false;
+      }
+      if (sameName) {
+        numOfSames += 1;
+        if (message[0] === currPlayer) {
+          comments.push(<div className="content" >
+                            <div className={textType} >
+                              {message[2]}
+                            </div>
+                          </div>);
+        }
+        else {
+          comments.push(<div className="content" >
+                            <div className={textType} >
+                              {message[2]}
+                            </div>
+                          </div>);
+        }
+      }
+      else if (!sameName) {
+        if (message[0] === currPlayer) {
+          comments.push(<div className="content" >
+                            <a class="author">
+                              {"You"}
+                            </a>
+                            <div className="metadata">
+                              <span className="date">{message[1]}</span>
+                            </div>
+                            <div className={textType} >
+                              {message[2]}
+                            </div>
+                          </div>);
+        }
+        else {
+          comments.push(<div className="content" >
+                            <a class="author">
+                              {message[0]}
+                            </a>
+                            <div className="metadata">
+                              <span className="date">{message[1]}</span>
+                            </div>
+                            <div className={textType} >
+                              {message[2]}
+                            </div>
+                          </div>);
+        }
+      }
+
     });
 
-    let textHeight = this.state.textHeight;
-    let totalMessages = textHeight / 17 * (prevMessages.length - 1);
-    let heightDiff = textHeight - totalMessages;
+    let heightDiff = this.findHeightDifference(numOfSames);
 
 
     return(

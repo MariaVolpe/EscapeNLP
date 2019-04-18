@@ -6,6 +6,7 @@ import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
 import TextInfo from './TextInfo';
+import Navigation from './Navigation';
 import '../styles/Play.css';
 
 class Play extends Component {
@@ -13,37 +14,40 @@ class Play extends Component {
     super(props);
     this.state = {
       playerOneInfo: {
-        name: 'Nicky Ken',
+        name: 'Nikki Ken',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey',
+          bk: 'sword'
         },
         picture: '[pic]',
         ready: true
       },
       playerTwoInfo: {
-        name: 'Brian Camper',
+        name: 'Brain Camper',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey'
         },
         picture: '[pic]',
         ready: true
       },
       playerThreeInfo: {
-        name: 'Ismail Clear',
+        name: 'Issac Clear',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: true
       },
       playerFourInfo: {
-        name: 'John Green',
+        name: 'Jonny Green',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: true
@@ -52,14 +56,15 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          wep: 'sword',
         },
         picture: '[pic]',
         ready: false
       },
       map: [],
       message: '',
-      prevMessages: [["Nicky Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]],
+      prevMessages: [["Nikki Ken", new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), "Let's solve a puzzle"]
+                    ],
       command: '',
       allPlayersReady: false,
       setName: false,
@@ -80,8 +85,8 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = '"' + event.target.value + '"';
-      const message = [commenter, time, mess];
+      let mess = event.target.value;
+      const message = [commenter, time, mess, 0];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ message: '', prevMessages });
@@ -100,8 +105,8 @@ class Play extends Component {
       let commenter = this.state.playerName;
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = 'You wanted to: "' + event.target.value + '"';
-      const message = [commenter, time, mess];
+      let mess = 'You wanted to: ' + event.target.value;
+      const message = [commenter, time, mess, 1];
       let prevMessages = this.state.prevMessages;
       prevMessages.push(message);
       this.setState({ command: '', prevMessages });
@@ -165,9 +170,9 @@ class Play extends Component {
   }
 
   render() {
-    const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
+    const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const allPlayers = [];
-    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row" />);
+    allPlayers.push(<PlayerInfo playerInfo={this.state.playerOneInfo} style={"player-box"} className="row player-box" />);
     //allPlayers.push(<div className="list"/>);
     allPlayers.push(<PlayerInfo playerInfo={this.state.playerTwoInfo} style={"player-box2"} className="row" />);
     //allPlayers.push(<div className="list"/>);
@@ -185,20 +190,20 @@ class Play extends Component {
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
-      gameInfo = <div className='game-info'>
+      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
 
                   </div>;
-      playerInfo = <div className='player-info'>
+      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                       <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
-      gameInfo = <div className='game-info'>
+      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
-      playerInfo = <div className='player-info'>
+      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                     <div className="ui list">{allPlayers}</div>
                     <Row>
                       <Col>
@@ -213,7 +218,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <h1 class="ui dividing header">EscapeNLP</h1>
+        <Navigation inGame={true} />
         {playerInfo}
         {gameInfo}
         <CreateNameModal
@@ -224,7 +229,7 @@ class Play extends Component {
           warningOpen={this.state.warningOpen}
           onWarningClose={this.onWarningClose}
         />
-        <div className='text-info'>
+        <div className='text-info' style={{marginTop: '1%'}}>
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}

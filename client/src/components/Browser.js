@@ -35,7 +35,7 @@ class Browser extends Component {
   render() {
     return (
       <div style={{background: '#283942', height: '100vh'}}>
-        <Navigation />
+        <Navigation inGame={false} />
 
         <h1 style={{textAlign: "center", marginTop: '3%', color: 'white'}}>Current Lobbies</h1>
 

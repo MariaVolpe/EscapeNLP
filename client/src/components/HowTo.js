@@ -6,7 +6,7 @@ class HowTo extends React.Component {
   render(){
     return (
       <div style={{backgroundColor: '#283942', color: 'white', height: '100vh'}}>
-        <Navigation />
+        <Navigation inGame={false}/>
           <h1 style={{marginTop: '3%'}}>How to Play EscapeNLP</h1>
           <br /><br />
           <h2>What is EscapeNLP?</h2>
