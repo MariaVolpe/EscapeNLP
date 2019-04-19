@@ -78,12 +78,13 @@ class Play extends Component {
     });
 
     this.socket.on('setNames', (players) => {
+      const MAX_PLAYER_COUNT = 5;
       let allPlayers = this.state.allPlayers;
       for (let i=0; i<players.length; i++) {
         allPlayers[i]['name'] = players[i]['name'];
         allPlayers[i]['ready'] = players[i]['ready'];
       }
-      for (let i=players.length; i<5; i++) {
+      for (let i=players.length; i<MAX_PLAYER_COUNT; i++) {
         allPlayers[i]['name'] = '';
         allPlayers[i]['ready'] = false;
       }
@@ -146,18 +147,22 @@ class Play extends Component {
     this.socket.emit('readyToggle');
   }
 
+  sameName = (playerInfo) => {
+    return playerInfo.name === this.state.playerName;
+  }
+
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
     let allPlayers = this.state.allPlayers;
     while(playerName[0] === ' ') {
       playerName = playerName.slice(1);
-      this.setState({playerName});
+      this.setState({ playerName });
     }
     while(playerName[playerName.length - 1] === ' ') {
       playerName = playerName.slice(0, playerName.length - 1);
-      this.setState({playerName});
+      this.setState({ playerName });
     }
-    let takenName = playerName === allPlayers[0].name || playerName === allPlayers[1].name || playerName === allPlayers[2].name || playerName === allPlayers[3].name || playerName === allPlayers[4].name;
+    const takenName = allPlayers.some(this.sameName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       const playerInfo = {name: playerName, ready: false};
       this.socket.emit('getName', playerInfo);
@@ -187,10 +192,7 @@ class Play extends Component {
 
   render() {
     const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
-    const allPlayers = [];
-    for (let i=0; i<this.state.allPlayers.length; i++) {
-      allPlayers.push(<PlayerInfo playerInfo={this.state.allPlayers[i]} style={"player-box"} className="row" />);
-    }
+    const allPlayers = this.state.allPlayers.map(player => <PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
 
     let gameInfo;
     let playerInfo;
