@@ -92,7 +92,7 @@ class Play extends Component {
       for (let i=0; i<allPlayers.length; i++) {
         allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '');
       }
-      let allPlayersReady = allReady[0] && allReady[1] && allReady[2] && allReady[3] && allReady[4];
+      let allPlayersReady = allReady.indexOf(false) >= 0 ? false : true;
 
       this.setState({allPlayers, allPlayersReady});
     });
@@ -164,7 +164,7 @@ class Play extends Component {
     }
     const takenName = allPlayers.some(this.sameName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      const playerInfo = {name: playerName, ready: false};
+      const playerInfo = { name: playerName, ready: false };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
