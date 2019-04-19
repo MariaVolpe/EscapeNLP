@@ -90,9 +90,10 @@ class Play extends Component {
       }
       let allReady = [];
       for (let i=0; i<allPlayers.length; i++) {
-        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '');
+        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '' && players.length > 1);
       }
-      let allPlayersReady = allReady.indexOf(false) >= 0 ? false : true;
+
+      let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
 
       this.setState({allPlayers, allPlayersReady});
     });
