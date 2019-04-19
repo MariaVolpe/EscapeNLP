@@ -79,18 +79,19 @@ class Play extends Component {
 
     this.socket.on('setNames', (players) => {
       const MAX_PLAYER_COUNT = 5;
+      const length = players.length;
       let allPlayers = this.state.allPlayers;
-      for (let i=0; i<players.length; i++) {
+      for (let i=0; i<length; i++) {
         allPlayers[i]['name'] = players[i]['name'];
         allPlayers[i]['ready'] = players[i]['ready'];
       }
-      for (let i=players.length; i<MAX_PLAYER_COUNT; i++) {
+      for (let i=length; i<MAX_PLAYER_COUNT; i++) {
         allPlayers[i]['name'] = '';
         allPlayers[i]['ready'] = false;
       }
       let allReady = [];
       for (let i=0; i<allPlayers.length; i++) {
-        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '' && players.length > 1);
+        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '' && i > 0);
       }
 
       let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
