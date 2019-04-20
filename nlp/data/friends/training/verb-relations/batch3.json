@@ -1,0 +1,33 @@
+{
+    "move": [
+        "move the bowl",
+        "go down there",
+        "go out on a limb",
+        "leave the room",
+        "walk in the rain"
+    ],
+    "look": [
+        "look at me",
+        "look at us"
+    ],
+    "take": [
+        "take you",
+        "take a picture",
+        "remove you",
+        "take care",
+        "take that bet",
+        "take more pictures",
+        "take his side"
+    ],
+    "give": [
+        "pass that information"
+    ],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

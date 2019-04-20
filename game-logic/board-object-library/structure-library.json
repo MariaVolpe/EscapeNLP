@@ -1,0 +1,42 @@
+{
+    "door": {
+        "moveable": false,
+        "usable": false,
+        "passable": false, 
+        "destructable": false,
+        "inspectTextInactive": "This door won't budge. There has to be a way to open it...",
+        "inspectTextActive": "A door, looks like it can be opened now!",
+        "useTextNotUsable": "This door won't budge. There has to be a way to open it...",
+        "useTextUsed": "Freedom!"
+    },
+    "door_switch": {
+        "moveable": false,
+        "usable": false,
+        "passable": false,
+        "destructable": false,
+        "inspectTextInactive": "A switch. It might activate something...",
+        "inspectTextActive": "A switch. It might activate something...",
+        "useTextNotUsable": "The switch won't budge. Maybe it needs to be activated too...",
+        "useTextUsed": "It worked! You get the feeling something has changed."
+    },
+    "weight": {
+        "moveable": true,
+        "usable": false,
+        "passable": false,
+        "destructable": false,
+        "inspectTextInactive": "A really heavy block. Maybe you can move it somewhere...",
+        "inspectTextActive": "A really heavy block. Maybe you can move it somewhere...",
+        "useTextNotUsable": "",
+        "useTextUsed": ""
+    },
+    "floor_switch": {
+        "moveable": false,
+        "usable": false,
+        "passable": false,
+        "destructable": false,
+        "inspectTextInactive": "Huh, it looks like something can fit here.",
+        "inspectTextActive": "A perfect fit!",
+        "useTextNotUsable": "",
+        "useTextUsed": ""
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "move": [
+        "walk out that door",
+        "go out we",
+        "go out with you officer"
+    ],
+    "look": [
+        "look at my books",
+        "look at that time's",
+        "look at it"
+    ],
+    "take": [
+        "take it",
+        "take their seats",
+        "take it myself thank you",
+        "hold it",
+        "take that back"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "say that like",
+        "say that there"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": [
+        "use the help"
+    ]
+}

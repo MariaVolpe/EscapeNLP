@@ -1,0 +1,45 @@
+{
+    "bowl": [
+        "move the bowl"
+    ],
+    "you": [
+        "take you",
+        "remove you"
+    ],
+    "picture": [
+        "take a picture"
+    ],
+    "there": [
+        "go down there"
+    ],
+    "care": [
+        "take care"
+    ],
+    "limb": [
+        "go out on a limb"
+    ],
+    "room": [
+        "leave the room"
+    ],
+    "undefined": [
+        "take that bet"
+    ],
+    "information": [
+        "pass that information"
+    ],
+    "pictures": [
+        "take more pictures"
+    ],
+    "side": [
+        "take his side"
+    ],
+    "me": [
+        "look at me"
+    ],
+    "rain": [
+        "walk in the rain"
+    ],
+    "us": [
+        "look at us"
+    ]
+}

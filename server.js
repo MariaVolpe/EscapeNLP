@@ -90,9 +90,9 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     if (io.nsps['/'].adapter.rooms[currentRoom] && socket.playerInfo) {
-      let date = new Date();
-      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = socket.playerInfo.name + ' has disconnected';
+      const date = new Date();
+      const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      const mess = `${socket.playerInfo.name} has disconnected`;
       const message = ['', time, mess];
       io.in(currentRoom).emit('chatMessage', message);
       updatePlayers('disconnected');

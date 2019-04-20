@@ -1,0 +1,32 @@
+{
+    "move": [
+        "go for something y'know",
+        "take a leave",
+        "leave the dollar"
+    ],
+    "look": [
+        "look at you",
+        "look in my office"
+    ],
+    "take": [
+        "hold your hand",
+        "take it",
+        "take my",
+        "take a leave",
+        "take time",
+        "take the money"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "say that there",
+        "tell this story",
+        "say that it's"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

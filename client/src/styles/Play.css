@@ -9,11 +9,19 @@
 }
 
 .text-info {
-  float: left;
-  width: 20%;
+  float: right;
+  width: 19.3%;
 }
 
 .play-page {
   //background: #283942;
   //height: 100vh;
+}
+
+.player-box {
+  height: 17vh;
+}
+
+.logo {
+  height: 4.2vh;
 }
