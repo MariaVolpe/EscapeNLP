@@ -1,0 +1,33 @@
+{
+    "move": [
+        "move this relationship forward",
+        "go down there",
+        "go the distance y'know"
+    ],
+    "look": [
+        "look at me"
+    ],
+    "take": [
+        "take it",
+        "adopt your cat",
+        "take the northern",
+        "take a couple",
+        "take in the morning",
+        "take the shower",
+        "take these back",
+        "grab me",
+        "take me",
+        "hold it"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "say a girl"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

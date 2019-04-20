@@ -27,6 +27,7 @@
   max-height: 80.7vh;
   min-height: 80.7vh;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .text-list {
@@ -40,4 +41,8 @@
 
 .between-text {
   border-bottom: 1px solid black;
+}
+
+.command {
+  background-color: #B9C1A3;
 }

@@ -1,0 +1,31 @@
+{
+    "move": [
+        "push her down the stairs",
+        "go down that road",
+        "go unhook the smoke detectors",
+        "leave the lights",
+        "walk into chandler's bedroom"
+    ],
+    "look": [
+        "read about these women",
+        "take a look"
+    ],
+    "take": [
+        "take their time they",
+        "take me",
+        "take the bus",
+        "take a moment"
+    ],
+    "give": [],
+    "destroy": [],
+    "attack": [],
+    "place": [],
+    "jump": [],
+    "speak": [
+        "tell this story",
+        "say that you"
+    ],
+    "activate": [],
+    "deactivate": [],
+    "use": []
+}

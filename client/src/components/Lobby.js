@@ -5,6 +5,10 @@ import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
 import axios from 'axios';
 import '../styles/Lobby.css';
+<<<<<<< HEAD
+=======
+import axios from 'axios';
+>>>>>>> development
 
 class Lobby extends Component {
   constructor(props) {

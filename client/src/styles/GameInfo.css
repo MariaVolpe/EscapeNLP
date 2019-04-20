@@ -2,14 +2,17 @@
   display: inline-block;
   margin-top: 0.1vh;
   margin-bottom: -0.1vh;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
+  border: 3px solid white;
   outline-color: gray;
   outline-style: solid;
   outline-width: thin;
-  top: -1.5vh;
-  height: 7.9vh;
+  top: 1.5vh;
+  height: 6.8vh;
   background-image: url('../images/tile.png');
   background-size: 100%;
   color: white;
+}
+
+.map:hover {
+    border: 3px solid black;
 }

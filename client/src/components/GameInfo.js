@@ -29,7 +29,7 @@ class GameInfo extends Component {
       i = 0;
       map.forEach((row) => {
         hiddenMap[i] = row.map((element, i) =>
-          <div className="map col-1" key={i}>
+          <div className="map one wide column" key={i}>
             !
           </div>
         );
@@ -39,7 +39,7 @@ class GameInfo extends Component {
     }
 
     return(
-      <div>
+      <div className="ui grid">
         {visibleMap}
       </div>
     )

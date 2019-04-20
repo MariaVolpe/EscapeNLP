@@ -7,6 +7,7 @@ import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import Commands from './Commands';
 import TextInfo from './TextInfo';
+import Navigation from './Navigation';
 import '../styles/Play.css';
 
 class Play extends Component {
@@ -17,7 +18,9 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey',
+          bk: 'sword'
         },
         picture: '[pic]',
         ready: false
@@ -26,7 +29,8 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
+          crd: 'doorKey'
         },
         picture: '[pic]',
         ready: false
@@ -35,7 +39,7 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: false
@@ -44,7 +48,7 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          itm: 'sword',
         },
         picture: '[pic]',
         ready: false
@@ -53,7 +57,7 @@ class Play extends Component {
         name: '',
         inventory: {
           key: 'doorKey',
-          weapon: 'sword',
+          wep: 'sword',
         },
         picture: '[pic]',
         ready: false
@@ -199,20 +203,20 @@ class Play extends Component {
     let gameInfo;
     let playerInfo;
     if (this.state.allPlayersReady) {
-      gameInfo = <div className='game-info'>
+      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
 
                   </div>;
-      playerInfo = <div className='player-info'>
+      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                       <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
-      gameInfo = <div className='game-info'>
+      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
                     <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
-      playerInfo = <div className='player-info'>
+      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                     <div className="ui list">{allPlayers}</div>
                     <Row>
                       <Col>
@@ -227,7 +231,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <h1 class="ui dividing header">EscapeNLP</h1>
+        <Navigation inGame={true} />
         {playerInfo}
         {gameInfo}
         <CreateNameModal
@@ -238,7 +242,7 @@ class Play extends Component {
           warningOpen={this.state.warningOpen}
           onWarningClose={this.onWarningClose}
         />
-        <div className='text-info'>
+        <div className='text-info' style={{marginTop: '1%'}}>
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}

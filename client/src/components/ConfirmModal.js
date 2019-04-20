@@ -19,7 +19,7 @@ class ConfirmModal extends Component {
               </FormGroup>
               <FormGroup row>
                 <Button
-                  color="success"
+                  color="danger"
                   data-dismiss="modal"
                   className="centered"
                   onClick={this.props.onToggle}
@@ -27,7 +27,7 @@ class ConfirmModal extends Component {
                   {this.props.confirmInfo.cancel}
                 </Button>
                 <Button
-                  color="danger"
+                  color="success"
                   data-dismiss="modal"
                   className="centered"
                 >
