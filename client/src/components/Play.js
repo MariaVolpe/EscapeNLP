@@ -81,18 +81,18 @@ class Play extends Component {
       const MAX_PLAYER_COUNT = 5;
       const length = players.length;
       let allPlayers = this.state.allPlayers;
-      for (let i=0; i<length; i++) {
-        allPlayers[i]['name'] = players[i]['name'];
-        allPlayers[i]['ready'] = players[i]['ready'];
-      }
-      for (let i=length; i<MAX_PLAYER_COUNT; i++) {
-        allPlayers[i]['name'] = '';
-        allPlayers[i]['ready'] = false;
-      }
-      let allReady = [];
-      for (let i=0; i<allPlayers.length; i++) {
-        allReady[i] = allPlayers[i].ready || (!allPlayers[i].ready && allPlayers[i].name === '' && i > 0);
-      }
+
+      allPlayers.forEach((player, i) => {
+        if (i < length) {
+          player.name = players[i].name;
+          player.ready = players[i].ready;
+        } else {
+          player.name = '';
+          player.ready = false;
+        }
+      });
+
+      const allReady = allPlayers.map((player, i) => (player.ready || (!player.ready && player.name === '' && i > 0)));
 
       let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
 
