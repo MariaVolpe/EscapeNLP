@@ -12,7 +12,7 @@ class GameInfo extends Component {
     let mapData = [];
     map.forEach((row) => {
       mapData[i] = row.map((element, i) =>
-        <div className="map col-1" key={i}>
+        <div className="map one wide column" key={i}>
           {i}
         </div>
       );

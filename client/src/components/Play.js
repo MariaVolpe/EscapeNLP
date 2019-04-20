@@ -197,7 +197,7 @@ class Play extends Component {
   }
 
   render() {
-    const map = new Array(12).fill(0).map(() => new Array(12).fill(0));
+    const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const allPlayers = this.state.allPlayers.map(player => <PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
 
     let gameInfo;
