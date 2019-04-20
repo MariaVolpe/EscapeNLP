@@ -87,7 +87,7 @@ class Play extends Component {
       let allPlayers = this.state.allPlayers;
       for (let i=0; i<length; i++) {
         allPlayers[i].name = players[i].name;
-        allPlayers[i]['ready'] = players[i]['ready'];
+        allPlayers[i].ready = players[i].ready;
       }
       for (let i=length; i<MAX_PLAYER_COUNT; i++) {
         allPlayers[i]['name'] = '';
