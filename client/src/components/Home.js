@@ -12,12 +12,10 @@ class Home extends Component {
   }
 
   onPlayClick = (event) => {
-    console.log('Play the game!');
     window.location.replace('/browser');
   }
 
   onHowToClick = (event) => {
-    console.log('How To');
     window.location.replace('/howto');
   }
 

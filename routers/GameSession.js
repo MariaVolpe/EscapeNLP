@@ -1,8 +1,6 @@
 const express = require('express');
-const GameSessionsContainer = require('../game-logic/GameSessionsContainer');
 
 const router = express.Router();
-const gameContainer = new GameSessionsContainer();
 
 const parseAction = (req, res, next) => {
   // NLP parse
@@ -18,13 +16,13 @@ const checkForFailure = (req, res) => {
 // to do: rename route? this only returns the bare minimum of session info
 // will not be consistent with what is returned from GET /game/:id
 router.get('/', (req, res) => {
-  const results = gameContainer.getAllSessions();
+  const results = req.gameContainer.getAllSessions();
   const { data } = results;
   res.json({ error: null, data });
 });
 
 router.get('/:gameId', (req, res) => {
-  const results = gameContainer.getGame(parseInt(req.params.gameId, 10));
+  const results = req.gameContainer.getGame(parseInt(req.params.gameId, 10));
   if (results.error) {
     const { error } = results;
     return res.status(error.status).json({ error, data: null });
@@ -34,13 +32,13 @@ router.get('/:gameId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const results = gameContainer.addGame();
+  const results = req.gameContainer.addGame(req.body.gameName);
   const { data } = results;
   res.status(201).json({ error: null, data });
 });
 
 router.delete('/:gameId', (req, res) => {
-  const results = gameContainer.removeGame(parseInt(req.params.gameId, 10));
+  const results = req.gameContainer.removeGame(parseInt(req.params.gameId, 10));
   if (results.error) {
     const { error } = results;
     return res.status(error.status).json({ error, data: null });
@@ -52,7 +50,7 @@ router.post('/:gameId/player', (req, res) => {
   // todo: check if user is logged in
   // if so grab from database
   // else for guests...:
-  const results = gameContainer.addPlayerToSession(
+  const results = req.gameContainer.addPlayerToSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
   );
@@ -65,7 +63,7 @@ router.post('/:gameId/player', (req, res) => {
 });
 
 router.delete('/:gameId/player/:playerId', (req, res) => {
-  const results = gameContainer.dropPlayerFromSession(
+  const results = req.gameContainer.dropPlayerFromSession(
     parseInt(req.params.gameId, 10),
     parseInt(req.params.playerId, 10),
   );
@@ -77,7 +75,7 @@ router.delete('/:gameId/player/:playerId', (req, res) => {
 });
 
 router.post('/:gameId/start', (req, res) => {
-  const results = gameContainer.startGame(parseInt(req.params.gameId, 10));
+  const results = req.gameContainer.startGame(parseInt(req.params.gameId, 10));
   if (results.error) {
     const { error } = results;
     return res.status(error.status).json({ error, data: null });

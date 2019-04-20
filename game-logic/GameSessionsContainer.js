@@ -18,16 +18,16 @@ class GameSessionsContainer {
 
   getAllSessions() {
     const games = [];
-    this.games.forEach(({ playerCount }, gameId) => {
-      games.push({ gameId, playerCount });
+    this.games.forEach(({ playerCount, id: gameId, name: gameName }) => {
+      games.push({ gameId, gameName, playerCount });
     });
     return { data: games };
   }
 
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
-  addGame() {
-    const game = new GameSession(this.gameIdCounter);
+  addGame(name) {
+    const game = new GameSession(this.gameIdCounter, name);
     this.games.set(this.gameIdCounter, game);
     return { data: { gameId: this.gameIdCounter++ } };
   }
