@@ -1,7 +1,7 @@
 .vs/
 node_modules/
 node_modules
-.vs_code
+.vscode/
 .DS_Store
 /nlp-notes
 nlp-notes/
