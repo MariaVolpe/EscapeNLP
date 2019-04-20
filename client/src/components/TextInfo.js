@@ -55,63 +55,63 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message) => {
-      if (message[3] === 1) {
+      if (message.type === 'action') {
         textType = "text command";
       }
-      else {
+      else if (message.type === 'chat') {
         textType = "text";
       }
-      if (!sameName && prevName !== message[0]) {
-        prevName = message[0];
+      if (!sameName && prevName !== message.commenter) {
+        prevName = message.commenter;
       }
-      else if (!sameName && prevName === message[0]) {
+      else if (!sameName && prevName === message.commenter) {
         sameName = true;
         numOfSames += 1;
       }
-      else if (sameName && prevName !== message[0]) {
+      else if (sameName && prevName !== message.commenter) {
         sameName = false;
       }
       if (sameName) {
         numOfSames += 1;
-        if (message[0] === currPlayer) {
+        if (message.commenter === currPlayer) {
           comments.push(<div className="content" >
                             <div className={textType} >
-                              {message[2]}
+                              {message.mess}
                             </div>
                           </div>);
         }
         else {
           comments.push(<div className="content" >
                             <div className={textType} >
-                              {message[2]}
+                              {message.mess}
                             </div>
                           </div>);
         }
       }
       else if (!sameName) {
-        if (message[0] === currPlayer) {
+        if (message.commenter === currPlayer) {
           comments.push(<div className="content" >
                             <a class="author">
                               {"You"}
                             </a>
                             <div className="metadata">
-                              <span className="date">{message[1]}</span>
+                              <span className="date">{message.time}</span>
                             </div>
                             <div className={textType} >
-                              {message[2]}
+                              {message.mess}
                             </div>
                           </div>);
         }
         else {
           comments.push(<div className="content" >
                             <a class="author">
-                              {message[0]}
+                              {message.commenter}
                             </a>
                             <div className="metadata">
-                              <span className="date">{message[1]}</span>
+                              <span className="date">{message.time}</span>
                             </div>
                             <div className={textType} >
-                              {message[2]}
+                              {message.mess}
                             </div>
                           </div>);
         }

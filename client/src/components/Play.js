@@ -115,14 +115,17 @@ class Play extends Component {
     this.socket.emit('getName', '');
   }
 
+  createComment = (mess, type) => {
+    let commenter = this.state.playerName;
+    let date = new Date();
+    let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    const message = { commenter, time, mess, type };
+    this.socket.emit('chatMessage', message);
+  }
+
   onMessageKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
-      let commenter = this.state.playerName;
-      let date = new Date();
-      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = event.target.value;
-      const message = [commenter, time, mess];
-      this.socket.emit('chatMessage', message);
+      this.createComment(event.target.value, 'chat');
     }
   }
 
@@ -135,12 +138,7 @@ class Play extends Component {
 
   onCommandKeyPress = (event) => {
     if (event.key === 'Enter' && event.target.value.length > 0) {
-      let commenter = this.state.playerName;
-      let date = new Date();
-      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-      let mess = 'You wanted to: ' + event.target.value;
-      const message = [commenter, time, mess];
-      this.socket.emit('chatMessage', message);
+      this.createComment(event.target.value, 'action');
     }
   }
 
@@ -198,7 +196,13 @@ class Play extends Component {
 
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
-    const allPlayers = this.state.allPlayers.map(player => <PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
+    let allPlayers = [];
+    this.state.allPlayers.forEach((player) => {
+      if (player.name !== '') {
+        allPlayers.push(<PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
+      }
+    });
+    //const allPlayers = this.state.allPlayers.map(player => <PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
 
     let gameInfo;
     let playerInfo;
