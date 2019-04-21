@@ -91,9 +91,9 @@ class TextInfo extends Component {
       else if (!sameName) {
         if (message.commenter === currPlayer) {
           comments.push(<div className="content" >
-                            <a class="author">
+                            <span className="author">
                               {"You"}
-                            </a>
+                            </span>
                             <div className="metadata">
                               <span className="date">{message.time}</span>
                             </div>
@@ -104,9 +104,9 @@ class TextInfo extends Component {
         }
         else {
           comments.push(<div className="content" >
-                            <a class="author">
+                            <span className="author">
                               {message.commenter}
-                            </a>
+                            </span>
                             <div className="metadata">
                               <span className="date">{message.time}</span>
                             </div>
@@ -124,14 +124,14 @@ class TextInfo extends Component {
 
     return(
       <div className="ui minimal comments">
-        <h3 class="ui dividing header">Chat Box</h3>
+        <h3 className="ui dividing header">Chat Box</h3>
         <div className="text-box"  >
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
         <div>
-            <select class="dropdown chat-change" onChange={this.props.onChatOptionChange}>
-            <option class="menu item" value="0">Chat</option>
-            <option class="menu item" value="1">Action</option>
+            <select className="dropdown chat-change" onChange={this.props.onChatOptionChange}>
+            <option className="menu item" value="0">Chat</option>
+            <option className="menu item" value="1">Action</option>
             </select>
             {chatBox}
         </div>

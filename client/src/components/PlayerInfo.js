@@ -16,13 +16,9 @@ class PlayerInfo extends Component {
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
     let columns = "col-" + numOfCols + " ui item mini button";
 
-    let items = [];
-    console.log(itemsList.length);
-    for (let i=0; i<itemsList.length; i++) {
-      items.push(<div className={columns}>
-                  {itemsList[i][0]}
-                 </div>);
-    }
+    const items = itemsList.map((item, i) => <div className={columns} key={i}>
+                                            {itemsList[i][0]}
+                                          </div>)
 
     let readyCheck;
     if (this.props.playerInfo.ready === true) {

@@ -5,7 +5,6 @@ import MultiButton from './MultiButton';
 import CreateNameModal from './CreateNameModal';
 import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
-import Commands from './Commands';
 import TextInfo from './TextInfo';
 import Navigation from './Navigation';
 import '../styles/Play.css';
@@ -82,17 +81,26 @@ class Play extends Component {
     });
 
     this.socket.on('setNames', (players) => {
-      const MAX_PLAYER_COUNT = 5;
       const length = players.length;
       let allPlayers = this.state.allPlayers;
 
       allPlayers.forEach((player, i) => {
         if (i < length) {
           player.name = players[i].name;
-          player.ready = players[i].ready;
         } else {
           player.name = '';
           player.ready = false;
+        }
+      });
+
+      this.setState({allPlayers});
+    });
+
+    this.socket.on('readyUp', (playerInfo) => {
+      let allPlayers = this.state.allPlayers;
+      allPlayers.forEach((player) => {
+        if (player.name === playerInfo.name) {
+          player.ready = playerInfo.ready;
         }
       });
 
@@ -101,7 +109,7 @@ class Play extends Component {
       let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
 
       this.setState({allPlayers, allPlayersReady});
-    });
+    })
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
@@ -197,14 +205,13 @@ class Play extends Component {
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     let allPlayers = [];
-    this.state.allPlayers.forEach((player) => {
+    this.state.allPlayers.forEach((player, i) => {
       if (player.name !== '') {
-        allPlayers.push(<PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
+        allPlayers.push(<PlayerInfo playerInfo={player} key={i} className="row player-box" />);
       }
     });
-    //const allPlayers = this.state.allPlayers.map(player => <PlayerInfo playerInfo={player} style={"player-box"} className="row" />);
 
-    let gameInfo;
+    let gameInfo = <div/>;
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
