@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
 
   socket.on('readyToggle', () => {
     socket.playerInfo.ready = !socket.playerInfo.ready;
-    updatePlayers('');
+    io.in(currentRoom).emit('readyUp', socket.playerInfo);
   });
 
   socket.on('disconnect', () => {
