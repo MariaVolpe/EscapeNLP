@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = ['', time, mess];
+      const message = { commenter:time, time:'', mess };
       io.in(currentRoom).emit('chatMessage', message);
       updatePlayers('disconnected');
     }

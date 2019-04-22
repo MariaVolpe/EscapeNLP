@@ -54,7 +54,7 @@ class TextInfo extends Component {
     let numOfSames = 0;
     let textType = "text";
 
-    prevMessages.forEach((message) => {
+    prevMessages.forEach((message, i) => {
       if (message.type === 'action') {
         textType = "text command";
       }
@@ -74,14 +74,14 @@ class TextInfo extends Component {
       if (sameName) {
         numOfSames += 1;
         if (message.commenter === currPlayer) {
-          comments.push(<div className="content" >
+          comments.push(<div className="content" key={i} >
                             <div className={textType} >
                               {message.mess}
                             </div>
                           </div>);
         }
         else {
-          comments.push(<div className="content" >
+          comments.push(<div className="content" key={i} >
                             <div className={textType} >
                               {message.mess}
                             </div>
@@ -90,7 +90,7 @@ class TextInfo extends Component {
       }
       else if (!sameName) {
         if (message.commenter === currPlayer) {
-          comments.push(<div className="content" >
+          comments.push(<div className="content" key={i} >
                             <span className="author">
                               {"You"}
                             </span>
@@ -103,7 +103,7 @@ class TextInfo extends Component {
                           </div>);
         }
         else {
-          comments.push(<div className="content" >
+          comments.push(<div className="content" key={i} >
                             <span className="author">
                               {message.commenter}
                             </span>
