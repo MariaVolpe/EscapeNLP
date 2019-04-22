@@ -2,26 +2,26 @@
     "sword": {
         "name": "sword",
         "id": "sword",
-        "useMethod": "",
+        "useMethod": "attack",
     },
     "sword_blade": {
         "name": "sword_blade",
         "id": "sword_blade",
-        "useMethod": "",        
+        "useMethod": "none",        
     },
     "sword_guard": {
         "name": "sword_guard",
         "id": "sword_guard",
-        "useMethod": "",        
+        "useMethod": "none",        
     },
     "sword_hilt": {
         "name": "sword_hilt",
         "id": "sword_hilt",
-        "useMethod": "",        
+        "useMethod": "none",        
     },
     "sword_pommel": {
         "name": "sword_pommel",
         "id": "sword_pommel",
-        "useMethod": "",        
+        "useMethod": "none",        
     }
 }
