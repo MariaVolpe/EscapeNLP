@@ -1,3 +1,18 @@
 div {
   text-align: center;
 }
+
+.colors {
+  background-color: #283942;
+  color: white;
+  height: 100vh;
+}
+
+.title {
+  margin-top: 3%;
+}
+
+p {
+  margin-left: 25%;
+  margin-right: 25%;
+}

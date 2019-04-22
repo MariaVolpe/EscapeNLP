@@ -48,7 +48,7 @@ class PlayerInfo extends Component {
         <div className="content">
           <img
             className="left floated mini ui image"
-            src="https://openclipart.org/download/247324/abstract-user-flat-1.svg"
+            src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
             alt="user icon"
             style={{marginLeft: '3%', marginTop: '3%'}}
           />
