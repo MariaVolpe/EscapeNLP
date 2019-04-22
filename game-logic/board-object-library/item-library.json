@@ -1,1 +1,27 @@
-{}
+{
+    "sword": {
+        "name": "sword",
+        "id": "sword",
+        "useMethod": "",
+    },
+    "sword_blade": {
+        "name": "sword_blade",
+        "id": "sword_blade",
+        "useMethod": "",        
+    },
+    "sword_guard": {
+        "name": "sword_guard",
+        "id": "sword_guard",
+        "useMethod": "",        
+    },
+    "sword_hilt": {
+        "name": "sword_hilt",
+        "id": "sword_hilt",
+        "useMethod": "",        
+    },
+    "sword_pommel": {
+        "name": "sword_pommel",
+        "id": "sword_pommel",
+        "useMethod": "",        
+    }
+}
