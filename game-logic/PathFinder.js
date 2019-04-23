@@ -18,7 +18,7 @@ class PathFinder {
 
   /*
     Returns an array of contiguous points illustrating a path
-    Direction is a point object that details the vector direction something can go in
+    Direction is a object that details x and y dimensions
   */
   getPathByDirection(start, direction) {
     const pathList = [];
@@ -27,13 +27,13 @@ class PathFinder {
     while (queue.length > 0) {
       p = queue.shift();
       if (!this.isPassablePoint(p)) {
-        continue;
+        return pathList;
       }
-      
+      const neighbors = this.getNeighborsByDirection(p, direction);
+      queue.push(...neighbors);
     }
-    return path;
+    return pathList;
   }
-
 
   // Returns an array of contiguous Points illustrating a path to reach the destination
   // from the starting coordinate. Returns an empty array if no path exists.
@@ -43,14 +43,12 @@ class PathFinder {
     const pathList = [];
     let pathExists = false;
     let p;
-
     while (queue.length > 0) {
       p = queue.shift();
       if (p.x === destination.x && p.y === destination.y) {
         pathExists = true;
         break;
       }
-
       visited.add(stringifyCoordinates(p.x, p.y));
       const neighbors = this.getNeighbors(p, visited);
       queue.push(...neighbors);
@@ -86,34 +84,49 @@ class PathFinder {
   /* Gets neighbors filtered by a direction vector */
   getNeighborsByDirection(p, direction) {
     const neighbors = [];
-    const magnitude = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2));
-    if (magnitude === 0) {
+    const dimensions = direction.x + direction.y;
+    if (dimensions === 0) {
       return neighbors;
     }
-    
-    if (magnitude === 1) { // movement along only 1 axis
-      let d = new Point(p.x, p.y);
-      d.x = d.x + direction.x;
-      d.y = d.y + direction.y;
-      neighbors.push(d);
-    } else { // movement along 2 axis
-      let d = new Point(p.x, p.y);
-      d.x 
-    } return neighbors;
+    const np = new Point(p.x, p.y);
+    np.x = p.x + direction.x;
+    np.y = p.y + direction.y;
+    if (dimensions === 1) { // movement along only 1 axis
+      neighbors.push(np);
+      return neighbors;
+    }
+    if (this.isPassablePoint({ x: np.x, y: p.y })) { // movement along 2 axis
+      neighbors.push({ x: np.x, y: p.y });
+      neighbors.push({ x: np.x, y: np.y });
+    } else {
+      neighbors.push({ x: p.x, y: np.y });
+      neighbors.push({ x: np.x, y: np.y });
+    }
+    return neighbors;
   }
 
   isPassablePoint({ x, y }) {
     if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
-    if (this.matrix[x][y] === 1) {
+    if (this.bottom(x, y) === 1) {
       return false;
     }
-    if (this.matrix[x][y] === null || !(this.matrix[x][y] instanceof BoardObject)
-      || this.matrix[x][y].isPassable()) {
+    if (this.bottom(x, y) === null || !(this.bottom(x, y) instanceof BoardObject)
+      || this.bottom(x, y).isPassable()) {
       return true;
     }
     return false;
+  }
+
+  // Gets the bottom element of the stack //
+  bottom(x, y) {
+    if (!this.matrix[x][y].length) return null;
+    return this.matrix[x][y][0];
+  }
+
+  setMatrix(matrix) {
+    this.matrix = matrix;
   }
 }
 

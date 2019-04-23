@@ -14,10 +14,8 @@ class Grid {
     this.boardSize = size;
     this.positionMap = new Map(); // Keeps coordinates of object in board, resolves ids to positions
     this.nameMap = new Map(); // resolves names to object IDs
-    this.objectMap = new Map(); // resolves objects to object IDs
     this.matrix = this.setMatrix({ xDim: size, yDim: size });
-    this.defaultMatrix = this.setDefaultMatrix({ xDim: size, yDim: size });
-    this.pathFinder = new PathFinder(this);
+    this.pathFinder = new PathFinder(this.matrix);
   }
 
   /*
@@ -34,41 +32,29 @@ class Grid {
     }
     this.nameMap.set(obj.name, obj.id);
     this.positionMap.set(obj.id, p);
-    this.objectMap.set(obj, p);
-    this.matrix[p.x][p.y] = obj;
+    this.matrix[p.x][p.y].push(obj);
   }
 
   /* Removes an object from the board */
   remove({
-    obj, id, name, x, y, defaultMatrix = false,
+    obj, id, name,
   }) {
-    let NAME;
     let ID;
-    let object;
-    const matrix = defaultMatrix ? this.defaultMatrix : this.matrix;
-    if (obj) { // if the object was passed in
-      NAME = obj.name;
-      ID = this.objectMap.get(obj);
-      object = obj;
-    } else if (id) { // if the id was passed in
-      const p = this.positionMap.get(id);
-      object = matrix[p.x][p.y];
-      NAME = object.name;
+    let NAME;
+    let object = obj;
+    if (id) { // if the id was passed in
       ID = id;
+      object = this.getObject(ID);
+      NAME = object.name;
     } else if (name) { // if the name was passed in
       ID = this.nameMap.get(name);
-      const p = this.positionMap.get(ID);
-      object = matrix[p.x][p.y];
-      NAME = object.name;
-    } else { // if the coordinates were passed in
-      object = matrix[x][y];
-      ID = object.id;
+      object = this.getObject(ID);
       NAME = object.name;
     }
     // delete from maps
     this.nameMap.delete(NAME);
-    this.objectMap.delete(object);
     this.positionMap.delete(ID);
+    this.removeFromStack(object);
   }
 
   // Finds a free space in the board, returns a point with its indices.
@@ -87,19 +73,23 @@ class Grid {
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
-  moveToDestination(movingObj, destination) {
-    const startPoint = this.getPosition(movingObj);
+  // movingObjs is a list of objects that are moving ordered by following to leading
+  moveToDestination(movingObjs, destination) {
     const destinationPoint = this.getPosition(destination);
-    const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
-    const lastPoint = path[path.length - 1];
-    // update matrix @ current point //
-    this.updateMatrix(lastPoint.x, lastPoint.y, this.matrix[startPoint.x][startPoint.y]);
-    // update matrix @ previous point //
-    this.updateMatrix(startPoint.x, startPoint.y, this.defaultMatrix[startPoint.x][startPoint.y]);
-    // update position of object
-    this.getPosition(movingObj).x = lastPoint.x;
-    this.getPosition(movingObj).y = lastPoint.y;
-    return { movingObject: movingObj, position: this.getPosition(movingObj), pathTaken: path };
+    for (let i = 0; i < movingObjs.length; i++) {
+      const movingObj = movingObjs[i];
+      const startPoint = this.getPosition(movingObj);
+      const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
+      const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0]; // offset by how many things we are moving
+      // update matrix @ current point //
+      this.pushOnMatrix(lastPoint.x, lastPoint.y, movingObj);
+      // update matrix @ previous point //
+      this.removeFromStack(movingObj); // this wont work for moving objects
+      // in the middle of the stack
+      // update position of object
+      this.getPosition(movingObj).x = lastPoint.x;
+      this.getPosition(movingObj).y = lastPoint.y;
+    }
   }
 
   // given a direction, move towards it
@@ -109,60 +99,55 @@ class Grid {
   }
 
   // Gets an object either by its object id, its name, or by the object itself
-  getObj(objID) {
-    let p;
-    if (typeof objID === 'number') {
-      p = this.positionMap.get(objID);
-    } else if (typeof objID === 'string') {
+  getObject(objID) {
+    let stack;
+    if (this.positionMap.has(objID)) { // passed in a objID
+      const p = this.positionMap.get(objID);
+      stack = this.matrix[p.x][p.y];
+    } else if (this.nameMap.has(objID)) { // passed in a name
       const id = this.nameMap.get(objID);
-      p = this.positionMap.get(id);
-    } else { // objectID is an object
-      const id = this.objectMap.get(objID);
-      p = this.positionMap.get(id);
+      const p = this.positionMap.get(id);
+      stack = this.matrix[p.x][p.y];
     }
-    return this.matrix[p.x][p.y];
+    return stack.find((o) => objID.name === o.name);
   }
 
   // Returns Point representing indices of desired object within the grid.
   getPosition(objID) {
-    if (typeof objID === 'number') {
+    let id;
+    if (this.positionMap.has(objID)) {
       return this.positionMap.get(objID);
     }
-    if (typeof objID === 'string') {
-      const id = this.nameMap.get(objID);
-      return this.positionMap.get(id);
+    if (this.nameMap.has(objID)) {
+      id = this.nameMap.get(objID);
+    } else { // object
+      id = objID.id;
     }
-    // else objID is an object
-    const id = this.objectMap.get(objID);
     return this.positionMap.get(id);
   }
 
-  /* Sets the default state of defaultMatrix */
-  setDefaultMatrix({ xDim, yDim, matrix }) {
-    if (matrix) {
-      this.defaultMatrix = matrix;
-      return;
-    }
-    this.defaultMatrix = new Array(xDim).fill(null).map(() => new Array(yDim).fill(null));
-  }
-
-  /* Sets the state of Matrix */
+  /* Creates a 3D matrix with xDim and yDim */
   setMatrix({ xDim, yDim, matrix }) {
     if (matrix) {
       this.matrix = matrix;
+      this.pathFinder.setMatrix(matrix);
       return;
     }
-    this.matrix = new Array(xDim).fill(null).map(() => new Array(yDim).fill(null));
-  }
-
-  // updates a position of the default matrix with an object //
-  updateDefaultMatrix(x, y, obj) {
-    this.defaultMatrix[x][y] = obj;
+    this.matrix = Array.from({ length: xDim },
+      () => Array.from({ length: yDim },
+        () => []));
   }
 
   // updates a position of matrix with an object //
-  updateMatrix(x, y, obj) {
-    this.matrix[x][y] = obj;
+  pushOnMatrix(x, y, obj) {
+    this.matrix[x][y].push(obj);
+  }
+
+  // removes an element from the stack by its ID or the object reference itself
+  removeFromStack(obj) {
+    const p = this.positionMap.get(obj.id);
+    const stack = this.matrix[p.x][p.y].filter(o => obj !== o);
+    this.matrix[p.x][p.y] = stack;
   }
 }
 
