@@ -109,7 +109,7 @@ class Grid {
       const p = this.positionMap.get(id);
       stack = this.matrix[p.x][p.y];
     }
-    return stack.find((o) => objID.name === o.name);
+    return stack.find(o => objID.name === o.name);
   }
 
   // Returns Point representing indices of desired object within the grid.

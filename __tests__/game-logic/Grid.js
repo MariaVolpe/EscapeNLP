@@ -2,7 +2,7 @@ const Grid = require('../../game-logic/Grid');
 
 describe('Grid functionality tests', () => {
   // This needs to be changed to use Structure objects to work //
-  /*describe('Adding and removing elements', () => {
+  /* describe('Adding and removing elements', () => {
     it('should add and remove elements elements', async () => {
       const grid = new Grid(3);
       // hardcode matrices to these //
@@ -20,7 +20,7 @@ describe('Grid functionality tests', () => {
       expected = JSON.stringify([[[1], [null], [null]], [[1], [null], [1]], [[null], [null], [1]]]);
       expect(JSON.stringify(grid.matrix)).toEqual(expected);
     });
-  });*/
+  }); */
   describe('Object movement', () => {
     it('should move a named object to a named destination', async () => {
       const grid = new Grid(3);
