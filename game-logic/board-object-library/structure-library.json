@@ -32,7 +32,7 @@
     "floor_switch": {
         "moveable": false,
         "usable": false,
-        "passable": false,
+        "passable": true,
         "destructable": false,
         "inspectTextInactive": "Huh, it looks like something can fit here.",
         "inspectTextActive": "A perfect fit!",

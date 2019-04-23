@@ -39,6 +39,9 @@ class Grid {
   remove({
     obj, id, name,
   }) {
+    if (!obj && !id && !name) {
+      return;
+    }
     let ID;
     let NAME;
     let object = obj;
@@ -50,11 +53,15 @@ class Grid {
       ID = this.nameMap.get(name);
       object = this.getObject(ID);
       NAME = object.name;
+    } else { // if object was passed in
+      ID = obj.id;
+      object = obj;
+      NAME = obj.name;
     }
     // delete from maps
+    this.removeFromStack(object);
     this.nameMap.delete(NAME);
     this.positionMap.delete(ID);
-    this.removeFromStack(object);
   }
 
   // Finds a free space in the board, returns a point with its indices.
@@ -105,12 +112,22 @@ class Grid {
     if (this.positionMap.has(objID)) { // passed in a objID
       const p = this.positionMap.get(objID);
       stack = this.matrix[p.x][p.y];
-    } else if (this.nameMap.has(objID)) { // passed in a name
+      return stack.find(o => objID === o.id);
+    }
+    if (this.nameMap.has(objID)) { // passed in a name
       const id = this.nameMap.get(objID);
       const p = this.positionMap.get(id);
       stack = this.matrix[p.x][p.y];
+      return stack.find(o => objID === o.name);
     }
-    return stack.find(o => objID.name === o.name);
+    for (let i = 0; i < this.matrix.length; i++) { // otherwise we have to brute force search for the obj
+      for (let j = 0; j < this.matrix[i].length; j++) {
+        stack = this.matrix[i][j];
+        const found = stack.find(o => objID.id === o.id);
+        if (found) return found;
+      }
+    }
+    return null;
   }
 
   // Returns Point representing indices of desired object within the grid.
