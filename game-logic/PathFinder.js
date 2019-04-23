@@ -46,7 +46,6 @@ class PathFinder {
     let closestP;
     let minimumDistance = Number.MAX_SAFE_INTEGER;
     while (queue.length > 0) {
-
       p = queue.shift();
       const distance = this.getManhattanDistance(p, destination);
       if (distance < minimumDistance) {
@@ -139,7 +138,7 @@ class PathFinder {
     if (this.bottom(x, y) === 1) {
       return false;
     }
-    
+
     if (this.bottom(x, y) === null || !(this.bottom(x, y) instanceof BoardObject)
       || this.bottom(x, y).isPassable()) {
       return true;
