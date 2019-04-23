@@ -43,8 +43,15 @@ class PathFinder {
     const pathList = [];
     let pathExists = false;
     let p;
+    let closestP;
+    let minimumDistance = Number.MAX_SAFE_INTEGER;
     while (queue.length > 0) {
       p = queue.shift();
+      const distance = this.getManhattanDistance(p, destination);
+      if (distance < minimumDistance) {
+        minimumDistance = distance;
+        closestP = p;
+      }
       if (p.x === destination.x && p.y === destination.y) {
         pathExists = true;
         break;
@@ -60,8 +67,27 @@ class PathFinder {
         p = p.pathHistory;
       }
       pathList.reverse();
+    } else { // if there is no direct path use closest point as destination
+      return this.getPathByDestination(start, closestP);
     }
     return pathList;
+  }
+
+  // Runs BFS to find the closest point where there is not more than 2 items in a square
+  getClosestFreePoint(start, threshold = 2) {
+    const queue = [start];
+    const visited = new Set([]);
+    let p;
+    while (queue.length > 0) {
+      p = queue.shift();
+      if (this.matrix[p.x][p.y].length < threshold) {
+        return p;
+      }
+      visited.add(stringifyCoordinates(p.x, p.y));
+      const neighbors = this.getNeighbors(p, visited);
+      queue.push(...neighbors);
+    }
+    return null; // return null if no points are free
   }
 
   getNeighbors(p, visited) {
@@ -117,6 +143,11 @@ class PathFinder {
       return true;
     }
     return false;
+  }
+
+  // Calculates the manhattan distance between two points
+  getManhattanDistance(current, target) {
+    return Math.abs(current.x - target.x) + Math.abs(current.y - target.y); 
   }
 
   // Gets the bottom element of the stack //

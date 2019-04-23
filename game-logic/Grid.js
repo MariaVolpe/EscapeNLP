@@ -80,7 +80,8 @@ class Grid {
       const movingObj = movingObjs[i];
       const startPoint = this.getPosition(movingObj);
       const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
-      const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0]; // offset by how many things we are moving
+      // offset by how many things we are moving
+      const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       // update matrix @ current point //
       this.pushOnMatrix(lastPoint.x, lastPoint.y, movingObj);
       // update matrix @ previous point //
