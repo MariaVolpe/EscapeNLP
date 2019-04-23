@@ -147,7 +147,7 @@ class PathFinder {
 
   // Calculates the manhattan distance between two points
   getManhattanDistance(current, target) {
-    return Math.abs(current.x - target.x) + Math.abs(current.y - target.y); 
+    return Math.abs(current.x - target.x) + Math.abs(current.y - target.y);
   }
 
   // Gets the bottom element of the stack //
