@@ -21,13 +21,10 @@ class MultiButton extends Component {
   }
 
   onToggle = (event) => {
-    //console.log('You abandoned your teammates!');
-    //window.location.replace('/');
     this.setState({ isOpen: !this.state.isOpen });
   }
 
   handleSubmit = (event) => {
-    console.log('You abandoned your teammates!');
     window.location.replace('/');
     event.preventDefault();
   }

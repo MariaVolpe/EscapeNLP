@@ -26,7 +26,11 @@
     "node-nlp": "2.4.1",
     "nodemon": "*",
     "supertest": "^4.0.2",
-    "synonyms": "*"
+    "socket.io": "^2.2.0",
+    "synonyms": "*",
+    "compromise": "*",
+    "nlp-corpus": "*",
+    "wordnetjs": "*"
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^13.1.1",

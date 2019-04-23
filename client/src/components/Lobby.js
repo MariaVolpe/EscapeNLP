@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'reactstrap';
+import socketIOClient from 'socket.io-client';
 import ErrorModal from './ErrorModal';
 import ConfirmModal from './ConfirmModal';
+import axios from 'axios';
 import '../styles/Lobby.css';
-
-const axios = require('axios');
 
 class Lobby extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
+      roomSize: 0,
     }
     this.confirmInfo = {
       title: 'Join Game?',
@@ -19,21 +20,44 @@ class Lobby extends Component {
       confirm: 'Join',
       cancel: 'Cancel',
     };
+    this.socket = socketIOClient('');
+
+    this.socket.on('canJoin', (isJoinable) => {     
+      if (isJoinable) {
+        this.setState({ confirmOpen: true });
+      } else {
+        this.setState({ errorOpen: true });
+      }
+    });
+
+    this.socket.on('confirmJoin', (isJoinable) => {
+      if (isJoinable) {
+        window.sessionStorage.setItem('roomName', this.props.lobbyName);
+        window.sessionStorage.setItem('roomId', this.props.lobbyId);        
+        window.location.replace('/play');
+
+        axios.post(`/game/${this.props.lobbyId}/player`);
+      } else {
+        this.setState({
+          confirmOpen: !this.state.confirmOpen,
+          errorOpen: !this.state.errorOpen,
+        });
+      }
+    });
+
+    this.socket.on('checkRoomSize', (roomSize) => {
+      this.setState({roomSize});
+    });
+
+  }
+
+  componentDidMount = () => {
+    this.socket.emit('checkRoomSize', this.props.lobbyId);
+    this.socket.emit('lobbyBrowser');
   }
 
   onJoinClick = (event) => {
-    if (this.props.playerCount < 5) {
-      console.log('Join a room');
-      //window.location.replace('/play');
-      axios.post('/game/0/player')
-        .then((res) => {
-          console.log(res);
-        });
-      this.setState({ confirmOpen: !this.state.confirmOpen });
-    }
-    else {
-      this.setState({ errorOpen: !this.state.errorOpen });
-    }
+    this.socket.emit('attemptJoin', this.props.lobbyId);
   }
 
   onErrorSubmit = (event) => {
@@ -42,7 +66,7 @@ class Lobby extends Component {
   }
 
   onConfirmSubmit = (event) => {
-    window.location.replace('/play');
+    this.socket.emit('confirmJoin', this.props.lobbyId);
     event.preventDefault();
   }
 
@@ -75,7 +99,7 @@ class Lobby extends Component {
             Lobby Info
           </Col>
           <Col>
-            Player Count: {this.props.playerCount}/5
+            Player Count: {this.state.roomSize}/5
           </Col>
         </Row>
       </a>

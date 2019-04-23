@@ -3,18 +3,17 @@ const Grid = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 
 class GameSession {
-  constructor(id) {
+  constructor(id, name) {
+    this.puzzleManager = null;
     this.grid = null;
     this.agents = [];
     this.puzzleManager = null;
     this.id = id;
+    this.name = name;
   }
 
   getGame() {
-    const players = [];
-    this.agents.forEach(({ inventory, id }) => {
-      players.push({ inventory, id });
-    });
+    const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
     return { id: this.id, grid: this.grid, players };
   }
 

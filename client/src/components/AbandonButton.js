@@ -19,7 +19,6 @@ class AbandonButton extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log('You abandoned your teammates!');
     window.location.replace('/');
     event.preventDefault();
   }

@@ -19,12 +19,6 @@ class CreateLobbyModal extends Component {
                 <Input className="col-8 centered" />
               </FormGroup>
               <FormGroup row>
-                <div clasName="col-3" style={{marginLeft: '5%',  marginRight: '3.5%'}}>
-                  Password:
-                </div>
-                <Input className="col-8 centered" />
-              </FormGroup>
-              <FormGroup row>
                 <Button
                   color="danger"
                   data-dismiss="modal"

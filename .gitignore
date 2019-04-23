@@ -1,4 +1,8 @@
-/node_modules
-.vs_code
+.vs/
+node_modules/
+node_modules
+.vscode/
 .DS_Store
-/.vs
+/nlp-notes
+nlp-notes/
+friends/
