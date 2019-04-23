@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/GameInfo.css';
+import image from '../images/player.png'
 
 class GameInfo extends Component {
 
@@ -13,7 +14,7 @@ class GameInfo extends Component {
     map.forEach((row) => {
       mapData[i] = row.map((element, i) =>
         <div className="map one wide column" key={i}>
-          {i}
+          <img src={image} className="item" />
         </div>
       );
       i++;
@@ -30,7 +31,7 @@ class GameInfo extends Component {
       map.forEach((row) => {
         hiddenMap[i] = row.map((element, i) =>
           <div className="map one wide column" key={i}>
-            !
+            <img src={image} className="item" />
           </div>
         );
         i++;

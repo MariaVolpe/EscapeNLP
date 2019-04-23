@@ -16,3 +16,8 @@
 .map:hover {
     border: 3px solid black;
 }
+
+.item {
+  max-width: 100%;
+  height: auto;
+}
