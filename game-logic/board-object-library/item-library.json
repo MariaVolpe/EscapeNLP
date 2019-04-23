@@ -9,19 +9,14 @@
         "id": "sword_blade",
         "useMethod": "none",        
     },
-    "sword_guard": {
-        "name": "sword_guard",
-        "id": "sword_guard",
-        "useMethod": "none",        
-    },
     "sword_hilt": {
         "name": "sword_hilt",
         "id": "sword_hilt",
         "useMethod": "none",        
     },
-    "sword_pommel": {
-        "name": "sword_pommel",
-        "id": "sword_pommel",
-        "useMethod": "none",        
+    "key": {
+        "name": "key",
+        "id": "key",
+        "useMethod": "open",          
     }
 }
