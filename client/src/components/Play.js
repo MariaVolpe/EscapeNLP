@@ -118,9 +118,13 @@ class Play extends Component {
     let message = event.target.value;
     message = this.removeStartAndEndSpaces(message);
     if (event.key === 'Enter' && message.length > 0) {
-      if (message[0] === '*' && !this.state.gameComplete) {
+      if (message[0] === '*' && !this.state.gameComplete && !this.state.commandDisabled && this.state.allPlayersReady) {
         message = message.slice(1);
         this.createComment(message, 'action');
+        this.setState({commandDisabled: true});
+        setTimeout(() => {
+          this.setState({commandDisabled: false});
+        }, 2000);
       } else {
         this.createComment(message, 'chat');
       }
@@ -131,6 +135,8 @@ class Play extends Component {
     else if (event.key === ' ') {
       if (message[0] === '*' && message.length === 1 && !this.state.gameComplete) {
         this.setState({chatOption: 'action', message: '', command: ''});
+      } else {
+        this.setState({message: '', command: ''});
       }
     }
   }
@@ -164,7 +170,7 @@ class Play extends Component {
 
   onCommandChange = (event) => {
     const command = event.target.value;
-    if (command.length <= 30 && !this.state.gameComplete) {
+    if (command.length <= 30) {
       this.setState({ command });
     }
   }
@@ -277,6 +283,8 @@ class Play extends Component {
             onCommandKeyPress={this.onCommandKeyPress}
             onCommandChange={this.onCommandChange}
             commandDisabled={this.state.commandDisabled}
+            gameComplete={this.state.gameComplete}
+            gameStart={this.state.allPlayersReady}
           />
         </div>
       </div>

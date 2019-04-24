@@ -47,9 +47,13 @@ class TextInfo extends Component {
       value = this.props.command;
       keyPress = this.props.onCommandKeyPress;
       change = this.props.onCommandChange;
-      disabled = this.props.commandDisabled;
-      if (disabled) {
+      disabled = this.props.commandDisabled || this.props.gameComplete || !this.props.gameStart;
+      if (disabled && !this.props.gameComplete && this.props.gameStart) {
         placeholder = "Wait until action is executed";
+      } else if (this.props.gameComplete) {
+        placeholder = "Game has ended";
+      } else if (!this.props.gameStart) {
+        placeholder = "Wait until game has started!";
       } else {
         placeholder = "Enter commands here";
       }
