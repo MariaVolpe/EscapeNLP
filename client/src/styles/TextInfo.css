@@ -55,4 +55,21 @@
 
 .command {
   background-color: #B9C1A3;
+  border: 3px solid #B9C1A3;
+}
+
+.command:hover {
+  border: 3.5px solid black;
+}
+
+.message {
+  margin-bottom: -6.66px;
+}
+
+.chat {
+  border: 3px solid white;
+}
+
+.chat:hover {
+  border: 3.5px solid black;
 }

@@ -19,6 +19,7 @@ class Play extends Component {
       message: '',
       prevMessages: [],
       command: '',
+      commandDisabled: false,
       allPlayersReady: false,
       setName: false,
       playerName: '',
@@ -48,7 +49,10 @@ class Play extends Component {
 
     this.socket.on('readyUp', (playerInfo) => {
       let allPlayers = this.state.allPlayers;
-      allPlayers[playerInfo.name].ready = playerInfo.ready;
+      if (allPlayers.hasOwnProperty(playerInfo.name)) {
+        allPlayers[playerInfo.name].ready = playerInfo.ready;
+      }
+
 
       let allReady = [];
       Object.keys(allPlayers).forEach((player, i) => {
@@ -59,6 +63,15 @@ class Play extends Component {
 
       this.setState({allPlayers, allPlayersReady});
     });
+
+    this.socket.on('removePlayer', (playerName) => {
+      let allPlayers = this.state.allPlayers;
+      if (allPlayers.hasOwnProperty(playerName)) {
+        delete allPlayers[playerName];
+      }
+
+      this.setState({allPlayers});
+    })
 
     this.socket.on('updateGame', (players, board, gameComplete) => {
       let allPlayers = this.state.allPlayers;
@@ -134,9 +147,13 @@ class Play extends Component {
     command = this.removeStartAndEndSpaces(command);
     if (event.key === 'Enter' && command.length > 0) {
       this.createComment(command, 'action');
+      this.setState({commandDisabled: true});
+      setTimeout(() => {
+        this.setState({commandDisabled: false});
+      }, 2000);
     }
     else if (command.length === 0) {
-      this.setState({command: ''});
+      this.setState({command});
     }
     else if (event.key === ' ') {
       if (command[0] === '*' && command.length === 1) {
@@ -259,6 +276,7 @@ class Play extends Component {
             command={this.state.command}
             onCommandKeyPress={this.onCommandKeyPress}
             onCommandChange={this.onCommandChange}
+            commandDisabled={this.state.commandDisabled}
           />
         </div>
       </div>

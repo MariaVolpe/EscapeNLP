@@ -19,7 +19,7 @@ class TextInfo extends Component {
   findHeightDifference = (samePlayerMessages) => {
     let change = 1.1;
     if (samePlayerMessages > 0) {
-      change = 0.6;
+      change = 0.45;
     }
     let totalMessages = 74.5 / 17 * ((this.props.prevMessages.length - 1) * (change));
     let heightDiff = 74.5 - totalMessages;
@@ -36,6 +36,7 @@ class TextInfo extends Component {
     let change;
     let placeholder;
     let value;
+    let disabled = false;
 
     if (chatOption === 'chat') {
       value = this.props.message;
@@ -46,7 +47,12 @@ class TextInfo extends Component {
       value = this.props.command;
       keyPress = this.props.onCommandKeyPress;
       change = this.props.onCommandChange;
-      placeholder = "Enter commands here";
+      disabled = this.props.commandDisabled;
+      if (disabled) {
+        placeholder = "Wait until action is executed";
+      } else {
+        placeholder = "Enter commands here";
+      }
     }
 
     let sameName = false;
@@ -59,7 +65,7 @@ class TextInfo extends Component {
         textType = "text command";
       }
       else if (message.type === 'chat') {
-        textType = "text";
+        textType = "text chat";
       }
       if (!sameName && prevName !== message.commenter) {
         prevName = message.commenter;
@@ -74,7 +80,7 @@ class TextInfo extends Component {
       if (sameName) {
         numOfSames += 1;
         if (message.commenter === currPlayer) {
-          comments.push(<div className="content" key={i} >
+          comments.push(<div className="content message" key={i} >
                             <div className={textType} >
                               {message.mess}
                             </div>
@@ -90,7 +96,7 @@ class TextInfo extends Component {
       }
       else if (!sameName) {
         if (message.commenter === currPlayer) {
-          comments.push(<div className="content" key={i} >
+          comments.push(<div className="content message" key={i} >
                             <span className="author">
                               {"You"}
                             </span>
@@ -103,7 +109,7 @@ class TextInfo extends Component {
                           </div>);
         }
         else {
-          comments.push(<div className="content" key={i} >
+          comments.push(<div className="content message" key={i} >
                             <span className="author">
                               {message.commenter}
                             </span>
@@ -138,6 +144,7 @@ class TextInfo extends Component {
             onKeyPress={keyPress}
             placeholder={placeholder}
             className="talk-input"
+            disabled={disabled}
           />
         </div>
       </div>
