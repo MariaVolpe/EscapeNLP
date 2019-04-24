@@ -49,10 +49,7 @@ class PlayerInfo extends Component {
             alt="user icon"
           />
 
-          <div
-            className="right floated ui header"
-            style={{marginRight: '3%', marginTop: '3%'}}
-          >
+          <div className="right floated ui header">
             {this.props.playerInfo.name}
           </div>
 

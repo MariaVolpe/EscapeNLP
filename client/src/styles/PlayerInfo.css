@@ -33,3 +33,8 @@
   margin-left: 3%;
   margin-top: 3%;
 }
+
+.right.floated.ui.header {
+  margin-right: 3%;
+  margin-top: 3%;
+}
