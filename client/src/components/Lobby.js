@@ -53,7 +53,6 @@ class Lobby extends Component {
 
   componentDidMount = () => {
     this.socket.emit('checkRoomSize', this.props.lobbyId);
-    this.socket.emit('lobbyBrowser');
   }
 
   onJoinClick = (event) => {

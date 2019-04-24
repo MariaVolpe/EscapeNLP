@@ -139,7 +139,7 @@ class TextInfo extends Component {
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
         <div className="ui left action input chat-action">
-          <button className="ui button chat-change" onClick={this.props.onChatOptionChange}>
+          <button className="ui button chat-change" onClick={this.props.onChatOptionChange} >
             {this.props.chatOption}
           </button>
           <input

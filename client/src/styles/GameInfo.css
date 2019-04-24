@@ -11,6 +11,8 @@
   color: black;
   background-size: 100%;
   background-color: white;
+  z-index: 5;
+  font-size: 2vh;
 }
 
 .map:hover {
