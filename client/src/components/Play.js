@@ -61,14 +61,15 @@ class Play extends Component {
         picture: '[pic]',
         ready: false
       }],
-      map: [],
+      board: [],
+      gameComplete: false,
       message: '',
       prevMessages: [],
       command: '',
       allPlayersReady: false,
       setName: false,
       playerName: '',
-      chatOption: '0',
+      chatOption: 'chat',
       warningOpen: false
     }
 
@@ -109,7 +110,11 @@ class Play extends Component {
       let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
 
       this.setState({allPlayers, allPlayersReady});
-    })
+    });
+
+    this.socket.on('updateGame', (board, gameComplete) => {
+      this.setState({board, gameComplete});
+    });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
@@ -123,6 +128,17 @@ class Play extends Component {
     this.socket.emit('getName', '');
   }
 
+  removeStartAndEndSpaces = (value) => {
+    let words = value;
+    while(words[0] === ' ') {
+      words = words.slice(1);
+    }
+    while(words[words.length - 1] === ' ') {
+      words = words.slice(0, words.length - 1);
+    }
+    return words;
+  }
+
   createComment = (mess, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
@@ -132,27 +148,54 @@ class Play extends Component {
   }
 
   onMessageKeyPress = (event) => {
-    if (event.key === 'Enter' && event.target.value.length > 0) {
-      this.createComment(event.target.value, 'chat');
+    let message = event.target.value;
+    message = this.removeStartAndEndSpaces(message);
+    if (event.key === 'Enter' && message.length > 0) {
+      if (message[0] === '*' && !this.state.gameComplete) {
+        message = message.slice(1);
+        this.createComment(message, 'action');
+      } else {
+        this.createComment(message, 'chat');
+      }
+    }
+    else if (message.length === 0) {
+      this.setState({message: ''});
+    }
+    else if (event.key === ' ') {
+      if (message[0] === '*' && message.length === 1 && !this.state.gameComplete) {
+        this.setState({chatOption: 'action', message: '', command: ''});
+      }
     }
   }
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 43) {
+    if (message.length <= 30) {
       this.setState({ message });
     }
   }
 
   onCommandKeyPress = (event) => {
-    if (event.key === 'Enter' && event.target.value.length > 0) {
-      this.createComment(event.target.value, 'action');
+    let command = event.target.value;
+    command = this.removeStartAndEndSpaces(command);
+    if (event.key === 'Enter' && command.length > 0) {
+      this.createComment(command, 'action');
+    }
+    else if (command.length === 0) {
+      this.setState({command: ''});
+    }
+    else if (event.key === ' ') {
+      if (command[0] === '*' && command.length === 1) {
+        this.setState({chatOption: 'chat', message: '', command: ''});
+      }
     }
   }
 
   onCommandChange = (event) => {
     const command = event.target.value;
-    this.setState({ command });
+    if (command.length <= 30 && !this.state.gameComplete) {
+      this.setState({ command });
+    }
   }
 
   readyUp = (event) => {
@@ -166,14 +209,8 @@ class Play extends Component {
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
     let allPlayers = this.state.allPlayers;
-    while(playerName[0] === ' ') {
-      playerName = playerName.slice(1);
-      this.setState({ playerName });
-    }
-    while(playerName[playerName.length - 1] === ' ') {
-      playerName = playerName.slice(0, playerName.length - 1);
-      this.setState({ playerName });
-    }
+    playerName = this.removeStartAndEndSpaces(playerName);
+    this.setState({ playerName });
     const takenName = allPlayers.some(this.sameName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       const playerInfo = { name: playerName, ready: false };
@@ -194,8 +231,12 @@ class Play extends Component {
   }
 
   onChatOptionChange = (event) => {
-    const chatOption = event.target.value;
-    this.setState({chatOption});
+    const chatOption = this.state.chatOption;
+    if (chatOption === 'chat') {
+      this.setState({chatOption: 'action', message: '', command: ''});
+    } else {
+      this.setState({chatOption: 'chat', message: '', command: ''});
+    }
   }
 
   onWarningClose = (event) => {
@@ -215,8 +256,7 @@ class Play extends Component {
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
-                    <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
-
+                    <GameInfo map={map} board={this.state.board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                       <div className="ui list">{allPlayers}</div>
@@ -225,7 +265,7 @@ class Play extends Component {
     }
     else {
       gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
-                    <GameInfo map={map} allPlayersReady={this.state.allPlayersReady} />
+                    <GameInfo map={map} board={this.state.board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                     <div className="ui list">{allPlayers}</div>

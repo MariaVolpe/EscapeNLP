@@ -4,44 +4,55 @@ import image from '../images/player.png'
 
 class GameInfo extends Component {
 
+
+
   render() {
-
     const ready = this.props.allPlayersReady;
-
     const map = this.props.map;
-    let i = 0;
     let mapData = [];
-    map.forEach((row) => {
-      mapData[i] = row.map((element, i) =>
-        <div className="map one wide column" key={i}>
-          <img src={image} className="item" />
-        </div>
-      );
-      i++;
-    });
-
-    var visibleMap;
-    let hiddenMap = [];
 
     if (ready) {
-      visibleMap = mapData;
+      map.forEach((row, i) => {
+        row.forEach((element, k) => {
+          if (k === 0) {
+            mapData.push(<div className="map one wide column" >
+                           {String.fromCharCode(i+65)}
+                         </div>);
+          } else if (i === 12) {
+            mapData.push(<div className="map one wide column" >
+                           {k}
+                         </div>);
+          } else {
+            mapData.push(<div className="map tile one wide column" >
+                           <img src={image} className="item" />
+                         </div>);
+          }
+        });
+      });
     }
     else {
-      i = 0;
-      map.forEach((row) => {
-        hiddenMap[i] = row.map((element, i) =>
-          <div className="map one wide column" key={i}>
-            <img src={image} className="item" />
-          </div>
-        );
-        i++;
+      map.forEach((row, i) => {
+        row.forEach((element, k) => {
+          if (k === 0 && i < 12) {
+            mapData.push(<div className="map one wide column" >
+                           {String.fromCharCode(i+65)}
+                         </div>);
+          } else if (i === 12) {
+            mapData.push(<div className="map one wide column" >
+                           {k}
+                         </div>);
+          } else {
+            mapData.push(<div className="map tile one wide column" >
+                           <img src={image} className="item" />
+                         </div>);
+          }
+        });
       });
-      visibleMap = hiddenMap;
     }
 
     return(
       <div className="ui grid">
-        {visibleMap}
+        {mapData}
       </div>
     )
   }

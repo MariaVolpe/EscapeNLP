@@ -1,13 +1,22 @@
+.chat-action {
+  right: 3vh;
+}
+
 .talk-input {
   float: left;
-  width: 80%;
+  width: 100%;
 }
 
 .chat-change {
   float: left;
-  width: 20%;
   height: 35px;
   font-size: 1.5vh;
+  margin-left: 2.25%;
+  width: 25%;
+}
+
+.chat-header {
+  background-color: white;
 }
 
 .text-container {
@@ -28,6 +37,7 @@
   min-height: 80.7vh;
   overflow: scroll;
   overflow-x: hidden;
+  background-color: white;
 }
 
 .text-list {

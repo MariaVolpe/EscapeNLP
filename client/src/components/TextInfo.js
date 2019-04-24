@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Input } from 'reactstrap';
-import Commands from './Commands';
 import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
@@ -34,19 +32,21 @@ class TextInfo extends Component {
     const currPlayer = this.props.currPlayer;
     let comments = [];
     const chatOption = this.props.chatOption;
-    let chatBox;
+    let keyPress;
+    let change;
+    let placeholder;
+    let value;
 
-    if (chatOption === '0') {
-      chatBox = <div className="talk-input">
-                  <Input
-                      value={this.props.message}
-                      onChange={this.props.onChange}
-                      onKeyPress={this.props.onKeyPress}
-                      placeholder="Chat with group"
-                  />
-                </div>}
-    else {
-      chatBox = <Commands command={this.props.command} onKeyPress={this.props.onCommandKeyPress} onChange={this.props.onCommandChange} />
+    if (chatOption === 'chat') {
+      value = this.props.message;
+      keyPress = this.props.onKeyPress;
+      change = this.props.onChange;
+      placeholder = "Chat with group";
+    } else {
+      value = this.props.command;
+      keyPress = this.props.onCommandKeyPress;
+      change = this.props.onCommandChange;
+      placeholder = "Enter commands here";
     }
 
     let sameName = false;
@@ -124,16 +124,21 @@ class TextInfo extends Component {
 
     return(
       <div className="ui minimal comments">
-        <h3 className="ui dividing header">Chat Box</h3>
+        <h3 className="chat-header ui dividing header">Chat Box</h3>
         <div className="text-box"  >
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
-        <div>
-            <select className="dropdown chat-change" onChange={this.props.onChatOptionChange}>
-            <option className="menu item" value="0">Chat</option>
-            <option className="menu item" value="1">Action</option>
-            </select>
-            {chatBox}
+        <div className="ui left action input chat-action">
+          <button className="ui button chat-change" onClick={this.props.onChatOptionChange}>
+            {this.props.chatOption}
+          </button>
+          <input
+            value={value}
+            onChange={change}
+            onKeyPress={keyPress}
+            placeholder={placeholder}
+            className="talk-input"
+          />
         </div>
       </div>
     )
