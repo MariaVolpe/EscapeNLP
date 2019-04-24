@@ -13,54 +13,7 @@ class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPlayers: [{
-        name: '',
-        inventory: {
-          key: 'doorKey',
-          itm: 'sword',
-          crd: 'doorKey',
-          bk: 'sword'
-        },
-        picture: '[pic]',
-        ready: false
-      },
-      {
-        name: '',
-        inventory: {
-          key: 'doorKey',
-          itm: 'sword',
-          crd: 'doorKey'
-        },
-        picture: '[pic]',
-        ready: false
-      },
-      {
-        name: '',
-        inventory: {
-          key: 'doorKey',
-          itm: 'sword',
-        },
-        picture: '[pic]',
-        ready: false
-      },
-      {
-        name: '',
-        inventory: {
-          key: 'doorKey',
-          itm: 'sword',
-        },
-        picture: '[pic]',
-        ready: false
-      },
-      {
-        name: '',
-        inventory: {
-          key: 'doorKey',
-          wep: 'sword',
-        },
-        picture: '[pic]',
-        ready: false
-      }],
+      allPlayers: {},
       board: [],
       gameComplete: false,
       message: '',
@@ -82,15 +35,11 @@ class Play extends Component {
     });
 
     this.socket.on('setNames', (players) => {
-      const length = players.length;
       let allPlayers = this.state.allPlayers;
 
-      allPlayers.forEach((player, i) => {
-        if (i < length) {
-          player.name = players[i].name;
-        } else {
-          player.name = '';
-          player.ready = false;
+      players.forEach((player) => {
+        if (!allPlayers.hasOwnProperty(player.name)) {
+          allPlayers[player.name] = {inventory: {' ': ' '}, ready: player.ready};
         }
       });
 
@@ -99,21 +48,26 @@ class Play extends Component {
 
     this.socket.on('readyUp', (playerInfo) => {
       let allPlayers = this.state.allPlayers;
-      allPlayers.forEach((player) => {
-        if (player.name === playerInfo.name) {
-          player.ready = playerInfo.ready;
-        }
-      });
+      allPlayers[playerInfo.name].ready = playerInfo.ready;
 
-      const allReady = allPlayers.map((player, i) => (player.ready || (!player.ready && player.name === '' && i > 0)));
+      let allReady = [];
+      Object.keys(allPlayers).forEach((player, i) => {
+        allReady.push(allPlayers[player].ready);
+      });
 
       let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
 
       this.setState({allPlayers, allPlayersReady});
     });
 
-    this.socket.on('updateGame', (board, gameComplete) => {
-      this.setState({board, gameComplete});
+    this.socket.on('updateGame', (players, board, gameComplete) => {
+      let allPlayers = this.state.allPlayers;
+      players.forEach((player) => {
+        if (allPlayers.hasOwnProperty(player.name)) {
+          allPlayers[player.name].inventory = players.inventory;
+        }
+      });
+      this.setState({allPlayers, board, gameComplete});
     });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -211,7 +165,7 @@ class Play extends Component {
     let allPlayers = this.state.allPlayers;
     playerName = this.removeStartAndEndSpaces(playerName);
     this.setState({ playerName });
-    const takenName = allPlayers.some(this.sameName);
+    const takenName = allPlayers.hasOwnProperty(playerName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
       const playerInfo = { name: playerName, ready: false };
       this.socket.emit('getName', playerInfo);
@@ -246,10 +200,10 @@ class Play extends Component {
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     let allPlayers = [];
-    this.state.allPlayers.forEach((player, i) => {
-      if (player.name !== '') {
-        allPlayers.push(<PlayerInfo playerInfo={player} key={i} className="row player-box" />);
-      }
+    Object.keys(this.state.allPlayers).forEach((player, i) => {
+      let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready};
+      console.log(player.ready);
+      allPlayers.push(<PlayerInfo playerInfo={playerInfo} key={i} className="row player-box" />);
     });
 
     let gameInfo = <div/>;

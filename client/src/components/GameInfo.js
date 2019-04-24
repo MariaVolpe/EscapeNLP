@@ -14,14 +14,16 @@ class GameInfo extends Component {
     if (ready) {
       map.forEach((row, i) => {
         row.forEach((element, k) => {
-          if (k === 0) {
+          if (k === 0 && i < 12) {
             mapData.push(<div className="map one wide column" >
                            {String.fromCharCode(i+65)}
                          </div>);
-          } else if (i === 12) {
+          } else if (i === 12 && k !== 0) {
             mapData.push(<div className="map one wide column" >
                            {k}
                          </div>);
+          } else if (i === 12 && k === 0) {
+            mapData.push(<div className="map one wide column" />)
           } else {
             mapData.push(<div className="map tile one wide column" >
                            <img src={image} className="item" />
@@ -37,10 +39,12 @@ class GameInfo extends Component {
             mapData.push(<div className="map one wide column" >
                            {String.fromCharCode(i+65)}
                          </div>);
-          } else if (i === 12) {
+          } else if (i === 12 && k !== 0) {
             mapData.push(<div className="map one wide column" >
                            {k}
                          </div>);
+          } else if (i === 12 && k === 0) {
+            mapData.push(<div className="map one wide column" />)
           } else {
             mapData.push(<div className="map tile one wide column" >
                            <img src={image} className="item" />
