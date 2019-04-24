@@ -133,10 +133,8 @@ class Play extends Component {
       this.setState({message: ''});
     }
     else if (event.key === ' ') {
-      if (message[0] === '*' && message.length === 1 && !this.state.gameComplete) {
+      if (message[0] === '*' && message.length === 1) {
         this.setState({chatOption: 'action', message: '', command: ''});
-      } else {
-        this.setState({message: '', command: ''});
       }
     }
   }
