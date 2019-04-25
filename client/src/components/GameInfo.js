@@ -26,7 +26,7 @@ class GameInfo extends Component {
             mapData.push(<div className="map one wide column" />)
           } else {
             mapData.push(<div className="map tile one wide column" >
-                           <img src={image} className="item" />
+                           <img src={image} alt="player" className="board-item" />
                          </div>);
           }
         });
@@ -47,7 +47,7 @@ class GameInfo extends Component {
             mapData.push(<div className="map one wide column" />)
           } else {
             mapData.push(<div className="map tile one wide column" >
-                           <img src={image} className="item" />
+                           <img src={image} alt="player" className="board-item" />
                          </div>);
           }
         });
