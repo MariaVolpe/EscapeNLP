@@ -40,7 +40,7 @@ class Play extends Component {
 
       players.forEach((player) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
-          allPlayers[player.name] = {inventory: {' ': ' '}, ready: player.ready};
+          allPlayers[player.name] = {inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '}, ready: player.ready};
         }
       });
 
@@ -223,7 +223,6 @@ class Play extends Component {
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
       let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready};
-      console.log(player.ready);
       allPlayers.push(<PlayerInfo playerInfo={playerInfo} key={i} className="row player-box" />);
     });
 

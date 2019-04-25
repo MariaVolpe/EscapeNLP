@@ -4,7 +4,7 @@ import '../styles/PlayerInfo.css';
 class PlayerInfo extends Component {
 
   responsiveColumns = (length) => {
-    let colSize = Math.floor(12/(length)-1);
+    let colSize = Math.floor(12/(length));
     if (colSize > 5) {
       colSize = 5;
     }
@@ -14,10 +14,11 @@ class PlayerInfo extends Component {
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
+    console.log(numOfCols);
     let columns = "col-" + numOfCols + " ui item mini button";
 
     const items = itemsList.map((item, i) => <div className={columns} key={i}>
-                                            {itemsList[i][0]}
+                                            {itemsList[i][1]}
                                           </div>)
 
     let readyCheck;
