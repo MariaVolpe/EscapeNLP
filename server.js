@@ -58,8 +58,16 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (dataFromClient) => {
+    if (dataFromClient.type === 'action') {
+      console.log('give data to game logic');
+      io.in(currentRoom).emit('updateGame', ({'playerOne': {inventory: {}, ready: false}}, [], false));
+    }
     io.in(currentRoom).emit('chatMessage', dataFromClient);
   });
+
+  socket.on('updateGame', () => {
+    io.in(currentRoom).emit('updateGame', ({'playerOne': {inventory: {}, ready: false}}, [], false));
+  })
 
   const updatePlayers = (reason) => {
     const allPlayerNames = [];
