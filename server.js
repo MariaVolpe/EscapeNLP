@@ -95,6 +95,7 @@ io.on('connection', (socket) => {
       const mess = `${socket.playerInfo.name} has disconnected`;
       const message = { commenter:time, time:'', mess };
       io.in(currentRoom).emit('chatMessage', message);
+      io.in(currentRoom).emit('removePlayer', socket.playerInfo.name);
       updatePlayers('disconnected');
     }
   });
