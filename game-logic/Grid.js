@@ -193,12 +193,6 @@ class Grid {
     const stack = this.matrix[p.x][p.y].filter(o => boardObj !== o);
     this.matrix[p.x][p.y] = stack;
   }
-
-  retrieveObj(id) {
-    let point = this.positionMap[id];
-    return this.matrix[point.x][point.y];
-    //TODO: Update for 3D Matrix
-  }
 }
 
 module.exports = Grid;
