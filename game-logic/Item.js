@@ -6,7 +6,7 @@ class Item extends BoardObject {
     super({ name: name, id: ItemLib[name].id, moveable: false, possesable: true,
       transferable: true, usable: true, passable: true, inspectable: true,
       destructable: false, puzzleType: null, objectType: "Item" });
-    this.use = null; //TODO: Check ItemLib for appropiate use function, set reference
+    this.use = null;
   }
 }
 module.exports = Item;

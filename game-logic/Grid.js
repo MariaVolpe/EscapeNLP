@@ -67,12 +67,6 @@ class Grid {
   getPosition(objId) {
     return this.positionMap[objId];
   }
-
-  retrieveObj(id) {
-    let point = this.positionMap[id];
-    return this.matrix[point.x][point.y];
-    //TODO: Update for 3D Matrix
-  }
 }
 
 module.exports = Grid;
