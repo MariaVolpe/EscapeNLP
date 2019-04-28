@@ -57,12 +57,11 @@ io.on('connection', (socket) => {
     socket.emit('refreshRoomsReceived', getGames());
   });
 
-  socket.on('chatMessage', (dataFromClient) => {
-    if (dataFromClient.type === 'action') {
-      console.log('give data to game logic');
-      io.in(currentRoom).emit('updateGame', ({'playerOne': {inventory: {}, ready: false}}, [], false));
+  socket.on('chatMessage', (message) => {
+    if (message.type === 'action') {
+      gameContainer.performAction(currentRoom, message);
     }
-    io.in(currentRoom).emit('chatMessage', dataFromClient);
+    io.in(currentRoom).emit('chatMessage', message);
   });
 
   socket.on('updateGame', () => {
