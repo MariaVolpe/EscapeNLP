@@ -14,7 +14,6 @@ class PlayerInfo extends Component {
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
-    console.log(numOfCols);
     let columns = "col-" + numOfCols + " ui item mini button";
 
     const items = itemsList.map((item, i) => <div className={columns} key={i}>

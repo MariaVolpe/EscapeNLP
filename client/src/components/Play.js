@@ -218,6 +218,10 @@ class Play extends Component {
     this.setState({warningOpen: !this.state.warningOpen});
   }
 
+  messageClick = (message) => {
+    console.log(`Report ${message.mess} written by ${message.commenter}`);
+  }
+
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     let allPlayers = [];
@@ -282,6 +286,7 @@ class Play extends Component {
             commandDisabled={this.state.commandDisabled}
             gameComplete={this.state.gameComplete}
             gameStart={this.state.allPlayersReady}
+            messageClick={this.messageClick}
           />
         </div>
       </div>
