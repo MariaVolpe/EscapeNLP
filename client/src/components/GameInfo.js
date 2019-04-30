@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/GameInfo.css';
-import image from '../images/player.png'
+import player from '../images/player.png'
 
 class GameInfo extends Component {
 
@@ -9,6 +9,10 @@ class GameInfo extends Component {
   render() {
     const ready = this.props.allPlayersReady;
     const map = this.props.map;
+    let board = this.props.board;
+    if (board[0] === undefined) {
+      board = map;
+    }
     let mapData = [];
 
     if (ready) {
@@ -24,9 +28,13 @@ class GameInfo extends Component {
                          </div>);
           } else if (i === 12 && k === 0) {
             mapData.push(<div className="map one wide column" />)
+          } else if (board[i][k-1] === 'player') {
+            mapData.push(<div className="map tile one wide column" >
+                           <img src={player} alt="player" className="board-item" />
+                         </div>);
           } else {
             mapData.push(<div className="map tile one wide column" >
-                           <img src={image} alt="player" className="board-item" />
+                           {board[i][k-1]}
                          </div>);
           }
         });
@@ -44,10 +52,14 @@ class GameInfo extends Component {
                            {k}
                          </div>);
           } else if (i === 12 && k === 0) {
-            mapData.push(<div className="map one wide column" />)
+            mapData.push(<div className="map one wide column" />);
+          } else if (board[i][k-1] === 'player') {
+            mapData.push(<div className="map tile one wide column" >
+                           <img src={player} alt="player" className="board-item" />
+                         </div>);
           } else {
             mapData.push(<div className="map tile one wide column" >
-                           <img src={image} alt="player" className="board-item" />
+                           {board[i][k-1]}
                          </div>);
           }
         });

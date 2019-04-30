@@ -19,6 +19,42 @@ const getGames = () => {
   return data;
 };
 
+const g = 'ground';
+const p = 'player';
+const k = 'key';
+const d = 'dragon';
+const s = 'switch';
+const b = 'block';
+const w = 'weapon';
+let gameMap = [
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
+];
+let defaultMap = [
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
+];
+
 let currentRoom;
 
 io.on('connection', (socket) => {
@@ -66,8 +102,22 @@ io.on('connection', (socket) => {
   });
 
   socket.on('updateGame', () => {
-    io.in(currentRoom).emit('updateGame', ({'playerOne': {inventory: {}, ready: false}}, [], false));
-  })
+    const numberOfPlayers = io.nsps['/'].adapter.rooms[currentRoom].length;
+    for (let i=0; i<numberOfPlayers; i++) {
+      let row = Math.floor(Math.random() * Math.floor(12));
+      let col = Math.floor(Math.random() * Math.floor(15));
+      while (gameMap[row][col] === p) {
+        row = Math.floor(Math.random() * Math.floor(12));
+        col = Math.floor(Math.random() * Math.floor(15));
+      }
+      gameMap[row][col] = p;
+    }
+    io.in(currentRoom).emit('updateGame', gameMap, false);
+  });
+
+  socket.on('setBoard', () => {
+    io.in(currentRoom).emit('updateGame', gameMap, false);
+  });
 
   const updatePlayers = (reason) => {
     const allPlayerNames = [];
@@ -104,6 +154,7 @@ io.on('connection', (socket) => {
       const message = { commenter:time, time:'', mess };
       io.in(currentRoom).emit('chatMessage', message);
       io.in(currentRoom).emit('removePlayer', socket.playerInfo.name);
+      gameMap = defaultMap;
       updatePlayers('disconnected');
     }
   });

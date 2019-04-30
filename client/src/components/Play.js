@@ -61,6 +61,9 @@ class Play extends Component {
       });
 
       let allPlayersReady = ((allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady) && (this.state.numberOfPlayers === allReady.length);
+      if (allPlayersReady) {
+        this.socket.emit('updateGame');
+      }
 
       this.setState({allPlayers, allPlayersReady});
     });
@@ -78,14 +81,8 @@ class Play extends Component {
       this.setState({numberOfPlayers});
     })
 
-    this.socket.on('updateGame', (players, board, gameComplete) => {
-      let allPlayers = this.state.allPlayers;
-      Object.keys(players).forEach((player, i) => {
-        if (allPlayers.hasOwnProperty(player)) {
-          allPlayers[player].inventory = player.inventory;
-        }
-      });
-      this.setState({allPlayers, board, gameComplete});
+    this.socket.on('updateGame', (board, gameComplete) => {
+      this.setState({board, gameComplete});
     });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -98,6 +95,7 @@ class Play extends Component {
   componentDidMount = () => {
     this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
     this.socket.emit('getName', '');
+    this.socket.emit('setBoard');
   }
 
   removeStartAndEndSpaces = (value) => {
@@ -230,6 +228,7 @@ class Play extends Component {
 
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
+    const board = this.state.board;
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
       let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready};
@@ -240,7 +239,7 @@ class Play extends Component {
     let playerInfo;
     if (this.state.allPlayersReady) {
       gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
-                    <GameInfo map={map} board={this.state.board} allPlayersReady={this.state.allPlayersReady} />
+                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                       <div className="ui list">{allPlayers}</div>
@@ -249,7 +248,7 @@ class Play extends Component {
     }
     else {
       gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
-                    <GameInfo map={map} board={this.state.board} allPlayersReady={this.state.allPlayersReady} />
+                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
       playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
                     <div className="ui list">{allPlayers}</div>
