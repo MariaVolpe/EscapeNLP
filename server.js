@@ -26,45 +26,20 @@ const d = 'dragon';
 const s = 'switch';
 const b = 'block';
 const w = 'weapon';
-let gameMap = [
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
-];
-let defaultMap = [
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-  [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
-];
-
-let currentRoom;
 
 io.on('connection', (socket) => {
   console.log('connection established');
 
   socket.on('joinRoom', (roomId) => {
+    let prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
+    prevRooms.forEach((room) => {
+      socket.leave(room);
+    });
     socket.join(roomId);
-    currentRoom = roomId;
+    socket.currentRoom = roomId;
+    console.log(Object.keys(io.sockets.adapter.sids[socket.id]))
     socket.broadcast.emit('refreshRoomsReceived', getGames());
-    io.in(currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[currentRoom].length);
+    io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -96,32 +71,48 @@ io.on('connection', (socket) => {
 
   socket.on('chatMessage', (message) => {
     // if (message.type === 'action') {
-    //   gameContainer.performAction(currentRoom, message);
+    //   gameContainer.performAction(socket.currentRoom, message);
     // }
-    io.in(currentRoom).emit('chatMessage', message);
+    io.in(socket.currentRoom).emit('chatMessage', message);
   });
 
   socket.on('updateGame', () => {
-    const numberOfPlayers = io.nsps['/'].adapter.rooms[currentRoom].length;
+    const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
+    let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
     for (let i=0; i<numberOfPlayers; i++) {
       let row = Math.floor(Math.random() * Math.floor(12));
       let col = Math.floor(Math.random() * Math.floor(15));
-      while (gameMap[row][col] === p) {
+      while (currentGame[row][col] === p) {
         row = Math.floor(Math.random() * Math.floor(12));
         col = Math.floor(Math.random() * Math.floor(15));
       }
-      gameMap[row][col] = p;
+      currentGame[row][col] = p;
     }
-    io.in(currentRoom).emit('updateGame', gameMap, false);
+    io.in(socket.currentRoom).emit('updateGame', currentGame, false);
   });
 
   socket.on('setBoard', () => {
-    io.in(currentRoom).emit('updateGame', gameMap, false);
+    const gameMap = [
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
+      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
+    ];
+    io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = gameMap;
+    io.in(socket.currentRoom).emit('updateGame', gameMap, false);
   });
 
   const updatePlayers = (reason) => {
     const allPlayerNames = [];
-    const allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
+    const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
 
     Object.keys(allPlayers).forEach((playerId) => {
       if (reason === 'disconnected') {
@@ -133,7 +124,7 @@ io.on('connection', (socket) => {
       }
     });
 
-    io.in(currentRoom).emit('setNames', allPlayerNames);
+    io.in(socket.currentRoom).emit('setNames', allPlayerNames);
   };
 
   socket.on('getName', (playerInfo) => {
@@ -143,18 +134,18 @@ io.on('connection', (socket) => {
 
   socket.on('readyToggle', () => {
     socket.playerInfo.ready = !socket.playerInfo.ready;
-    io.in(currentRoom).emit('readyUp', socket.playerInfo);
+    io.in(socket.currentRoom).emit('readyUp', socket.playerInfo);
   });
 
   socket.on('disconnect', () => {
-    if (io.nsps['/'].adapter.rooms[currentRoom] && socket.playerInfo) {
+    if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
       const message = { commenter:time, time:'', mess };
-      io.in(currentRoom).emit('chatMessage', message);
-      io.in(currentRoom).emit('removePlayer', socket.playerInfo.name);
-      gameMap = defaultMap;
+      io.in(socket.currentRoom).emit('chatMessage', message);
+      io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
+      delete socket.currentRoom;
       updatePlayers('disconnected');
     }
   });
