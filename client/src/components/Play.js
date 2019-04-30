@@ -93,9 +93,16 @@ class Play extends Component {
   }
 
   componentDidMount = () => {
-    this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
-    this.socket.emit('getName', '');
-    this.socket.emit('setBoard');
+    if (window.sessionStorage.getItem('roomId') !== null) {
+      console.log(window.sessionStorage.getItem("roomId"));
+      this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
+      window.sessionStorage.removeItem("roomId")
+      this.socket.emit('getName', '');
+      this.socket.emit('setBoard');
+    } else {
+      console.log(window.sessionStorage.getItem("roomId"));
+      window.location.replace('/browser');
+    }
   }
 
   removeStartAndEndSpaces = (value) => {
