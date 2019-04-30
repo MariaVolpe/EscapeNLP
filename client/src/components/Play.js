@@ -24,7 +24,8 @@ class Play extends Component {
       setName: false,
       playerName: '',
       chatOption: 'chat',
-      warningOpen: false
+      warningOpen: false,
+      numberOfPlayers: 0
     }
 
     this.socket = socketIOClient('');
@@ -59,7 +60,7 @@ class Play extends Component {
         allReady.push(allPlayers[player].ready);
       });
 
-      let allPlayersReady = (allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady;
+      let allPlayersReady = ((allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady) && (this.state.numberOfPlayers === allReady.length);
 
       this.setState({allPlayers, allPlayersReady});
     });
@@ -71,6 +72,10 @@ class Play extends Component {
       }
 
       this.setState({allPlayers});
+    });
+
+    this.socket.on('playerIsJoining', (numberOfPlayers) => {
+      this.setState({numberOfPlayers});
     })
 
     this.socket.on('updateGame', (players, board, gameComplete) => {
@@ -218,8 +223,9 @@ class Play extends Component {
     this.setState({warningOpen: !this.state.warningOpen});
   }
 
-  messageClick = (message) => {
-    console.log(`Report ${message.mess} written by ${message.commenter}`);
+  onMessageClick = (i) => {
+    let prevMessages = this.state.prevMessages;
+    console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
   }
 
   render() {
@@ -227,7 +233,7 @@ class Play extends Component {
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
       let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready};
-      allPlayers.push(<PlayerInfo playerInfo={playerInfo} key={i} className="row player-box" />);
+      allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
     });
 
     let gameInfo = <div/>;
@@ -286,7 +292,7 @@ class Play extends Component {
             commandDisabled={this.state.commandDisabled}
             gameComplete={this.state.gameComplete}
             gameStart={this.state.allPlayersReady}
-            messageClick={this.messageClick}
+            onMessageClick={this.onMessageClick}
           />
         </div>
       </div>

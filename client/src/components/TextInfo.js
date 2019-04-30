@@ -85,14 +85,14 @@ class TextInfo extends Component {
         numOfSames += 1;
         if (message.commenter === currPlayer) {
           comments.push(<div className="content message" key={i} >
-                            <div className={textType} onClick={this.props.messageClick(message)}>
+                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
                               {message.mess}
                             </div>
                           </div>);
         }
         else {
           comments.push(<div className="content" key={i} >
-                            <div className={textType} onClick={this.props.messageClick(message)}>
+                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
                               {message.mess}
                             </div>
                           </div>);
@@ -107,7 +107,7 @@ class TextInfo extends Component {
                             <div className="metadata">
                               <span className="date">{message.time}</span>
                             </div>
-                            <div className={textType} onClick={this.props.messageClick(message)}>
+                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
                               {message.mess}
                             </div>
                           </div>);
@@ -120,7 +120,7 @@ class TextInfo extends Component {
                             <div className="metadata">
                               <span className="date">{message.time}</span>
                             </div>
-                            <div className={textType} onClick={this.props.messageClick(message)}>
+                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
                               {message.mess}
                             </div>
                           </div>);

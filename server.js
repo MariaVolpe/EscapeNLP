@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
     socket.join(roomId);
     currentRoom = roomId;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
+    io.in(currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[currentRoom].length);
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -58,9 +59,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (message) => {
-    if (message.type === 'action') {
-      gameContainer.performAction(currentRoom, message);
-    }
+    // if (message.type === 'action') {
+    //   gameContainer.performAction(currentRoom, message);
+    // }
     io.in(currentRoom).emit('chatMessage', message);
   });
 

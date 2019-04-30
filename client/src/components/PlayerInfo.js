@@ -18,20 +18,23 @@ class PlayerInfo extends Component {
 
     const items = itemsList.map((item, i) => <div className={columns} key={i}>
                                             {itemsList[i][1]}
-                                          </div>)
-
+                                          </div>);
+    const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
-    if (this.props.playerInfo.ready === true) {
-      readyCheck = <div className="ui disabled checked checkbox">
-                      <input type="checkbox" disabled="disabled" checked="checked"/>
-                      <label>Ready</label>
-                   </div>
-    }
-    else {
-      readyCheck = <div className="ui disabled checked checkbox">
-                      <input type="checkbox" disabled="disabled"/>
-                      <label>Ready</label>
-                   </div>
+
+    if (!allPlayersReady) {
+      if (this.props.playerInfo.ready === true) {
+        readyCheck = <div className="ui disabled checked checkbox">
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                        <label>Ready</label>
+                     </div>
+      }
+      else {
+        readyCheck = <div className="ui disabled checked checkbox">
+                        <input type="checkbox" disabled="disabled"/>
+                        <label>Ready</label>
+                     </div>
+      }
     }
 
     // real icon will be decided later, this serves as a temp
