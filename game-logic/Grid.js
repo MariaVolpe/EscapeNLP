@@ -35,33 +35,14 @@ class Grid {
     this.matrix[p.x][p.y].push(obj);
   }
 
-  /* Removes an object from the board */
-  remove({
-    obj, id, name,
-  }) {
-    if (!obj && !id && !name) {
+  removeFromBoard(boardObj) {
+    if (!boardObj) {
       return;
     }
-    let ID;
-    let NAME;
-    let object = obj;
-    if (id) { // if the id was passed in
-      ID = id;
-      object = this.getObject(ID);
-      NAME = object.name;
-    } else if (name) { // if the name was passed in
-      ID = this.nameMap.get(name);
-      object = this.getObject(ID);
-      NAME = object.name;
-    } else { // if object was passed in
-      ID = obj.id;
-      object = obj;
-      NAME = obj.name;
-    }
-    // delete from maps
-    this.removeFromStack(object);
-    this.nameMap.delete(NAME);
-    this.positionMap.delete(ID);
+
+    this.removeFromStack(boardObj);
+    this.nameMap.delete(boardObj.name);
+    this.positionMap.delete(boardObj.id);
   }
 
   // Finds a free space in the board, returns a point with its indices.
