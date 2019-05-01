@@ -19,13 +19,13 @@ const getGames = () => {
   return data;
 };
 
-const g = 'ground';
+const f = 'floor';
 const p = 'player';
 const k = 'key';
 const d = 'dragon';
 const s = 'switch';
 const b = 'block';
-const w = 'weapon';
+const w = 'wep';
 
 io.on('connection', (socket) => {
   console.log('connection established');
@@ -93,19 +93,29 @@ io.on('connection', (socket) => {
 
   socket.on('setBoard', () => {
     const gameMap = [
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g],
-      [g,g,g,g,g,g,g,g,g,g,g,g,g,g,g]
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
+      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f]
     ];
+    const blocks = [k, d, s, b, w];
+    blocks.forEach((block) => {
+      let row = Math.floor(Math.random() * Math.floor(12));
+      let col = Math.floor(Math.random() * Math.floor(15));
+      while (gameMap[row][col] !== f) {
+        row = Math.floor(Math.random() * Math.floor(12));
+        col = Math.floor(Math.random() * Math.floor(15));
+      }
+      gameMap[row][col] = block;
+    });
     io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = gameMap;
     io.in(socket.currentRoom).emit('updateGame', gameMap, false);
   });
