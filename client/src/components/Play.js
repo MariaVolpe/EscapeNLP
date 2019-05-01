@@ -98,7 +98,7 @@ class Play extends Component {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId")
       this.socket.emit('getName', '');
-      this.socket.emit('setBoard');
+      this.socket.emit('setBoard', '');
     } else {
       console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');

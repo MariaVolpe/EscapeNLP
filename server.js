@@ -79,19 +79,17 @@ io.on('connection', (socket) => {
   socket.on('updateGame', () => {
     const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
     let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
-    for (let i=0; i<numberOfPlayers; i++) {
-      let row = Math.floor(Math.random() * Math.floor(12));
-      let col = Math.floor(Math.random() * Math.floor(15));
-      while (currentGame[row][col] === p) {
-        row = Math.floor(Math.random() * Math.floor(12));
-        col = Math.floor(Math.random() * Math.floor(15));
-      }
-      currentGame[row][col] = p;
+    let row = Math.floor(Math.random() * Math.floor(12));
+    let col = Math.floor(Math.random() * Math.floor(15));
+    while (currentGame[row][col] === p) {
+      row = Math.floor(Math.random() * Math.floor(12));
+      col = Math.floor(Math.random() * Math.floor(15));
     }
+    currentGame[row][col] = p;
     io.in(socket.currentRoom).emit('updateGame', currentGame, false);
   });
 
-  socket.on('setBoard', () => {
+  socket.on('setBoard', (newBoard) => {
     const gameMap = [
       [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
       [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
