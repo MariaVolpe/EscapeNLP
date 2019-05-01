@@ -135,9 +135,6 @@ class PathFinder {
     if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
-    if (this.bottom(x, y) === 1) {
-      return false;
-    }
 
     if (this.bottom(x, y) === null || !(this.bottom(x, y) instanceof BoardObject)
       || this.bottom(x, y).isPassable()) {
