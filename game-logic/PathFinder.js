@@ -19,6 +19,7 @@ class PathFinder {
   /*
     Returns an array of contiguous points illustrating a path
     Direction is a object that details x and y dimensions
+    Use at own risk, not tested - stretch goal
   */
   getPathByDirection(start, direction) {
     const pathList = [];
