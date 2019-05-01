@@ -43,10 +43,10 @@ describe('Grid functionality tests', () => {
       // place a moving object and destination at these points //
       removingGrid.add(mover, { x: 0, y: 2 });
       removingGrid.add(destination, { x: 2, y: 0 });
-      removingGrid.remove({ obj: mover });
-      removingGrid.remove({ name: 'destination' }); // deleting by name
+      removingGrid.removeFromBoard({ obj: mover });
+      removingGrid.removeFromBoard({ name: 'destination' }); // deleting by name
       removingGrid.add(destination, { x: 2, y: 0 });
-      removingGrid.remove({ id: '1' });
+      removingGrid.removeFromBoard({ id: '1' });
       expected = JSON.stringify(
         [
           [[wall], [floor], [floor]],
