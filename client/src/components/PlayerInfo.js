@@ -40,21 +40,15 @@ class PlayerInfo extends Component {
     // real icon will be decided later, this serves as a temp
 
     return(
-      <div
-        className="card player-box"
-        style={{borderRadius: '10px', margin: '1%', marginRight: '1%'}}
-      >
+      <div className="card player-box">
         <div className="content">
           <img
             className="left floated mini ui image"
-            src="https://openclipart.org/download/247324/abstract-user-flat-1.svg"
+            src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
             alt="user icon"
-            style={{marginLeft: '3%', marginTop: '3%'}}
           />
-          <div
-            className="right floated ui header"
-            style={{marginRight: '3%', marginTop: '3%'}}
-          >
+
+          <div className="right floated ui header">
             {this.props.playerInfo.name}
           </div>
 

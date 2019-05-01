@@ -245,19 +245,19 @@ class Play extends Component {
     let gameInfo = <div/>;
     let playerInfo;
     if (this.state.allPlayersReady) {
-      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
+      gameInfo = <div className='game-info'>
                     <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
-      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
+      playerInfo = <div className='player-info'>
                       <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
-      gameInfo = <div className='game-info' style={{marginTop:'1%'}}>
+      gameInfo = <div className='game-info'>
                     <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
                   </div>;
-      playerInfo = <div className='player-info' style={{marginTop:'1%'}}>
+      playerInfo = <div className='player-info'>
                     <div className="ui list">{allPlayers}</div>
                     <Row>
                       <Col>
@@ -283,7 +283,7 @@ class Play extends Component {
           warningOpen={this.state.warningOpen}
           onWarningClose={this.onWarningClose}
         />
-        <div className='text-info' style={{marginTop: '1%'}}>
+        <div className='text-info'>
           <TextInfo
             message={this.state.message}
             prevMessages={this.state.prevMessages}
