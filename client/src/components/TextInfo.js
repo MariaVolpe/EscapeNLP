@@ -138,10 +138,7 @@ class TextInfo extends Component {
         <div className="text-box"  >
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
-        <div className="ui left action input chat-action">
-          <button className="ui button chat-change" onClick={this.props.onChatOptionChange} >
-            {this.props.chatOption}
-          </button>
+        <div className="ui right action input chat-action">
           <input
             value={value}
             onChange={change}
@@ -150,6 +147,9 @@ class TextInfo extends Component {
             className="talk-input"
             disabled={disabled}
           />
+          <button className="ui button chat-change" onClick={this.props.onChatOptionChange} >
+            {this.props.chatOption}
+          </button>
         </div>
       </div>
     )

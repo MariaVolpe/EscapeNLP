@@ -1,6 +1,5 @@
 .chat-action {
-  width: 97%;
-  max-width: 97%;
+  width: 100%;
   right: -1%;
 }
 
@@ -12,7 +11,8 @@
   float: left;
   height: 40px;
   font-size: 1.5vh;
-  width: 22.5%;
+  width: 27.5%;
+  text-align: center;
 }
 
 @media only screen and (max-width: 1500px) {
