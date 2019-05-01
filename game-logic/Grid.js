@@ -13,7 +13,7 @@ class Grid {
   constructor(size) {
     this.boardSize = size;
     this.positionMap = new Map(); // Keeps coordinates of object in board, resolves ids to positions
-    this.nameMap = new Map(); // resolves names to object IDs
+    this.nameMap = new Map(); // resolves names to list of objects|useful when multiple of same name
     this.matrix = this.setMatrix({ xDim: size, yDim: size });
     this.pathFinder = new PathFinder(this.matrix);
   }
