@@ -62,8 +62,14 @@ class Grid {
 
   // Given a destination object, call pathfinder to find a suitable path towards it
   // movingObjs is a list of objects that are moving ordered by following to leading
-  moveToDestination(movingObjs, destination) {
-    const destinationPoint = this.getPosition(destination);
+  moveToCoordinates(movingObjs, destination) {
+    
+  }
+
+  // Given a destination object, call pathfinder to find a suitable path towards it
+  // movingObjs is a list of objects that are moving ordered by following to leading
+  moveToObj(movingObjs, destinationObj) {
+    const destinationPoint = destinationObj.position;
     for (let i = 0; i < movingObjs.length; i++) {
       const movingObj = movingObjs[i];
       const startPoint = this.getPosition(movingObj);
@@ -76,10 +82,11 @@ class Grid {
       this.removeFromStack(movingObj); // this wont work for moving objects
       // in the middle of the stack
       // update position of object
-      this.getPosition(movingObj).x = lastPoint.x;
-      this.getPosition(movingObj).y = lastPoint.y;
+      movingObj.position.x = lastPoint.x;
+      movingObj.position.y = lastPoint.y;
     }
   }
+
 
   // given a direction, move towards it
   moveByDirection(movingObj, direction) {
@@ -109,20 +116,6 @@ class Grid {
       }
     }
     return null;
-  }
-
-  // Returns Point representing indices of desired object within the grid.
-  getPosition(objID) {
-    let id;
-    if (this.positionMap.has(objID)) {
-      return this.positionMap.get(objID);
-    }
-    if (this.nameMap.has(objID)) {
-      id = this.nameMap.get(objID);
-    } else { // object
-      id = objID.id;
-    }
-    return this.positionMap.get(id);
   }
 
   /* Creates a 3D matrix with xDim and yDim */

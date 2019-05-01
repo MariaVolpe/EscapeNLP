@@ -38,6 +38,10 @@ class BoardObject {
     this.destructable = destructable;
     this.puzzleType = puzzleType;
     this.objectType = objectType;
+    this.position = {
+      x: null,
+      y: null,
+    }
   }
 
   isPassable() {
