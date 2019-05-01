@@ -1,7 +1,7 @@
 .chat-action {
   width: 97%;
   max-width: 97%;
-  right: -3%;
+  right: -1%;
 }
 
 .talk-input {
@@ -10,10 +10,9 @@
 
 .chat-change {
   float: left;
-  height: 35px;
+  height: 40px;
   font-size: 1.5vh;
-  margin-left: 2.25%;
-  width: 66px;
+  width: 22.5%;
 }
 
 @media only screen and (max-width: 1500px) {
