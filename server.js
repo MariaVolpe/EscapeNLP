@@ -90,20 +90,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('setBoard', (newBoard) => {
-    const gameMap = [
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f],
-      [f,f,f,f,f,f,f,f,f,f,f,f,f,f,f]
-    ];
+    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(f));
     const blocks = [k, d, s, b, w];
     blocks.forEach((block) => {
       let row = Math.floor(Math.random() * Math.floor(12));
