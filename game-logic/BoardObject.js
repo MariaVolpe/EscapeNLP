@@ -1,3 +1,5 @@
+const Point = require('Point');
+
 /* A Class that acts a skeleton for objects that can appear
  * on the game board. Note that all objects that can appear
  * on the board should inherit from this class. The specific
@@ -38,10 +40,7 @@ class BoardObject {
     this.destructable = destructable;
     this.puzzleType = puzzleType;
     this.objectType = objectType;
-    this.position = {
-      x: null,
-      y: null,
-    }
+    this.position = new Point();
   }
 
   isPassable() {
