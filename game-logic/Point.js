@@ -8,7 +8,7 @@ class Point {
     this.y = y;
   }
 
-  /*get point() {
+  /* get point() {
     return { x: this.x, y: this.y };
   }
 
@@ -31,7 +31,7 @@ class Point {
   set point({ x, y }) {
     this.x = x;
     this.y = y;
-  }*/
+  } */
 }
 
 module.exports = Point;

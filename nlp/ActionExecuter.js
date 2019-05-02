@@ -38,7 +38,6 @@ class ActionExecuter {
       movingObjects = data.directObjects; // else: there are only direct objects, use those as the destination
     } else { destinations = data.directObjects; }
 
-
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
       const objName = movingObjects[i]; // the name of the object
@@ -54,7 +53,7 @@ class ActionExecuter {
       if (!this.grid.getObject({ identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
-      for (let j = 0; j < movingObjects.length; j++) this.grid.moveToObject(movingObjects[j], destinations[i]);
+      this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
     } return true;
   }
 
