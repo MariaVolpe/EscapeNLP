@@ -28,7 +28,7 @@ class Structure extends BoardObject {
       transferable: false,
       usable: StructLib[name].usable,
       passable: StructLib[name].passable,
-      inspectbale: true,
+      inspectable: true,
       destructable: StructLib[name].destructable,
       puzzleType,
       objectType: 'Structure',

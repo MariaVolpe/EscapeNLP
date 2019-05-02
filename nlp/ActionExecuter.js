@@ -28,37 +28,37 @@ class ActionExecuter {
     return this.functionMap[actionType](user, data);
   }
 
-  executeMove(user, data) {
+  executeMove(data) {
     // Check for all the direct objects, then indirect
+    const { user } = data.user;
     let destinations = [];
     let movingObjects = [];
     if (data.indirectObjects.length) { // if there are indirect objects, use those as the destination
       destinations = data.indirectObjects;
-      movingObjects = data.directObjects;
-    } else // if there are only direct objects, use those as the destination
-    { destinations = data.directObjects; }
+      movingObjects = data.directObjects; // else: there are only direct objects, use those as the destination
+    } else { destinations = data.directObjects; }
 
 
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
-      const obj = movingObjects[i]; // the name of the object
+      const objName = movingObjects[i]; // the name of the object
       // include pronoun caching later
-      if (!this.grid.getObject(obj)) {
+      if (!this.grid.getObject(objName)) {
         return false;
       }
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      if (!this.grid.getObject(dest))// include pronoun caching later
-      { return false; }
+      // TODO: include pronoun caching later
+      if (!this.grid.getObject({ identifier: dest })) { return false; }
     }
-
-    for (let i = 0; i < destinations.length; i++) for (let j = 0; j < movingObjects.length; j++) this.grid.moveByDestination(movingObjects[j], destinations[i]);
-    return true;
+    for (let i = 0; i < destinations.length; i++) {
+      for (let j = 0; j < movingObjects.length; j++) this.grid.moveToObject(movingObjects[j], destinations[i]);
+    } return true;
   }
 
-  executeLook(user, data) {
+  executeLook(data) {
 
   }
 

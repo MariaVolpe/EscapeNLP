@@ -10,10 +10,9 @@ const PathFinder = require('./PathFinder');
  */
 
 class Grid {
-  constructor(size) {
-    this.boardSize = size;
+  constructor({ xDimension, yDimension }) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
-    this.matrix = this.setMatrix({ xDim: size, yDim: size });
+    this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
   }
 
@@ -29,10 +28,10 @@ class Grid {
     } else {
       p = new Point(x, y);
     }
-    // TODO: FIX THIS LINE
+    obj.position = p;
     if (this.nameToObjsList.has(obj.name)) { // if a list already exists
       this.nameToObjsList.get(obj.name).push(obj);
-    } else this.nameToObjList.set(obj.name, [obj]);
+    } else this.nameToObjsList.set(obj.name, [obj]);
     this.matrix[p.x][p.y].push(obj);
   }
 
@@ -44,6 +43,9 @@ class Grid {
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
     const { name } = boardObj.name;
+    console.log(boardObj);
+    console.log(this.nameToObjsList)
+    console.log (this.nameToObjsList.get(name));
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -85,7 +87,7 @@ class Grid {
 
   // Given a destination object, call pathfinder to find a suitable path towards it
   // movingObjs is a list of objects that are moving ordered by following to leading
-  moveToObj(movingObjs, destinationObj) {
+  moveToObject(movingObjs, destinationObj) {
     const destinationPoint = destinationObj.position;
     for (let i = 0; i < movingObjs.length; i++) {
       const movingObj = movingObjs[i];
@@ -112,10 +114,10 @@ class Grid {
 
   // Gets an object either by its name or the object id
   getObject({ centerObj, identifier }) {
-    // if passed in a name, must be done relative to a centerObj
+    // if passed in a name and a centerObj, get nearest one, otherwise just get first in list
     if (this.nameToObjsList.has(identifier)) {
       const objList = this.nameToObjsList.get(identifier);
-      return this.getNearestObject(centerObj, objList);
+      return centerObj ? this.getNearestObject(centerObj, objList) : this.nameToObjsList.get(identifier)[0];
     }
     // otherwise its an id
     for (let i = 0; i < this.matrix.length; i++) {
@@ -147,7 +149,7 @@ class Grid {
   // Given a center object and an object name, find the nearest object that matches that name
   resolveNameToNearestObject(centerObj, objName) {
     const objList = this.nameToObjsList.get(objName);
-    this.getNearestObject(centerObj, objList);
+    return this.getNearestObject(centerObj, objList);
   }
 
   // Given a center object and list of objects, find the nearest object to it.
@@ -155,7 +157,8 @@ class Grid {
     const centerPosition = centerObj.position;
     let nearest = null;
     let distance = Number.MAX_VALUE;
-    objList.array.forEach((element) => { // for all objects in the list provided find the nearest
+    console.log(objList);
+    objList.forEach((element) => { // for all objects in the list provided find the nearest
       const d = this.pathFinder.getManhattanDistance(centerPosition, element.position);
       if (d < distance) {
         distance = d;
