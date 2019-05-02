@@ -132,16 +132,21 @@ class PathFinder {
     return neighbors;
   }
 
+  // Checks if movement is allowed at a 2D location in the grid
   isPassablePoint({ x, y }) {
     if (x < 0 || y < 0 || x >= this.matrix.length || y >= this.matrix[0].length) {
       return false;
     }
+    return this.isPassableStack({ x, y });
+  }
 
-    if (this.bottom(x, y) === null || !(this.bottom(x, y) instanceof BoardObject)
-      || this.bottom(x, y).isPassable()) {
-      return true;
-    }
-    return false;
+  // Checks if all points are passable in a stack
+  isPassableStack({ x, y }) {
+    const stack = this.matrix[x][y];
+    for (let i = 0; i < stack.length; i++) {
+      const obj = stack[i];
+      if (!obj.isPassable()) return false;
+    } return true;
   }
 
   // Calculates the manhattan distance between two points

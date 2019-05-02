@@ -1,4 +1,4 @@
-const Point = require('Point');
+const Point = require('./Point');
 
 /* A Class that acts a skeleton for objects that can appear
  * on the game board. Note that all objects that can appear
