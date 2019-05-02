@@ -144,7 +144,7 @@ class Grid {
   getNearestObject(player, objList) {
     const playerPosition = player.position;
     const nearest = null;
-    // do calc
+    // todo: do calc
     return nearest;
   }
 
