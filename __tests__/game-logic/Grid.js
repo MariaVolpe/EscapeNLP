@@ -62,19 +62,21 @@ describe('Grid functionality tests', () => {
     it('should move a named object to a named destination', async () => {
       const grid = new Grid(3);
       const floor = new Structure('floor_switch', 'a', null);
-      const weight = new Structure('weight', 'b', null);
+      const mover = new Structure('weight', 'b', null);
       const wall = new Structure('weight', 'c', null);
+      const destination = new Structure('floor_switch', 'd', null);
       // hardcode matrices to these //
       grid.setMatrix({ matrix: [[[wall], [floor], [floor]], [[wall], [floor], [wall]], [[floor], [floor], [wall]]] });
-      const destination = { name: 'destination', id: 1, position: { x: 0, y: 0 } };
       // place a moving object and destination at these points //
-      grid.add(weight, { x: 0, y: 2 });
+      mover.name = 'mover';
+      destination.name = 'destination';
+      grid.add(mover, { x: 0, y: 2 });
       grid.add(destination, { x: 2, y: 0 });
       // move object
-      grid.moveToObject([weight], grid.resolveNameToNearestObject(weight, 'destination'));
+      grid.moveToObject([mover], grid.resolveNameToNearestObject(mover, 'destination'));
       // do checks
       const expected = JSON.stringify([[[wall], [floor], [floor]], [[wall], [floor], [wall]],
-        [[floor, destination, weight], [floor], [wall]]]);
+        [[floor, destination, mover], [floor], [wall]]]);
       expect(JSON.stringify(grid.matrix)).toEqual(expected);
     });
   });

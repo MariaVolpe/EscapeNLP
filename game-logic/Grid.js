@@ -42,10 +42,7 @@ class Grid {
     this.removeFromStack(boardObj);
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
-    const { name } = boardObj.name;
-    console.log(boardObj);
-    console.log(this.nameToObjsList)
-    console.log (this.nameToObjsList.get(name));
+    const name = boardObj.name;
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -157,7 +154,6 @@ class Grid {
     const centerPosition = centerObj.position;
     let nearest = null;
     let distance = Number.MAX_VALUE;
-    console.log(objList);
     objList.forEach((element) => { // for all objects in the list provided find the nearest
       const d = this.pathFinder.getManhattanDistance(centerPosition, element.position);
       if (d < distance) {
