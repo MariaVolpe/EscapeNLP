@@ -12,8 +12,7 @@ const PathFinder = require('./PathFinder');
 class Grid {
   constructor(size) {
     this.boardSize = size;
-    this.positionMap = new Map(); // Keeps coordinates of object in board, resolves ids to positions
-    this.nameMap = new Map(); // resolves names to list of objects|useful when multiple of same name
+    this.nameToObjsList = new Map(); // resolves names to list of objects|useful when multiple of same name
     this.matrix = this.setMatrix({ xDim: size, yDim: size });
     this.pathFinder = new PathFinder(this.matrix);
   }
@@ -30,7 +29,8 @@ class Grid {
     } else {
       p = new Point(x, y);
     }
-    this.nameMap.set(obj.name, obj.id);
+    // TODO: FIX THIS LINE
+    // this.nameToObjList.set(obj.name, obj.id);
     this.positionMap.set(obj.id, p);
     this.matrix[p.x][p.y].push(obj);
   }
@@ -41,8 +41,8 @@ class Grid {
     }
 
     this.removeFromStack(boardObj);
-    this.nameMap.delete(boardObj.name);
-    this.positionMap.delete(boardObj.id);
+    // todo: delete from list not the key
+    // this.nameToObjsList.delete(boardObj.name);
   }
 
   // Finds a free space in the board, returns a point with its indices.
@@ -60,10 +60,10 @@ class Grid {
     // todo: handle if board is full
   }
 
-  // Given a destination object, call pathfinder to find a suitable path towards it
+  // Given destination coordinates, call pathfinder to find a suitable path towards it
   // movingObjs is a list of objects that are moving ordered by following to leading
-  moveToCoordinates(movingObjs, destination) {
-    
+  moveToCoordinates(movingObjs, destinationCoords) {
+    // todo
   }
 
   // Given a destination object, call pathfinder to find a suitable path towards it
@@ -87,13 +87,14 @@ class Grid {
     }
   }
 
-
   // given a direction, move towards it
   moveByDirection(movingObj, direction) {
-    const startPoint = this.positionMap[movingObj];
+    const startPoint = movingObj.position;
     const path = PathFinder.getPathByDirection(startPoint, direction);
   }
 
+  // todo: rewrite this! it doesn't work in its current form! note the change
+  // in name and functionality of nameMap -> nameToObjsList
   // Gets an object either by its object id, its name, or by the object itself
   getObject(objID) {
     let stack;
@@ -102,7 +103,7 @@ class Grid {
       stack = this.matrix[p.x][p.y];
       return stack.find(o => objID === o.id);
     }
-    if (this.nameMap.has(objID)) { // passed in a name
+    if (this.nameToObjsList.has(objID)) { // passed in a name
       const id = this.nameMap.get(objID);
       const p = this.positionMap.get(id);
       stack = this.matrix[p.x][p.y];
@@ -135,10 +136,22 @@ class Grid {
     this.matrix[x][y].push(obj);
   }
 
-  // removes an element from the stack by its ID or the object reference itself
-  removeFromStack(obj) {
-    const p = this.positionMap.get(obj.id);
-    const stack = this.matrix[p.x][p.y].filter(o => obj !== o);
+  resolveNameToNearestObject(player, objName) {
+    const objList = this.nameToObjsList.get(objName);
+    getNearestObject(playerId, objList);
+  }
+
+  getNearestObject(player, objList) {
+    const playerPosition = player.position;
+    const nearest = null;
+    // do calc
+    return nearest;
+  }
+
+  // removes an element from the stack by the object reference itself
+  removeFromStack(boardObj) {
+    const p = boardObj.position
+    const stack = this.matrix[p.x][p.y].filter(o => boardObj !== o);
     this.matrix[p.x][p.y] = stack;
   }
 }
