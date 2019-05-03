@@ -106,7 +106,7 @@ class Grid {
   // given a direction, move towards it
   moveByDirection(movingObj, direction) {
     const startPoint = movingObj.position;
-    const path = PathFinder.getPathByDirection(startPoint, direction);
+    const path = this.pathFinder.getPathByDirection(startPoint, direction);
   }
 
   // Gets an object either by its name or the object id
@@ -160,8 +160,7 @@ class Grid {
         distance = d;
         nearest = element;
       }
-    });
-    return nearest;
+    }); return nearest;
   }
 
   // removes an element from the stack by the object reference itself
