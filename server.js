@@ -82,15 +82,21 @@ io.on('connection', (socket) => {
 
   socket.on('updateGame', (board) => {
     const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
-    let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
-    let row = Math.floor(Math.random() * Math.floor(12));
-    let col = Math.floor(Math.random() * Math.floor(15));
-    while (currentGame[row][col][1] !== f) {
-      row = Math.floor(Math.random() * Math.floor(12));
-      col = Math.floor(Math.random() * Math.floor(15));
-    }
-    currentGame[row][col][1] = p + socket.playerNumber;
-    io.in(socket.currentRoom).emit('updateGame', currentGame, false);
+    const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
+
+    Object.keys(allPlayers).forEach((playerId) => {
+      const player = io.sockets.connected[playerId];
+      let row = Math.floor(Math.random() * Math.floor(12));
+      let col = Math.floor(Math.random() * Math.floor(15));
+      while (board[row][col][1] !== f) {
+        row = Math.floor(Math.random() * Math.floor(12));
+        col = Math.floor(Math.random() * Math.floor(15));
+      }
+      board[row][col][1] = p + player.playerNumber;
+    });
+
+    io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = board;
+    io.in(socket.currentRoom).emit('updateGame', board, false);
   });
 
   socket.on('setBoard', (newBoard) => {
@@ -109,7 +115,7 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateGame', gameMap, false);
   });
 
-  const updatePlayers = (reason, room) => {
+  const updatePlayers = (reason, room, disconnectedPlayer) => {
     const allPlayerNames = [];
     const allPlayers = io.sockets.adapter.rooms[room].sockets;
 
@@ -123,18 +129,34 @@ io.on('connection', (socket) => {
       }
     });
 
+    if (reason === 'disconnected' && io.sockets.adapter.rooms[room].sockets.length > 0) {
+      disconnectedPlayer.leftGame = true;
+      allPlayerNames.push(disconnectedPlayer);
+    }
+
     io.in(room).emit('setNames', allPlayerNames);
   };
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
     socket.playerInfo.position = socket.playerNumber;
-    updatePlayers('', socket.currentRoom);
+    updatePlayers('', socket.currentRoom, {});
   });
 
   socket.on('readyToggle', () => {
     socket.playerInfo.ready = !socket.playerInfo.ready;
-    io.in(socket.currentRoom).emit('readyUp', socket.playerInfo);
+
+    const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
+    let allReady = [];
+
+    Object.keys(allPlayers).forEach((playerId) => {
+      const player = io.sockets.connected[playerId];
+      allReady.push(player.playerInfo.ready);
+    });
+
+    io.sockets.adapter.rooms[socket.currentRoom].gameStart = allReady.indexOf(false) >= 0 ? false : true;
+
+    io.in(socket.currentRoom).emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
   });
 
   socket.on('disconnect', () => {
@@ -145,7 +167,11 @@ io.on('connection', (socket) => {
       const message = { commenter:time, time:'', mess };
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
-      updatePlayers('disconnected', socket.currentRoom);
+      if (io.nsps['/'].adapter.rooms[socket.currentRoom].gameStart) {
+        updatePlayers('disconnected', socket.currentRoom, socket.playerInfo);
+      } else {
+        updatePlayers('disconnected', socket.currentRoom, {});
+      }
       delete socket.currentRoom;
     }
   });

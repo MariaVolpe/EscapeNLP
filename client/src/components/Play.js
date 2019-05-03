@@ -52,19 +52,12 @@ class Play extends Component {
       this.setState({allPlayers});
     });
 
-    this.socket.on('readyUp', (playerInfo) => {
+    this.socket.on('readyUp', (playerInfo, allPlayersReady) => {
       let allPlayers = this.state.allPlayers;
       if (allPlayers.hasOwnProperty(playerInfo.name)) {
         allPlayers[playerInfo.name].ready = playerInfo.ready;
       }
 
-
-      let allReady = [];
-      Object.keys(allPlayers).forEach((player, i) => {
-        allReady.push(allPlayers[player].ready);
-      });
-
-      let allPlayersReady = ((allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady) && (this.state.numberOfPlayers === allReady.length);
       if (allPlayersReady) {
         this.socket.emit('updateGame', this.state.board);
       }
@@ -112,7 +105,8 @@ class Play extends Component {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId")
       this.socket.emit('getName', '');
-      this.socket.emit('setBoard', '');
+      const board = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill('floor')));
+      this.setState({board});
     } else {
       console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');
