@@ -44,7 +44,8 @@ class Play extends Component {
           allPlayers[player.name] = {
             inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
             ready: player.ready,
-            position: player.position
+            position: player.position,
+            leftGame: player.leftGame
           };
         }
       });
@@ -246,7 +247,12 @@ class Play extends Component {
     const board = this.state.board;
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
-      let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready, position: this.state.allPlayers[player].position };
+      let playerInfo = { name: player,
+                         inventory: this.state.allPlayers[player].inventory,
+                         ready: this.state.allPlayers[player].ready,
+                         position: this.state.allPlayers[player].position,
+                         leftGame: this.state.allPlayers[player].leftGame
+                       };
       allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
     });
 

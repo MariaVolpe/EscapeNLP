@@ -129,7 +129,7 @@ io.on('connection', (socket) => {
       }
     });
 
-    if (reason === 'disconnected' && io.sockets.adapter.rooms[room].sockets.length > 0) {
+    if (reason === 'disconnected' && allPlayerNames.length > 0 && io.sockets.adapter.rooms[room].gameStart) {
       disconnectedPlayer.leftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     }
