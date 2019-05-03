@@ -4,7 +4,7 @@ import '../styles/PlayerInfo.css';
 class PlayerInfo extends Component {
 
   responsiveColumns = (length) => {
-    let colSize = Math.floor(12/(length)-1);
+    let colSize = Math.floor(12/(length));
     if (colSize > 5) {
       colSize = 5;
     }
@@ -16,26 +16,25 @@ class PlayerInfo extends Component {
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
     let columns = "col-" + numOfCols + " ui item mini button";
 
-    let items = [];
-    console.log(itemsList.length);
-    for (let i=0; i<itemsList.length; i++) {
-      items.push(<div className={columns}>
-                  {itemsList[i][0]}
-                 </div>);
-    }
-
+    const items = itemsList.map((item, i) => <div className={columns} key={i}>
+                                            {itemsList[i][1]}
+                                          </div>);
+    const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
-    if (this.props.playerInfo.ready === true) {
-      readyCheck = <div className="ui disabled checked checkbox">
-                      <input type="checkbox" disabled="disabled" checked="checked"/>
-                      <label>Ready</label>
-                   </div>
-    }
-    else {
-      readyCheck = <div className="ui disabled checked checkbox">
-                      <input type="checkbox" disabled="disabled"/>
-                      <label>Ready</label>
-                   </div>
+
+    if (!allPlayersReady) {
+      if (this.props.playerInfo.ready === true) {
+        readyCheck = <div className="ui disabled checked checkbox">
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                        <label>Ready</label>
+                     </div>
+      }
+      else {
+        readyCheck = <div className="ui disabled checked checkbox">
+                        <input type="checkbox" disabled="disabled"/>
+                        <label>Ready</label>
+                     </div>
+      }
     }
 
     // real icon will be decided later, this serves as a temp

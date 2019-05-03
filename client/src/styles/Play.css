@@ -13,14 +13,14 @@
 
 .text-info {
   float: right;
-  width: 19.3%;
+  width: 18.65%;
   margin-top: 1%;
 }
 
-/*.play-page {
+.play-page {
   background: #283942;
   height: 100vh;
-}*/
+}
 
 .player-box {
   height: 17vh;
@@ -28,4 +28,18 @@
 
 .logo {
   height: 4.2vh;
+}
+
+@media only screen and (min-width: 1600px) {
+  .ready-button {
+    position: fixed;
+    bottom: 1vh;
+    left: 23vh;
+  }
+
+  .leave-button {
+    position: fixed;
+    bottom: 1vh;
+    left: 8vh;
+  }
 }

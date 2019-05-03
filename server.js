@@ -19,15 +19,27 @@ const getGames = () => {
   return data;
 };
 
-let currentRoom;
+const f = 'floor';
+const p = 'player';
+const k = 'key';
+const d = 'dragon';
+const s = 'button';
+const b = 'block';
+const w = 'wep';
 
 io.on('connection', (socket) => {
   console.log('connection established');
 
   socket.on('joinRoom', (roomId) => {
+    let prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
+    prevRooms.forEach((room) => {
+      socket.leave(room);
+    });
     socket.join(roomId);
-    currentRoom = roomId;
+    socket.currentRoom = roomId;
+    socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
+    io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -57,13 +69,49 @@ io.on('connection', (socket) => {
     socket.emit('refreshRoomsReceived', getGames());
   });
 
-  socket.on('chatMessage', (dataFromClient) => {
-    io.in(currentRoom).emit('chatMessage', dataFromClient);
+  socket.on('chatMessage', (message) => {
+    if (message.type === 'action') {
+      gameContainer.performAction(socket.currentRoom, message);
+    }
+    io.in(socket.currentRoom).emit('chatMessage', message);
   });
 
-  const updatePlayers = (reason) => {
+  socket.on('getInventories', (inventories) => {
+    io.in(socket.currentRoom).emit('updateInventories', inventories);
+  });
+
+  socket.on('updateGame', (board) => {
+    const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
+    let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
+    let row = Math.floor(Math.random() * Math.floor(12));
+    let col = Math.floor(Math.random() * Math.floor(15));
+    while (currentGame[row][col][1] !== f) {
+      row = Math.floor(Math.random() * Math.floor(12));
+      col = Math.floor(Math.random() * Math.floor(15));
+    }
+    currentGame[row][col][1] = p + socket.playerNumber;
+    io.in(socket.currentRoom).emit('updateGame', currentGame, false);
+  });
+
+  socket.on('setBoard', (newBoard) => {
+    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
+    const blocks = [k, d, s, b, w];
+    blocks.forEach((block) => {
+      let row = Math.floor(Math.random() * Math.floor(12));
+      let col = Math.floor(Math.random() * Math.floor(15));
+      while (gameMap[row][col][1] !== f) {
+        row = Math.floor(Math.random() * Math.floor(12));
+        col = Math.floor(Math.random() * Math.floor(15));
+      }
+      gameMap[row][col][1] = block;
+    });
+    io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = gameMap;
+    io.in(socket.currentRoom).emit('updateGame', gameMap, false);
+  });
+
+  const updatePlayers = (reason, room) => {
     const allPlayerNames = [];
-    const allPlayers = io.sockets.adapter.rooms[currentRoom].sockets;
+    const allPlayers = io.sockets.adapter.rooms[room].sockets;
 
     Object.keys(allPlayers).forEach((playerId) => {
       if (reason === 'disconnected') {
@@ -75,27 +123,30 @@ io.on('connection', (socket) => {
       }
     });
 
-    io.in(currentRoom).emit('setNames', allPlayerNames);
+    io.in(room).emit('setNames', allPlayerNames);
   };
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
-    updatePlayers('');
+    socket.playerInfo.position = socket.playerNumber;
+    updatePlayers('', socket.currentRoom);
   });
 
   socket.on('readyToggle', () => {
     socket.playerInfo.ready = !socket.playerInfo.ready;
-    updatePlayers('');
+    io.in(socket.currentRoom).emit('readyUp', socket.playerInfo);
   });
 
   socket.on('disconnect', () => {
-    if (io.nsps['/'].adapter.rooms[currentRoom] && socket.playerInfo) {
+    if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = ['', time, mess];
-      io.in(currentRoom).emit('chatMessage', message);
-      updatePlayers('disconnected');
+      const message = { commenter:time, time:'', mess };
+      io.in(socket.currentRoom).emit('chatMessage', message);
+      io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
+      updatePlayers('disconnected', socket.currentRoom);
+      delete socket.currentRoom;
     }
   });
 });

@@ -17,15 +17,20 @@ class HowTo extends React.Component {
             interpreter which then alters the state of the game. With the usage of natural language
             processing (or NLP), players will be able to focus on the game, rather than memorizing commands.
           </p>
-          <h2>Who can we play EscapeNLP with?</h2>
+          <h2>Who can I play EscapeNLP with?</h2>
           <div className="ui divider"></div>
           <p>
-            You can either play alone or in a team of up to 5 players.
+            You can play with up to 5 players. Anybody is allowed to join a lobby as long as
+            it is not full.
           </p>
           <h2>Rules</h2>
           <div className="ui divider"></div>
           <p>
-
+            Once you reach the play screen, the game will start if and only if every player in the
+            lobby say that they are ready. Once the game begins, you are able to either chat with
+            the other players in the game or if its your turn you type in your action. The most important
+            thing of them all is to...
+            <h1>Have fun!</h1>
           </p>
 
 
