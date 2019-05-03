@@ -1,3 +1,5 @@
+const Point = require('./Point');
+
 /* A Class that acts a skeleton for objects that can appear
  * on the game board. Note that all objects that can appear
  * on the board should inherit from this class. The specific
@@ -23,8 +25,10 @@
  */
 
 class BoardObject {
-  constructor({ name, id, moveable, possesable, transferable, 
-    usable, passable, inspectable, destructable, puzzleType, objectType }) {
+  constructor({
+    name, id, moveable, possesable, transferable,
+    usable, passable, inspectable, destructable, puzzleType, objectType,
+  }) {
     this.name = name;
     this.id = id;
     this.moveable = moveable;
@@ -36,10 +40,15 @@ class BoardObject {
     this.destructable = destructable;
     this.puzzleType = puzzleType;
     this.objectType = objectType;
+    this.position = new Point();
   }
 
   isPassable() {
     return this.passable;
+  }
+
+  isMovable() {
+    return this.moveable;
   }
 }
 

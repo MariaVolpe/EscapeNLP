@@ -1,9 +1,9 @@
 const compromise = require('compromise');
 
 class ActionExecuter {
-  constructor(grid, boardObjects) {
+  constructor(grid) {
     this.functionMap = this.createFunctionMap();
-    this.boardObjects = boardObjects;
+    this.grid = grid;
   }
 
   createFunctionMap() {
@@ -25,40 +25,47 @@ class ActionExecuter {
   }
 
   // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction() //
-  executeAction(user, actionType, data) {
-    return this.functionMap[actionType](user, data);
+  executeAction(actionType, data) {
+    return this.functionMap[actionType](data);
   }
-  
-  executeMove(user, data) {
+
+  executeMove(data) {
     // Check for all the direct objects, then indirect
+    const { user } = data.user;
     let destinations = [];
     let movingObjects = [];
     if (data.indirectObjects.length) { // if there are indirect objects, use those as the destination
       destinations = data.indirectObjects;
-      movingObjects = data.directObjects;
-    } else // if there are only direct objects, use those as the destination
-    { destinations = data.directObjects; }
-
+      movingObjects = data.directObjects; // else: there are only direct objects, use those as the destination
+    } else { destinations = data.directObjects; }
 
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
-      const obj = movingObjects[i];
-      if (!this.boardObjects.has(obj) || !this.boardObjects.get(obj).isMovable()) // include pronoun caching later
-      { return false; }
+      const objName = movingObjects[i]; // the name of the object
+      // TODO: include pronoun caching
+      if (!this.grid.getObject(objName) || !this.grid.getObject(objName).isMovable()) {
+        return false;
+      }
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      if (!this.boardObjects.has(obj))// include pronoun caching later
-      { return false; }
+      // TODO: include pronoun caching later
+      if (!this.grid.getObject({ identifier: dest })) { return false; }
     }
-
-    for (let i = 0; i < destinations.length; i++) for (let j = 0; j < movingObjects.length; j++) this.grid.moveByDestination(movingObjects[j], destinations[i]);
-    return true;
+    for (let i = 0; i < destinations.length; i++) {
+      this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
+    } return true;
   }
 
-  executeLook(user, data) {
-
+  executeLook(data) {
+    //if (!data.directObjects.length) { // if no specified object to look at, look around
+    //}
+    // the direct objects will be what is looked at
+    
+    //this.executeMove(data); // move to the thing being looked at
+    // all objects can potentially be inspectable, there should be an inspect function in BoardObject.js
+    // not in structure.js
   }
 
   executeTake(data) {
@@ -68,7 +75,7 @@ class ActionExecuter {
   executeGive(data) {
 
   }
-  
+
   executeDestroy(data) {
 
   }

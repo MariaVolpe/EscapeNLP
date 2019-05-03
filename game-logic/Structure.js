@@ -18,12 +18,21 @@ const StructLib = require('./board-object-library/structure-library');
  */
 
 class Structure extends BoardObject {
-  constructor(name, id, puzzleType ) {
+  constructor(name, id, puzzleType) {
     // moveable, passable, usable,
-    super({name: name, id: id, moveable: StructLib[name].moveable, possesable: false,
-      transferable: false, usable: StructLib[name].usable, passable: StructLib[name].passable,
-      inspectbale: true, destructable: StructLib[name].destructable, puzzleType: puzzleType,
-      objectType: "Structure" });
+    super({
+      name,
+      id,
+      moveable: StructLib[name].moveable,
+      possesable: false,
+      transferable: false,
+      usable: StructLib[name].usable,
+      passable: StructLib[name].passable,
+      inspectable: true,
+      destructable: StructLib[name].destructable,
+      puzzleType,
+      objectType: 'Structure',
+    });
     this.activated = false;
     this.inspectTextInactive = StructLib[name].inspectTextInactive;
     this.inspectTextActive = StructLib[name].inspectTextActive;
@@ -37,15 +46,13 @@ class Structure extends BoardObject {
     if (this.activated) {
       return this.inspectTextActive;
     }
-    else {
-      return this.inspectTextInactive;
-    }
+
+    return this.inspectTextInactive;
   }
 
   activate() {
     this.activated = true;
   }
-
 }
 
 module.exports = Structure;
