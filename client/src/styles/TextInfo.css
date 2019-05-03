@@ -73,6 +73,7 @@
 
 .command:hover {
   border: 3.5px solid black;
+  cursor: pointer;
 }
 
 .message {
@@ -86,4 +87,5 @@
 
 .chat:hover {
   border: 3.5px solid black;
+  cursor: pointer;
 }

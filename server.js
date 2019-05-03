@@ -23,7 +23,7 @@ const f = 'floor';
 const p = 'player';
 const k = 'key';
 const d = 'dragon';
-const s = 'switch';
+const s = 'button';
 const b = 'block';
 const w = 'wep';
 
@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
     });
     socket.join(roomId);
     socket.currentRoom = roomId;
-    console.log(Object.keys(io.sockets.adapter.sids[socket.id]))
+    socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
     io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
   });
@@ -70,36 +70,40 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (message) => {
-    // if (message.type === 'action') {
-    //   gameContainer.performAction(socket.currentRoom, message);
-    // }
+    if (message.type === 'action') {
+      gameContainer.performAction(socket.currentRoom, message);
+    }
     io.in(socket.currentRoom).emit('chatMessage', message);
   });
 
-  socket.on('updateGame', () => {
+  socket.on('getInventories', (inventories) => {
+    io.in(socket.currentRoom).emit('updateInventories', inventories);
+  });
+
+  socket.on('updateGame', (board) => {
     const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
     let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
     let row = Math.floor(Math.random() * Math.floor(12));
     let col = Math.floor(Math.random() * Math.floor(15));
-    while (currentGame[row][col] === p) {
+    while (currentGame[row][col][1] !== f) {
       row = Math.floor(Math.random() * Math.floor(12));
       col = Math.floor(Math.random() * Math.floor(15));
     }
-    currentGame[row][col] = p;
+    currentGame[row][col][1] = p + socket.playerNumber;
     io.in(socket.currentRoom).emit('updateGame', currentGame, false);
   });
 
   socket.on('setBoard', (newBoard) => {
-    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(f));
+    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
     const blocks = [k, d, s, b, w];
     blocks.forEach((block) => {
       let row = Math.floor(Math.random() * Math.floor(12));
       let col = Math.floor(Math.random() * Math.floor(15));
-      while (gameMap[row][col] !== f) {
+      while (gameMap[row][col][1] !== f) {
         row = Math.floor(Math.random() * Math.floor(12));
         col = Math.floor(Math.random() * Math.floor(15));
       }
-      gameMap[row][col] = block;
+      gameMap[row][col][1] = block;
     });
     io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = gameMap;
     io.in(socket.currentRoom).emit('updateGame', gameMap, false);
@@ -124,6 +128,7 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
+    socket.playerInfo.position = socket.playerNumber;
     updatePlayers('', socket.currentRoom);
   });
 

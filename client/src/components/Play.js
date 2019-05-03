@@ -41,7 +41,11 @@ class Play extends Component {
 
       players.forEach((player) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
-          allPlayers[player.name] = {inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '}, ready: player.ready};
+          allPlayers[player.name] = {
+            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
+            ready: player.ready,
+            position: player.position
+          };
         }
       });
 
@@ -62,7 +66,7 @@ class Play extends Component {
 
       let allPlayersReady = ((allReady.indexOf(false) >= 0 ? false : true) || this.state.allPlayersReady) && (this.state.numberOfPlayers === allReady.length);
       if (allPlayersReady) {
-        this.socket.emit('updateGame');
+        this.socket.emit('updateGame', this.state.board);
       }
 
       this.setState({allPlayers, allPlayersReady});
@@ -83,6 +87,16 @@ class Play extends Component {
 
     this.socket.on('updateGame', (board, gameComplete) => {
       this.setState({board, gameComplete});
+    });
+
+    this.socket.on('updateInventories', (inventories) => {
+      let allPlayers = this.state.allPlayers;
+      Object.keys(inventories).forEach((player) => {
+        if (allPlayers.hasOwnProperty(player)) {
+          allPlayers.inventory = player.inventory;
+        }
+      });
+      this.setState({allPlayers});
     });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -198,7 +212,7 @@ class Play extends Component {
     this.setState({ playerName });
     const takenName = allPlayers.hasOwnProperty(playerName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      const playerInfo = { name: playerName, ready: false };
+      const playerInfo = { name: playerName, ready: false, position: 0 };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
@@ -238,7 +252,7 @@ class Play extends Component {
     const board = this.state.board;
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
-      let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready};
+      let playerInfo = {name: player, inventory: this.state.allPlayers[player].inventory, ready: this.state.allPlayers[player].ready, position: this.state.allPlayers[player].position };
       allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
     });
 
