@@ -27,9 +27,10 @@ class PathFinder {
     let p;
     while (queue.length > 0) {
       p = queue.shift();
-      if (!this.isPassablePoint(p)) {
+      if (!this.isPassablePoint(p)) { // stop as soon as you meet an impassible point
         return pathList;
       }
+      pathList.push(p);
       const neighbors = this.getNeighborsByDirection(p, direction);
       queue.push(...neighbors);
     }
@@ -91,7 +92,7 @@ class PathFinder {
     return null; // return null if no points are free
   }
 
-  getNeighbors(p, visited) {
+  getNeighbors(p, visited, onlyPassable = true) {
     const neighbors = [
       { x: p.x - 1, y: p.y },
       { x: p.x + 1, y: p.y },
@@ -101,8 +102,9 @@ class PathFinder {
     const validNeighbors = [];
 
     neighbors.forEach((pt) => {
-      if (!visited.has(stringifyCoordinates(pt.x, pt.y)) && this.isPassablePoint(pt)) {
-        validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
+      if (!visited.has(stringifyCoordinates(pt.x, pt.y))) {
+        if (onlyPassable && this.isPassablePoint({ x: pt.x, y: pt.y })) validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
+        else if (!onlyPassable) validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
       }
     });
     return validNeighbors;
@@ -152,6 +154,21 @@ class PathFinder {
   // Calculates the manhattan distance between two points
   getManhattanDistance(current, target) {
     return Math.abs(current.x - target.x) + Math.abs(current.y - target.y);
+  }
+
+  getNearbyObjects(start, maxDistance) {
+    const nearby = [];
+    const queue = [start];
+    let p;
+    const visited = new Set([]);
+    while (queue.length > 0) {
+      p = queue.shift();
+      if (this.getManhattanDistance(p, start) <= maxDistance) {
+        nearby.push(...this.matrix[p.x][p.y]); // push the elements in this stack
+        const neighbors = this.getNeighbors(p, visited);
+        queue.push(...neighbors);
+      }
+    } return nearby;
   }
 
   // Gets the bottom element of the stack //

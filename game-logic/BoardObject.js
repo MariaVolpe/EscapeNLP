@@ -46,6 +46,10 @@ class BoardObject {
   isPassable() {
     return this.passable;
   }
+
+  isMovable() {
+    return this.moveable;
+  }
 }
 
 module.exports = BoardObject;

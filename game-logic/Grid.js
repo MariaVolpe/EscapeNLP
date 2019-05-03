@@ -103,10 +103,24 @@ class Grid {
     }
   }
 
-  // given a direction, move towards it
-  moveByDirection(movingObj, direction) {
-    const startPoint = movingObj.position;
-    const path = this.pathFinder.getPathByDirection(startPoint, direction);
+  // STRETCH GOAL CODE
+  // given a direction, move in that direction
+  moveByDirection(movingObjs, direction) {
+    for (let i = 0; i < movingObjs.length; i++) {
+      const movingObj = movingObjs[i];
+      const startPoint = movingObj.position;
+      const path = this.pathFinder.getPathByDirection(startPoint, direction);
+      // offset by how many things we are moving
+      const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
+      // update matrix @ previous point //
+      this.removeFromStack(movingObj); // this wont work for moving objects
+      // update matrix @ current point //
+      this.pushOnMatrix(lastPoint.x, lastPoint.y, movingObj);
+      // in the middle of the stack
+      // update position of object
+      movingObj.position.x = lastPoint.x;
+      movingObj.position.y = lastPoint.y;
+    }
   }
 
   // Gets an object either by its name or the object id
@@ -149,6 +163,11 @@ class Grid {
     return this.getNearestObject(centerObj, objList);
   }
 
+  // STRETCH GOAL CODE
+  // given a directional classification, resolves to a direction vector
+  resolveDirectionToVector({ start, end, direction }) {
+  }
+
   // Given a center object and list of objects, find the nearest object to it.
   getNearestObject(centerObj, objList) {
     const centerPosition = centerObj.position;
@@ -161,6 +180,11 @@ class Grid {
         nearest = element;
       }
     }); return nearest;
+  }
+
+  // Given a center object get all objects within a threshold distance
+  getNearbyObjects(centerObj, maxDistance = 2) {
+    return this.pathFinder.getNearbyObjects(centerObj.position, maxDistance, false);
   }
 
   // removes an element from the stack by the object reference itself

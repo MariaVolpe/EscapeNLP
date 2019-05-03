@@ -3,6 +3,7 @@ const compromise = require('compromise');
 class ActionExecuter {
   constructor(grid) {
     this.functionMap = this.createFunctionMap();
+    this.grid = grid;
   }
 
   createFunctionMap() {
@@ -24,8 +25,8 @@ class ActionExecuter {
   }
 
   // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction() //
-  executeAction(user, actionType, data) {
-    return this.functionMap[actionType](user, data);
+  executeAction(actionType, data) {
+    return this.functionMap[actionType](data);
   }
 
   executeMove(data) {
@@ -41,8 +42,8 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
       const objName = movingObjects[i]; // the name of the object
-      // include pronoun caching later
-      if (!this.grid.getObject(objName)) {
+      // TODO: include pronoun caching
+      if (!this.grid.getObject(objName) || !this.grid.getObject(objName).isMovable()) {
         return false;
       }
     }
@@ -58,7 +59,13 @@ class ActionExecuter {
   }
 
   executeLook(data) {
-
+    //if (!data.directObjects.length) { // if no specified object to look at, look around
+    //}
+    // the direct objects will be what is looked at
+    
+    //this.executeMove(data); // move to the thing being looked at
+    // all objects can potentially be inspectable, there should be an inspect function in BoardObject.js
+    // not in structure.js
   }
 
   executeTake(data) {
