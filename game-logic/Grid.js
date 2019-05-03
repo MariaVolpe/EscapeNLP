@@ -193,6 +193,10 @@ class Grid {
     const stack = this.matrix[p.x][p.y].filter(o => boardObj !== o);
     this.matrix[p.x][p.y] = stack;
   }
+
+  getDistance(centerObj, otherObj) {
+    return this.pathFinder.getManhattanDistance(centerObj.position, otherObj.position);
+  }
 }
 
 module.exports = Grid;

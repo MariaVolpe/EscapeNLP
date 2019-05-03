@@ -155,9 +155,9 @@ class PathFinder {
   getManhattanDistance(current, target) {
     return Math.abs(current.x - target.x) + Math.abs(current.y - target.y);
   }
-
+  
   // Gets all objects near a start location bounded by a maximum distance
-  getNearbyObjects(start, maxDistance) {
+  getNearbyObjects(start, maxDistance = 2) {
     const nearby = [];
     const queue = [start];
     let p;

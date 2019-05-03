@@ -38,16 +38,14 @@ class Structure extends BoardObject {
     this.inspectTextActive = StructLib[name].inspectTextActive;
     this.useTextUsed = StructLib[name].useTextUsed;
     this.useTextNotUsable = StructLib[name].useTextNotUsable;
-
     this.useFunction = null;
   }
 
   inspect() {
     if (this.activated) {
-      return this.inspectTextActive;
+      this.inspectText = this.inspectTextActive;
     }
-
-    return this.inspectTextInactive;
+    return this.inspectText;
   }
 
   activate() {
