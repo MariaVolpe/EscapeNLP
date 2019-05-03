@@ -93,7 +93,7 @@ class Grid {
       // offset by how many things we are moving
       const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       // update matrix @ previous point //
-      this.removeFromStack(movingObj); // this wont work for moving objects
+      this.removeFromStack(movingObj);
       // update matrix @ current point //
       this.pushOnMatrix(lastPoint.x, lastPoint.y, movingObj);
       // in the middle of the stack
