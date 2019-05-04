@@ -191,4 +191,4 @@ class PathFinder {
   }
 }
 
-module.exports = PathFinder;
+module.exports = { getManhattanDistance, PathFinder };

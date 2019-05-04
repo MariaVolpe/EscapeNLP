@@ -1,5 +1,5 @@
 const Point = require('./Point');
-const PathFinder = require('./PathFinder');
+const { PathFinder, getManhattanDistance } = require('./PathFinder');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -162,7 +162,7 @@ class Grid {
     let nearest = null;
     let distance = Number.MAX_VALUE;
     objList.forEach((element) => { // for all objects in the list provided find the nearest
-      const d = this.pathFinder.getManhattanDistance(centerPosition, element.position);
+      const d = getManhattanDistance(centerPosition, element.position);
       if (d < distance) {
         distance = d;
         nearest = element;
