@@ -36,15 +36,15 @@ class Play extends Component {
       this.setState({ message: '', command: '', prevMessages });
     });
 
-    this.socket.on('setNames', (players) => {
+    this.socket.on('setNames', (players, playerNumbers) => {
       let allPlayers = this.state.allPlayers;
 
-      players.forEach((player) => {
+      players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
             inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
             ready: player.ready,
-            position: player.position,
+            position: playerNumbers[i],
             leftGame: player.leftGame
           };
         }
@@ -60,7 +60,7 @@ class Play extends Component {
       }
 
       if (allPlayersReady) {
-        this.socket.emit('updateGame', this.state.board);
+        this.socket.emit('startGame', this.state.board);
       }
 
       this.setState({allPlayers, allPlayersReady});
@@ -91,6 +91,10 @@ class Play extends Component {
         }
       });
       this.setState({allPlayers});
+    });
+
+    this.socket.on('playerLeave', (playerList) => {
+
     });
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
