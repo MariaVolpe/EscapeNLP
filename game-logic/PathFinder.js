@@ -1,5 +1,4 @@
 const Point = require('./Point');
-
 /*
  * PathFinder:
     1) given a direction finds a suitable path to move along said direction
@@ -157,18 +156,21 @@ class PathFinder {
     } return true;
   }
 
-  getNearbyObjects(start, maxDistance) {
+  getNearbyObjects(start, maxDistance = 2) {
     const nearby = [];
     const queue = [start];
     let p;
     const visited = new Set([]);
     while (queue.length > 0) {
       p = queue.shift();
-      if (getManhattanDistance(p, start) <= maxDistance) {
+      if (this.inBounds(p)
+      && !visited.has(stringifyCoordinates(p.x, p.y))
+      && getManhattanDistance(p, start) <= maxDistance) {
         nearby.push(...this.matrix[p.x][p.y]); // push the elements in this stack
-        const neighbors = this.getNeighbors(p, visited);
+        const neighbors = this.getNeighbors(p, visited, false);
         queue.push(...neighbors);
       }
+      visited.add(stringifyCoordinates(p.x, p.y));
     } return nearby;
   }
 
@@ -178,9 +180,14 @@ class PathFinder {
     return this.matrix[x][y][0];
   }
 
+  // checks if a point is in bounds of the matrix
+  inBounds(p) {
+    return !(p.x < 0 || p.y < 0 || p.x >= this.matrix.length || p.y >= this.matrix[0].length);
+  }
+
   setMatrix(matrix) {
     this.matrix = matrix;
   }
 }
 
-module.exports = PathFinder;
+module.exports = { getManhattanDistance, PathFinder };

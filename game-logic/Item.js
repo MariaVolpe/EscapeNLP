@@ -1,11 +1,11 @@
-const BoardObject = require('./BoardObject.js');
-const ItemLib = require('./board-object-library/item-library.js');
+const BoardObject = require('./BoardObject');
+const ItemLib = require('./board-object-library/item-library');
 
 class Item extends BoardObject {
   constructor(name) {
     super({
-      name: name,
-      id: ItemLib[name].id
+      name,
+      id: ItemLib[name].id,
       moveable: false,
       possesable: true,
       transferable: true,
@@ -19,4 +19,5 @@ class Item extends BoardObject {
     this.use = null;
   }
 }
+
 module.exports = Item;
