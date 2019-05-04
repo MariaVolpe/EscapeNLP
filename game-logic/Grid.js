@@ -38,7 +38,18 @@ class Grid {
   }
 
   getGrid() {
-    return this.matrix;
+    const frontEndMatrix = Array.from({ length: 15 },
+      () => Array.from({ length: 12 },
+        () => []));
+
+    for (let i = 0; i < this.matrix.length; i++) {
+      for (let j = 0; j < this.matrix[i].length; j++) {
+        this.matrix[i][j].forEach((item) => {
+          frontEndMatrix[i][j].push(item.name);
+        });
+      }
+    }
+    return frontEndMatrix;
   }
 
   removeFromBoard(boardObj) {
