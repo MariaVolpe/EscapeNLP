@@ -53,7 +53,7 @@ class PuzzleManager {
     }
   }
 
-  evaluatePuzzleStatus(puzzleType) {
+  evaluatePuzzleStatus(puzzleType) { // eslint-disable-line class-methods-use-this
     switch (puzzleType) {
       case 'weight':
         break;

@@ -1,3 +1,4 @@
 node_modules
 /nlp
+__tests__/nlp
 nlp-classifier.js

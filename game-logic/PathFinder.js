@@ -1,5 +1,5 @@
 const Point = require('./Point');
-const BoardObject = require('./BoardObject');
+
 /*
  * PathFinder:
     1) given a direction finds a suitable path to move along said direction
@@ -10,6 +10,9 @@ const BoardObject = require('./BoardObject');
  */
 
 const stringifyCoordinates = (x, y) => `${x},${y}`;
+
+// Calculates the manhattan distance between two points
+const getManhattanDistance = (p1, p2) => Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
 
 class PathFinder {
   constructor(matrix) {
@@ -49,7 +52,7 @@ class PathFinder {
     let minimumDistance = Number.MAX_SAFE_INTEGER;
     while (queue.length > 0) {
       p = queue.shift();
-      const distance = this.getManhattanDistance(p, destination);
+      const distance = getManhattanDistance(p, destination);
       if (distance < minimumDistance) {
         minimumDistance = distance;
         closestP = p;
@@ -103,8 +106,11 @@ class PathFinder {
 
     neighbors.forEach((pt) => {
       if (!visited.has(stringifyCoordinates(pt.x, pt.y))) {
-        if (onlyPassable && this.isPassablePoint({ x: pt.x, y: pt.y })) validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
-        else if (!onlyPassable) validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
+        if (onlyPassable && this.isPassablePoint({ x: pt.x, y: pt.y })) {
+          validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
+        } else if (!onlyPassable) {
+          validNeighbors.push({ x: pt.x, y: pt.y, pathHistory: p });
+        }
       }
     });
     return validNeighbors;
@@ -151,11 +157,6 @@ class PathFinder {
     } return true;
   }
 
-  // Calculates the manhattan distance between two points
-  getManhattanDistance(current, target) {
-    return Math.abs(current.x - target.x) + Math.abs(current.y - target.y);
-  }
-
   getNearbyObjects(start, maxDistance) {
     const nearby = [];
     const queue = [start];
@@ -163,7 +164,7 @@ class PathFinder {
     const visited = new Set([]);
     while (queue.length > 0) {
       p = queue.shift();
-      if (this.getManhattanDistance(p, start) <= maxDistance) {
+      if (getManhattanDistance(p, start) <= maxDistance) {
         nearby.push(...this.matrix[p.x][p.y]); // push the elements in this stack
         const neighbors = this.getNeighbors(p, visited);
         queue.push(...neighbors);

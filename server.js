@@ -80,8 +80,7 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateInventories', inventories);
   });
 
-  socket.on('updateGame', (board) => {
-    const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
+  socket.on('updateGame', () => {
     const currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
     let row = Math.floor(Math.random() * Math.floor(12));
     let col = Math.floor(Math.random() * Math.floor(15));
@@ -93,8 +92,10 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateGame', currentGame, false);
   });
 
-  socket.on('setBoard', (newBoard) => {
-    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
+  socket.on('setBoard', () => {
+    const gameMap = new Array(13)
+      .fill(null)
+      .map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
     const blocks = [k, d, s, b, w];
     blocks.forEach((block) => {
       let row = Math.floor(Math.random() * Math.floor(12));
