@@ -66,23 +66,26 @@ class Browser extends Component {
 
   render() {
     return (
-      <div style={{background: '#283942', height: '100vh'}}>
+      <div className="browser-background">
         <Navigation inGame={false} />
 
-        <h1 style={{textAlign: "center", marginTop: '3%', color: 'white'}}>Current Lobbies</h1>
+        <h1 className="lobby-title">Current Lobbies</h1>
 
         <div className="ui grid" style={{marginTop: '3%', marginLeft: '3%', width: '100%'}}>
           {this.state.lobbies}
         </div>
-        <CreateLobbyModal isOpen={this.state.createLobbyIsOpen} onToggle={this.onCreateClick} handleSubmit={this.handleCreateSubmit}/>
+        <CreateLobbyModal
+          isOpen={this.state.createLobbyIsOpen}
+          onToggle={this.onCreateClick}
+          handleSubmit={this.handleCreateSubmit}
+        />
         <Button
           onClick={this.onCreateClick}
           color="success"
-          style={{marginTop: '3%'}}
+          className="lobby-create"
         >
           <i class="plus icon"></i> Create Lobby
         </Button>
-        <br /><br /><br /><br /><br /><br />
       </div>
     );
   }

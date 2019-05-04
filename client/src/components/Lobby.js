@@ -22,7 +22,7 @@ class Lobby extends Component {
     };
     this.socket = socketIOClient('');
 
-    this.socket.on('canJoin', (isJoinable) => {     
+    this.socket.on('canJoin', (isJoinable) => {
       if (isJoinable) {
         this.setState({ confirmOpen: true });
       } else {
@@ -33,7 +33,7 @@ class Lobby extends Component {
     this.socket.on('confirmJoin', (isJoinable) => {
       if (isJoinable) {
         window.sessionStorage.setItem('roomName', this.props.lobbyName);
-        window.sessionStorage.setItem('roomId', this.props.lobbyId);        
+        window.sessionStorage.setItem('roomId', this.props.lobbyId);
         window.location.replace('/play');
 
         axios.post(`/game/${this.props.lobbyId}/player`);
@@ -53,7 +53,6 @@ class Lobby extends Component {
 
   componentDidMount = () => {
     this.socket.emit('checkRoomSize', this.props.lobbyId);
-    this.socket.emit('lobbyBrowser');
   }
 
   onJoinClick = (event) => {
@@ -78,7 +77,7 @@ class Lobby extends Component {
 
     return (
       <div className={this.props.className}>
-      <a onClick={this.props.onLobbyClick}>
+      <div onClick={this.props.onLobbyClick}>
         <Row>
           <Col>
             {this.props.lobbyName}
@@ -102,7 +101,7 @@ class Lobby extends Component {
             Player Count: {this.state.roomSize}/5
           </Col>
         </Row>
-      </a>
+      </div>
       </div>
     );
   }

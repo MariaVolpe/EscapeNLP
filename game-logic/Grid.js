@@ -42,7 +42,7 @@ class Grid {
     this.removeFromStack(boardObj);
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
-    const name = boardObj.name;
+    const { name } = boardObj;
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -103,7 +103,7 @@ class Grid {
     }
   }
 
-  // STRETCH GOAL CODE
+  // TODO: STRETCH GOAL CODE
   // given a direction, move in that direction
   moveByDirection(movingObjs, direction) {
     for (let i = 0; i < movingObjs.length; i++) {
@@ -153,7 +153,7 @@ class Grid {
 
   // STRETCH GOAL CODE
   // given a directional classification, resolves to a direction vector
-  resolveDirectionToVector({ start, end, direction }) {
+  resolveDirectionToVector({ start, end, direction }) { // eslint-disable-line
   }
 
   // Given a center object and list of objects, find the nearest object to it.
@@ -188,7 +188,7 @@ class Grid {
 
   // Goes through the objects in the grid and updates their position fields
   updateObjectInformation() {
-    const matrix = this.matrix;
+    const matrix = this.matrix; // eslint-disable-line prefer-destructuring
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         const stack = matrix[i][j];
