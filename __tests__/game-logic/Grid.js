@@ -65,7 +65,13 @@ describe('Grid functionality tests', () => {
       const wall = new Structure('weight', 'c', null);
       const destination = new Structure('floor_switch', 'd', null);
       // hardcode matrices to these //
-      grid.setMatrix({ matrix: [[[wall], [floor], [floor]], [[wall], [floor], [wall]], [[floor], [floor], [wall]]] });
+      grid.setMatrix({
+        matrix: [
+          [[wall], [floor], [floor]],
+          [[wall], [floor], [wall]],
+          [[floor], [floor], [wall]],
+        ],
+      });
       // place a moving object and destination at these points //
       mover.name = 'mover';
       destination.name = 'destination';

@@ -10,7 +10,7 @@ class Navigation extends Component {
         <div>
           <Navbar color="danger">
             <Nav />
-            <NavbarBrand href='/' style={{color: 'white'}}>EscapeNLP</NavbarBrand>
+            <NavbarBrand href='/' className="navbar">EscapeNLP</NavbarBrand>
             <Nav />
           </Navbar>
         </div>
@@ -21,7 +21,7 @@ class Navigation extends Component {
         <div>
           <Navbar color="danger">
             <Nav />
-            <NavbarBrand style={{color: 'white'}}>EscapeNLP</NavbarBrand>
+            <NavbarBrand className="navbar">EscapeNLP</NavbarBrand>
             <Nav />
           </Navbar>
         </div>

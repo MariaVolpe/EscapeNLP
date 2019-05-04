@@ -10,7 +10,7 @@ class Agent extends BoardObject {
       possesable: false,
       transferable: false,
       usable: false,
-      passable: false,
+      passable: true,
       inspectable: false,
       destructable: false,
       puzzleType: null,
@@ -33,10 +33,6 @@ class Agent extends BoardObject {
   dropItem(itemName) {
     const item = this.removeItem(itemName);
     this.grid.dropOntoBoard({ centerObj: this, droppedObject: item });
-  }
-
-  giveItem(itemName, receipient) {
-    const item = this.inventory.removeItem(itemName);
   }
 }
 

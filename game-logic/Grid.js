@@ -1,5 +1,5 @@
 const Point = require('./Point');
-const PathFinder = require('./PathFinder');
+const { PathFinder, getManhattanDistance } = require('./PathFinder');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -109,7 +109,7 @@ class Grid {
     }
   }
 
-  // STRETCH GOAL CODE
+  // TODO: STRETCH GOAL CODE
   // given a direction, move in that direction
   moveByDirection(movingObjs, direction) {
     for (let i = 0; i < movingObjs.length; i++) {
@@ -159,7 +159,7 @@ class Grid {
 
   // STRETCH GOAL CODE
   // given a directional classification, resolves to a direction vector
-  resolveDirectionToVector({ start, end, direction }) {
+  resolveDirectionToVector({ start, end, direction }) { // eslint-disable-line
   }
 
   // Given a center object and list of objects, find the nearest object to it.
@@ -168,7 +168,7 @@ class Grid {
     let nearest = null;
     let distance = Number.MAX_VALUE;
     objList.forEach((element) => { // for all objects in the list provided find the nearest
-      const d = this.pathFinder.getManhattanDistance(centerPosition, element.position);
+      const d = getManhattanDistance(centerPosition, element.position);
       if (d < distance) {
         distance = d;
         nearest = element;
@@ -189,12 +189,12 @@ class Grid {
   }
 
   getDistance(centerObj, otherObj) {
-    return this.pathFinder.getManhattanDistance(centerObj.position, otherObj.position);
+    return getManhattanDistance(centerObj.position, otherObj.position);
   }
 
   // Goes through the objects in the grid and updates their position fields
   updateObjectInformation() {
-    const matrix = this.matrix;
+    const matrix = this.matrix; // eslint-disable-line prefer-destructuring
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         const stack = matrix[i][j];

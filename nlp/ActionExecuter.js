@@ -37,28 +37,30 @@ class ActionExecuter {
     // Check for all the direct objects, then indirect
     const { user } = data.user;
     let destinations = [];
-    let movingObjects = [];
+    let movingObjectNames = [];
+    const movingObjects = [];
     // if there are indirect objects, use those as the destination
     if (data.indirectObjects.length) {
       destinations = data.indirectObjects;
-      movingObjects = data.directObjects;
+      movingObjectNames = data.directObjects;
       // else: there are only direct objects, use those as the destination
     } else { destinations = data.directObjects; }
 
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
-      const objName = movingObjects[i]; // the name of the object
-      const object = this.grid.getObject(objName);
+      const objName = movingObjectNames[i]; // the name of the object
+      const object = this.grid.getObject({ centerObj: data.user, identifier: objName });
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
       }
+      movingObjects.push(object);
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
       // TODO: include pronoun caching later
-      if (!this.grid.getObject({ identifier: dest })) { return false; }
+      if (!this.grid.getObject({ centerObj: data.user, identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
       this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
@@ -74,7 +76,7 @@ class ActionExecuter {
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
-      const object = this.grid.getObject({ identifier: name });
+      const object = this.grid.getObject({ centerObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
       if (this.grid.getDistance(data.user, object) > 2) {

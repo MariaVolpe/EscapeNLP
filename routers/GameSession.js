@@ -7,12 +7,6 @@ const parseAction = (req, res, next) => {
   next();
 };
 
-const checkForFailure = (req, res) => {
-  if (!res.headersSent) {
-    res.sendStatus(500);
-  }
-};
-
 // to do: rename route? this only returns the bare minimum of session info
 // will not be consistent with what is returned from GET /game/:id
 router.get('/', (req, res) => {
