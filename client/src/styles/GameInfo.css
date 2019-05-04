@@ -8,11 +8,27 @@
   outline-width: thin;
   top: 1.5vh;
   height: 6.8vh;
-  background-image: url('../images/tile.png');
+  color: black;
   background-size: 100%;
-  color: white;
+  background-color: white;
+  z-index: 5;
+  font-size: 2vh;
 }
 
 .map:hover {
     border: 3px solid black;
+    cursor: pointer;
+}
+
+.tile {
+  background-image: url('../images/tile.png');
+  background-size: 100%;
+}
+
+.board-item {
+  height: 6vh;
+  width: 6vh;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }

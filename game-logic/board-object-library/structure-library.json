@@ -42,7 +42,7 @@
     "wall": {
         "moveable": false,
         "usable": false,
-        "passable": false,
+        "passable": true,
         "destructable": false,
         "inspectTextInactive": "",
         "inspectTextActive": "",

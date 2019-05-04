@@ -1,21 +1,25 @@
 .player-info {
   float: left;
   width: 20%;
+  margin-top: 1%;
 }
 
 .game-info {
   float: left;
   width: 60%;
+  margin-left: 0.25%;
+  margin-top: 1%;
 }
 
 .text-info {
   float: right;
-  width: 19.3%;
+  width: 18.65%;
+  margin-top: 1%;
 }
 
 .play-page {
-  //background: #283942;
-  //height: 100vh;
+  background: #283942;
+  height: 100vh;
 }
 
 .player-box {
@@ -24,4 +28,18 @@
 
 .logo {
   height: 4.2vh;
+}
+
+@media only screen and (min-width: 1600px) {
+  .ready-button {
+    position: fixed;
+    bottom: 1vh;
+    left: 23vh;
+  }
+
+  .leave-button {
+    position: fixed;
+    bottom: 1vh;
+    left: 8vh;
+  }
 }
