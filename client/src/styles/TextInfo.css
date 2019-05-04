@@ -21,9 +21,18 @@
 }
 
 @media only screen and (max-width: 1500px) {
-  .chat-action {
-    width: 77.7%;
-    right: 7.77%;
+  .talk-input {
+    width: 66.6%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .chat-change {
+    height: 27px;
+  }
+
+  .talk-input {
+    height: 27px;
   }
 }
 
