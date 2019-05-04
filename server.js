@@ -170,7 +170,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('playerLeave', (playerList, roomId) => {
-    io.in(roomId).emit('playerLeave', playerList);
+  socket.on('updatePlayerCount', (playerList, roomId) => {
+    io.in(roomId).emit('updatePlayerCount', playerList);
   });
 });

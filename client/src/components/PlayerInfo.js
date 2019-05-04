@@ -38,7 +38,7 @@ class PlayerInfo extends Component {
     }
 
     // real icon will be decided later, this serves as a temp
-    if (this.props.playerInfo.leftGame) {
+    if (this.props.playerInfo.hasLeftGame) {
       const name = this.props.playerInfo.name + " has disconnected";
       return(
         <div className="card player-box">

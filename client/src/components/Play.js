@@ -45,7 +45,7 @@ class Play extends Component {
             inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
             ready: player.ready,
             position: playerNumbers[i],
-            leftGame: player.leftGame
+            hasLeftGame: player.hasLeftGame
           };
         }
       });
@@ -93,7 +93,7 @@ class Play extends Component {
       this.setState({allPlayers});
     });
 
-    this.socket.on('playerLeave', (playerList) => {
+    this.socket.on('updatePlayerCount', (playerList) => {
 
     });
 
@@ -255,7 +255,7 @@ class Play extends Component {
                          inventory: this.state.allPlayers[player].inventory,
                          ready: this.state.allPlayers[player].ready,
                          position: this.state.allPlayers[player].position,
-                         leftGame: this.state.allPlayers[player].leftGame
+                         hasLeftGame: this.state.allPlayers[player].hasLeftGame
                        };
       allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
     });
