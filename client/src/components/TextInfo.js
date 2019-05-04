@@ -134,7 +134,7 @@ class TextInfo extends Component {
 
     return(
       <div className="ui minimal comments">
-        <h3 className="chat-header ui dividing header" style={{marginTop: '2%', borderRadius: '3px'}}>Chat Box</h3>
+        <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
@@ -152,7 +152,7 @@ class TextInfo extends Component {
           </form>
           <button className="ui button chat-change"
             onClick={this.props.onChatOptionChange}
-            style={{width: '99.5%', marginLeft: '2.5%', marginTop: '0.75%', float: 'center'}}
+            style={{width: '99.5%', marginLeft: '2.5%', marginTop: '0.75%'}}
           >
             {this.props.chatOption}
           </button>
