@@ -145,6 +145,7 @@ class Grid {
     if (matrix) {
       this.matrix = matrix;
       this.pathFinder.setMatrix(matrix);
+      this.recordPositionsOfObjects();
       return;
     }
     this.matrix = Array.from({ length: xDim },
@@ -207,9 +208,17 @@ class Grid {
         stack.forEach((e) => {
           e.position.x = i;
           e.position.y = j;
+          this.addToObjectMap(e);
         });
       }
     }
+  }
+
+  addToObjectMap(object) {
+    if (!this.nameToObjsList.has(object.name)) {
+      this.nameToObjsList.set(object.name, []);
+    }
+    this.nameToObjsList.get(object.name).push(object);
   }
 }
 

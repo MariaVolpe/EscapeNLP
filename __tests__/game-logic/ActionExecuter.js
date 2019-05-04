@@ -25,7 +25,6 @@ describe('ActionExecuter tests', () => {
         [[wall], [wall], [wall]],
       ],
     });
-    g.recordPositionsOfObjects();
     it('Should look around', async () => {
       const lookResponse = actionExecuter.executeLook({
         user: floor,
@@ -38,6 +37,13 @@ describe('ActionExecuter tests', () => {
     });
 
     it('Should look at a particular object', async () => {
+      const lookResponse = actionExecuter.executeLook({
+        user: floor,
+        directObjects: ['door'],
+      }).filter(text => text !== '');
+      const expected = JSON.stringify([
+        'This door won\'t budge. There has to be a way to open it...']);
+      expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
   });
 

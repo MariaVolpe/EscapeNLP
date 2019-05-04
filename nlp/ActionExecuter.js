@@ -71,6 +71,7 @@ class ActionExecuter {
       return nearbyObjects.map(e => e.inspectText);
     }
     // if specified direct objects, look at that those objects
+    console.log('executing look on direct object');
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
@@ -79,7 +80,7 @@ class ActionExecuter {
       if (this.grid.getDistance(data.user, object) > 2) { // if the user is too far from
         this.grid.moveToObject([data.user], object); // the object, move them to it
       } texts.push(object.inspectText);
-    }
+    } return texts;
   }
 
   executeTake(data) {
