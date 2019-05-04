@@ -15,7 +15,7 @@ const build = () => {
   }
 
   // bottom walls
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 15; i++) {
     matrix[i][11].push(wall);
   }
 
