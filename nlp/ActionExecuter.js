@@ -5,7 +5,7 @@ const compromise = require('compromise');
  */
 
 class ActionExecuter {
-  constructor(grid) {
+  constructor({ grid }) {
     this.functionMap = this.createFunctionMap();
     this.grid = grid;
   }
@@ -28,7 +28,7 @@ class ActionExecuter {
     return functionMap;
   }
 
-  // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction() //
+  // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction()
   executeAction(actionType, data) {
     return this.functionMap[actionType](data);
   }
@@ -60,7 +60,6 @@ class ActionExecuter {
       // TODO: include pronoun caching later
       if (!this.grid.getObject({ identifier: dest })) { return false; }
     }
-    
     for (let i = 0; i < destinations.length; i++) {
       this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
     } return true;

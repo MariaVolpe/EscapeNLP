@@ -164,11 +164,14 @@ class PathFinder {
     const visited = new Set([]);
     while (queue.length > 0) {
       p = queue.shift();
-      if (this.getManhattanDistance(p, start) <= maxDistance) {
+      if (this.inBounds(p)
+      && !visited.has(stringifyCoordinates(p.x, p.y))
+      && this.getManhattanDistance(p, start) <= maxDistance) {
         nearby.push(...this.matrix[p.x][p.y]); // push the elements in this stack
-        const neighbors = this.getNeighbors(p, visited);
+        const neighbors = this.getNeighbors(p, visited, false);
         queue.push(...neighbors);
       }
+      visited.add(stringifyCoordinates(p.x, p.y));
     } return nearby;
   }
 
@@ -176,6 +179,11 @@ class PathFinder {
   bottom(x, y) {
     if (!this.matrix[x][y].length) return null;
     return this.matrix[x][y][0];
+  }
+
+  // checks if a point is in bounds of the matrix
+  inBounds(p) {
+    return !(p.x < 0 || p.y < 0 || p.x >= this.matrix.length || p.y >= this.matrix[0].length);
   }
 
   setMatrix(matrix) {

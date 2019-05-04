@@ -39,6 +39,7 @@ class Structure extends BoardObject {
     this.useTextUsed = StructLib[name].useTextUsed;
     this.useTextNotUsable = StructLib[name].useTextNotUsable;
     this.useFunction = null;
+    this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
   inspect() {

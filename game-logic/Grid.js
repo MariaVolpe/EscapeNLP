@@ -197,6 +197,20 @@ class Grid {
   getDistance(centerObj, otherObj) {
     return this.pathFinder.getManhattanDistance(centerObj.position, otherObj.position);
   }
+
+  // Goes through the objects in the grid and updates their position fields
+  recordPositionsOfObjects() {
+    const matrix = this.matrix;
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const stack = matrix[i][j];
+        stack.forEach((e) => {
+          e.position.x = i;
+          e.position.y = j;
+        });
+      }
+    }
+  }
 }
 
 module.exports = Grid;

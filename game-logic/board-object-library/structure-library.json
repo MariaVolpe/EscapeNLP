@@ -39,6 +39,16 @@
         "useTextNotUsable": "",
         "useTextUsed": ""
     },
+    "wall": {
+        "moveable": false,
+        "usable": false,
+        "passable": false,
+        "destructable": false,
+        "inspectTextInactive": "",
+        "inspectTextActive": "",
+        "useTextNotUsable": "",
+        "useTextUsed": ""
+    },
     "floor_switch": {
         "moveable": false,
         "usable": false,
