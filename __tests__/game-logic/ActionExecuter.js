@@ -81,7 +81,7 @@ describe('ActionExecuter tests', () => {
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     // Stretch goal test
-    /*it('Should filter out objects whose view is obstructed', async () => {
+    /* it('Should filter out objects whose view is obstructed', async () => {
       const g = new Grid({ xDimension: 3, yDimension: 3 });
       const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
@@ -96,7 +96,7 @@ describe('ActionExecuter tests', () => {
           [[wall], [floor], [wall]],
         ],
       });
-    });*/
+    }); */
   });
 
   describe('Take', () => {
