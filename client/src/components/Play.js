@@ -246,6 +246,12 @@ class Play extends Component {
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
   }
 
+  onHoverOverTile = (tileInfo) => {
+    if (this.state.board[0] !== undefined) {
+      console.log(this.state.board[tileInfo.row][tileInfo.col][1]);
+    }
+  }
+
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const board = this.state.board;
@@ -260,21 +266,17 @@ class Play extends Component {
       allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
     });
 
-    let gameInfo = <div/>;
+    let gameInfo = <div className='game-info'>
+                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} onHoverOverTile={this.onHoverOverTile} />
+                   </div>;
     let playerInfo;
     if (this.state.allPlayersReady) {
-      gameInfo = <div className='game-info'>
-                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
-                  </div>;
       playerInfo = <div className='player-info'>
                       <div className="ui list">{allPlayers}</div>
                       <MultiButton type="abandon-button"/>
                    </div>;
     }
     else {
-      gameInfo = <div className='game-info'>
-                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} />
-                  </div>;
       playerInfo = <div className='player-info'>
                     <div className="ui list">{allPlayers}</div>
                     <Row>
