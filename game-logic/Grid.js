@@ -183,7 +183,7 @@ class Grid {
   }
 
   getDistance(centerObj, otherObj) {
-    return this.pathFinder.getManhattanDistance(centerObj.position, otherObj.position);
+    return getManhattanDistance(centerObj.position, otherObj.position);
   }
 
   // Goes through the objects in the grid and updates their position fields

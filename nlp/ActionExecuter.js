@@ -49,7 +49,7 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjects.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
-      const object = this.grid.getObject(objName);
+      const object = this.grid.getObject({ centerObj: data.user, identifier: objName });
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
