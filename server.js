@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   console.log('connection established');
 
   socket.on('joinRoom', (roomId) => {
-    let prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
+    const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
     });
@@ -80,9 +80,8 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateInventories', inventories);
   });
 
-  socket.on('updateGame', (board) => {
-    const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
-    let currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
+  socket.on('updateGame', () => {
+    const currentGame = io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap;
     let row = Math.floor(Math.random() * Math.floor(12));
     let col = Math.floor(Math.random() * Math.floor(15));
     while (currentGame[row][col][1] !== f) {
@@ -93,8 +92,10 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateGame', currentGame, false);
   });
 
-  socket.on('setBoard', (newBoard) => {
-    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
+  socket.on('setBoard', () => {
+    const gameMap = new Array(13)
+      .fill(null)
+      .map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
     const blocks = [k, d, s, b, w];
     blocks.forEach((block) => {
       let row = Math.floor(Math.random() * Math.floor(12));
@@ -142,7 +143,7 @@ io.on('connection', (socket) => {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = { commenter:time, time:'', mess };
+      const message = { commenter: time, time: '', mess };
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
       updatePlayers('disconnected', socket.currentRoom);

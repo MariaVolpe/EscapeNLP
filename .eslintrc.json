@@ -2,7 +2,11 @@
     "rules": {
         "linebreak-style": "off",
         "no-plusplus": "off",
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "no-param-reassign": "warn",
+        "max-len": ["error", {
+            "code": 110
+        }]
     },
     "settings": {
         "react": {
