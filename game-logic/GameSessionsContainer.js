@@ -16,6 +16,20 @@ class GameSessionsContainer {
     return { data: this.games.get(id).getGame() };
   }
 
+  getBoard(id) {
+    if (!this.games.has(id)) {
+      return { error: { status: 404 } };
+    }
+    return this.games.get(id).getBoard();
+  }
+
+  startGame(id) {
+    if (!this.games.has(id)) {
+      return { error: { status: 404 } };
+    }
+    this.games.get(id).generateGame();
+  }
+
   getAllSessions() {
     const games = [];
     this.games.forEach(({ playerCount, id: gameId, name: gameName }) => {
@@ -37,14 +51,6 @@ class GameSessionsContainer {
       return { error: { status: 404 } };
     }
     this.games.delete(id);
-    return { error: null };
-  }
-
-  startGame(id) {
-    if (!this.games.has(id)) {
-      return { error: { status: 404 } };
-    }
-    this.games.get(id).generateGame();
     return { error: null };
   }
 

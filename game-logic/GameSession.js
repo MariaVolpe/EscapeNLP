@@ -3,7 +3,6 @@ const Grid = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayout = require('./room-layouts/room-1');
 
-
 class GameSession {
   constructor(id, name) {
     this.puzzleManager = null;
@@ -17,6 +16,10 @@ class GameSession {
   getGame() {
     const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
     return { id: this.id, grid: this.grid, players };
+  }
+
+  getBoard() {
+    return this.grid.getGrid();
   }
 
   addPlayerToSession(id) {
@@ -40,7 +43,7 @@ class GameSession {
   generateGame() {
     const size = 12;
     const grid = roomLayout.build();
-    this.grid = new Grid(size);
+    this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
 

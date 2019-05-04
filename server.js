@@ -80,25 +80,9 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateInventories', inventories);
   });
 
-  socket.on('startGame', (board) => {
-    const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
-    const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
-    const blocks = [k, d, s, b, w];
-
-    blocks.forEach((block, i) => {
-      board[0][i][1] = block;
-    });
-
-    Object.keys(allPlayers).forEach((playerId) => {
-      const player = io.sockets.connected[playerId];
-      let row = Math.floor(Math.random() * Math.floor(12));
-      let col = Math.floor(Math.random() * Math.floor(15));
-      while (board[row][col][1] !== f) {
-        row = Math.floor(Math.random() * Math.floor(12));
-        col = Math.floor(Math.random() * Math.floor(15));
-      }
-      board[row][col][1] = p + player.playerNumber;
-    });
+  socket.on('startGame', () => {
+    gameContainer.generateGame(socket.currentRoom);
+    const board = gameContainer.getBoard(socket.currentRoom);
 
     io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = board;
     io.in(socket.currentRoom).emit('updateGame', board, false);

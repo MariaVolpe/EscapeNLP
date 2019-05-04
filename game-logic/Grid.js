@@ -37,6 +37,10 @@ class Grid {
     this.matrix[p.x][p.y].push(obj);
   }
 
+  getGrid() {
+    return this.matrix;
+  }
+
   removeFromBoard(boardObj) {
     if (!boardObj) {
       return;
