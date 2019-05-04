@@ -10,8 +10,8 @@ class Inventory {
       // todo: catch
       return;
     }
-    const item = this.removeItem();
-    if (item) item.use();
+    //const item = this.removeItem();
+    //if (item) item.use();
   }
 
   // why? because i had to change the implementation from {} to map so
