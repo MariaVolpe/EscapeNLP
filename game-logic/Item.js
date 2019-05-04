@@ -1,5 +1,5 @@
-const BoardObject = require('./BoardObject.js');
-const ItemLib = require('./board-object-library/item-library.js');
+const BoardObject = require('./BoardObject');
+const ItemLib = require('./board-object-library/item-library');
 
 class Item extends BoardObject {
   constructor(name) {

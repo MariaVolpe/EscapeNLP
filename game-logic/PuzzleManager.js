@@ -58,17 +58,17 @@ class PuzzleManager {
     if (!this.checkPuzzleComplete(puzzleType)) {
       return;
     }
-    switch (puzzleType) {
+    switch (puzzleType) { // eslint-disable-line default-case
       case 'weight':
-        this.grid.add(new Item("sword_blade"));
+        this.grid.add(new Item('sword_blade'));
         break;
       case 'binary':
-        this.grid.add(new Item("sword_hilt"));
+        this.grid.add(new Item('sword_hilt'));
         break;
       case 'pots':
-        this.grid.add(new Item("key"));
+        this.grid.add(new Item('key'));
         break;
-      case: 'goal':
+      case 'goal':
         this.gameComplete = true;
         break;
     }

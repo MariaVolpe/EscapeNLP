@@ -1,5 +1,4 @@
 const Point = require('./Point');
-const BoardObject = require('./BoardObject');
 /*
  * PathFinder:
     1) given a direction finds a suitable path to move along said direction
