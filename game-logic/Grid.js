@@ -42,7 +42,7 @@ class Grid {
     this.removeFromStack(boardObj);
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
-    const name = boardObj.name;
+    const { name } = boardObj;
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -103,7 +103,7 @@ class Grid {
     }
   }
 
-  // STRETCH GOAL CODE
+  // TODO: STRETCH GOAL CODE
   // given a direction, move in that direction
   moveByDirection(movingObjs, direction) {
     for (let i = 0; i < movingObjs.length; i++) {
@@ -163,9 +163,12 @@ class Grid {
     return this.getNearestObject(centerObj, objList);
   }
 
-  // STRETCH GOAL CODE
+  // TODO: STRETCH GOAL CODE
   // given a directional classification, resolves to a direction vector
-  resolveDirectionToVector({ start, end, direction }) {
+  resolveDirectionToVector({ start, end, direction }) { // eslint-disable-line class-methods-use-this
+    const shut = start; // eslint-disable-line no-unused-vars
+    const linter = end; // eslint-disable-line no-unused-vars
+    const up = direction; // eslint-disable-line no-unused-vars
   }
 
   // Given a center object and list of objects, find the nearest object to it.

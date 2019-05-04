@@ -59,11 +59,11 @@ class ActionExecuter {
   }
 
   executeLook(data) {
-    //if (!data.directObjects.length) { // if no specified object to look at, look around
-    //}
+    // if (!data.directObjects.length) { // if no specified object to look at, look around
+    // }
     // the direct objects will be what is looked at
-    
-    //this.executeMove(data); // move to the thing being looked at
+
+    // this.executeMove(data); // move to the thing being looked at
     // all objects can potentially be inspectable, there should be an inspect function in BoardObject.js
     // not in structure.js
   }
