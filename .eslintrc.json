@@ -3,7 +3,7 @@
         "linebreak-style": "off",
         "no-plusplus": "off",
         "consistent-return": "off",
-        "no-param-reassign": "warn",
+        "no-param-reassign": "off",
         "max-len": ["error", {
             "code": 110
         }],
