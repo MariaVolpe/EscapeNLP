@@ -1,5 +1,5 @@
 const Structure = require('./Structure');
-
+const Item = require('./Item');
 // todo: ...dont do it this way, since its not arbitrary puzzles but a random get
 const Weight = require('./puzzles/weight');
 const Switch = require('./puzzles/switch');
@@ -10,6 +10,7 @@ class PuzzleManager {
     this.puzzles = [];
     this.grid = grid;
     this.puzzleProgress = new Map();
+    this.gameComplete = false;
 
     this.findPuzzles();
   }
@@ -23,9 +24,9 @@ class PuzzleManager {
 
   addPuzzlesToBoard() {
     const structures = this.getStructureDetails();
-    structures.forEach(({ obj, coordinates, manage }) => {
+    structures.forEach(({ obj, coordinates, isManaged }) => {
       this.grid.add(obj, coordinates);
-      if (manage) {
+      if (isManaged) {
         this.addToProgressMap(obj.puzzleType, obj);
       }
     });
@@ -54,15 +55,36 @@ class PuzzleManager {
   }
 
   evaluatePuzzleStatus(puzzleType) {
-    switch (puzzleType) {
+    if (!this.checkPuzzleComplete(puzzleType)) {
+      return;
+    }
+    switch (puzzleType) { // eslint-disable-line default-case
       case 'weight':
+        this.grid.add(new Item('sword_blade'));
         break;
-      case 'switch':
+      case 'binary':
+        this.grid.add(new Item('sword_hilt'));
+        break;
+      case 'pots':
+        this.grid.add(new Item('key'));
         break;
       case 'goal':
+        this.gameComplete = true;
         break;
-      default:
     }
+  }
+
+  checkPuzzleComplete(puzzleType) {
+    this.puzzleProgress.get(puzzleType).forEach((obj) => {
+      if (!obj.activated) {
+        return false;
+      }
+    });
+    return true;
+  }
+
+  checkGameComplete() {
+    return this.gameComplete;
   }
 }
 

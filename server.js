@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   console.log('connection established');
 
   socket.on('joinRoom', (roomId) => {
-    let prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
+    const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
     });
@@ -158,7 +158,7 @@ io.on('connection', (socket) => {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = { commenter:time, time:'', mess };
+      const message = { commenter: time, time: '', mess };
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
       if (io.nsps['/'].adapter.rooms[socket.currentRoom].gameStart) {

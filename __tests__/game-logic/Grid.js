@@ -65,7 +65,13 @@ describe('Grid functionality tests', () => {
       const wall = new Structure('weight', 'c', null);
       const destination = new Structure('floor_switch', 'd', null);
       // hardcode matrices to these //
-      grid.setMatrix({ matrix: [[[wall], [floor], [floor]], [[wall], [floor], [wall]], [[floor], [floor], [wall]]] });
+      grid.setMatrix({
+        matrix: [
+          [[wall], [floor], [floor]],
+          [[wall], [floor], [wall]],
+          [[floor], [floor], [wall]],
+        ],
+      });
       // place a moving object and destination at these points //
       mover.name = 'mover';
       destination.name = 'destination';
@@ -80,7 +86,7 @@ describe('Grid functionality tests', () => {
     });
 
     // STRETCH GOAL CODE
-    /*it('should move an object in a direction', async () => {
+    /* it('should move an object in a direction', async () => {
       const grid = new Grid(3);
       const floor = new Structure('floor_switch', 'a', null);
       const mover = new Structure('weight', 'b', null);
@@ -110,6 +116,6 @@ describe('Grid functionality tests', () => {
         ],
       );
       expect(JSON.stringify(grid.matrix)).toEqual(expected);
-    });*/
+    }); */
   });
 });

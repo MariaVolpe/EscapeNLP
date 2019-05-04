@@ -5,7 +5,7 @@ class Puzzle {
     this.itemsRequired = [];
   }
 
-  setPuzzle(num) {
+  setPuzzle(num) { // eslint-disable-line class-methods-use-this
     switch (num) {
       case 1:
         // switch puzzle
