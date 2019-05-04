@@ -80,13 +80,14 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateInventories', inventories);
   });
 
-  socket.on('updateGame', (board, gameComplete) => {
-    io.in(socket.currentRoom).emit('updateGame', board, gameComplete);
-  });
-
   socket.on('startGame', (board) => {
     const numberOfPlayers = io.nsps['/'].adapter.rooms[socket.currentRoom].length;
     const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
+    const blocks = [k, d, s, b, w];
+
+    blocks.forEach((block, i) => {
+      board[0][i][1] = block;
+    });
 
     Object.keys(allPlayers).forEach((playerId) => {
       const player = io.sockets.connected[playerId];
@@ -101,22 +102,6 @@ io.on('connection', (socket) => {
 
     io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = board;
     io.in(socket.currentRoom).emit('updateGame', board, false);
-  });
-
-  socket.on('setBoard', (newBoard) => {
-    const gameMap = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill(f)));
-    const blocks = [k, d, s, b, w];
-    blocks.forEach((block) => {
-      let row = Math.floor(Math.random() * Math.floor(12));
-      let col = Math.floor(Math.random() * Math.floor(15));
-      while (gameMap[row][col][1] !== f) {
-        row = Math.floor(Math.random() * Math.floor(12));
-        col = Math.floor(Math.random() * Math.floor(15));
-      }
-      gameMap[row][col][1] = block;
-    });
-    io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = gameMap;
-    io.in(socket.currentRoom).emit('updateGame', gameMap, false);
   });
 
   const updatePlayers = (reason, room, disconnectedPlayer) => {

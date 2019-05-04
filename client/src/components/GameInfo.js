@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
 import player from '../images/player.png';
 import dragon from '../images/dragonite.png';
@@ -51,14 +52,56 @@ class GameInfo extends Component {
                        </div>);
         } else if (i === 12 && k === 0) {
           mapData.push(<div className="map one wide column" />);
+        } else if (board[i][k-1][1] === 'key') {
+          mapData.push(<div className="map tile one wide column" data-tip="With this, you are the master of unlocking!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'floor') {
+          mapData.push(<div className="map tile one wide column" data-tip="You can walk on this!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'dragon') {
+          mapData.push(<div className="map tile one wide column" data-tip="Watch out, it's a dragon!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'player1') {
+          mapData.push(<div className="map tile one wide column" data-tip="It's player 1!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'player2') {
+          mapData.push(<div className="map tile one wide column" data-tip="It's player 2!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'player3') {
+          mapData.push(<div className="map tile one wide column" data-tip="It's player 3!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'player4') {
+          mapData.push(<div className="map tile one wide column" data-tip="It's player 4!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
+        } else if (board[i][k-1][1] === 'player5') {
+          mapData.push(<div className="map tile one wide column" data-tip="It's player 5!" data-for="tile" >
+                         <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
+                         <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
+                       </div>);
         } else {
-          mapData.push(<div className="map tile one wide column" onMouseOver={() => this.props.onHoverOverTile({row: i, col: k-1})} >
+          mapData.push(<div className="map tile one wide column" data-tip="What is this?" data-for="tile" >
                          <img src={pictures[board[i][k-1][0]]} alt="player" className="board-item" />
                          <img src={pictures[board[i][k-1][1]]} alt="player" className="board-item" />
                        </div>);
         }
       });
     });
+
+    mapData.push(<ReactTooltip id="tile" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
 
     return(
       <div className="ui grid">

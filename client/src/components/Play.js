@@ -246,12 +246,6 @@ class Play extends Component {
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
   }
 
-  onHoverOverTile = (tileInfo) => {
-    if (this.state.board[0] !== undefined) {
-      console.log(this.state.board[tileInfo.row][tileInfo.col][1]);
-    }
-  }
-
   render() {
     const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const board = this.state.board;
