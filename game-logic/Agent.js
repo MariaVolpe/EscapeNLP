@@ -22,6 +22,14 @@ class Agent extends BoardObject {
   getItem(item) {
     this.inventory.pickupItem(item);
   }
+
+  giveItem(item, agent) {
+
+  }
+
+  dropItem(item) {
+
+  }
 }
 
 module.exports = Agent;
