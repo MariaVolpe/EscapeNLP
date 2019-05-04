@@ -175,4 +175,8 @@ io.on('connection', (socket) => {
       delete socket.currentRoom;
     }
   });
+
+  socket.on('playerLeave', (playerList, roomId) => {
+    io.in(roomId).emit('playerLeave', playerList);
+  });
 });
