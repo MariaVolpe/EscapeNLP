@@ -2,7 +2,7 @@ const BoardObject = require('./BoardObject');
 const Inventory = require('./Inventory');
 
 class Agent extends BoardObject {
-  constructor(id, grid) {
+  constructor(id) {
     super({
       name: null,
       id,
@@ -17,7 +17,6 @@ class Agent extends BoardObject {
       objectType: 'Agent',
     });
     this.inventory = new Inventory();
-    this.grid = grid;
   }
 
   getItem(item) {
@@ -31,9 +30,8 @@ class Agent extends BoardObject {
   }
 
   // given an item name drops it onto the board
-  dropItem(itemName) {
-    const item = this.removeItem(itemName);
-    this.grid.dropOntoBoard({ centerObj: this, droppedObject: item });
+  removeItem(itemName) {
+    return this.removeItem(itemName);
   }
 
   // returns a list of all the items in this agent's inventory
