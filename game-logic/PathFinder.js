@@ -87,10 +87,11 @@ class PathFinder {
       if (this.matrix[p.x][p.y].length < maxItemsOnSquare) {
         return p;
       }
-      if (this.getManhattanDistance)
       visited.add(stringifyCoordinates(p.x, p.y));
-      const neighbors = this.getNeighbors(p, visited);
-      queue.push(...neighbors);
+      if (getManhattanDistance(start, p) <= maxDistance) {
+        const neighbors = this.getNeighbors(p, visited);
+        queue.push(...neighbors);
+      }
     }
     return null; // return null if no points are free
   }

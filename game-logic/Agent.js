@@ -21,18 +21,24 @@ class Agent extends BoardObject {
   }
 
   getItem(item) {
-    this.inventory.pickupItem(item);
+    if (!item) return;
+    this.inventory.addItem(item);
   }
 
   giveItem(itemName, recipient) {
     const item = this.removeItem(itemName);
-    recipient.getItem(item);
+    if (item) recipient.getItem(item);
   }
 
   // given an item name drops it onto the board
   dropItem(itemName) {
     const item = this.removeItem(itemName);
     this.grid.dropOntoBoard({ centerObj: this, droppedObject: item });
+  }
+
+  // returns a list of all the items in this agent's inventory
+  getAllItems() {
+    return this.inventory.flattenInventory();
   }
 }
 

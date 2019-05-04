@@ -25,6 +25,14 @@ class Inventory {
     if (!this.items.has(item.name)) this.items.set(item.name, []);
     this.items.get(item.name).push(item);
   }
+
+  // returns a list of all items in inventory
+  flattenInventory() {
+    const inventory = [];
+    for (let [itemName, list] of this.items) {
+      inventory.push(...list);
+    } return inventory;
+  }
 }
 
 module.exports = Inventory;
