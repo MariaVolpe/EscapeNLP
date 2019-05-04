@@ -31,8 +31,8 @@ const pictures = {
 }
 
 class GameInfo extends Component {
-
   render() {
+    console.log('board here:', this.props.board);
     const map = this.props.map;
     let board = this.props.board;
     if (board[0] === undefined) {

@@ -17,10 +17,12 @@ class GameSessionsContainer {
   }
 
   getBoard(id) {
-    if (!this.games.has(id)) {
+    console.log('inGetBoard in gamesessionsContainer');  
+    if (!this.games.has(parseInt(id, 10))) {
       return { error: { status: 404 } };
     }
-    return this.games.get(id).getBoard();
+    console.log(id, typeof id);
+    return this.games.get(parseInt(id, 10)).getBoard();
   }
 
   startGame(id) {

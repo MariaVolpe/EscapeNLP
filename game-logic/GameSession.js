@@ -1,7 +1,7 @@
 const Agent = require('./Agent');
 const Grid = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
-const roomLayout = require('./room-layouts/room-1');
+const roomLayoutBuild = require('./room-layouts/room-1');
 
 class GameSession {
   constructor(id, name) {
@@ -19,6 +19,7 @@ class GameSession {
   }
 
   getBoard() {
+    console.log('getBoard in gamesession');
     return this.grid.getGrid();
   }
 
@@ -41,8 +42,8 @@ class GameSession {
   // however if the performance on this is poor, we can optimize by adding puzzles
   // as each player joins, and if players leave, attempt to regen some parts
   generateGame() {
-    const size = 12;
-    const grid = roomLayout.build();
+    // const size = 12;
+    const grid = roomLayoutBuild();
     this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();

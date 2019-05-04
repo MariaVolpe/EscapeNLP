@@ -2,7 +2,7 @@ const Structure = require('../Structure');
 
 const build = () => {
   const wall = new Structure('wall', 'wall', null);
-  const floor = new Structure('floor', 'floor', null);  
+  const floor = new Structure('floor', 'floor', null);
 
   const matrix = Array.from({ length: 15 },
     () => Array.from({ length: 12 },

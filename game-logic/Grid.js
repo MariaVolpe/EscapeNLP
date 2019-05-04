@@ -49,6 +49,7 @@ class Grid {
         });
       }
     }
+    console.log('in getGrid in grid.js');
     return frontEndMatrix;
   }
 

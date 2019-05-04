@@ -52,9 +52,9 @@ class Lobby extends Component {
   }
 
   componentDidMount = () => {
-    this.interval = setInterval(() => {
-      this.socket.emit('checkRoomSize', this.props.lobbyId);
-    }, 1000);
+    // this.interval = setInterval(() => {
+    //   this.socket.emit('checkRoomSize', this.props.lobbyId);
+    // }, 1000);
   }
 
   onJoinClick = (event) => {

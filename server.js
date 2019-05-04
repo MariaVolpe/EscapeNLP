@@ -80,12 +80,11 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('updateInventories', inventories);
   });
 
-  socket.on('startGame', () => {
-    gameContainer.startGame(socket.currentRoom);
-    const board = gameContainer.getBoard(socket.currentRoom);
-
-    io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = board;
-    io.in(socket.currentRoom).emit('updateGame', board, false);
+  socket.on('startGame', async () => {
+    await gameContainer.startGame(parseInt(socket.currentRoom));
+    const board = await gameContainer.getBoard(socket.currentRoom);
+    console.log('startGame');
+    io.in(socket.currentRoom).emit('updateBoard', board, false);
   });
 
   const updatePlayers = (reason, room, disconnectedPlayer) => {
@@ -101,8 +100,8 @@ io.on('connection', (socket) => {
       if (player.playerInfo) {
         allPlayerNames.push(player.playerInfo);
       }
-      playerNumbers.push(i+1);
-      io.sockets.connected[playerId].playerNumber = i+1;
+      playerNumbers.push(i + 1);
+      io.sockets.connected[playerId].playerNumber = i + 1;
     });
 
     if (reason === 'disconnected' && allPlayerNames.length > 0 && io.sockets.adapter.rooms[room].gameStart) {
@@ -125,14 +124,14 @@ io.on('connection', (socket) => {
     socket.playerInfo.ready = !socket.playerInfo.ready;
 
     const allPlayers = io.sockets.adapter.rooms[socket.currentRoom].sockets;
-    let allReady = [];
+    const allReady = [];
 
     Object.keys(allPlayers).forEach((playerId) => {
       const player = io.sockets.connected[playerId];
       allReady.push(player.playerInfo.ready);
     });
 
-    io.sockets.adapter.rooms[socket.currentRoom].gameStart = allReady.indexOf(false) >= 0 ? false : true;
+    io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
 
     io.in(socket.currentRoom).emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
   });

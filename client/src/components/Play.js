@@ -79,8 +79,8 @@ class Play extends Component {
       this.setState({numberOfPlayers});
     })
 
-    this.socket.on('updateGame', (board, gameComplete) => {
-      this.setState({board, gameComplete});
+    this.socket.on('updateBoard', (board, gameComplete) => {
+      this.setState({ board, gameComplete });
     });
 
     this.socket.on('updateInventories', (inventories) => {
