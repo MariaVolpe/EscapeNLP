@@ -140,19 +140,6 @@ class Grid {
     } return null;
   }
 
-  /* Creates a 3D matrix with xDim and yDim */
-  setMatrix({ xDim, yDim, matrix }) {
-    if (matrix) {
-      this.matrix = matrix;
-      this.pathFinder.setMatrix(matrix);
-      this.recordPositionsOfObjects();
-      return;
-    }
-    this.matrix = Array.from({ length: xDim },
-      () => Array.from({ length: yDim },
-        () => []));
-  }
-
   // updates a position of matrix with an object //
   pushOnMatrix(x, y, obj) {
     this.matrix[x][y].push(obj);
@@ -200,7 +187,7 @@ class Grid {
   }
 
   // Goes through the objects in the grid and updates their position fields
-  recordPositionsOfObjects() {
+  updateObjectInformation() {
     const matrix = this.matrix;
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
@@ -219,6 +206,19 @@ class Grid {
       this.nameToObjsList.set(object.name, []);
     }
     this.nameToObjsList.get(object.name).push(object);
+  }
+
+  /* Creates a 3D matrix with xDim and yDim */
+  setMatrix({ xDim, yDim, matrix }) {
+    if (matrix) {
+      this.matrix = matrix;
+      this.pathFinder.setMatrix(matrix);
+      this.updateObjectInformation();
+      return;
+    }
+    this.matrix = Array.from({ length: xDim },
+      () => Array.from({ length: yDim },
+        () => []));
   }
 }
 
