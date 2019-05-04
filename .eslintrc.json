@@ -6,7 +6,8 @@
         "no-param-reassign": "warn",
         "max-len": ["error", {
             "code": 110
-        }]
+        }],
+        "prefer-destructuring": "warn"
     },
     "settings": {
         "react": {
