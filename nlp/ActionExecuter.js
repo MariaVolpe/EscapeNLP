@@ -76,7 +76,7 @@ class ActionExecuter {
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
-      const object = this.grid.getObject({ identifier: name });
+      const object = this.grid.getObject({ centerObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
       if (this.grid.getDistance(data.user, object) > 2) {
