@@ -47,6 +47,12 @@ class Grid {
     this.nameToObjsList.set(name, removed);
   }
 
+  // drops the specified object to the nearest point to the center object
+  dropOntoBoard({ centerObj, droppedObject }) {
+    const p = this.pathFinder.getClosestFreePoint(centerObj.position, droppedObject);
+    this.add(droppedObject, { x: p.x, y: p.y });
+  }
+
   // Finds a free space in the board, returns a point with its indices.
   findFreeSpace() {
     const p = new Point();

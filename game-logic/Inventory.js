@@ -21,14 +21,9 @@ class Inventory {
     return this.items.get(itemName).pop();
   }
 
-  pickupItem(item) {
+  addItem(item) {
     if (!this.items.has(item.name)) this.items.set(item.name, []);
     this.items.get(item.name).push(item);
-  }
-
-  giveItem(itemName, recipient) {
-    const item = this.removeItem(itemName);
-    recipient.getItem(item);
   }
 }
 

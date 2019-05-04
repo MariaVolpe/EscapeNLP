@@ -77,14 +77,14 @@ class ActionExecuter {
       const object = this.grid.getObject({ identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
-      if (data.user.isMovable() && this.grid.getDistance(data.user, object) > 2) {
+      if (this.grid.getDistance(data.user, object) > 2) {
         this.grid.moveToObject([data.user], object);
       } texts.push(object.inspectText);
     } return texts;
   }
 
   executeTake(data) {
-
+    
   }
 
   executeGive(data) {
