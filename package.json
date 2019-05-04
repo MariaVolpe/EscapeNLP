@@ -9,6 +9,11 @@
     "test": "Jest",
     "start": "nodemon server.js"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MariaVolpe/EscapeNLP.git"
@@ -45,6 +50,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
+    "husky": "^2.2.0",
     "jest": "23.6.0"
   }
 }
