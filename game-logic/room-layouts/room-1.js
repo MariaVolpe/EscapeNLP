@@ -16,7 +16,7 @@ const build = () => {
 
   // bottom walls
   for (let i = 0; i < 15; i++) {
-    matrix[14][11].push(wall);
+    matrix[14][i].push(wall);
   }
 
   // irregular upper-right corner

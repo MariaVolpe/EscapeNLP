@@ -19,16 +19,8 @@ const getGames = () => {
   return data;
 };
 
-const f = 'floor';
-const p = 'player';
-const k = 'key';
-const d = 'dragon';
-const s = 'button';
-const b = 'block';
-const w = 'wep';
-
 io.on('connection', (socket) => {
-  console.log('connection established');
+  console.log('connection established'); // eslint-disable-line no-console
 
   socket.on('joinRoom', (roomId) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
@@ -37,6 +29,7 @@ io.on('connection', (socket) => {
     });
     socket.join(roomId);
     socket.currentRoom = roomId;
+    socket.gameId = parseInt(roomId, 10);
     socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
     io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
@@ -71,7 +64,7 @@ io.on('connection', (socket) => {
 
   socket.on('chatMessage', (message) => {
     if (message.type === 'action') {
-      gameContainer.performAction(socket.currentRoom, message);
+      gameContainer.performAction(socket.gameId, message);
     }
     io.in(socket.currentRoom).emit('chatMessage', message);
   });
@@ -81,9 +74,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startGame', async () => {
-    await gameContainer.startGame(parseInt(socket.currentRoom));
-    const board = await gameContainer.getBoard(socket.currentRoom);
-    console.log('startGame');
+    await gameContainer.startGame(socket.gameId);
+    const board = await gameContainer.getBoard(socket.gameId);
+    console.log(board);
     io.in(socket.currentRoom).emit('updateBoard', board, false);
   });
 
@@ -108,7 +101,7 @@ io.on('connection', (socket) => {
       disconnectedPlayer.leftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     } else {
-      gameContainer.dropPlayerFromSession(socket.currentRoom, socket.playerInfo.name);
+      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
     }
 
     io.in(room).emit('setNames', allPlayerNames, playerNumbers);
