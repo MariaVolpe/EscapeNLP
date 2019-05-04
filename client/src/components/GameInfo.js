@@ -99,7 +99,7 @@ class GameInfo extends Component {
     for (let i=0; i<16; i++) {
       if (i !== 0) {
        mapData.push(<div className="map one wide column" >
-                      {i+1}
+                      {i}
                     </div>);
      } else {
        mapData.push(<div className="map one wide column" />);
