@@ -1,6 +1,8 @@
 const Agent = require('./Agent');
 const Grid = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
+const roomLayout = require('./room-layouts/room-1');
+
 
 class GameSession {
   constructor(id, name) {
@@ -37,6 +39,7 @@ class GameSession {
   // as each player joins, and if players leave, attempt to regen some parts
   generateGame() {
     const size = 12;
+    const grid = roomLayout.build();
     this.grid = new Grid(size);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();

@@ -10,10 +10,12 @@ const PathFinder = require('./PathFinder');
  */
 
 class Grid {
-  constructor({ xDimension, yDimension }) {
+  constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
-    this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
+    this.matrix = layoutGrid;
+    // this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
+    this.pathFinder.setMatrix(this.matrix);
   }
 
   /*
@@ -140,17 +142,17 @@ class Grid {
     } return null;
   }
 
-  /* Creates a 3D matrix with xDim and yDim */
-  setMatrix({ xDim, yDim, matrix }) {
-    if (matrix) {
-      this.matrix = matrix;
-      this.pathFinder.setMatrix(matrix);
-      return;
-    }
-    this.matrix = Array.from({ length: xDim },
-      () => Array.from({ length: yDim },
-        () => []));
-  }
+  // /* Creates a 3D matrix with xDim and yDim */
+  // setMatrix(matrix) {
+  //   if (matrix) {
+  //     this.matrix = matrix;
+  //     this.pathFinder.setMatrix(matrix);
+  //     return;
+  //   }
+  //   this.matrix = Array.from({ length: xDim },
+  //     () => Array.from({ length: yDim },
+  //       () => []));
+  // }
 
   // updates a position of matrix with an object //
   pushOnMatrix(x, y, obj) {
