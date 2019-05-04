@@ -80,7 +80,7 @@ describe('Grid functionality tests', () => {
     });
 
     // STRETCH GOAL CODE
-    /*it('should move an object in a direction', async () => {
+    /* it('should move an object in a direction', async () => {
       const grid = new Grid(3);
       const floor = new Structure('floor_switch', 'a', null);
       const mover = new Structure('weight', 'b', null);
@@ -110,6 +110,6 @@ describe('Grid functionality tests', () => {
         ],
       );
       expect(JSON.stringify(grid.matrix)).toEqual(expected);
-    });*/
+    }); */
   });
 });
