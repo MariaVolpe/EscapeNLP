@@ -31,7 +31,7 @@ class Agent extends BoardObject {
 
   // given an item name drops it onto the board
   removeItem(itemName) {
-    return this.removeItem(itemName);
+    return this.inventory.removeItem(itemName);
   }
 
   // returns a list of all the items in this agent's inventory
