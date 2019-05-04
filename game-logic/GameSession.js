@@ -19,7 +19,6 @@ class GameSession {
   }
 
   getBoard() {
-    console.log('getBoard in gamesession');
     return this.grid.getGrid();
   }
 

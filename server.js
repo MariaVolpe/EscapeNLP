@@ -126,7 +126,9 @@ io.on('connection', (socket) => {
 
     io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
 
-    io.in(socket.currentRoom).emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
+    io
+      .in(socket.currentRoom)
+      .emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
   });
 
   socket.on('disconnect', () => {
