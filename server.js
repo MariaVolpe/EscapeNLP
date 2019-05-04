@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startGame', () => {
-    gameContainer.generateGame(socket.currentRoom);
+    gameContainer.startGame(socket.currentRoom);
     const board = gameContainer.getBoard(socket.currentRoom);
 
     io.nsps['/'].adapter.rooms[socket.currentRoom].gameMap = board;

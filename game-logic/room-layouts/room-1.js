@@ -2,10 +2,11 @@ const Structure = require('../Structure');
 
 const build = () => {
   const wall = new Structure('wall', 'wall', null);
+  const floor = new Structure('floor', 'floor', null);  
 
   const matrix = Array.from({ length: 15 },
     () => Array.from({ length: 12 },
-      () => []));
+      () => [floor]));
 
   // top wall up to 12 and left-most wall
   for (let i = 0; i < 12; i++) {
