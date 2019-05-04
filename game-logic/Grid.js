@@ -1,5 +1,5 @@
 const Point = require('./Point');
-const PathFinder = require('./PathFinder');
+const { PathFinder, getManhattanDistance } = require('./PathFinder');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -142,7 +142,7 @@ class Grid {
     } return null;
   }
 
-  // /* Creates a 3D matrix with xDim and yDim */
+  /* Creates a 3D matrix with xDim and yDim */
   // setMatrix(matrix) {
   //   if (matrix) {
   //     this.matrix = matrix;
@@ -165,12 +165,9 @@ class Grid {
     return this.getNearestObject(centerObj, objList);
   }
 
-  // TODO: STRETCH GOAL CODE
+  // STRETCH GOAL CODE
   // given a directional classification, resolves to a direction vector
-  resolveDirectionToVector({ start, end, direction }) { // eslint-disable-line class-methods-use-this
-    const shut = start; // eslint-disable-line no-unused-vars
-    const linter = end; // eslint-disable-line no-unused-vars
-    const up = direction; // eslint-disable-line no-unused-vars
+  resolveDirectionToVector({ start, end, direction }) { // eslint-disable-line
   }
 
   // Given a center object and list of objects, find the nearest object to it.
@@ -179,7 +176,7 @@ class Grid {
     let nearest = null;
     let distance = Number.MAX_VALUE;
     objList.forEach((element) => { // for all objects in the list provided find the nearest
-      const d = this.pathFinder.getManhattanDistance(centerPosition, element.position);
+      const d = getManhattanDistance(centerPosition, element.position);
       if (d < distance) {
         distance = d;
         nearest = element;
@@ -197,6 +194,45 @@ class Grid {
     const p = boardObj.position;
     const stack = this.matrix[p.x][p.y].filter(o => boardObj !== o);
     this.matrix[p.x][p.y] = stack;
+  }
+
+  getDistance(centerObj, otherObj) {
+    return getManhattanDistance(centerObj.position, otherObj.position);
+  }
+
+  // Goes through the objects in the grid and updates their position fields
+  updateObjectInformation() {
+    const matrix = this.matrix; // eslint-disable-line prefer-destructuring
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const stack = matrix[i][j];
+        stack.forEach((e) => {
+          e.position.x = i;
+          e.position.y = j;
+          this.addToObjectMap(e);
+        });
+      }
+    }
+  }
+
+  addToObjectMap(object) {
+    if (!this.nameToObjsList.has(object.name)) {
+      this.nameToObjsList.set(object.name, []);
+    }
+    this.nameToObjsList.get(object.name).push(object);
+  }
+
+  /* Creates a 3D matrix with xDim and yDim */
+  setMatrix({ xDim, yDim, matrix }) {
+    if (matrix) {
+      this.matrix = matrix;
+      this.pathFinder.setMatrix(matrix);
+      this.updateObjectInformation();
+      return;
+    }
+    this.matrix = Array.from({ length: xDim },
+      () => Array.from({ length: yDim },
+        () => []));
   }
 }
 
