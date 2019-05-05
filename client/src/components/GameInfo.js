@@ -38,7 +38,6 @@ const pictures = {
 
 class GameInfo extends Component {
   render() {
-    console.log('board here:', this.props.board);
     let board = this.props.board;
     let mapData = [];
     for (let i=0; i<12; i++) {
