@@ -16,7 +16,7 @@ class Item extends BoardObject {
       puzzleType: null,
       objectType: 'Item',
     });
-    this.use = null;
+    this.use = ItemLib[name].useMethod;
   }
 
   getSpriteName() {

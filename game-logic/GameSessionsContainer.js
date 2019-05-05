@@ -27,11 +27,11 @@ class GameSessionsContainer {
     return { data: this.games.get(id).getGame() };
   }
 
-  getBoard(id) {
+  getFormattedBoard(id) {
     if (!this.games.has(id)) {
       return notFoundErr(id);
     }
-    return this.games.get(id).getBoard();
+    return this.games.get(id).getFormattedBoard();
   }
 
   startGame(id) {

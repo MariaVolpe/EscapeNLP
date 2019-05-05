@@ -164,7 +164,7 @@ class Play extends Component {
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 30) {
+    if (message.length <= 150) {
       this.setState({ message });
     }
   }
@@ -191,7 +191,7 @@ class Play extends Component {
 
   onCommandChange = (event) => {
     const command = event.target.value;
-    if (command.length <= 30) {
+    if (command.length <= 100) {
       this.setState({ command });
     }
   }

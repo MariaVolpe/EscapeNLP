@@ -18,8 +18,8 @@ class GameSession {
     return { id: this.id, grid: this.grid, players };
   }
 
-  getBoard() {
-    return this.grid.getGrid();
+  getFormattedBoard() {
+    return this.grid.getFormattedGrid();
   }
 
   addPlayerToSession(id) {

@@ -10,14 +10,12 @@ describe('Grid functionality tests', () => {
     const destination = { name: 'destination', id: '1', position: { x: 0, y: 0 } };
     let expected;
     it('should add elements', async () => {
-      const addingGrid = new Grid(3);
-      addingGrid.setMatrix({
-        matrix: [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor], [wall]],
-        ],
-      });
+      const matrix = [
+        [[wall], [floor], [floor]],
+        [[wall], [floor], [wall]],
+        [[floor], [floor], [wall]],
+      ];
+      const addingGrid = new Grid(matrix);
       // place a moving object and destination at these points //
       addingGrid.add(mover, { x: 0, y: 2 });
       addingGrid.add(destination, { x: 2, y: 0 });
@@ -32,14 +30,12 @@ describe('Grid functionality tests', () => {
     });
 
     it('should remove elements', async () => {
-      const removingGrid = new Grid(3);
-      removingGrid.setMatrix({
-        matrix: [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor], [wall]],
-        ],
-      });
+      const matrix = [
+        [[wall], [floor], [floor]],
+        [[wall], [floor], [wall]],
+        [[floor], [floor], [wall]],
+      ];
+      const removingGrid = new Grid(matrix);
       // place a moving object and destination at these points //
       removingGrid.add(mover, { x: 0, y: 2 });
       removingGrid.add(destination, { x: 2, y: 0 });
@@ -59,19 +55,16 @@ describe('Grid functionality tests', () => {
   });
   describe('Object movement', () => {
     it('should move a named object to a named destination', async () => {
-      const grid = new Grid(3);
       const floor = new Structure('floor_switch', 'a', null);
       const mover = new Structure('weight', 'b', null);
       const wall = new Structure('weight', 'c', null);
       const destination = new Structure('floor_switch', 'd', null);
-      // hardcode matrices to these //
-      grid.setMatrix({
-        matrix: [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor], [wall]],
-        ],
-      });
+      const matrix = [
+        [[wall], [floor], [floor]],
+        [[wall], [floor], [wall]],
+        [[floor], [floor], [wall]],
+      ];
+      const grid = new Grid(matrix);
       // place a moving object and destination at these points //
       mover.name = 'mover';
       destination.name = 'destination';
