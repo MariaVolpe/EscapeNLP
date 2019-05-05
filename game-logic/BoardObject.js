@@ -41,6 +41,7 @@ class BoardObject {
     this.puzzleType = puzzleType;
     this.objectType = objectType;
     this.position = new Point();
+    this.inspectText = '';
   }
 
   isPassable() {

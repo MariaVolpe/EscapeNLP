@@ -8,44 +8,27 @@ class Inventory {
   useItem(itemName) {
     if (!this.items.has(itemName)) {
       // todo: catch
-      return;
+
     }
-    const isSuccessful = this.items.get(itemName).use();
-    if (isSuccessful) {
-      this.deleteItem(itemName);
-    } else {
-      // todo: cant use
-    }
+    // const item = this.removeItem();
+    // if (item) item.use();
   }
 
-  dropItem(itemName) {
-    // may or may not need these guard clauses depending on UI
-    // also might be able to DRY this up if it needs to stay
-    if (!this.items.has(itemName)) {
-      // todo: catch
-      return;
-    }
-    // todo: return to grid ?
-    this.deleteItem(itemName);
+  removeItem(itemName) {
+    if (!this.items.has(itemName)) return null;
+    return this.items.get(itemName).pop();
   }
 
-  // why? because i had to change the implementation from {} to map so
-  // this made it easier. maybe delete later and save a few lines of code
-  deleteItem(itemName) {
-    this.items.delete(itemName);
+  addItem(item) {
+    if (!this.items.has(item.name)) this.items.set(item.name, []);
+    this.items.get(item.name).push(item);
   }
 
-  pickupItem(item) {
-    this.items.set(item.name, item);
-  }
-
-  giveItem(itemName, recipient) {
-    if (!this.items.has(itemName)) {
-      // todo: catch
-      return;
-    }
-    recipient.getItem(this.items.get(itemName));
-    this.deleteItem(itemName);
+  // returns a list of all items in inventory
+  flattenInventory() {
+    const inventory = [];
+    for (const [itemName, list] of this.items) inventory.push(...list);
+    return inventory;
   }
 }
 

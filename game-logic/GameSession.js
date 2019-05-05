@@ -1,6 +1,7 @@
 const Agent = require('./Agent');
 const Grid = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
+const roomLayoutBuild = require('./room-layouts/room-1');
 
 class GameSession {
   constructor(id, name) {
@@ -15,6 +16,10 @@ class GameSession {
   getGame() {
     const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
     return { id: this.id, grid: this.grid, players };
+  }
+
+  getFormattedBoard() {
+    return this.grid.getFormattedGrid();
   }
 
   addPlayerToSession(id) {
@@ -36,8 +41,9 @@ class GameSession {
   // however if the performance on this is poor, we can optimize by adding puzzles
   // as each player joins, and if players leave, attempt to regen some parts
   generateGame() {
-    const size = 12;
-    this.grid = new Grid(size);
+    // const size = 12;
+    const grid = roomLayoutBuild();
+    this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
 
