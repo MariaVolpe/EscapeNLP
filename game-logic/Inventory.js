@@ -8,10 +8,10 @@ class Inventory {
   useItem(itemName) {
     if (!this.items.has(itemName)) {
       // todo: catch
-      return;
+
     }
-    //const item = this.removeItem();
-    //if (item) item.use();
+    // const item = this.removeItem();
+    // if (item) item.use();
   }
 
   removeItem(itemName) {
@@ -27,7 +27,7 @@ class Inventory {
   // returns a list of all items in inventory
   flattenInventory() {
     const inventory = [];
-    for (let [itemName, list] of this.items) inventory.push(...list);
+    for (const [itemName, list] of this.items) inventory.push(...list);
     return inventory;
   }
 }
