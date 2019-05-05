@@ -110,7 +110,11 @@ class Play extends Component {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId")
       this.socket.emit('getName', '');
+<<<<<<< HEAD
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill([{ sprite: '', hint: 'fgsd'}])));
+=======
+      const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
+>>>>>>> development
       this.setState({board});
     } else {
       console.log(window.sessionStorage.getItem("roomId"));
@@ -164,7 +168,7 @@ class Play extends Component {
 
   onMessageChange = (event) => {
     const message = event.target.value;
-    if (message.length <= 30) {
+    if (message.length <= 150) {
       this.setState({ message });
     }
   }
@@ -191,7 +195,7 @@ class Play extends Component {
 
   onCommandChange = (event) => {
     const command = event.target.value;
-    if (command.length <= 30) {
+    if (command.length <= 100) {
       this.setState({ command });
     }
   }

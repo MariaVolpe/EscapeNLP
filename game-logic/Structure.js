@@ -52,6 +52,15 @@ class Structure extends BoardObject {
   activate() {
     this.activated = true;
   }
+
+  getSpriteName() {
+    if (this.activated ) {
+      return StructLib.altSprite
+    }
+    else {
+      return this.name;
+    }
+  }
 }
 
 module.exports = Structure;

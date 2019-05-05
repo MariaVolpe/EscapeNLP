@@ -14,6 +14,7 @@ class Grid {
   constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
     this.matrix = layoutGrid;
+    this.updateObjectInformation();
     // this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
     this.pathFinder.setMatrix(this.matrix);
@@ -46,7 +47,10 @@ class Grid {
     for (let i = 0; i < this.matrix.length; i++) {
       for (let j = 0; j < this.matrix[i].length; j++) {
         this.matrix[i][j].forEach((item) => {
-          frontEndMatrix[i][j].push(item.name);
+          frontEndMatrix[i][j].push({
+            sprite: item.getSpriteName(),
+            hint: item.name,
+          });
         });
       }
     }
@@ -258,19 +262,6 @@ class Grid {
         }
       }
     }
-  }
-
-  /* Creates a 3D matrix with xDim and yDim */
-  setMatrix({ xDim, yDim, matrix }) {
-    if (matrix) {
-      this.matrix = matrix;
-      this.pathFinder.setMatrix(matrix);
-      this.updateObjectInformation();
-      return;
-    }
-    this.matrix = Array.from({ length: xDim },
-      () => Array.from({ length: yDim },
-        () => []));
   }
 }
 

@@ -2,8 +2,13 @@
     "puzzle_type": "switch",
     "items_required": [
         {
+<<<<<<< HEAD
             "name": "switch",
             "id": "left_switch",
+=======
+            "name": "binary_switch",
+            "id": "switch",
+>>>>>>> development
             "isManaged" : true,
             "coordinates": {
                 "x": 1,
