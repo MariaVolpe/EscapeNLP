@@ -78,18 +78,20 @@ class PathFinder {
   }
 
   // Runs BFS to find the closest point where there is not more than 2 items in a square
-  getClosestFreePoint(start, threshold = 2) {
+  getClosestFreePoint(start, maxItemsOnSquare = 2, maxDistance = Number.MAX_VALUE) {
     const queue = [start];
     const visited = new Set([]);
     let p;
     while (queue.length > 0) {
       p = queue.shift();
-      if (this.matrix[p.x][p.y].length < threshold) {
+      if (this.matrix[p.x][p.y].length < maxItemsOnSquare) {
         return p;
       }
       visited.add(stringifyCoordinates(p.x, p.y));
-      const neighbors = this.getNeighbors(p, visited);
-      queue.push(...neighbors);
+      if (getManhattanDistance(start, p) <= maxDistance) {
+        const neighbors = this.getNeighbors(p, visited);
+        queue.push(...neighbors);
+      }
     }
     return null; // return null if no points are free
   }
@@ -156,6 +158,7 @@ class PathFinder {
     } return true;
   }
 
+  // Gets all objects near a start location bounded by a maximum distance
   getNearbyObjects(start, maxDistance = 2) {
     const nearby = [];
     const queue = [start];

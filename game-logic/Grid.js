@@ -65,6 +65,12 @@ class Grid {
     this.nameToObjsList.set(name, removed);
   }
 
+  // drops the specified object to the nearest point to the center object
+  dropOntoBoard({ centerObj, droppedObject }) {
+    const p = this.pathFinder.getClosestFreePoint(centerObj.position, droppedObject);
+    this.add(droppedObject, { x: p.x, y: p.y });
+  }
+
   // Finds a free space in the board, returns a point with its indices.
   findFreeSpace() {
     const p = new Point();
@@ -236,6 +242,22 @@ class Grid {
       this.nameToObjsList.set(object.name, []);
     }
     this.nameToObjsList.get(object.name).push(object);
+  }
+
+  // gets all objects of type agent from the grid //
+  // NOT READY YET
+  getAgents() {
+    const matrix = this.matrix;
+    const agents = [];
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const stack = matrix[i][j];
+        for (let k = 0; k < stack.length; k++) {
+          const obj = stack[k];
+          if (typeof obj === 'Agent') agents.push(obj);
+        }
+      }
+    }
   }
 
   /* Creates a 3D matrix with xDim and yDim */
