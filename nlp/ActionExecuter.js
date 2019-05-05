@@ -135,23 +135,38 @@ class ActionExecuter {
     const recipients = data.indirectObjects;
     const objectNames = data.directObjects;
     for (let i = 0; i < recipients.length; i++) {// for all receipients
-      const recipientName = receipients[i];
+      const recipientName = recipients[i];
       const recipient = this.grid.getObject({ centerObj: data.user, identifier: recipientName });
       for (let j = 0; j < objectNames.length; j++) {// for all items
         const objectName = objectNames[j];
-        const transferred = data.user.giveItem(objectName, recipient);
-        if (!transferred) {// if item was not already possessed
-          const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+        const hasItem = data.user.hasItem(objectName);
+        if (hasItem) {
+          this.grid.moveToObject([data.user], recipient);
+          data.user.giveItem(objectName, recipient);
+        } else {// if item was not already possessed
           const takeAttemptData = {
             user: data.user,
             directObjects: [objectName],
             indirectObjects: []
           };
           const taken = this.executeTake(takeAttemptData);
+          this.grid.moveToObject([data.user], recipient); // move to the recipient
+          const arr = this.grid.matrix[data.user.position.x][data.user.position.y];
           if (taken) data.user.giveItem(objectName, recipient); // give the item to the recipient
         }
       }
     } return true;
+  }
+
+  executePlace(data) {
+    // if no destinations specified
+    //    for all items
+    //      if we have the item
+    //        place all items at the nearest points
+    // for all destinations
+    //    for all items
+    //
+    
   }
 
   executeDestroy(data) {
@@ -159,10 +174,6 @@ class ActionExecuter {
   }
 
   executeAttack(data) {
-
-  }
-
-  executePlace(data) {
 
   }
 

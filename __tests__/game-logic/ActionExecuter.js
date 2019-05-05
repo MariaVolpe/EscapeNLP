@@ -217,7 +217,163 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Give', () => {
+    it('Should give an item already possessed to another agent', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const swiper = new Agent('Swiper');
+      const dora = new Agent('Dora');
+      const item = new Item('key', '6', null);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, swiper], [wall]],
+        [[wall], [floor, dora], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, swiper], [wall]],
+        [[wall], [floor, dora], [wall]],
+        [[wall], [floor], [wall]],
+      ];
 
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      swiper.takeItem(item);
+      actionExecuter.executeGive({
+        user: swiper,
+        directObjects: ['key'],
+        indirectObjects: ['dora'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify(['key']);
+      const actualAgentInventory = JSON.stringify(dora.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+      const expectedOtherAgentInventory = JSON.stringify([]);
+      const actualOtherAgentInventory = JSON.stringify(swiper.getAllItems().map(e => e.name));
+      expect(actualOtherAgentInventory).toEqual(expectedOtherAgentInventory);
+    });
+
+    it('Should move to give an item already possessed to another agent', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const swiper = new Agent('Swiper');
+      const dora = new Agent('Dora');
+      const item = new Item('key', '6', null);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, swiper], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, dora], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, swiper], [wall]],
+        [[wall], [floor, dora], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      swiper.takeItem(item);
+      actionExecuter.executeGive({
+        user: swiper,
+        directObjects: ['key'],
+        indirectObjects: ['dora'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify(['key']);
+      const actualAgentInventory = JSON.stringify(dora.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+      const expectedOtherAgentInventory = JSON.stringify([]);
+      const actualOtherAgentInventory = JSON.stringify(swiper.getAllItems().map(e => e.name));
+      expect(actualOtherAgentInventory).toEqual(expectedOtherAgentInventory);
+    });
+
+    it('Should move to pick up an item and give to another agent', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const swiper = new Agent('Swiper');
+      const dora = new Agent('Dora');
+      const item = new Item('key', '6', null);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, swiper], [wall]],
+        [[floor, item], [floor], [wall]],
+        [[wall], [floor, dora], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor], [wall]],
+        [[floor], [floor, swiper], [wall]],
+        [[wall], [floor, dora], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeGive({
+        user: swiper,
+        directObjects: ['key'],
+        indirectObjects: ['dora'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify(['key']);
+      const actualAgentInventory = JSON.stringify(dora.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+      const expectedOtherAgentInventory = JSON.stringify([]);
+      const actualOtherAgentInventory = JSON.stringify(swiper.getAllItems().map(e => e.name));
+      expect(actualOtherAgentInventory).toEqual(expectedOtherAgentInventory);
+    });
+  });
+
+  describe('Place', () => {
+    /*it('Should place an item already possessed onto the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('floor_switch', '3', null);
+      const indianaJones = new Agent('Indiana Jones');
+      const idol = new Item('Idol', '6', null);
+      indianaJones.takeItem(idol);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch, idol], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executePlace({
+        user: indianaJones,
+        directObjects: ['idol'],
+        indirectObjects: ['floor_switch'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify([]);
+      const actualAgentInventory = JSON.stringify(indianaJones.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+    });*/
   });
 
   describe('Destroy', () => {

@@ -19,6 +19,10 @@ class Agent extends BoardObject {
     this.inventory = new Inventory();
   }
 
+  hasItem(itemName) {
+    return this.inventory.hasItem(itemName);
+  }
+
   takeItem(item) {
     if (!item) return false;
     this.inventory.addItem(item);

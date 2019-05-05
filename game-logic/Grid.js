@@ -33,9 +33,10 @@ class Grid {
       p = new Point(x, y);
     }
     obj.position = p;
-    if (this.nameToObjsList.has(obj.name)) { // if a list already exists
-      this.nameToObjsList.get(obj.name).push(obj);
-    } else this.nameToObjsList.set(obj.name, [obj]);
+    const name = obj.name.toLowerCase();
+    if (this.nameToObjsList.has(name)) { // if a list already exists
+      this.nameToObjsList.get(name).push(obj);
+    } else this.nameToObjsList.set(name, [obj]);
     this.matrix[p.x][p.y].push(obj);
   }
 
@@ -61,7 +62,8 @@ class Grid {
     this.removeFromStack(boardObj);
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
-    const { name } = boardObj;
+    let { name } = boardObj;
+    name = name.toLowerCase();
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -115,6 +117,7 @@ class Grid {
       const movingObj = movingObjs[i];
       const startPoint = movingObj.position;
       const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
+      if (!path.length) continue;
       // offset by how many things we are moving
       const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       // update matrix @ previous point //
@@ -151,6 +154,7 @@ class Grid {
   // Gets an object either by its name or the object id
   getObject({ centerObj, identifier }) {
     // if passed in a name and a centerObj, get nearest one, otherwise just get first in list
+    identifier = identifier.toLowerCase();
     if (this.nameToObjsList.has(identifier)) {
       const objList = this.nameToObjsList.get(identifier);
       return centerObj ? this.getNearestObject(centerObj, objList) : this.nameToObjsList.get(identifier)[0];
@@ -172,6 +176,7 @@ class Grid {
 
   // Given a center object and an object name, find the nearest object that matches that name
   resolveNameToNearestObject(centerObj, objName) {
+    objName = objName.toLowerCase();
     const objList = this.nameToObjsList.get(objName);
     return this.getNearestObject(centerObj, objList);
   }
@@ -220,17 +225,18 @@ class Grid {
         stack.forEach((e) => {
           e.position.x = i;
           e.position.y = j;
-          this.addToObjectMap(e);
+          this.addToNameToObjectsMap(e);
         });
       }
     }
   }
 
-  addToObjectMap(object) {
-    if (!this.nameToObjsList.has(object.name)) {
-      this.nameToObjsList.set(object.name, []);
+  addToNameToObjectsMap(object) {
+    const name = object.name.toLowerCase();
+    if (!this.nameToObjsList.has(name)) {
+      this.nameToObjsList.set(name, []);
     }
-    this.nameToObjsList.get(object.name).push(object);
+    this.nameToObjsList.get(name).push(object);
   }
 
   // gets all objects of type agent from the grid //
