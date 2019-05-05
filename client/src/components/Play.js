@@ -79,8 +79,8 @@ class Play extends Component {
       this.setState({numberOfPlayers});
     })
 
-    this.socket.on('updateGame', (board, gameComplete) => {
-      this.setState({board, gameComplete});
+    this.socket.on('updateBoard', (board, gameComplete) => {
+      this.setState({ board, gameComplete });
     });
 
     this.socket.on('updateInventories', (inventories) => {
@@ -110,7 +110,7 @@ class Play extends Component {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId")
       this.socket.emit('getName', '');
-      const board = new Array(13).fill(null).map(() => new Array(16).fill(null).map(() => new Array(2).fill('floor')));
+      const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill('floor')));
       this.setState({board});
     } else {
       console.log(window.sessionStorage.getItem("roomId"));
@@ -247,7 +247,6 @@ class Play extends Component {
   }
 
   render() {
-    const map = new Array(13).fill(0).map(() => new Array(16).fill(0));
     const board = this.state.board;
     let allPlayers = [];
     Object.keys(this.state.allPlayers).forEach((player, i) => {
@@ -261,7 +260,7 @@ class Play extends Component {
     });
 
     let gameInfo = <div className='game-info'>
-                    <GameInfo map={map} board={board} allPlayersReady={this.state.allPlayersReady} onHoverOverTile={this.onHoverOverTile} />
+                    <GameInfo board={board} allPlayersReady={this.state.allPlayersReady} onHoverOverTile={this.onHoverOverTile} />
                    </div>;
     let playerInfo;
     if (this.state.allPlayersReady) {
