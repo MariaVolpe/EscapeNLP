@@ -16,7 +16,15 @@ import player3 from '../images/black.png';
 import player4 from '../images/white.png';
 import player5 from '../images/blue.png';
 import player6 from '../images/wall.png';
-import weight from '../images/weight.png'
+import weight from '../images/weight.png';
+import billboard from '../images/billboard.png';
+import binary_switch from '../images/binary_switch.png';
+import binary_switch_activated from '../images/binary_switch_activated.png';
+import bookshelf from '../images/bookshelf.png';
+import door from '../images/door.png';
+import forge from '../images/forge.png';
+import pot from '../images/pot.png';
+
 
 const pictures = {
   'dragon': dragon,
@@ -28,6 +36,13 @@ const pictures = {
   'button': button,
   'block': block,
   'wep': wep,
+  'billboard': billboard,
+  'binary_switch': binary_switch,
+  'binary_switch_activated' : binary_switch_activated,
+  'bookshelf': bookshelf,
+  'door': door,
+  'forge': forge,
+  'pot': pot,
   'player1': player1,
   'player2': player2,
   'player3': player3,
