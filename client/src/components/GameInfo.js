@@ -50,7 +50,7 @@ class GameInfo extends Component {
                          {String.fromCharCode(i+65)}
                        </div>);
         }
-        if (board[k][i][1] != undefined) {
+        if (board[k][i][1] !== undefined) {
         mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1]}`} data-for="tile" >
                        <img src={pictures[board[k][i][0]]} alt='' className="board-item" />
                        <img src={pictures[board[k][i][1]]} alt='' className="board-item" />
