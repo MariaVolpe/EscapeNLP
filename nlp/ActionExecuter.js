@@ -115,7 +115,7 @@ class ActionExecuter {
     }
     // if there is not a source
     if (!sources.length) {
-      // search for it in the grid
+      // search for it in the grid | TODO: implement stealing if its not on the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
         const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
