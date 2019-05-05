@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
-import pot from '../images/pot.png';
+import pic from '../images/yellow.png';
 import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
 
-  responsiveColumns = (length) => {
-    let colSize = Math.floor(12/(length + 1));
-    if (colSize > 5) {
-      colSize = 5;
-    }
-    return colSize;
-  }
-
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
-    let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
-    let columns = "col-" + numOfCols + " ui item small button basic label item-slot";
 
-    const items = itemsList.map((item, i) => <div className={columns} key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
-                                               <i className="fork icon"/>
+    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
+                                               <img src={pic} alt='item' className="item-pic" />
                                              </div>);
     items.push(<ReactTooltip id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
