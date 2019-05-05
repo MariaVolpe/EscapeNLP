@@ -2,7 +2,7 @@
     "puzzle_type": "switch",
     "items_required": [
         {
-            "name": "binary switch",
+            "name": "switch",
             "id": "left_switch",
             "isManaged" : true,
             "coordinates": {
@@ -11,7 +11,7 @@
             }
         },
         {
-            "name": "binary switch",
+            "name": "switch",
             "id": "middle_switch",
             "isManaged" : true,
             "coordinates": {
@@ -20,7 +20,7 @@
             }
         },
         {
-            "name": "binary switch",
+            "name": "switch",
             "id": "right_switch",
             "isManaged" : true,
             "coordinates": {
@@ -29,7 +29,7 @@
             }
         },
         {
-            "name": "binary switch hint poster",
+            "name": "poster",
             "id": "binary_switch_hint_poster",
             "isManaged" : true,
             "coordinates": {

@@ -20,7 +20,7 @@
             }
         },
         {
-            "name": "floor_switch",
+            "name": "floor switch",
             "id": "switch_A",
             "isManaged" : false,
             "coordinates": {
@@ -29,7 +29,7 @@
             }
         },
         {
-            "name": "floor_switch",
+            "name": "floor switch",
             "id" : "switch_B",
             "isManaged" : false,
             "coordinates": {
