@@ -1,7 +1,7 @@
 {
     "door": {
         "moveable": false,
-        "moveFalseText": "You can't move the door, it's embedded in the wall...",
+        "moveFalseText": "You can't move the door, it's embedded in the wall.",
         "moveTrueText": null,
         "take": false,
         "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
@@ -31,7 +31,7 @@
     },
     "locked door": {
         "moveable": false,
-        "moveFalseText": "You can't move the door, it's embedded in the wall...",
+        "moveFalseText": "You can't move the door, it's embedded in the wall.",
         "moveTrueText": null,
         "take": false,
         "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
