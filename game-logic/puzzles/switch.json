@@ -2,12 +2,39 @@
     "puzzle_type": "switch",
     "items_required": [
         {
-            "name": "door_switch",
-            "id": "switch",
+            "name": "binary switch",
+            "id": "left_switch",
             "isManaged" : true,
             "coordinates": {
-                "x": 4,
-                "y": 6
+                "x": 1,
+                "y": 5
+            }
+        },
+        {
+            "name": "binary switch",
+            "id": "middle_switch",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 1,
+                "y": 3
+            }
+        },
+        {
+            "name": "binary switch",
+            "id": "right_switch",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "name": "binary switch poster",
+            "id": "binary_switch_poster",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 3,
+                "y": 1
             }
         }
     ]

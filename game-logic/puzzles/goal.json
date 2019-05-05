@@ -1,0 +1,14 @@
+{
+    "puzzle_type": "goal",
+    "items_required": [
+        {
+            "name": "locked door",
+            "id": "locked_door",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 7,
+                "y": 0
+            }
+        }
+    ]
+}

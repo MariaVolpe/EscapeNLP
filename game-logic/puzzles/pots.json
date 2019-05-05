@@ -2,21 +2,21 @@
     "puzzle_type": "door",
     "items_required": [
         {
-            "name": "door",
-            "id": "door",
-            "isManaged" : true,
-            "coordinates": {
-                "x": 5,
-                "y": 8
-            }
-        },
-        {
             "name": "pot",
             "id" : "pot_A",
             "isManaged" : false,
             "coordinates": {
+                "x": 9,
+                "y": 1
+            }
+        },
+        {
+            "name": "pot",
+            "id" : "pot_B",
+            "isManaged" : true,
+            "coordinates": {
                 "x": 5,
-                "y": 10
+                "y": 1
             }
         }
     ]
