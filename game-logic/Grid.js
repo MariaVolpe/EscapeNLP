@@ -45,7 +45,10 @@ class Grid {
     for (let i = 0; i < this.matrix.length; i++) {
       for (let j = 0; j < this.matrix[i].length; j++) {
         this.matrix[i][j].forEach((item) => {
-          frontEndMatrix[i][j].push(item.name);
+          frontEndMatrix[i][j].push({
+            sprite: item.getSpriteName(),
+            hint: item.name,
+          });
         });
       }
     }

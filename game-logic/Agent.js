@@ -22,6 +22,10 @@ class Agent extends BoardObject {
   getItem(item) {
     this.inventory.pickupItem(item);
   }
+
+  getSpriteName() {
+    return `player${this.id}`;
+  }
 }
 
 module.exports = Agent;

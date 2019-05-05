@@ -18,6 +18,10 @@ class Item extends BoardObject {
     });
     this.use = null;
   }
+
+  getSpriteName() {
+    return this.name;
+  }
 }
 
 module.exports = Item;
