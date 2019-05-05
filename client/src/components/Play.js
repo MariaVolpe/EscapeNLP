@@ -42,7 +42,7 @@ class Play extends Component {
       players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
-            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
+            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' '},
             ready: player.ready,
             position: playerNumbers[i],
             hasLeftGame: player.hasLeftGame
@@ -108,7 +108,7 @@ class Play extends Component {
     if (window.sessionStorage.getItem('roomId') !== null) {
       console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
-      window.sessionStorage.removeItem("roomId")
+      window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill('floor')));
       this.setState({board});

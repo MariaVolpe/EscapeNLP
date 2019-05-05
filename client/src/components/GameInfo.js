@@ -35,6 +35,37 @@ const pictures = {
 }
 
 class GameInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timerHours: 0,
+      timerMinutes: 0,
+      timerSeconds: 0,
+    }
+  }
+
+  componentDidMount = () => {
+    this.interval = setInterval(() => {
+      if (this.props.allPlayersReady) {
+        let timerSeconds = this.state.timerSeconds + 1;
+        let timerMinutes = this.state.timerMinutes;
+        let timerHours = this.state.timerHours;
+        if (timerSeconds > 59) {
+          timerSeconds = 0;
+          timerMinutes++;
+        }
+        if (timerMinutes > 59) {
+          timerMinutes = 0;
+          timerHours++;
+        }
+        this.setState({timerSeconds, timerMinutes, timerHours});
+      } else {
+        this.setState({timerSeconds: 0, timerMinutes: 0, timerHours: 0});
+      }
+
+    }, 1000);
+  }
+
   render() {
     console.log('board here:', this.props.board);
     let board = this.props.board;
@@ -65,13 +96,21 @@ class GameInfo extends Component {
       }
     }
 
+    let timerSeconds = this.state.timerSeconds < 10 ? '0' + this.state.timerSeconds.toString() : timerSeconds = this.state.timerSeconds.toString();;
+    let timerMinutes = this.state.timerMinutes < 10 ? '0' + this.state.timerMinutes.toString() : timerSeconds = this.state.timerMinutes.toString();;;
+    let timerHours = this.state.timerHours < 10 ? '0' + this.state.timerHours.toString() : timerSeconds = this.state.timerHours.toString();;;
+
+    const time = `Timer ${timerHours}:${timerMinutes}:${timerSeconds}`;
+
     for (let i=0; i<16; i++) {
       if (i !== 0) {
        mapData.push(<div className="map one wide column" >
                       {i}
                     </div>);
      } else {
-       mapData.push(<div className="map one wide column" />);
+       mapData.push(<div className="map one wide column">
+                      <div className="timer">{time}</div>
+                    </div>);
      }
     }
 

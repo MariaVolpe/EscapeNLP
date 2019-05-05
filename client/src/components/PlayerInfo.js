@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
 
   responsiveColumns = (length) => {
-    let colSize = Math.floor(12/(length));
+    let colSize = Math.floor(12/(length + 1));
     if (colSize > 5) {
       colSize = 5;
     }
@@ -14,11 +15,12 @@ class PlayerInfo extends Component {
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
-    let columns = "col-" + numOfCols + " ui item mini button";
+    let columns = "col-" + numOfCols + " ui item small button";
 
-    const items = itemsList.map((item, i) => <div className={columns} key={i}>
+    const items = itemsList.map((item, i) => <div className={columns} key={i} data-tip={`${itemsList[i][0]}`} data-for="inventory">
                                             {itemsList[i][1]}
                                           </div>);
+    items.push(<ReactTooltip id="inventory" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
 
