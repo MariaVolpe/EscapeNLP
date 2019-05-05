@@ -119,7 +119,7 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('4', g);
+      const agent = new Agent('Agent');
       const item = new Item('key', '5', null);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -155,7 +155,7 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('4', g);
+      const agent = new Agent('Agent');
       const item = new Item('key', '5', null);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -192,8 +192,8 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Swiper', g);
-      const otherAgent = new Agent('Dora', g);
+      const agent = new Agent('Swiper');
+      const otherAgent = new Agent('Dora');
       const item = new Item('key', '6', null);
       otherAgent.getItem(item);
 
