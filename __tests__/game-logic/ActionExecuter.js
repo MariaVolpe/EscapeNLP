@@ -186,6 +186,49 @@ describe('ActionExecuter tests', () => {
       const actualInventory = JSON.stringify(agent.getAllItems().map(e => e.name));
       expect(actualInventory).toEqual(expectedInventory);
     });
+
+    it('Should steal an item from another agent', async () => {
+      const g = new Grid({ xDimension: 3, yDimension: 3 });
+      const actionExecuter = new ActionExecuter({ grid: g });
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const agent = new Agent('Ralph', g);
+      const otherAgent = new Agent('Merideth', g);
+      const item = new Item('key', '6', null);
+      otherAgent.getItem(item);
+
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, otherAgent], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, otherAgent], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      g.setMatrix({
+        matrix: startingMatrix,
+      });
+      actionExecuter.executeTake({
+        user: agent,
+        directObjects: ['key'],
+        indirectObjects: ['Merideth'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify(['key']);
+      const actualAgentInventory = JSON.stringify(agent.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+      const expectedOtherAgentInventory = JSON.stringify([]);
+      const actualOtherAgentInventory = JSON.stringify(otherAgent.getAllItems().map(e => e.name));
+      expect(actualOtherAgentInventory).toEqual(expectedOtherAgentInventory);
+    });
   });
 
   describe('Give', () => {

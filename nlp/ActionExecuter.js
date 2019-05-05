@@ -1,5 +1,5 @@
 const compromise = require('compromise');
-
+const Agent = require('../game-logic/Agent');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -93,9 +93,12 @@ class ActionExecuter {
       const sourceName = sources[i];
       const sourceObject = this.grid.getObject({ centerObj: data.user, identifier: sourceName });
       if (!sourceObject) continue;
-      if (typeof sourceObject == Agent) {
+      if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
           const objName = objectNames[j];
+          if (this.grid.getDistance(data.user, sourceObject) > 1) {
+            this.grid.moveToObject([data.user], sourceObject);
+          }
           sourceObject.giveItem(objName, data.user);  
         }
       } else { // take from the grid
@@ -112,7 +115,7 @@ class ActionExecuter {
     }
     // if there is not a source
     if (!sources.length) {
-      // take it from the grid
+      // search for it in the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
         const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });

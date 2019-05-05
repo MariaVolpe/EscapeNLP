@@ -14,8 +14,6 @@ class Inventory {
     //if (item) item.use();
   }
 
-  // why? because i had to change the implementation from {} to map so
-  // this made it easier. maybe delete later and save a few lines of code
   removeItem(itemName) {
     if (!this.items.has(itemName)) return null;
     return this.items.get(itemName).pop();
