@@ -27,9 +27,8 @@ class Inventory {
   // returns a list of all items in inventory
   flattenInventory() {
     const inventory = [];
-    for (let [itemName, list] of this.items) {
-      inventory.push(...list);
-    } return inventory;
+    for (let [itemName, list] of this.items) inventory.push(...list);
+    return inventory;
   }
 }
 
