@@ -1,5 +1,6 @@
 const Point = require('./Point');
 const { PathFinder, getManhattanDistance } = require('./PathFinder');
+const Agent = require('./Agent');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -10,10 +11,12 @@ const { PathFinder, getManhattanDistance } = require('./PathFinder');
  */
 
 class Grid {
-  constructor({ xDimension, yDimension }) {
+  constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
-    this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
+    this.matrix = layoutGrid;
+    // this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
+    this.pathFinder.setMatrix(this.matrix);
   }
 
   /*
@@ -33,6 +36,21 @@ class Grid {
       this.nameToObjsList.get(obj.name).push(obj);
     } else this.nameToObjsList.set(obj.name, [obj]);
     this.matrix[p.x][p.y].push(obj);
+  }
+
+  getFormattedGrid() {
+    const frontEndMatrix = Array.from({ length: 15 },
+      () => Array.from({ length: 12 },
+        () => []));
+
+    for (let i = 0; i < this.matrix.length; i++) {
+      for (let j = 0; j < this.matrix[i].length; j++) {
+        this.matrix[i][j].forEach((item) => {
+          frontEndMatrix[i][j].push(item.name);
+        });
+      }
+    }
+    return frontEndMatrix;
   }
 
   removeFromBoard(boardObj) {
@@ -146,6 +164,18 @@ class Grid {
     } return null;
   }
 
+  /* Creates a 3D matrix with xDim and yDim */
+  // setMatrix(matrix) {
+  //   if (matrix) {
+  //     this.matrix = matrix;
+  //     this.pathFinder.setMatrix(matrix);
+  //     return;
+  //   }
+  //   this.matrix = Array.from({ length: xDim },
+  //     () => Array.from({ length: yDim },
+  //       () => []));
+  // }
+
   // updates a position of matrix with an object //
   pushOnMatrix(x, y, obj) {
     this.matrix[x][y].push(obj);
@@ -217,14 +247,14 @@ class Grid {
   // gets all objects of type agent from the grid //
   // NOT READY YET
   getAgents() {
-    const matrix = this.matrix;
+    const matrix = this.matrix; // eslint-disable-line prefer-destructuring
     const agents = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
         const stack = matrix[i][j];
         for (let k = 0; k < stack.length; k++) {
           const obj = stack[k];
-          if (typeof obj === 'Agent') agents.push(obj);
+          if (obj instanceof Agent) agents.push(obj);
         }
       }
     }

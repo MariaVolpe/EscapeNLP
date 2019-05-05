@@ -38,29 +38,44 @@ class PlayerInfo extends Component {
     }
 
     // real icon will be decided later, this serves as a temp
-
-    return(
-      <div className="card player-box">
-        <div className="content">
-          <img
-            className="left floated mini ui image"
-            src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
-            alt="user icon"
-          />
-
-          <div className="right floated ui header">
-            {this.props.playerInfo.name}
+    if (this.props.playerInfo.hasLeftGame) {
+      const name = this.props.playerInfo.name + " has disconnected";
+      return(
+        <div className="card player-box">
+          <div className="content">
+            <div className="right floated ui header">
+              {name}
+            </div>
           </div>
-
         </div>
-        <div className="floated ready">{readyCheck}</div>
-        <div className="ui horizontal divider inventory" >inventory</div>
-        <div className="item-box">
-          {items}
-        </div>
-      </div>
 
-    )
+      )
+    } else {
+      return(
+        <div className="card player-box">
+          <div className="content">
+            <img
+              className="left floated mini ui image"
+              src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
+              alt="user icon"
+            />
+
+            <div className="right floated ui header">
+              {this.props.playerInfo.name}
+            </div>
+
+          </div>
+          <div className="floated ready">{readyCheck}</div>
+          <div className="ui horizontal divider inventory" >inventory</div>
+          <div className="item-box">
+            {items}
+          </div>
+        </div>
+
+      )
+    }
+
+
   }
 }
 
