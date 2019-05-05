@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
+import pot from '../images/pot.png';
 import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
@@ -15,12 +16,12 @@ class PlayerInfo extends Component {
   render() {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
     let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
-    let columns = "col-" + numOfCols + " ui item small button";
+    let columns = "col-" + numOfCols + " ui item small button basic label item-slot";
 
-    const items = itemsList.map((item, i) => <div className={columns} key={i} data-tip={`${itemsList[i][0]}`} data-for="inventory">
-                                            {itemsList[i][1]}
-                                          </div>);
-    items.push(<ReactTooltip id="inventory" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
+    const items = itemsList.map((item, i) => <div className={columns} key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
+                                               <i className="fork icon"/>
+                                             </div>);
+    items.push(<ReactTooltip id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
 
