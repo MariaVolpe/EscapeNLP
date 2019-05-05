@@ -17,6 +17,7 @@ class Agent extends BoardObject {
       objectType: 'Agent',
     });
     this.inventory = new Inventory();
+    this.spriteId = null;
   }
 
   getItem(item) {
@@ -40,7 +41,7 @@ class Agent extends BoardObject {
   }
 
   getSpriteName() {
-    return `player${this.id}`;
+    return this.spriteId;
   }
 }
 
