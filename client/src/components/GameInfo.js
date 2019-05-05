@@ -13,7 +13,7 @@ import player2 from '../images/red.png';
 import player3 from '../images/black.png';
 import player4 from '../images/white.png';
 import player5 from '../images/blue.png';
-import player6 from '../images/yellow.png';
+import player6 from '../images/wall.png';
 
 const pictures = {
   'dragon': dragon,
@@ -50,47 +50,47 @@ class GameInfo extends Component {
         if (board[k][i][1] === 'key') {
           mapData.push(<div className="map tile one wide column" data-tip="With this, you are the master of unlocking!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'floor') {
           mapData.push(<div className="map tile one wide column" data-tip="You can walk on this!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'dragon') {
           mapData.push(<div className="map tile one wide column" data-tip="Watch out, it's a dragon!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'player1') {
           mapData.push(<div className="map tile one wide column" data-tip="It's player 1!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'player2') {
           mapData.push(<div className="map tile one wide column" data-tip="It's player 2!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'player3') {
           mapData.push(<div className="map tile one wide column" data-tip="It's player 3!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'player4') {
           mapData.push(<div className="map tile one wide column" data-tip="It's player 4!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else if (board[k][i][1] === 'player5') {
           mapData.push(<div className="map tile one wide column" data-tip="It's player 5!" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         } else {
-          mapData.push(<div className="map tile one wide column" data-tip="What is this?" data-for="tile" >
+          mapData.push(<div className="map tile one wide column" data-for="tile" >
                          <img src={pictures[board[k][i][0]]} alt="player" className="board-item" />
-                         <img src={pictures[board[k][i][1]]} alt="player" className="board-item" />
+                         <img src={pictures[board[k][i][1]]} alt="" className="board-item" />
                        </div>);
         }
       }

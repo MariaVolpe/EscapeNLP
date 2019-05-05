@@ -2,7 +2,6 @@
   display: inline-block;
   margin-top: 0.1vh;
   margin-bottom: -0.1vh;
-  border: 3px solid white;
   outline-color: gray;
   outline-style: solid;
   outline-width: thin;
@@ -16,7 +15,6 @@
 }
 
 .map:hover {
-    border: 3px solid black;
     cursor: pointer;
 }
 
@@ -26,9 +24,11 @@
 }
 
 .board-item {
-  height: 6vh;
-  width: 6vh;
   position: absolute;
   right: 0px;
+  left: 0px;
   top: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100% 
 }
