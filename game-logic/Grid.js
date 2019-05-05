@@ -47,7 +47,10 @@ class Grid {
     for (let i = 0; i < this.matrix.length; i++) {
       for (let j = 0; j < this.matrix[i].length; j++) {
         this.matrix[i][j].forEach((item) => {
-          frontEndMatrix[i][j].push(item.name);
+          frontEndMatrix[i][j].push({
+            sprite: item.getSpriteName(),
+            hint: item.name,
+          });
         });
       }
     }
@@ -164,6 +167,18 @@ class Grid {
       }
     } return null;
   }
+
+  /* Creates a 3D matrix with xDim and yDim */
+  // setMatrix(matrix) {
+  //   if (matrix) {
+  //     this.matrix = matrix;
+  //     this.pathFinder.setMatrix(matrix);
+  //     return;
+  //   }
+  //   this.matrix = Array.from({ length: xDim },
+  //     () => Array.from({ length: yDim },
+  //       () => []));
+  // }
 
   // updates a position of matrix with an object //
   pushOnMatrix(x, y, obj) {
