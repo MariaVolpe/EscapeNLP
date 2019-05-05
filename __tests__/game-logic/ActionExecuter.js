@@ -192,8 +192,8 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Ralph', g);
-      const otherAgent = new Agent('Merideth', g);
+      const agent = new Agent('Swiper', g);
+      const otherAgent = new Agent('Dora', g);
       const item = new Item('key', '6', null);
       otherAgent.getItem(item);
 
@@ -215,7 +215,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executeTake({
         user: agent,
         directObjects: ['key'],
-        indirectObjects: ['Merideth'],
+        indirectObjects: ['Dora'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
