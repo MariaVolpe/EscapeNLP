@@ -1,5 +1,6 @@
 const Point = require('./Point');
 const { PathFinder, getManhattanDistance } = require('./PathFinder');
+const Agent = require('./Agent');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
@@ -13,6 +14,7 @@ class Grid {
   constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
     this.matrix = layoutGrid;
+    this.updateObjectInformation();
     // this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
     this.pathFinder.setMatrix(this.matrix);
@@ -37,7 +39,7 @@ class Grid {
     this.matrix[p.x][p.y].push(obj);
   }
 
-  getGrid() {
+  getFormattedGrid() {
     const frontEndMatrix = Array.from({ length: 15 },
       () => Array.from({ length: 12 },
         () => []));
@@ -52,7 +54,6 @@ class Grid {
         });
       }
     }
-    console.log('in getGrid in grid.js');
     return frontEndMatrix;
   }
 
@@ -66,6 +67,12 @@ class Grid {
     const { name } = boardObj;
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
+  }
+
+  // drops the specified object to the nearest point to the center object
+  dropOntoBoard({ centerObj, droppedObject }) {
+    const p = this.pathFinder.getClosestFreePoint(centerObj.position, droppedObject);
+    this.add(droppedObject, { x: p.x, y: p.y });
   }
 
   // Finds a free space in the board, returns a point with its indices.
@@ -241,17 +248,20 @@ class Grid {
     this.nameToObjsList.get(object.name).push(object);
   }
 
-  /* Creates a 3D matrix with xDim and yDim */
-  setMatrix({ xDim, yDim, matrix }) {
-    if (matrix) {
-      this.matrix = matrix;
-      this.pathFinder.setMatrix(matrix);
-      this.updateObjectInformation();
-      return;
+  // gets all objects of type agent from the grid //
+  // NOT READY YET
+  getAgents() {
+    const matrix = this.matrix; // eslint-disable-line prefer-destructuring
+    const agents = [];
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const stack = matrix[i][j];
+        for (let k = 0; k < stack.length; k++) {
+          const obj = stack[k];
+          if (obj instanceof Agent) agents.push(obj);
+        }
+      }
     }
-    this.matrix = Array.from({ length: xDim },
-      () => Array.from({ length: yDim },
-        () => []));
   }
 }
 

@@ -75,7 +75,7 @@ io.on('connection', (socket) => {
 
   socket.on('startGame', async () => {
     await gameContainer.startGame(socket.gameId);
-    const board = await gameContainer.getBoard(socket.gameId);
+    const board = await gameContainer.getFormattedBoard(socket.gameId);
     console.log(board);
     io.in(socket.currentRoom).emit('updateBoard', board, false);
   });

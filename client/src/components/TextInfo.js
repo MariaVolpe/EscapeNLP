@@ -129,28 +129,33 @@ class TextInfo extends Component {
 
     });
 
-    let heightDiff = this.findHeightDifference(numOfSames);
+    let heightDiff = this.findHeightDifference(numOfSames) - 10;
 
 
     return(
       <div className="ui minimal comments">
-        <h3 className="chat-header ui dividing header">Chat Box</h3>
+        <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
-        <div className="ui right action input chat-action">
-          <input
-            value={value}
-            onChange={change}
-            onKeyPress={keyPress}
-            placeholder={placeholder}
-            className="talk-input"
-            disabled={disabled}
-          />
-          <button className="ui button chat-change" onClick={this.props.onChatOptionChange} >
+          <form className="ui form">
+            <textarea placeholder="Tell us more"
+              value={value}
+              onChange={change}
+              onKeyPress={keyPress}
+              placeholder={placeholder}
+              className="talk-input"
+              disabled={disabled}
+              rows="3"
+              style={{width: '99%'}}
+            ></textarea>
+          </form>
+          <button className="ui button chat-change"
+            onClick={this.props.onChatOptionChange}
+            style={{width: '99.5%', marginLeft: '2.5%', marginTop: '0.75%'}}
+          >
             {this.props.chatOption}
           </button>
-        </div>
       </div>
     )
   }

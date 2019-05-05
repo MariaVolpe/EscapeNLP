@@ -41,7 +41,6 @@ class GameInfo extends Component {
     console.log('board here:', this.props.board);
     let board = this.props.board;
     let mapData = [];
-    console.log(board);
     for (let i=0; i<12; i++) {
       for (let k=0; k<15; k++) {
         if (k === 0) {
@@ -49,9 +48,7 @@ class GameInfo extends Component {
                          {String.fromCharCode(i+65)}
                        </div>);
         }
-        if (board[0] == undefined) {
-
-        }
+        if (board[0] == undefined) { }
         else if (board[k][i][1] == undefined) {
         mapData.push(<div className="map tile one wide column" data-tip="" data-for="tile" >
                        <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
