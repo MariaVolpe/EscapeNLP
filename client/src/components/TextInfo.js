@@ -139,7 +139,7 @@ class TextInfo extends Component {
           <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
         </div>
           <form className="ui form">
-            <textarea placeholder="Tell us more"
+            <textarea
               value={value}
               onChange={change}
               onKeyPress={keyPress}
