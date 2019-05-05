@@ -1,13 +1,13 @@
 {
-    "puzzle_type": "goal",
+    "puzzle_type": "door",
     "items_required": [
         {
             "name": "door",
             "id": "door",
             "isManaged" : true,
             "coordinates": {
-                "x": 3,
-                "y": 6
+                "x": 5,
+                "y": 8
             }
         }
     ]

@@ -1,7 +1,39 @@
 {
     "door": {
         "moveable": false,
+        "moveFalseText": "You can't move the door, it's embedded in the wall...",
+        "moveTrueText": null,
+        "take": false,
+        "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
+        "takeTrueText": null,
+        "destructable": false,
+        "destroyFalseText": "The door is made of metal. You can barely put a dent in it.",
+        "destroyTrueText": null,
+        "attackable": false,
+        "attackFalseText": "The door is made of metal. You can barely put a dent in it.",
+        "attackTrueText": null,
+        "speakable": false,
+        "speakFalseText": "You whisper sweet nothings to the door. The door doesn't respond.",
+        "speakTrueText": null,
+        "activateable": true,
+        "activateTrueText": "You swing the door open.",
+        "activateFalseText": "The door is already open. You can't open it again.",
+        "deactivateable": true,
+        "deactivateTrueText": "You close the door, presumable to not let the draft in.",
+        "deactivateFalseText": "The door is already closed. You can't close it again.",
+        "inspectTextInactive": "It's a closed door.",
+        "inspectTextActive": "It's an open door.",
+
+        "jumpable": null,
+        "giveable": null,        
+        "placeable": null
+    },
+    "locked_door": {
+        "active": false,
+        "moveable": false,
         "usable": false,
+        "openable": true,        
+        "closable": true,
         "passable": false, 
         "destructable": false,
         "inspectTextInactive": "This door won't budge. There has to be a way to open it...",
@@ -9,25 +41,25 @@
         "useTextNotUsable": "This door won't budge. There has to be a way to open it...",
         "useTextUsed": "Freedom!"
     },
-    "door_switch": {
+    "binary_switch": {
         "moveable": false,
-        "usable": false,
+        "usable": true,
         "passable": false,
         "destructable": false,
-        "inspectTextInactive": "A switch. It might activate something...",
-        "inspectTextActive": "A switch. It might activate something...",
-        "useTextNotUsable": "The switch won't budge. Maybe it needs to be activated too...",
-        "useTextUsed": "It worked! You get the feeling something has changed."
+        "inspectTextInactive": "A switch. It's looks like it's in the 'off' position.",
+        "inspectTextActive": "The switch is turned on.",
+        "useTextNotUsable": "It's a switch.",
+        "useTextUsed": "You pulled the switch."
     },
     "weight": {
         "moveable": true,
         "usable": false,
         "passable": false,
         "destructable": false,
-        "inspectTextInactive": "A really heavy block. Maybe you can move it somewhere...",
+        "inspectTextInactive": "The bottom of the block is locked into the floor switch now.",
         "inspectTextActive": "A really heavy block. Maybe you can move it somewhere...",
-        "useTextNotUsable": "",
-        "useTextUsed": ""
+        "useTextNotUsable": "The block is locked onto the floor switch now. You struggle to push it, but it won't budge.",
+        "useTextUsed": "Using all your might, you moved the block."
     },
     "floor": {
         "moveable": false,
@@ -57,6 +89,6 @@
         "inspectTextInactive": "Huh, it looks like something can fit here.",
         "inspectTextActive": "A perfect fit!",
         "useTextNotUsable": "",
-        "useTextUsed": ""
+        "useTextUsed": "The switch seems different now."
     }
 }
