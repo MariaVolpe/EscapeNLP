@@ -45,14 +45,14 @@
         "speakable": false,
         "speakFalseText": "You whisper sweet nothings to the door. The door doesn't respond.",
         "speakTrueText": null,
-        "manuallyActivateable": true, // but ONLY with a key??
+        "manuallyActivateable": true,
         "activateTrueText": "The door unlocks! Freedom!",
         "activateFalseText": null,
         "manuallyDeactivateable": false,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
         "inspectTextInactive": "It's a locked door.",
-        "inspectTextActive": "The door is unlocked now!", // this will never actually trigger
+        "inspectTextActive": "The door is unlocked now!",
 
         "jumpable": null,
         "giveable": null,        
@@ -270,10 +270,10 @@
         "take": false,
         "takeFalseText": "I don't think the dragon would appreciate that.",
         "takeTrueText": null,
-        "destructable": true, // BUT ONLY WITH SWORD
+        "destructable": true,
         "destroyFalseText": "You're unarmed, and clearly no match for a dragon.",
         "destroyTrueText": "You heroically slay the dragon.",
-        "attackable": true, // BUT ONLY WITH SWORD
+        "attackable": true,
         "attackFalseText": "You're unarmed, and clearly no match for a dragon.",
         "attackTrueText": "You heroically slay the dragon.",
         "speakable": false,

@@ -110,11 +110,7 @@ class Play extends Component {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId")
       this.socket.emit('getName', '');
-<<<<<<< HEAD
-      const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill([{ sprite: '', hint: 'fgsd'}])));
-=======
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
->>>>>>> development
       this.setState({board});
     } else {
       console.log(window.sessionStorage.getItem("roomId"));
