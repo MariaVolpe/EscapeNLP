@@ -24,8 +24,8 @@
             "id": "switch_A",
             "isManaged" : false,
             "coordinates": {
-                "x": 10,
-                "y": 9
+                "x": 13,
+                "y": 3
             }
         },
         {
@@ -33,8 +33,8 @@
             "id" : "switch_B",
             "isManaged" : false,
             "coordinates": {
-                "x": 11,
-                "y": 10
+                "x": 13,
+                "y": 7
             }
         },
         {
@@ -42,8 +42,8 @@
             "id" : "pot_A",
             "isManaged" : false,
             "coordinates": {
-                "x": 12,
-                "y": 7
+                "x": 10,
+                "y": 10
             }
         },
         {
@@ -51,8 +51,8 @@
             "id" : "pot_B",
             "isManaged" : false,
             "coordinates": {
-                "x": 13,
-                "y": 7
+                "x": 11,
+                "y": 9
             }
         },
         {
@@ -60,8 +60,8 @@
             "id" : "pot_C",
             "isManaged" : false,
             "coordinates": {
-                "x": 13,
-                "y": 7
+                "x": 12,
+                "y": 10
             }
         }
     ]

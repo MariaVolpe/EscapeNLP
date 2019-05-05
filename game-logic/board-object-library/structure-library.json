@@ -59,7 +59,7 @@
         "placeable": null,
         "passable": false
     },
-    "binary switch": {
+    "switch": {
         "moveable": false,
         "moveFalseText": "You can't move the switch. It's bolted to the floor.",
         "moveTrueText": null,
@@ -134,7 +134,7 @@
     "wall": {
         "moveable": false,
         "usable": false,
-        "passable": true,
+        "passable": false,
         "destructable": false,
         "inspectTextInactive": "",
         "inspectTextActive": "",
@@ -233,7 +233,7 @@
         "placeable": null,
         "passable": false
     },
-    "binary switch hint poster": {
+    "poster": {
         "moveable": false,
         "moveFalseText": null,
         "moveTrueText": null,

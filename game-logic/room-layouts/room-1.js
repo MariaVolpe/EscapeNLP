@@ -14,6 +14,8 @@ const build = () => {
     matrix[i][0].push(wall);
   }
 
+  matrix[7][0] = [floor];
+
   // bottom walls
   for (let i = 1; i < 15; i++) {
     matrix[i][11].push(wall);
@@ -30,6 +32,8 @@ const build = () => {
   for (let i = 3; i < 11; i++) {
     matrix[14][i].push(wall);
   }
+
+  matrix[14][5] = [floor];
 
   // bottom left corner room
   matrix[1][6].push(wall);

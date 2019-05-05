@@ -20,6 +20,7 @@ const StructLib = require('./board-object-library/structure-library');
 class Structure extends BoardObject {
   constructor(name, id, puzzleType) {
     // moveable, passable, usable,
+    console.log(name);
     super({
       name,
       id,
@@ -31,15 +32,15 @@ class Structure extends BoardObject {
       inspectable: true,
       destructable: StructLib[name].destructable,
       puzzleType,
-      objectType: "Structure"
+      objectType: "Structure",
     });
-    this.activated = false;
-    this.inspectTextInactive = StructLib[name].inspectTextInactive;
-    this.inspectTextActive = StructLib[name].inspectTextActive;
-    this.useTextUsed = StructLib[name].useTextUsed;
-    this.useTextNotUsable = StructLib[name].useTextNotUsable;
-    this.useFunction = null;
-    this.inspectText = this.inspectTextInactive; // initialize inspectText to this
+    // this.activated = false;
+    // this.inspectTextInactive = StructLib[name].inspectTextInactive;
+    // this.inspectTextActive = StructLib[name].inspectTextActive;
+    // this.useTextUsed = StructLib[name].useTextUsed;
+    // this.useTextNotUsable = StructLib[name].useTextNotUsable;
+    // this.useFunction = null;
+    // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
   inspect() {
