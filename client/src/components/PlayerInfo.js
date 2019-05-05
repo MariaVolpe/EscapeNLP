@@ -9,7 +9,9 @@ class PlayerInfo extends Component {
     const itemsList = Object.entries(this.props.playerInfo.inventory);
 
     const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
-                                               <img src={pic} alt='item' className="item-pic" />
+                                               <div className="item-outline">
+                                                <img src={pic} alt='item' className="item-pic" />
+                                               </div>
                                              </div>);
     items.push(<ReactTooltip id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;

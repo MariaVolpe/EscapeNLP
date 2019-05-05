@@ -42,7 +42,7 @@ class Play extends Component {
       players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
-            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' '},
+            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' '},
             ready: player.ready,
             position: playerNumbers[i],
             hasLeftGame: player.hasLeftGame

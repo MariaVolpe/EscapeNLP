@@ -16,7 +16,7 @@
   }
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1500px) {
   .inventory {
     visibility: hidden;
     position: absolute;
@@ -26,13 +26,6 @@
     margin-left: 65.5%;
     margin-top: 11.1%;
     position: absolute;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-  .item-pic {
-    max-width: 40%;
-    max-height: auto;
   }
 }
 
@@ -53,10 +46,7 @@
 }
 
 .item-pic {
-  border: 3px solid gray;
-  background-color: transparent;
-  margin-right: 3px;
-  width: 70%;
+  width: 100%;
   height: auto;
 }
 
@@ -64,4 +54,13 @@
   display: inline-block;
   top: 0vh;
   margin-bottom: 2.5px;
+}
+
+.item-outline {
+  height: 3.75vh;
+  width: 3.75vh;
+  border: 0.5vh solid silver;
+  border-radius: 15%;
+  margin-right: 5px;
+  background-color: silver;
 }
