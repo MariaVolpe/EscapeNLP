@@ -196,7 +196,7 @@ describe('ActionExecuter tests', () => {
 
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
-      otherAgent.getItem(item);
+      otherAgent.takeItem(item);
       actionExecuter.executeTake({
         user: agent,
         directObjects: ['key'],

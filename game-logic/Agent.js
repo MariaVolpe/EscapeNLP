@@ -19,14 +19,17 @@ class Agent extends BoardObject {
     this.inventory = new Inventory();
   }
 
-  getItem(item) {
-    if (!item) return;
+  takeItem(item) {
+    if (!item) return false;
     this.inventory.addItem(item);
+    return true;
   }
 
   giveItem(itemName, recipient) {
+    if (!this.inventory.hasItem(itemName)) return false;
     const item = this.removeItem(itemName);
-    if (item) recipient.getItem(item);
+    recipient.takeItem(item);
+    return true;
   }
 
   // given an item name drops it onto the board

@@ -35,7 +35,7 @@ class ActionExecuter {
 
   executeMove(data) {
     // Check for all the direct objects, then indirect
-    const { user } = data.user;
+    const { user } = data;
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
@@ -70,7 +70,7 @@ class ActionExecuter {
   executeLook(data) {
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(data.user);
-      return nearbyObjects.map(e => e.inspectText);
+      return nearbyObjects.filter(e => e.name != 'floor' || e.name != 'wall').map(e => e.inspectText);
     }
     // if specified direct objects, look at that those objects
     const texts = [];
@@ -108,7 +108,7 @@ class ActionExecuter {
           if (this.grid.getDistance(data.user, object) > 1) {
             this.grid.moveToObject([data.user], object);
           }
-          data.user.getItem(object);
+          data.user.takeItem(object);
           this.grid.removeFromBoard(object);
         }
       }
@@ -123,7 +123,7 @@ class ActionExecuter {
         if (this.grid.getDistance(data.user, object) > 1) {
           this.grid.moveToObject([data.user], object);
         }
-        data.user.getItem(object);
+        data.user.takeItem(object);
         this.grid.removeFromBoard(object);
       }
     }
@@ -131,7 +131,27 @@ class ActionExecuter {
   }
 
   executeGive(data) {
-
+    // we can expect receipients whenever an object is given
+    const recipients = data.indirectObjects;
+    const objectNames = data.directObjects;
+    for (let i = 0; i < recipients.length; i++) {// for all receipients
+      const recipientName = receipients[i];
+      const recipient = this.grid.getObject({ centerObj: data.user, identifier: recipientName });
+      for (let j = 0; j < objectNames.length; j++) {// for all items
+        const objectName = objectNames[j];
+        const transferred = data.user.giveItem(objectName, recipient);
+        if (!transferred) {// if item was not already possessed
+          const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+          const takeAttemptData = {
+            user: data.user,
+            directObjects: [objectName],
+            indirectObjects: []
+          };
+          const taken = this.executeTake(takeAttemptData);
+          if (taken) data.user.giveItem(objectName, recipient); // give the item to the recipient
+        }
+      }
+    } return true;
   }
 
   executeDestroy(data) {
