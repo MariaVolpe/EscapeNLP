@@ -27,19 +27,17 @@ describe('ActionExecuter tests', () => {
 
   describe('Look', () => {
     it('Should look around', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      g.setMatrix({
-        matrix: [
-          [[weight], [door], [wall]],
-          [[wall], [floor], [wall]],
-          [[wall], [wall], [wall]],
-        ],
-      });
+      const matrix = [
+        [[weight], [door], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [wall], [wall]],
+      ];
+      const g = new Grid(matrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
         user: floor,
         directObjects: [],
@@ -50,19 +48,17 @@ describe('ActionExecuter tests', () => {
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     it('Should look at a particular object', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      g.setMatrix({
-        matrix: [
-          [[weight], [door], [wall]],
-          [[wall], [floor], [wall]],
-          [[wall], [wall], [wall]],
-        ],
-      });
+      const matrix = [
+        [[weight], [door], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [wall], [wall]],
+      ];
+      const g = new Grid(matrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
         user: floor,
         directObjects: ['door'],
@@ -72,20 +68,18 @@ describe('ActionExecuter tests', () => {
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     it('Should look around in a larger space', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      g.setMatrix({
-        matrix: [
-          [[weight], [wall], [wall]],
-          [[wall], [door], [wall]],
-          [[wall], [new Structure('floor', 6, null)], [wall]],
-          [[wall], [floor], [wall]],
-        ],
-      });
+      const matrix = [
+        [[weight], [wall], [wall]],
+        [[wall], [door], [wall]],
+        [[wall], [new Structure('floor', 6, null)], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const g = new Grid(matrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
         user: floor,
         directObjects: [],
@@ -115,8 +109,6 @@ describe('ActionExecuter tests', () => {
 
   describe('Take', () => {
     it('Should take an item off the grid', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const agent = new Agent('Agent');
@@ -133,9 +125,8 @@ describe('ActionExecuter tests', () => {
         [[wall], [floor, agent], [wall]],
         [[wall], [wall], [wall]],
       ];
-      g.setMatrix({
-        matrix: startingMatrix,
-      });
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeTake({
         user: agent,
         directObjects: ['key'],
@@ -151,8 +142,6 @@ describe('ActionExecuter tests', () => {
       expect(actualInventory).toEqual(expectedInventory);
     });
     it('Should move to take an item off the grid', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const agent = new Agent('Agent');
@@ -169,9 +158,8 @@ describe('ActionExecuter tests', () => {
         [[wall], [floor], [wall]],
         [[wall], [floor], [wall]],
       ];
-      g.setMatrix({
-        matrix: startingMatrix,
-      });
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeTake({
         user: agent,
         directObjects: ['key'],
@@ -188,15 +176,11 @@ describe('ActionExecuter tests', () => {
     });
 
     it('Should steal an item from another agent', async () => {
-      const g = new Grid({ xDimension: 3, yDimension: 3 });
-      const actionExecuter = new ActionExecuter({ grid: g });
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const agent = new Agent('Swiper');
       const otherAgent = new Agent('Dora');
       const item = new Item('key', '6', null);
-      otherAgent.getItem(item);
-
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, otherAgent], [wall]],
@@ -209,9 +193,10 @@ describe('ActionExecuter tests', () => {
         [[wall], [floor, agent], [wall]],
         [[wall], [floor], [wall]],
       ];
-      g.setMatrix({
-        matrix: startingMatrix,
-      });
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      otherAgent.getItem(item);
       actionExecuter.executeTake({
         user: agent,
         directObjects: ['key'],
