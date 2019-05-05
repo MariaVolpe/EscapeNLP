@@ -31,7 +31,7 @@ class Structure extends BoardObject {
       inspectable: true,
       destructable: StructLib[name].destructable,
       puzzleType,
-      objectType: 'Structure',
+      objectType: "Structure"
     });
     this.activated = false;
     this.inspectTextInactive = StructLib[name].inspectTextInactive;
@@ -54,12 +54,10 @@ class Structure extends BoardObject {
   }
 
   getSpriteName() {
-    if (this.activated ) {
-      return StructLib.altSprite
+    if (this.activated) {
+      return StructLib.altSprite;
     }
-    else {
-      return this.name;
-    }
+    return this.name;
   }
 }
 

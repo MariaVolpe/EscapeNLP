@@ -29,11 +29,7 @@
         "placeable": null,
         "passable": false
     },
-<<<<<<< HEAD
     "locked door": {
-=======
-    "binary_switch": {
->>>>>>> development
         "moveable": false,
         "moveFalseText": "You can't move the door, it's embedded in the wall...",
         "moveTrueText": null,
@@ -41,7 +37,6 @@
         "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
         "takeTrueText": null,
         "destructable": false,
-<<<<<<< HEAD
         "destroyFalseText": "The door is made of metal. You can barely put a dent in it.",
         "destroyTrueText": null,
         "attackable": false,
@@ -89,17 +84,11 @@
         "inspectTextInactive": "A switch. It's looks like it's in the 'off' position.",
         "inspectTextActive": "A switch. It's looks like it's in the 'on' position.",
 
+        "altSprite": "binary_switch_activated",        
         "jumpable": null,
         "giveable": null,        
         "placeable": null,
         "passable": false
-=======
-        "altSprite": "binary_switch_activated",
-        "inspectTextInactive": "A switch. It might activate something...",
-        "inspectTextActive": "A switch. It might activate something...",
-        "useTextNotUsable": "The switch won't budge. Maybe it needs to be activated too...",
-        "useTextUsed": "It worked! You get the feeling something has changed."
->>>>>>> development
     },
     "weight": {
         "moveable": true,
@@ -161,7 +150,6 @@
         "takeFalseText": "The floor switch is staying where it is.",
         "takeTrueText": null,
         "destructable": false,
-<<<<<<< HEAD
         "destroyFalseText": null,
         "destroyTrueText": null,
         "attackable": false,
@@ -176,12 +164,10 @@
         "manuallyDeactivateable": false,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-=======
-        "altSprite": "floor_switch_activated",
->>>>>>> development
         "inspectTextInactive": "Huh, it looks like something can fit here.",
         "inspectTextActive": "A perfect fit!",
 
+        "altSprite": "floor_switch_activated",
         "jumpable": null,
         "giveable": null,
         "placeable": null,
