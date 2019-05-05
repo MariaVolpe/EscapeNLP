@@ -1,5 +1,5 @@
 const compromise = require('compromise');
-
+const Agent = require('../game-logic/Agent');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -47,7 +47,7 @@ class ActionExecuter {
     } else { destinations = data.directObjects; }
 
     // validate moving objects
-    for (let i = 0; i < movingObjects.length; i++) {
+    for (let i = 0; i < movingObjectsNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ centerObj: data.user, identifier: objName });
       // TODO: include pronoun caching
@@ -86,7 +86,48 @@ class ActionExecuter {
   }
 
   executeTake(data) {
-
+    const sources = data.indirectObjects;
+    const objectNames = data.directObjects;
+    // if there is a source
+    for (let i = 0; i < sources.length; i++) {
+      const sourceName = sources[i];
+      const sourceObject = this.grid.getObject({ centerObj: data.user, identifier: sourceName });
+      if (!sourceObject) continue;
+      if (sourceObject instanceof Agent) { // you can take items from other agents
+        for (let j = 0; j < objectNames.length; j++) {
+          const objName = objectNames[j];
+          if (this.grid.getDistance(data.user, sourceObject) > 1) {
+            this.grid.moveToObject([data.user], sourceObject);
+          }
+          sourceObject.giveItem(objName, data.user);  
+        }
+      } else { // take from the grid
+        for (let j = 0; j < objectNames.length; j++) {
+          const objectName = objectNames[j];
+          const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+          if (this.grid.getDistance(data.user, object) > 1) {
+            this.grid.moveToObject([data.user], object);
+          }
+          data.user.getItem(object);
+          this.grid.removeFromBoard(object);
+        }
+      }
+    }
+    // if there is not a source
+    if (!sources.length) {
+      // search for it in the grid | TODO: implement stealing if its not on the grid
+      for (let j = 0; j < objectNames.length; j++) {
+        const objectName = objectNames[j];
+        const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+        if (!object) continue;
+        if (this.grid.getDistance(data.user, object) > 1) {
+          this.grid.moveToObject([data.user], object);
+        }
+        data.user.getItem(object);
+        this.grid.removeFromBoard(object);
+      }
+    }
+    return true;
   }
 
   executeGive(data) {
