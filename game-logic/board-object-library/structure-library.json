@@ -29,7 +29,7 @@
         "placeable": null,
         "passable": false
     },
-    "locked_door": {
+    "locked door": {
         "moveable": false,
         "moveFalseText": "You can't move the door, it's embedded in the wall...",
         "moveTrueText": null,
@@ -59,7 +59,7 @@
         "placeable": null,
         "passable": false
     },
-    "binary_switch": {
+    "binary switch": {
         "moveable": false,
         "moveFalseText": "You can't move the switch. It's bolted to the floor.",
         "moveTrueText": null,
@@ -141,7 +141,7 @@
         "speak": "If these walls could talk... But they can't.",
         "useTextUsed": ""
     },
-    "floor_switch": {
+    "floor switch": {
         "moveable": false,
         "moveFalseText": "The floor switch is staying where it is.",
         "moveTrueText": null,
@@ -231,7 +231,7 @@
         "placeable": null,
         "passable": false
     },
-    "binary_switch_hint_poster": {
+    "binary switch hint poster": {
         "moveable": false,
         "moveFalseText": null,
         "moveTrueText": null,

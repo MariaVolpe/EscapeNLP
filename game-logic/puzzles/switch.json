@@ -29,8 +29,8 @@
             }
         },
         {
-            "name": "binary switch poster",
-            "id": "binary_switch_poster",
+            "name": "binary switch hint poster",
+            "id": "binary_switch_hint_poster",
             "isManaged" : true,
             "coordinates": {
                 "x": 3,
