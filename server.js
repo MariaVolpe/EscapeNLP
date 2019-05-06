@@ -126,6 +126,9 @@ io.on('connection', (socket) => {
     });
 
     io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
+    if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+      io.sockets.adapter.rooms[socket.currentRoom].startTime = Date.now();
+    }
 
     io
       .in(socket.currentRoom)
@@ -153,12 +156,13 @@ io.on('connection', (socket) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
 
-  this.interval = setInterval(() => {
+  setInterval(() => {
     if (socket.currentRoom) {
       if (io.sockets.adapter.rooms[socket.currentRoom]) {
         if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
-          io.sockets.adapter.rooms[socket.currentRoom].timer++;
-          io.in(socket.currentRoom).emit('updateTimer', io.sockets.adapter.rooms[socket.currentRoom].timer);
+          const currentTime = Date.now();
+          const timer = currentTime - io.sockets.adapter.rooms[socket.currentRoom].startTime;
+          socket.emit('updateTimer', timer);
         }
       }
     }
