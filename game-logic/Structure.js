@@ -19,22 +19,47 @@ const StructLib = require('./board-object-library/structure-library');
 
 class Structure extends BoardObject {
   constructor(name, id, puzzleType) {
-    // moveable, passable, usable,
-    console.log(name);
+    // moveable, passable, usable
     super({
       name,
       id,
       moveable: StructLib[name].moveable,
       possesable: false,
+      attackable: StructLib[name].attackable,
       transferable: false,
-      usable: StructLib[name].usable,
       passable: StructLib[name].passable,
+      speakable: StructLib[name].speakable,
+      manuallyActivateable: StructLib[name].manuallyActivateable,
+      manuallyDeactivateable: StructLib[name].manuallyDeactivateable,
       inspectable: true,
+      jumpable: StructLib[name].jumpable,
+      placeable: false,
       destructable: StructLib[name].destructable,
       puzzleType,
-      objectType: "Structure",
+      objectType: 'Structure',
     });
-    // this.activated = false;
+
+    this.activated = false;
+
+    // this is the least efficient code i've ever written. sorry to my future self
+    this.moveFalseText = StructLib[name].moveFalseText;
+    this.moveTrueText = StructLib[name].moveTrueText;
+    this.takeFalseText = StructLib[name].takeFalseText;
+    this.takeTrueText = StructLib[name].takeTrueText;
+    this.destroyFalseText = StructLib[name].destroyFalseText;
+    this.destroyTrueText = StructLib[name].destroyTrueText;
+    this.attackFalseText = StructLib[name].attackFalseText;
+    this.attackTrueText = StructLib[name].attackTrueText;
+    this.speakFalseText = StructLib[name].speakFalseText;
+    this.speakTrueText = StructLib[name].speakTrueText;
+    this.activateTrueText = StructLib[name].activateTrueText;
+    this.activateFalseText = StructLib[name].activateFalseText;
+    this.deactivateTrueText = StructLib[name].deactivateTrueText;
+    this.deactivateFalseText = StructLib[name].deactivateFalseText;
+
+    this.inspectTextInactive = StructLib[name].inspectTextInactive;
+    this.inspectTextActive = StructLib[name].inspectTextActive;
+
     // this.inspectTextInactive = StructLib[name].inspectTextInactive;
     // this.inspectTextActive = StructLib[name].inspectTextActive;
     // this.useTextUsed = StructLib[name].useTextUsed;
