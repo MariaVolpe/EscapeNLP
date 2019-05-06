@@ -3,7 +3,7 @@
         "moveable": false,
         "moveFalseText": "You can't move the door, it's embedded in the wall.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
         "takeTrueText": null,
         "destructable": false,
@@ -24,16 +24,17 @@
         "inspectTextInactive": "It's a closed door.",
         "inspectTextActive": "It's an open door.",
 
-        "jumpable": null,
-        "giveable": null,
-        "placeable": null,
+        "use": "activate",
+
+        "jumpable": false,
+        "placeable": false,
         "passable": false
     },
     "locked door": {
         "moveable": false,
         "moveFalseText": "You can't move the door, it's embedded in the wall.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "What are you trying to do, take the door off it's hinges? Good luck with that.",
         "takeTrueText": null,
         "destructable": false,
@@ -54,16 +55,16 @@
         "inspectTextInactive": "It's a locked door.",
         "inspectTextActive": "The door is unlocked now!",
 
+        "use": "activate",
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "switch": {
         "moveable": false,
         "moveFalseText": "You can't move the switch. It's bolted to the floor.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "The switch is bolted to the floor. Lifting it doesn't work.",
         "takeTrueText": null,
         "destructable": false,
@@ -84,17 +85,17 @@
         "inspectTextInactive": "A switch. It's looks like it's in the 'off' position.",
         "inspectTextActive": "A switch. It's looks like it's in the 'on' position.",
 
+        "use": "activate",
+        
         "altSprite": "binary_switch_activated",        
         "jumpable": null,
-        "giveable": null,        
-        "placeable": null,
         "passable": false
     },
     "weight": {
         "moveable": true,
         "moveFalseText": "The block is locked onto the floor switch now. You struggle to push it, but it won't budge.",
         "moveTrueText": "Using all your might, you move the block.",
-        "take": false,
+        "possesable": false,
         "takeFalseText": "The weight is too big and heavy to put into your bag.",
         "takeTrueText": null,
         "destructable": false,
@@ -115,16 +116,16 @@
         "inspectTextInactive": "The bottom of the block is locked into the floor switch now.",
         "inspectTextActive": "A really heavy block. Maybe you can move it somewhere...",
 
+        "use": "move",
+        
         "jumpable": null,
-        "giveable": null,        
-        "placeable": null,
         "passable": false
     },
     "floor": {
         "moveable": false,
         "moveFalseText": "You struggle to push on the wall, but it won't budge and you end up looking like a fool.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": null,
         "takeTrueText": null,
         "destructable": false,
@@ -145,16 +146,16 @@
         "inspectTextInactive": "It's a floor. Nothing extraordinary about it. You've seen plenty of floors in your lifetime.",
         "inspectTextActive": null,
 
+        "use": null,
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": true
     },
     "wall": {
         "moveable": false,
         "moveFalseText": "You struggle to push on the wall, but it won't budge and you end up looking like a fool.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": null,
         "takeTrueText": null,
         "destructable": false,
@@ -175,16 +176,16 @@
         "inspectTextInactive": "It's a wall with nothing special about it.",
         "inspectTextActive": null,
 
+        "use": null,
+        
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "floor switch": {
         "moveable": false,
         "moveFalseText": "The floor switch is staying where it is.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "The floor switch is staying where it is.",
         "takeTrueText": null,
         "destructable": false,
@@ -205,17 +206,17 @@
         "inspectTextInactive": "Huh, it looks like something can fit here.",
         "inspectTextActive": "A perfect fit!",
 
+        "use": "activate",
+
         "altSprite": "floor_switch_activated",
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "pot": {
         "moveable": true,
         "moveFalseText": null,
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": null,
         "takeTrueText": null,
         "destructable": true,
@@ -236,16 +237,16 @@
         "inspectTextInactive": "It's a clay pot, with some fancy designs on it.",
         "inspectTextActive": null,
 
+        "use": null,
+        
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "forge": {
         "moveable": false,
         "moveFalseText": "It won't budge.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": null,
         "takeTrueText": null,
         "destructable": false,
@@ -259,23 +260,53 @@
         "speakTrueText": null,
         "manuallyActivateable": false,
         "activateTrueText": "The forge fire roars to life.",
-        "activateFalseText": null,
+        "activateFalseText": "You can't use the forge while it's cold.",
         "manuallyDeactivateable": false,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
         "inspectTextInactive": "It's a forge, but it's cold right now.",
         "inspectTextActive": "The forge is hot and useable now!",
 
+        "use": null,
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
+        "passable": false
+    },
+    "active forge": {
+        "moveable": false,
+        "moveFalseText": "It won't budge.",
+        "moveTrueText": null,
+        "possesable": false,
+        "takeFalseText": null,
+        "takeTrueText": null,
+        "destructable": false,
+        "destroyFalseText": null,
+        "destroyTrueText": null,
+        "attackable": false,
+        "attackFalseText": null,
+        "attackTrueText": null,
+        "speakable": false,
+        "speakFalseText": "You talk to the forge. It doesn't say anything in response.",
+        "speakTrueText": null,
+        "manuallyActivateable": false,
+        "activateTrueText": "The forge fire roars to life.",
+        "activateFalseText": "You can't forge those items.",
+        "manuallyDeactivateable": false,
+        "deactivateTrueText": null,
+        "deactivateFalseText": null,
+        "inspectTextInactive": "It's a forge, but it's cold right now.",
+        "inspectTextActive": "The forge is hot and useable now!",
+
+        "use": null,
+
+        "jumpable": null,
         "passable": false
     },
     "poster": {
         "moveable": false,
         "moveFalseText": null,
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": null,
         "takeTrueText": null,
         "destructable": false,
@@ -296,16 +327,16 @@
         "inspectTextInactive": "It says: ",
         "inspectTextActive": null,
 
+        "use": "inspect",
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "dragon": {
         "moveable": false,
         "moveFalseText": "I don't think the dragon would appreciate that.",
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "I don't think the dragon would appreciate that.",
         "takeTrueText": null,
         "destructable": true,
@@ -326,16 +357,16 @@
         "inspectTextInactive": "Holy crap, it's a dragon!",
         "inspectTextActive": null,
 
+        "use": null,
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     },
     "bookshelf": {
         "moveable": true,
         "moveFalseText": null,
         "moveTrueText": null,
-        "take": false,
+        "possesable": false,
         "takeFalseText": "That bookshelf won't fit in your pocket.",
         "takeTrueText": null,
         "destructable": true,
@@ -356,9 +387,9 @@
         "inspectTextInactive": "It's an inexpensive bookshelf.",
         "inspectTextActive": null,
 
+        "use": null,
+
         "jumpable": null,
-        "giveable": null,
-        "placeable": null,
         "passable": false
     }
 }
