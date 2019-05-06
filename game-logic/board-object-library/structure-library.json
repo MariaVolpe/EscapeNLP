@@ -9,11 +9,12 @@
         "useTextNotUsable": "This door won't budge. There has to be a way to open it...",
         "useTextUsed": "Freedom!"
     },
-    "door_switch": {
+    "binary_switch": {
         "moveable": false,
         "usable": false,
         "passable": false,
         "destructable": false,
+        "altSprite": "binary_switch_activated",
         "inspectTextInactive": "A switch. It might activate something...",
         "inspectTextActive": "A switch. It might activate something...",
         "useTextNotUsable": "The switch won't budge. Maybe it needs to be activated too...",
@@ -54,6 +55,7 @@
         "usable": false,
         "passable": true,
         "destructable": false,
+        "altSprite": "floor_switch_activated",
         "inspectTextInactive": "Huh, it looks like something can fit here.",
         "inspectTextActive": "A perfect fit!",
         "useTextNotUsable": "",
