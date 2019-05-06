@@ -35,39 +35,7 @@ const pictures = {
 }
 
 class GameInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timerHours: 0,
-      timerMinutes: 0,
-      timerSeconds: 0,
-    }
-  }
-
-  componentDidMount = () => {
-    this.interval = setInterval(() => {
-      if (this.props.allPlayersReady) {
-        let timerSeconds = this.state.timerSeconds + 1;
-        let timerMinutes = this.state.timerMinutes;
-        let timerHours = this.state.timerHours;
-        if (timerSeconds > 59) {
-          timerSeconds = 0;
-          timerMinutes++;
-        }
-        if (timerMinutes > 59) {
-          timerMinutes = 0;
-          timerHours++;
-        }
-        this.setState({timerSeconds, timerMinutes, timerHours});
-      } else {
-        this.setState({timerSeconds: 0, timerMinutes: 0, timerHours: 0});
-      }
-
-    }, 1000);
-  }
-
   render() {
-    console.log('board here:', this.props.board);
     let board = this.props.board;
     if (board[0] === undefined) {
       board = new Array(15).fill(0).map(() => new Array(12).fill(0));;
@@ -96,9 +64,28 @@ class GameInfo extends Component {
       }
     }
 
-    let timerSeconds = this.state.timerSeconds < 10 ? '0' + this.state.timerSeconds.toString() : timerSeconds = this.state.timerSeconds.toString();;
-    let timerMinutes = this.state.timerMinutes < 10 ? '0' + this.state.timerMinutes.toString() : timerSeconds = this.state.timerMinutes.toString();;;
-    let timerHours = this.state.timerHours < 10 ? '0' + this.state.timerHours.toString() : timerSeconds = this.state.timerHours.toString();;;
+    let seconds = this.props.timer;
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    seconds = seconds % 60;
+    let timerSeconds = '';
+    let timerMinutes = '';
+    let timerHours = '';
+    if (seconds < 10) {
+      timerSeconds = '0' + seconds.toString();
+    } else {
+      timerSeconds = seconds.toString();
+    }
+    if (minutes < 10) {
+      timerMinutes = '0' + minutes.toString();
+    } else {
+      timerMinutes = minutes.toString();
+    }
+    if (hours < 10) {
+      timerHours = '0' + hours.toString();
+    } else {
+      timerHours = hours.toString();
+    }
 
     const time = `Timer ${timerHours}:${timerMinutes}:${timerSeconds}`;
 

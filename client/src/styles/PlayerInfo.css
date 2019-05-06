@@ -55,7 +55,7 @@
 .item-outline {
   height: 3.75vh;
   width: 3.75vh;
-  border: 0.5vh transparent;
+  border: 0.5vh solid silver;
   border-radius: 15%;
   margin-right: 5px;
   margin-top: -5px;

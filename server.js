@@ -32,6 +32,7 @@ io.on('connection', (socket) => {
     socket.gameId = parseInt(roomId, 10);
     socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
+    io.nsps['/'].adapter.rooms[roomId].timer = 0;
     io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
   });
 
@@ -151,4 +152,17 @@ io.on('connection', (socket) => {
   socket.on('updatePlayerCount', (playerList, roomId) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
+
+  this.interval = setInterval(() => {
+    if (socket.currentRoom) {
+      if (io.sockets.adapter.rooms[socket.currentRoom]) {
+        if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+          io.sockets.adapter.rooms[socket.currentRoom].timer++;
+          io.in(socket.currentRoom).emit('updateTimer', io.sockets.adapter.rooms[socket.currentRoom].timer);
+        }
+      }
+    }
+  }, 1000);
+
+
 });

@@ -25,7 +25,8 @@ class Play extends Component {
       playerName: '',
       chatOption: 'chat',
       warningOpen: false,
-      numberOfPlayers: 0
+      numberOfPlayers: 0,
+      timer: 0
     }
 
     this.socket = socketIOClient('');
@@ -96,6 +97,10 @@ class Play extends Component {
     this.socket.on('updatePlayerCount', (playerList) => {
 
     });
+
+    this.socket.on('updateTimer', (timer) => {
+      this.setState({timer});
+    })
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
@@ -260,7 +265,12 @@ class Play extends Component {
     });
 
     let gameInfo = <div className='game-info'>
-                    <GameInfo board={board} allPlayersReady={this.state.allPlayersReady} onHoverOverTile={this.onHoverOverTile} />
+                    <GameInfo
+                      board={board}
+                      allPlayersReady={this.state.allPlayersReady} 
+                      onHoverOverTile={this.onHoverOverTile}
+                      timer={this.state.timer}
+                    />
                    </div>;
     let playerInfo;
     if (this.state.allPlayersReady) {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
-import pic from '../images/yellow.png';
 import '../styles/PlayerInfo.css';
 
 class PlayerInfo extends Component {
@@ -10,7 +9,7 @@ class PlayerInfo extends Component {
 
     const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
                                                <div className="item-outline">
-                                                <img src={pic} alt='item' className="item-pic" />
+                                                <img src='' alt='' className="item-pic" />
                                                </div>
                                              </div>);
     items.push(<ReactTooltip id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
