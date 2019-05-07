@@ -30,7 +30,7 @@
         "placeable": false,
         "passable": false
     },
-    "locked door": {
+    "exit": {
         "moveable": false,
         "moveFalseText": "You can't move the door, it's embedded in the wall.",
         "moveTrueText": null,

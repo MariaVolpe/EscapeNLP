@@ -81,7 +81,7 @@ class Structure extends BoardObject {
 
   getSpriteName() {
     if (this.activated) {
-      return StructLib.altSprite;
+      return `${this.name}_activated`;
     }
     return this.name;
   }

@@ -2,8 +2,8 @@
     "puzzle_type": "goal",
     "items_required": [
         {
-            "name": "locked door",
-            "id": "locked_door",
+            "name": "exit",
+            "id": "exit",
             "isManaged" : true,
             "coordinates": {
                 "x": 7,
