@@ -56,7 +56,7 @@ class PlayerInfo extends Component {
     } else {
       let name;
       if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
-        name = this.props.playerInfo.name + " [YOU]";
+        name = this.props.playerInfo.name + " / You";
       } else {
         name = this.props.playerInfo.name;
       }
@@ -69,7 +69,7 @@ class PlayerInfo extends Component {
               alt="user icon"
             />
 
-            <div className="right floated ui header">
+            <div className="right floated ui header player-name">
               {name}
             </div>
 

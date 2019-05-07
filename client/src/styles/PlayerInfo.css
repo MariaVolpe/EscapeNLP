@@ -7,8 +7,12 @@
 @media only screen and (max-width: 1700px) {
   .ready {
     margin-left: 65.5%;
-    margin-top: 10%;
+    margin-top: 15%;
     position: absolute;
+  }
+
+  .right.floated.ui.header {
+    font-size: 1.67vh;
   }
 }
 
@@ -19,9 +23,13 @@
   }
 
   .ready {
-    margin-left: 65.5%;
-    margin-top: 11.1%;
+    margin-left: 55.5%;
+    margin-top: 14.3%;
     position: absolute;
+  }
+
+  .item-slot {
+    margin-top: 6.66%;
   }
 }
 
@@ -39,6 +47,8 @@
 .right.floated.ui.header {
   margin-right: 3%;
   margin-top: 3%;
+  padding: 1%;
+  border: 3px solid black;
 }
 
 .item-pic {
@@ -63,15 +73,15 @@
 }
 
 .card.player1 {
-  background-color: pink;
+  background-color: #e84393;
 }
 
 .card.player2 {
-  background-color: Crimson;
+  background-color: #d63031;
 }
 
 .card.player3 {
-  background-color: SlateGrey;
+  background-color: #7f8c8d;
 }
 
 .card.player4 {
@@ -79,5 +89,9 @@
 }
 
 .card.player5 {
-  background-color: DodgerBlue;
+  background-color: #3498db;
+}
+
+.player-name {
+  background-color: white;
 }
