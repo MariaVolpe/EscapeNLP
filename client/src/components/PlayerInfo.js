@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
+import playerIcon from '../images/playericon.png';
 
 class PlayerInfo extends Component {
 
@@ -65,7 +66,7 @@ class PlayerInfo extends Component {
           <div className="content">
             <img
               className="left floated mini ui image"
-              src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
+              src={playerIcon}
               alt="user icon"
             />
 
