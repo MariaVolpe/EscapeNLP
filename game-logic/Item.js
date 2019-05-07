@@ -18,6 +18,10 @@ class Item extends BoardObject {
     });
     this.use = ItemLib[name].useMethod;
   }
+
+  getSpriteName() {
+    return this.name;
+  }
 }
 
 module.exports = Item;

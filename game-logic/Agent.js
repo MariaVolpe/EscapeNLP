@@ -17,6 +17,7 @@ class Agent extends BoardObject {
       objectType: 'Agent',
     });
     this.inventory = new Inventory();
+    this.spriteId = null;
   }
 
   // Checks if an agent has an item in their inventory
@@ -42,6 +43,10 @@ class Agent extends BoardObject {
   // returns a list of all the items in this agent's inventory
   getAllItems() {
     return this.inventory.flattenInventory();
+  }
+
+  getSpriteName() {
+    return this.spriteId;
   }
 }
 
