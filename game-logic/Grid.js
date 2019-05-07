@@ -14,7 +14,7 @@ class Grid {
   constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
     this.matrix = layoutGrid;
-    this.updateObjectInformation();
+    this.recordObjectInformation();
     // this.matrix = this.setMatrix({ xDim: xDimension, yDim: yDimension });
     this.pathFinder = new PathFinder(this.matrix);
     this.pathFinder.setMatrix(this.matrix);
@@ -151,7 +151,7 @@ class Grid {
     }
   }
 
-  // Gets an object either by its name or the object id
+  // Gets an object relative to a centerObj and its the object name
   getObject({ centerObj, identifier }) {
     // if passed in a name and a centerObj, get nearest one, otherwise just get first in list
     identifier = identifier.toLowerCase();
@@ -159,14 +159,7 @@ class Grid {
       const objList = this.nameToObjsList.get(identifier);
       return centerObj ? this.getNearestObject(centerObj, objList) : this.nameToObjsList.get(identifier)[0];
     }
-    // otherwise its an id
-    for (let i = 0; i < this.matrix.length; i++) {
-      for (let j = 0; j < this.matrix[i].length; j++) {
-        const stack = this.matrix[i][j];
-        const found = stack.find(o => identifier === o.id);
-        if (found) return found;
-      }
-    } return null;
+    return null;
   }
 
   // updates a position of matrix with an object //
@@ -217,7 +210,7 @@ class Grid {
   }
 
   // Goes through the objects in the grid and updates their position fields
-  updateObjectInformation() {
+  recordObjectInformation() {
     const matrix = this.matrix; // eslint-disable-line prefer-destructuring
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
@@ -231,6 +224,7 @@ class Grid {
     }
   }
 
+  // Adds an object to the nameToObjects map 
   addToNameToObjectsMap(object) {
     const name = object.name.toLowerCase();
     if (!this.nameToObjsList.has(name)) {

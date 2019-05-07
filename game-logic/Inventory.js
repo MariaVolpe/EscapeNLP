@@ -26,7 +26,7 @@ class Inventory {
     this.items.get(item.name).push(item);
   }
 
-  hasItem(itemName) {
+  inventoryHasItem(itemName) {
     return this.items.has(itemName);
   }
 
