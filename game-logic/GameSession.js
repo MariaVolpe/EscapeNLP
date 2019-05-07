@@ -13,11 +13,6 @@ class GameSession {
     this.name = name;
   }
 
-  getGame() {
-    const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
-    return { id: this.id, grid: this.grid, players };
-  }
-
   getFormattedBoard() {
     return this.grid.getFormattedGrid();
   }
