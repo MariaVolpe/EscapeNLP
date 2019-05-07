@@ -5,14 +5,22 @@ import '../styles/PlayerInfo.css';
 class PlayerInfo extends Component {
 
   render() {
-    const itemsList = Object.entries(this.props.playerInfo.inventory);
+    const inventory = this.props.playerInfo.inventory;
+    const itemsList = Object.keys(inventory);
 
-    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${itemsList[i][0]}`} data-for="inv">
+    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
                                                <div className="item-outline">
                                                 <img src='' alt='' className="item-pic" />
                                                </div>
                                              </div>);
-    items.push(<ReactTooltip id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
+    for (let i = items.length; i < 6; i++) {
+      items.push(<div className="item-slot" key={i} data-tip='free space' data-for="inv">
+                                                 <div className="item-outline">
+                                                  <img src='' alt='' className="item-pic" />
+                                                 </div>
+                                               </div>);
+    }
+    items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
 

@@ -12,7 +12,7 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
-      roomSize: this.props.lobbySize,
+      roomSize: '',
     }
     this.confirmInfo = {
       title: 'Join Game?',
@@ -45,6 +45,14 @@ class Lobby extends Component {
       }
     });
 
+    this.socket.on('checkRoomSize', (roomSize) => {
+      this.setState({roomSize});
+    });
+
+  }
+
+  componentDidMount = () => {
+    this.socket.emit('checkRoomSize', this.props.lobbyId);
   }
 
   onJoinClick = (event) => {
