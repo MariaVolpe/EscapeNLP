@@ -1,4 +1,4 @@
-const Grid = require('../../game-logic/Grid');
+const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
 const Agent = require('../../game-logic/Agent');
 const Item = require('../../game-logic/Item');

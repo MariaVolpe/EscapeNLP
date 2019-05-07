@@ -1,5 +1,5 @@
 const Agent = require('./Agent');
-const Grid = require('./Grid');
+const { Grid } = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayoutBuild = require('./room-layouts/room-1');
 
@@ -11,11 +11,6 @@ class GameSession {
     this.puzzleManager = null;
     this.id = id;
     this.name = name;
-  }
-
-  getGame() {
-    const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
-    return { id: this.id, grid: this.grid, players };
   }
 
   getFormattedBoard() {
