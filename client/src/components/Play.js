@@ -267,7 +267,7 @@ class Play extends Component {
     let gameInfo = <div className='game-info'>
                     <GameInfo
                       board={board}
-                      allPlayersReady={this.state.allPlayersReady} 
+                      allPlayersReady={this.state.allPlayersReady}
                       onHoverOverTile={this.onHoverOverTile}
                       timer={this.state.timer}
                     />

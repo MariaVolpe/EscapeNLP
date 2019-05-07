@@ -12,24 +12,32 @@ class Browser extends Component {
     this.state = {
       createLobbyIsOpen: false,
       lobbies: [],
+      lobbySize: {}
     }
 
     this.socket = socketIOClient('');
 
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      const lobbies = allRooms.map(({ gameName, gameId }) => {
-        return (
-          <div className="five wide column">
-            <Lobby
-              lobbyName={gameName}
-              lobbyId={gameId}
-              className="lobby-box"
-              onLobbyClick={this.onLobbyClick}
-            />
-          </div>
-        );
+      let lobbies = [];
+      allRooms.forEach(({gameName, gameId}) => {
+        let lobbySize = this.state.lobbySize[gameId] ? this.state.lobbySize[gameId] : 0;
+        lobbies.push(<div className="five wide column" key={gameId}>
+                      <Lobby
+                        lobbyName={gameName}
+                        lobbyId={gameId}
+                        className="lobby-box"
+                        onLobbyClick={this.onLobbyClick}
+                        lobbySize={lobbySize}
+                      />
+                     </div>);
       });
       this.setState({lobbies});
+    });
+
+    this.socket.on('updateRoomSize', (roomSize, roomId) => {
+      let lobbySize = this.state.lobbySize;
+      lobbySize[roomId] = roomSize;
+      this.setState({lobbySize});
     });
 
     this.onCreateClick = this.onCreateClick.bind(this);

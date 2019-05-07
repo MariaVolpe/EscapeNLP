@@ -22,12 +22,27 @@ const getGames = () => {
 io.on('connection', (socket) => {
   console.log('connection established'); // eslint-disable-line no-console
 
+  const checkRoomSize = (roomId) => {
+    if (io.nsps['/'].adapter.rooms[roomId]) {
+      const roomSize = io.nsps['/'].adapter.rooms[roomId].length;
+      socket.broadcast.emit('updateRoomSize', roomSize, roomId);
+    }
+  };
+
+  socket.on('checkRoomSize', (roomInfo) => {
+    if (io.nsps['/'].adapter.rooms[roomInfo]) {
+      const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
+      socket.emit('checkRoomSize', roomSize);
+    }
+  });
+
   socket.on('joinRoom', (roomId) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
     });
     socket.join(roomId);
+    checkRoomSize(roomId);
     socket.currentRoom = roomId;
     socket.gameId = parseInt(roomId, 10);
     socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
@@ -52,12 +67,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('checkRoomSize', (roomInfo) => {
-    if (io.nsps['/'].adapter.rooms[roomInfo]) {
-      const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
-      socket.emit('checkRoomSize', roomSize);
-    }
-  });
 
   socket.on('getAllRooms', () => {
     socket.emit('refreshRoomsReceived', getGames());
@@ -99,7 +108,7 @@ io.on('connection', (socket) => {
     });
 
     if (reason === 'disconnected' && allPlayerNames.length > 0 && io.sockets.adapter.rooms[room].gameStart) {
-      disconnectedPlayer.leftGame = true;
+      disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     } else {
       gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
@@ -143,6 +152,7 @@ io.on('connection', (socket) => {
       const message = { commenter: time, time: '', mess };
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
+      checkRoomSize(socket.currentRoom);
       if (io.nsps['/'].adapter.rooms[socket.currentRoom].gameStart) {
         updatePlayers('disconnected', socket.currentRoom, socket.playerInfo);
       } else {
