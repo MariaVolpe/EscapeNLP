@@ -38,6 +38,7 @@ class PlayerInfo extends Component {
                      </div>
       }
     }
+    const playerCardStyle = "card player-box player" + this.props.playerInfo.position;
 
     // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
@@ -53,8 +54,14 @@ class PlayerInfo extends Component {
 
       )
     } else {
+      let name;
+      if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
+        name = this.props.playerInfo.name + " [YOU]";
+      } else {
+        name = this.props.playerInfo.name;
+      }
       return(
-        <div className="card player-box">
+        <div className={playerCardStyle}>
           <div className="content">
             <img
               className="left floated mini ui image"
@@ -63,7 +70,7 @@ class PlayerInfo extends Component {
             />
 
             <div className="right floated ui header">
-              {this.props.playerInfo.name}
+              {name}
             </div>
 
           </div>

@@ -64,9 +64,9 @@ class GameInfo extends Component {
       }
     }
 
-    let seconds = Math.floor(this.props.timer/1000);
-    let minutes = Math.floor(seconds / 60);
-    let hours = Math.floor(minutes / 60);
+    let seconds = Math.round(this.props.timer/1000);
+    let minutes = Math.round(seconds / 60);
+    let hours = Math.round(minutes / 60);
     seconds = seconds % 60;
     minutes = minutes % 60;
     let timerSeconds = '';

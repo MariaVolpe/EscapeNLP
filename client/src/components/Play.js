@@ -270,7 +270,14 @@ class Play extends Component {
                          position: this.state.allPlayers[player].position,
                          hasLeftGame: this.state.allPlayers[player].hasLeftGame
                        };
-      allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
+      allPlayers.push(<PlayerInfo
+                        playerInfo={playerInfo}
+                        allPlayersReady={this.state.allPlayersReady}
+                        key={i}
+                        className="row player-box"
+                        hasSetName={this.state.setName}
+                        yourName={this.state.playerName}
+                      />);
     });
 
     let gameInfo = <div className='game-info'>
