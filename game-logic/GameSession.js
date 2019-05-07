@@ -1,5 +1,5 @@
 const Agent = require('./Agent');
-const Grid = require('./Grid');
+const { Grid } = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayoutBuild = require('./room-layouts/room-1');
 
