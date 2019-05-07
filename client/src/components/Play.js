@@ -53,6 +53,10 @@ class Play extends Component {
       this.setState({allPlayers});
     });
 
+    this.socket.on('updatePlayers', (allPlayers) => {
+      this.setState({allPlayers})
+    });
+
     this.socket.on('readyUp', (playerInfo, allPlayersReady) => {
       let allPlayers = this.state.allPlayers;
       if (allPlayers.hasOwnProperty(playerInfo.name)) {
