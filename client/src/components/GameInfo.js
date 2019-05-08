@@ -15,7 +15,7 @@ import player2 from '../images/red.png';
 import player3 from '../images/black.png';
 import player4 from '../images/white.png';
 import player5 from '../images/blue.png';
-import player6 from '../images/wall.png';
+import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
 import binary_switch from '../images/binary_switch.png';
@@ -31,7 +31,7 @@ const pictures = {
   'dragon': dragon,
   'key': key,
   'weight': weight,
-  'wall': player6,
+  'wall': wall,
   'floor switch': floor_switch,
   'floor_switch_activated': floor_switch_activated,
   'button': button,
