@@ -1,0 +1,14 @@
+{
+    "puzzle_type": "goal",
+    "items_required": [
+        {
+            "name": "exit",
+            "id": "exit",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 7,
+                "y": 0
+            }
+        }
+    ]
+}

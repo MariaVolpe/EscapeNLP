@@ -22,17 +22,26 @@ const getGames = () => {
 io.on('connection', (socket) => {
   console.log('connection established'); // eslint-disable-line no-console
 
+  socket.on('checkRoomSize', (roomInfo) => {
+    if (io.nsps['/'].adapter.rooms[roomInfo]) {
+      const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
+      socket.emit('checkRoomSize', roomSize);
+    }
+  });
+
   socket.on('joinRoom', (roomId) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
-    });
+    }); //force current socket to only belong to one room when they join a game
     socket.join(roomId);
+    const roomSize = io.nsps['/'].adapter.rooms[roomId].length;
     socket.currentRoom = roomId;
     socket.gameId = parseInt(roomId, 10);
-    socket.playerNumber = io.nsps['/'].adapter.rooms[roomId].length;
+    socket.playerNumber = roomSize;
     socket.broadcast.emit('refreshRoomsReceived', getGames());
-    io.in(socket.currentRoom).emit('playerIsJoining', io.nsps['/'].adapter.rooms[roomId].length);
+    io.nsps['/'].adapter.rooms[roomId].timer = 0;
+    io.in(socket.currentRoom).emit('playerIsJoining', roomSize);
   });
 
   socket.on('attemptJoin', (roomInfo) => {
@@ -51,12 +60,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('checkRoomSize', (roomInfo) => {
-    if (io.nsps['/'].adapter.rooms[roomInfo]) {
-      const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
-      socket.emit('checkRoomSize', roomSize);
-    }
-  });
 
   socket.on('getAllRooms', () => {
     socket.emit('refreshRoomsReceived', getGames());
@@ -83,28 +86,29 @@ io.on('connection', (socket) => {
   const updatePlayers = (reason, room, disconnectedPlayer) => {
     const allPlayerNames = [];
     const allPlayers = io.sockets.adapter.rooms[room].sockets;
-    const playerNumbers = [];
 
     Object.keys(allPlayers).forEach((playerId, i) => {
       if (reason === 'disconnected') {
         io.sockets.connected[playerId].playerInfo.ready = false;
+        if (!io.sockets.adapter.rooms[room].gameStart) {
+          io.sockets.connected[playerId].playerNumber = i + 1;
+          io.sockets.connected[playerId].playerInfo.position = i + 1;
+        }
       }
       const player = io.sockets.connected[playerId];
       if (player.playerInfo) {
         allPlayerNames.push(player.playerInfo);
       }
-      playerNumbers.push(i + 1);
-      io.sockets.connected[playerId].playerNumber = i + 1;
     });
 
     if (reason === 'disconnected' && allPlayerNames.length > 0 && io.sockets.adapter.rooms[room].gameStart) {
-      disconnectedPlayer.leftGame = true;
+      disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     } else {
       gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
     }
 
-    io.in(room).emit('setNames', allPlayerNames, playerNumbers);
+    io.in(room).emit('setNames', allPlayerNames);
   };
 
   socket.on('getName', (playerInfo) => {
@@ -125,6 +129,9 @@ io.on('connection', (socket) => {
     });
 
     io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
+    if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+      io.sockets.adapter.rooms[socket.currentRoom].startTime = Date.now();
+    }
 
     io
       .in(socket.currentRoom)
@@ -151,4 +158,18 @@ io.on('connection', (socket) => {
   socket.on('updatePlayerCount', (playerList, roomId) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
+
+  setInterval(() => {
+    if (socket.currentRoom) {
+      if (io.sockets.adapter.rooms[socket.currentRoom]) {
+        if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+          const currentTime = Date.now();
+          const timer = currentTime - io.sockets.adapter.rooms[socket.currentRoom].startTime;
+          socket.emit('updateTimer', timer);
+        }
+      }
+    }
+  }, 1000);
+
+
 });

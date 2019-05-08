@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
+import playerIcon from '../images/playericon.png';
 
 class PlayerInfo extends Component {
 
-  responsiveColumns = (length) => {
-    let colSize = Math.floor(12/(length));
-    if (colSize > 5) {
-      colSize = 5;
-    }
-    return colSize;
-  }
-
   render() {
-    const itemsList = Object.entries(this.props.playerInfo.inventory);
-    let numOfCols = (this.responsiveColumns(itemsList.length)).toString();
-    let columns = "col-" + numOfCols + " ui item mini button";
+    const inventory = this.props.playerInfo.inventory;
+    const itemsList = Object.keys(inventory);
 
-    const items = itemsList.map((item, i) => <div className={columns} key={i}>
-                                            {itemsList[i][1]}
-                                          </div>);
+    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
+                                               <div className="item-outline">
+                                                <img src='' alt='' className="item-pic" />
+                                               </div>
+                                             </div>);
+    for (let i = items.length; i < 6; i++) {
+      items.push(<div className="item-slot" key={i}>
+                   <div className="item-outline">
+                    <img src='' alt='' className="item-pic" />
+                   </div>
+                 </div>);
+    }
+    items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
 
@@ -36,6 +39,7 @@ class PlayerInfo extends Component {
                      </div>
       }
     }
+    const playerCardStyle = "card player-box player" + this.props.playerInfo.position;
 
     // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
@@ -51,17 +55,23 @@ class PlayerInfo extends Component {
 
       )
     } else {
+      let name;
+      if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
+        name = this.props.playerInfo.name + " (you)";
+      } else {
+        name = this.props.playerInfo.name;
+      }
       return(
-        <div className="card player-box">
+        <div className={playerCardStyle}>
           <div className="content">
             <img
               className="left floated mini ui image"
-              src="https://banner2.kisspng.com/20180828/sxw/kisspng-clip-art-computer-icons-user-download-chamber-of-d-talonpaw-svg-png-icon-free-download-175238-on-5b84c95a116717.2809616615354289540713.jpg"
+              src={playerIcon}
               alt="user icon"
             />
 
-            <div className="right floated ui header">
-              {this.props.playerInfo.name}
+            <div className="right floated ui header player-name">
+              {name}
             </div>
 
           </div>

@@ -1,0 +1,23 @@
+{
+    "puzzle_type": "dragon",
+    "items_required": [
+        {
+            "name": "dragon",
+            "id": "dragon",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 7,
+                "y": 1
+            }
+        },
+        {
+            "name": "bookshelf",
+            "id": "bookshelf",
+            "isManaged": false,
+            "coordinates": {
+                "x": 5,
+                "y": 4
+            }
+        }
+    ]
+}

@@ -4,6 +4,10 @@ const Item = require('./Item');
 const Weight = require('./puzzles/weight');
 const Switch = require('./puzzles/switch');
 const Door = require('./puzzles/door');
+const Forge = require('./puzzles/forge');
+const Goal = require('./puzzles/goal');
+const Dragon = require('./puzzles/dragon');
+const Pots = require('./puzzles/pots');
 
 class PuzzleManager {
   constructor(grid) {
@@ -17,9 +21,13 @@ class PuzzleManager {
 
   // todo: set puzzles on this.puzzles, dynamically
   findPuzzles() {
-    this.puzzles.push(Weight);
-    this.puzzles.push(Switch);
     this.puzzles.push(Door);
+    this.puzzles.push(Weight);
+    this.puzzles.push(Forge);
+    this.puzzles.push(Pots);
+    this.puzzles.push(Switch);
+    this.puzzles.push(Dragon);
+    this.puzzles.push(Goal);
   }
 
   addPuzzlesToBoard() {

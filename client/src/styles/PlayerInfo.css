@@ -4,22 +4,32 @@
   width: 95%;
 }
 
-.item-box {
-  margin-left: 3vh;
-}
-
 @media only screen and (max-width: 1700px) {
   .ready {
     margin-left: 65.5%;
-    margin-top: 10%;
+    margin-top: 15%;
     position: absolute;
+  }
+
+  .right.floated.ui.header {
+    font-size: 1.67vh;
   }
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1500px) {
   .inventory {
     visibility: hidden;
     position: absolute;
+  }
+
+  .ready {
+    margin-left: 55.5%;
+    margin-top: 14.3%;
+    position: absolute;
+  }
+
+  .item-slot {
+    margin-top: 6.66%;
   }
 }
 
@@ -37,4 +47,52 @@
 .right.floated.ui.header {
   margin-right: 3%;
   margin-top: 3%;
+  padding: 1%;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.item-pic {
+  width: 100%;
+  height: auto;
+}
+
+.item-slot {
+  display: inline-block;
+  top: 0vh;
+  margin-bottom: 2.5px;
+}
+
+.item-outline {
+  height: 3.75vh;
+  width: 3.75vh;
+  border: 0.5vh solid silver;
+  border-radius: 15%;
+  margin-right: 5px;
+  margin-top: -5px;
+  background-color: white;
+}
+
+.card.player1 {
+  background-color: #fd79a8;
+}
+
+.card.player3 {
+  background-color: #d63031;
+}
+
+.card.player2 {
+  background-color: #7f8c8d;
+}
+
+.card.player4 {
+  background-color: white;
+}
+
+.card.player5 {
+  background-color: #3498db;
+}
+
+.player-name {
+  background-color: white;
 }

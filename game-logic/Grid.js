@@ -10,6 +10,10 @@ const Agent = require('./Agent');
  *      using the position the object can be found
  */
 
+const getDistance = (centerObj, otherObj) => (
+  getManhattanDistance(centerObj.position, otherObj.position)
+);
+
 class Grid {
   constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
@@ -33,10 +37,9 @@ class Grid {
       p = new Point(x, y);
     }
     obj.position = p;
-    const name = obj.name.toLowerCase();
-    if (this.nameToObjsList.has(name)) { // if a list already exists
-      this.nameToObjsList.get(name).push(obj);
-    } else this.nameToObjsList.set(name, [obj]);
+    if (this.nameToObjsList.has(obj.name)) { // if a list already exists
+      this.nameToObjsList.get(obj.name).push(obj);
+    } else this.nameToObjsList.set(obj.name, [obj]);
     this.matrix[p.x][p.y].push(obj);
   }
 
@@ -48,7 +51,10 @@ class Grid {
     for (let i = 0; i < this.matrix.length; i++) {
       for (let j = 0; j < this.matrix[i].length; j++) {
         this.matrix[i][j].forEach((item) => {
-          frontEndMatrix[i][j].push(item.name);
+          frontEndMatrix[i][j].push({
+            sprite: item.getSpriteName(),
+            hint: item.name,
+          });
         });
       }
     }
@@ -62,8 +68,7 @@ class Grid {
     this.removeFromStack(boardObj);
     const p = boardObj.position;
     this.matrix[p.x][p.y] = this.matrix[p.x][p.y].filter(o => boardObj !== o);
-    let { name } = boardObj;
-    name = name.toLowerCase();
+    const { name } = boardObj;
     const removed = this.nameToObjsList.get(name).filter(o => boardObj !== o);
     this.nameToObjsList.set(name, removed);
   }
@@ -117,7 +122,6 @@ class Grid {
       const movingObj = movingObjs[i];
       const startPoint = movingObj.position;
       const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
-      if (!path.length) continue;
       // offset by how many things we are moving
       const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       // update matrix @ previous point //
@@ -162,6 +166,18 @@ class Grid {
     return null;
   }
 
+  /* Creates a 3D matrix with xDim and yDim */
+  // setMatrix(matrix) {
+  //   if (matrix) {
+  //     this.matrix = matrix;
+  //     this.pathFinder.setMatrix(matrix);
+  //     return;
+  //   }
+  //   this.matrix = Array.from({ length: xDim },
+  //     () => Array.from({ length: yDim },
+  //       () => []));
+  // }
+
   // updates a position of matrix with an object //
   pushOnMatrix(x, y, obj) {
     this.matrix[x][y].push(obj);
@@ -169,7 +185,6 @@ class Grid {
 
   // Given a center object and an object name, find the nearest object that matches that name
   resolveNameToNearestObject(centerObj, objName) {
-    objName = objName.toLowerCase();
     const objList = this.nameToObjsList.get(objName);
     return this.getNearestObject(centerObj, objList);
   }
@@ -205,10 +220,6 @@ class Grid {
     this.matrix[p.x][p.y] = stack;
   }
 
-  getDistance(centerObj, otherObj) {
-    return getManhattanDistance(centerObj.position, otherObj.position);
-  }
-
   // Goes through the objects in the grid and updates their position fields
   recordObjectInformation() {
     const matrix = this.matrix; // eslint-disable-line prefer-destructuring
@@ -224,13 +235,11 @@ class Grid {
     }
   }
 
-  // Adds an object to the nameToObjects map 
-  addToNameToObjectsMap(object) {
-    const name = object.name.toLowerCase();
-    if (!this.nameToObjsList.has(name)) {
-      this.nameToObjsList.set(name, []);
+  addToObjectMap(object) {
+    if (!this.nameToObjsList.has(object.name)) {
+      this.nameToObjsList.set(object.name, []);
     }
-    this.nameToObjsList.get(name).push(object);
+    this.nameToObjsList.get(object.name).push(object);
   }
 
   // gets all objects of type agent from the grid //
@@ -250,4 +259,4 @@ class Grid {
   }
 }
 
-module.exports = Grid;
+module.exports = { Grid, getDistance };

@@ -19,7 +19,7 @@ class Browser extends Component {
     this.socket.on('refreshRoomsReceived', (allRooms) => {
       const lobbies = allRooms.map(({ gameName, gameId }) => {
         return (
-          <div className="five wide column">
+          <div className="five wide column" key={gameId}>
             <Lobby
               lobbyName={gameName}
               lobbyId={gameId}

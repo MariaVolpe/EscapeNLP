@@ -1,5 +1,5 @@
 const Agent = require('./Agent');
-const Grid = require('./Grid');
+const { Grid } = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayoutBuild = require('./room-layouts/room-1');
 
@@ -11,11 +11,6 @@ class GameSession {
     this.puzzleManager = null;
     this.id = id;
     this.name = name;
-  }
-
-  getGame() {
-    const players = this.agents.map(({ inventory, id }) => ({ inventory, id }));
-    return { id: this.id, grid: this.grid, players };
   }
 
   getFormattedBoard() {
@@ -52,17 +47,10 @@ class GameSession {
   }
 
   // drop everyone onto map AFTER game starts, again unless performance is poor
-  addAgentsToMap(positions) {
-    if (positions) {
-      positions.forEach((position, index) => {
-        this.grid.add(this.agents[index], position);
-      });
-      return;
-    }
-
-    // simple demo logic: drop agents onto first available space
+  addAgentsToMap() {
+    let spawnPoints = [{ x: 1, y: 7 },{ x: 1, y: 9 },{ x: 4, y: 7 },{ x: 4, y: 9 },{ x: 2, y: 8 }];
     this.agents.forEach((agent) => {
-      this.grid.add(agent);
+      this.grid.add(agent, spawnPoints.pop());
     });
   }
 
