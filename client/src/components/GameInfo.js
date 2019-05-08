@@ -49,8 +49,7 @@ const pictures = {
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5,
-  'player6': player6
+  'player5': player5
 }
 
 class GameInfo extends Component {
