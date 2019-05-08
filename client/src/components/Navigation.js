@@ -23,6 +23,9 @@ class Navigation extends Component {
 
   onAvatarClick = (icon) => {
     window.sessionStorage.setItem('playerIcon', icon);
+    if (this.props.inGame) {
+      this.props.updatePlayerIcon(icon);
+    }
     this.setState({ isOpen: false });
   }
 

@@ -268,6 +268,12 @@ class Play extends Component {
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
   }
 
+  updatePlayerIcon = (iconName) => {
+    if (this.state.setName) {
+      this.socket.emit('updatePlayerIcon', iconName);
+    }
+  }
+
   render() {
     const board = this.state.board;
     let allPlayers = [];
@@ -320,7 +326,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <Navigation inGame={true} />
+        <Navigation inGame={true} updatePlayerIcon={this.updatePlayerIcon}/>
         {playerInfo}
         {gameInfo}
         <CreateNameModal
