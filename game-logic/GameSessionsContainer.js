@@ -20,13 +20,6 @@ class GameSessionsContainer {
     this.playerIdCounter = 0;
   }
 
-  getGame(id) {
-    if (!this.games.has(id)) {
-      return notFoundErr(id);
-    }
-    return { data: this.games.get(id).getGame() };
-  }
-
   getFormattedBoard(id) {
     if (!this.games.has(id)) {
       return notFoundErr(id);

@@ -1,5 +1,6 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
+const { getDistance } = require('../game-logic/grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -79,7 +80,7 @@ class ActionExecuter {
       const object = this.grid.getObject({ centerObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
-      if (this.grid.getDistance(data.user, object) > 2) {
+      if (getDistance(data.user, object) > 2) {
         this.grid.moveToObject([data.user], object);
       } texts.push(object.inspectText);
     } return texts;
@@ -96,7 +97,7 @@ class ActionExecuter {
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
           const objName = objectNames[j];
-          if (this.grid.getDistance(data.user, sourceObject) > 1) {
+          if (getDistance(data.user, sourceObject) > 1) {
             this.grid.moveToObject([data.user], sourceObject);
           }
           sourceObject.giveItem(objName, data.user);  
@@ -105,7 +106,7 @@ class ActionExecuter {
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
           const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
-          if (this.grid.getDistance(data.user, object) > 1) {
+          if (getDistance(data.user, object) > 1) {
             this.grid.moveToObject([data.user], object);
           }
           data.user.getItem(object);
@@ -120,7 +121,7 @@ class ActionExecuter {
         const objectName = objectNames[j];
         const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
         if (!object) continue;
-        if (this.grid.getDistance(data.user, object) > 1) {
+        if (getDistance(data.user, object) > 1) {
           this.grid.moveToObject([data.user], object);
         }
         data.user.getItem(object);

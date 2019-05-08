@@ -1,4 +1,4 @@
-const Grid = require('../../game-logic/Grid');
+const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
 
 describe('Grid functionality tests', () => {

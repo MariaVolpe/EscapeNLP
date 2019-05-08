@@ -10,6 +10,10 @@ const Agent = require('./Agent');
  *      using the position the object can be found
  */
 
+const getDistance = (centerObj, otherObj) => (
+  getManhattanDistance(centerObj.position, otherObj.position)
+);
+
 class Grid {
   constructor(layoutGrid) {
     this.nameToObjsList = new Map(); // resolves names to list of objects
@@ -222,10 +226,6 @@ class Grid {
     this.matrix[p.x][p.y] = stack;
   }
 
-  getDistance(centerObj, otherObj) {
-    return getManhattanDistance(centerObj.position, otherObj.position);
-  }
-
   // Goes through the objects in the grid and updates their position fields
   updateObjectInformation() {
     const matrix = this.matrix; // eslint-disable-line prefer-destructuring
@@ -265,4 +265,4 @@ class Grid {
   }
 }
 
-module.exports = Grid;
+module.exports = { Grid, getDistance };
