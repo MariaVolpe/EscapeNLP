@@ -9,6 +9,15 @@
                 "x": 7,
                 "y": 1
             }
+        },
+        {
+            "name": "bookshelf",
+            "id": "bookshelf",
+            "isManaged": false,
+            "coordinates": {
+                "x": 5,
+                "y": 4
+            }
         }
     ]
 }
