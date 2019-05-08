@@ -57,7 +57,7 @@ class PlayerInfo extends Component {
     } else {
       let name;
       if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
-        name = this.props.playerInfo.name + " / You";
+        name = this.props.playerInfo.name + " (you)";
       } else {
         name = this.props.playerInfo.name;
       }

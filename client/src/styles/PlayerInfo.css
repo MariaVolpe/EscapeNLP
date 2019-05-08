@@ -48,7 +48,8 @@
   margin-right: 3%;
   margin-top: 3%;
   padding: 1%;
-  border: 3px solid black;
+  border: 2px solid black;
+  border-radius: 5px;
 }
 
 .item-pic {
@@ -73,14 +74,14 @@
 }
 
 .card.player1 {
-  background-color: #e84393;
-}
-
-.card.player2 {
-  background-color: #d63031;
+  background-color: #fd79a8;
 }
 
 .card.player3 {
+  background-color: #d63031;
+}
+
+.card.player2 {
   background-color: #7f8c8d;
 }
 

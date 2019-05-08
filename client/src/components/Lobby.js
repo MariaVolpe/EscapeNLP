@@ -12,7 +12,7 @@ class Lobby extends Component {
     this.state = {
       errorOpen: false,
       confirmOpen: false,
-      roomSize: '',
+      roomSize: 0,
     }
     this.confirmInfo = {
       title: 'Join Game?',
