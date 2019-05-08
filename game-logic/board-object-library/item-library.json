@@ -5,12 +5,12 @@
         "useMethod": "attack"
         },
     "sword_blade": {
-        "name": "sword_blade",
+        "name": "sword blade",
         "id": "sword_blade",
         "useMethod": "none"
     },
     "sword_hilt": {
-        "name": "sword_hilt",
+        "name": "sword hilt",
         "id": "sword_hilt",
         "useMethod": "none"    
     },

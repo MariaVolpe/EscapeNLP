@@ -47,17 +47,10 @@ class GameSession {
   }
 
   // drop everyone onto map AFTER game starts, again unless performance is poor
-  addAgentsToMap(positions) {
-    if (positions) {
-      positions.forEach((position, index) => {
-        this.grid.add(this.agents[index], position);
-      });
-      return;
-    }
-
-    // simple demo logic: drop agents onto first available space
+  addAgentsToMap() {
+    let spawnPoints = [{ x: 1, y: 7 },{ x: 1, y: 9 },{ x: 4, y: 7 },{ x: 4, y: 9 },{ x: 2, y: 8 }];
     this.agents.forEach((agent) => {
-      this.grid.add(agent);
+      this.grid.add(agent, spawnPoints.pop());
     });
   }
 

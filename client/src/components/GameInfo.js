@@ -15,40 +15,41 @@ import player2 from '../images/red.png';
 import player3 from '../images/black.png';
 import player4 from '../images/white.png';
 import player5 from '../images/blue.png';
-import player6 from '../images/wall.png';
+import wall from '../images/wall.png';
 import weight from '../images/weight.png';
-import billboard from '../images/billboard.png';
+import poster from '../images/poster.png';
 import binary_switch from '../images/binary_switch.png';
 import binary_switch_activated from '../images/binary_switch_activated.png';
 import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
 import forge from '../images/forge.png';
 import pot from '../images/pot.png';
+import exit from '../images/exit.png';
 
 
 const pictures = {
   'dragon': dragon,
   'key': key,
   'weight': weight,
-  'wall': player6,
+  'wall': wall,
   'floor switch': floor_switch,
   'floor_switch_activated': floor_switch_activated,
   'button': button,
   'block': block,
   'wep': wep,
-  'billboard': billboard,
+  'poster': poster,
   'switch': binary_switch,
   'binary_switch_activated' : binary_switch_activated,
   'bookshelf': bookshelf,
   'door': door,
   'forge': forge,
   'pot': pot,
+  'exit': exit,
   'player1': player1,
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5,
-  'player6': player6
+  'player5': player5
 }
 
 class GameInfo extends Component {
