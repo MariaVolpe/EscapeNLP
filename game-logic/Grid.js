@@ -152,12 +152,12 @@ class Grid {
   }
 
   // Gets an object relative to a centerObj and its the object name
-  getObject({ centerObj, identifier }) {
+  getObject({ searchOriginObj, identifier }) {
     // if passed in a name and a centerObj, get nearest one, otherwise just get first in list
     identifier = identifier.toLowerCase();
     if (this.nameToObjsList.has(identifier)) {
       const objList = this.nameToObjsList.get(identifier);
-      return centerObj ? this.getNearestObject(centerObj, objList) : this.nameToObjsList.get(identifier)[0];
+      return searchOriginObj ? this.getNearestObject(searchOriginObj, objList) : objList[0];
     }
     return null;
   }
