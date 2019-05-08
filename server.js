@@ -163,7 +163,7 @@ io.on('connection', (socket) => {
     if (socket.playerInfo) {
       socket.playerInfo.iconName = iconName;
     }
-    updatePlayers('disconnected', socket.currentRoom, {});
+    updatePlayers('', socket.currentRoom, {});
   });
 
   setInterval(() => {
