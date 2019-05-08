@@ -15,11 +15,11 @@ class PlayerInfo extends Component {
                                                </div>
                                              </div>);
     for (let i = items.length; i < 6; i++) {
-      items.push(<div className="item-slot" key={i} data-tip='free space' data-for="inv">
-                                                 <div className="item-outline">
-                                                  <img src='' alt='' className="item-pic" />
-                                                 </div>
-                                               </div>);
+      items.push(<div className="item-slot" key={i}>
+                   <div className="item-outline">
+                    <img src='' alt='' className="item-pic" />
+                   </div>
+                 </div>);
     }
     items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
