@@ -46,7 +46,8 @@ class Play extends Component {
             inventory: {},
             ready: player.ready,
             position: player.position,
-            hasLeftGame: player.hasLeftGame
+            hasLeftGame: player.hasLeftGame,
+            iconName: player.iconName
           };
           console.log(allPlayers[player.name]);
         } else {
@@ -54,7 +55,8 @@ class Play extends Component {
             inventory: {},
             ready: player.ready,
             position: player.position,
-            hasLeftGame: player.hasLeftGame
+            hasLeftGame: player.hasLeftGame,
+            iconName: player.iconName
           };
           console.log(allPlayers[player.name]);
         }
@@ -225,7 +227,13 @@ class Play extends Component {
     this.setState({ playerName });
     const takenName = allPlayers.hasOwnProperty(playerName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      const playerInfo = { name: playerName, ready: false, position: 0 };
+      let playerIcon;
+      if (window.sessionStorage.getItem('playerIcon') !== null) {
+        playerIcon = window.sessionStorage.getItem('playerIcon');
+      } else {
+        playerIcon = 'defaultIcon';
+      }
+      const playerInfo = { name: playerName, ready: false, position: 0, iconName: playerIcon };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
@@ -268,7 +276,8 @@ class Play extends Component {
                          inventory: this.state.allPlayers[player].inventory,
                          ready: this.state.allPlayers[player].ready,
                          position: this.state.allPlayers[player].position,
-                         hasLeftGame: this.state.allPlayers[player].hasLeftGame
+                         hasLeftGame: this.state.allPlayers[player].hasLeftGame,
+                         iconName: this.state.allPlayers[player].iconName
                        };
       allPlayers.push(<PlayerInfo
                         playerInfo={playerInfo}

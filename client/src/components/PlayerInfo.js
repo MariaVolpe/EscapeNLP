@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
-import playerIcon from '../images/playericon.png';
+import defaultIcon from '../images/playericon.png';
+import kirbyIcon from '../images/player.png';
+
+const icons = {
+  'defaultIcon': defaultIcon,
+  'kirbyIcon': kirbyIcon
+}
 
 class PlayerInfo extends Component {
 
@@ -66,7 +72,7 @@ class PlayerInfo extends Component {
           <div className="content">
             <img
               className="left floated mini ui image"
-              src={playerIcon}
+              src={icons[this.props.playerInfo.iconName]}
               alt="user icon"
             />
 

@@ -19,13 +19,13 @@ class PictureModal extends Component {
                         </div>);
     }
     playerIconList.push(<div
-                        color="danger"
-                        data-dismiss="modal"
-                        className="avatar-box centered"
-                        onClick={() => this.props.onAvatarClick('kirbyIcon')}
-                      >
-                        <img src={kirbyIcon} alt='' className="avatar" />
-                      </div>);
+                          color="danger"
+                          data-dismiss="modal"
+                          className="avatar-box centered"
+                          onClick={() => this.props.onAvatarClick('kirbyIcon')}
+                        >
+                          <img src={kirbyIcon} alt='' className="avatar" />
+                        </div>);
 
     return (
       <div>
@@ -43,7 +43,7 @@ class PictureModal extends Component {
                   data-dismiss="modal"
                   className="ui button"
                 >
-                  Cancel
+                  Close
                 </button>
               </FormGroup>
             </Form>
