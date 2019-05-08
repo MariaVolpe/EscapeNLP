@@ -1,0 +1,17 @@
+.avatar {
+  height: 100%;
+  width: auto;
+}
+
+.avatar-box {
+  height: 90px;
+  width: 90px;
+  border: 0.1vh solid silver;
+  border-radius: 15%;
+  background-color: white;
+  display: inline-block;
+}
+
+.avatar-box:hover {
+  cursor: pointer;
+}

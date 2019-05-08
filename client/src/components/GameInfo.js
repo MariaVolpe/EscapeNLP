@@ -77,13 +77,41 @@ class GameInfo extends Component {
       }
     }
 
+    let seconds = Math.round(this.props.timer/1000);
+    let minutes = Math.round(seconds / 60);
+    let hours = Math.round(minutes / 60);
+    seconds = seconds % 60;
+    minutes = minutes % 60;
+    let timerSeconds = '';
+    let timerMinutes = '';
+    let timerHours = '';
+    if (seconds < 10) {
+      timerSeconds = '0' + seconds.toString();
+    } else {
+      timerSeconds = seconds.toString();
+    }
+    if (minutes < 10) {
+      timerMinutes = '0' + minutes.toString();
+    } else {
+      timerMinutes = minutes.toString();
+    }
+    if (hours < 10) {
+      timerHours = '0' + hours.toString();
+    } else {
+      timerHours = hours.toString();
+    }
+
+    const time = `Timer ${timerHours}:${timerMinutes}:${timerSeconds}`;
+
     for (let i=0; i<16; i++) {
       if (i !== 0) {
        mapData.push(<div className="map one wide column" >
                       {i}
                     </div>);
      } else {
-       mapData.push(<div className="map one wide column" />);
+       mapData.push(<div className="map one wide column">
+                      <div className="timer">{time}</div>
+                    </div>);
      }
     }
 

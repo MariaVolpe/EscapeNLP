@@ -25,7 +25,8 @@ class Play extends Component {
       playerName: '',
       chatOption: 'chat',
       warningOpen: false,
-      numberOfPlayers: 0
+      numberOfPlayers: 0,
+      timer: 0
     }
 
     this.socket = socketIOClient('');
@@ -42,11 +43,20 @@ class Play extends Component {
       players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
-            inventory: {'slot1': ' ', 'slot2': ' ', 'slot3': ' ', 'slot4': ' ', 'slot5': ' ', 'slot6': ' ', 'slot7': ' ', 'slot8': ' '},
+            inventory: {},
             ready: player.ready,
-            position: playerNumbers[i],
+            position: player.position,
             hasLeftGame: player.hasLeftGame
           };
+          console.log(allPlayers[player.name]);
+        } else {
+          allPlayers[player.name] = {
+            inventory: {},
+            ready: player.ready,
+            position: player.position,
+            hasLeftGame: player.hasLeftGame
+          };
+          console.log(allPlayers[player.name]);
         }
       });
 
@@ -101,6 +111,10 @@ class Play extends Component {
 
     });
 
+    this.socket.on('updateTimer', (timer) => {
+      this.setState({timer});
+    })
+
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
     this.onMessageChange = this.onMessageChange.bind(this);
     this.onCommandKeyPress = this.onCommandKeyPress.bind(this);
@@ -112,7 +126,7 @@ class Play extends Component {
     if (window.sessionStorage.getItem('roomId') !== null) {
       console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
-      window.sessionStorage.removeItem("roomId")
+      window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({board});
@@ -260,11 +274,23 @@ class Play extends Component {
                          position: this.state.allPlayers[player].position,
                          hasLeftGame: this.state.allPlayers[player].hasLeftGame
                        };
-      allPlayers.push(<PlayerInfo playerInfo={playerInfo} allPlayersReady={this.state.allPlayersReady} key={i} className="row player-box" />);
+      allPlayers.push(<PlayerInfo
+                        playerInfo={playerInfo}
+                        allPlayersReady={this.state.allPlayersReady}
+                        key={i}
+                        className="row player-box"
+                        hasSetName={this.state.setName}
+                        yourName={this.state.playerName}
+                      />);
     });
 
     let gameInfo = <div className='game-info'>
-                    <GameInfo board={board} allPlayersReady={this.state.allPlayersReady} onHoverOverTile={this.onHoverOverTile} />
+                    <GameInfo
+                      board={board}
+                      allPlayersReady={this.state.allPlayersReady}
+                      onHoverOverTile={this.onHoverOverTile}
+                      timer={this.state.timer}
+                    />
                    </div>;
     let playerInfo;
     if (this.state.allPlayersReady) {
