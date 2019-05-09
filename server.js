@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
-    }); //force current socket to only belong to one room when they join a game
+    }); // force current socket to only belong to one room when they join a game
     socket.join(roomId);
     const roomSize = io.nsps['/'].adapter.rooms[roomId].length;
     socket.currentRoom = roomId;
@@ -66,10 +66,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (message) => {
-    if (message.type === 'action') {
-      gameContainer.performAction(socket.gameId, message);
-    }
     io.in(socket.currentRoom).emit('chatMessage', message);
+    if (message.type === 'action') {
+      //gameContainer.performAction(socket.gameId, message);
+      let action = {
+        type: 'interpreted',
+        time: message.time,
+        commenter: message.commenter,
+        mess: 'INTERPRETED ACTION'
+      };
+      io.in(socket.currentRoom).emit('chatMessage', action);
+    }
   });
 
   socket.on('getInventories', (inventories) => {
@@ -170,6 +177,4 @@ io.on('connection', (socket) => {
       }
     }
   }, 1000);
-
-
 });
