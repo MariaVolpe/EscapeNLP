@@ -234,7 +234,7 @@ class Grid {
   addToNameToObjectsMap(object) {
     const name = object.name.toLowerCase();
     if (!this.nameToObjsList.has(name)) this.nameToObjsList.set(name, []);
-    
+
     this.nameToObjsList.get(name).push(object);
   }
 

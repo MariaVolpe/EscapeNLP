@@ -323,7 +323,7 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Place', () => {
-    /*it('Should place an item already possessed onto the board', async () => {
+    /* it('Should place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor_switch', '3', null);
@@ -358,7 +358,7 @@ describe('ActionExecuter tests', () => {
       const expectedAgentInventory = JSON.stringify([]);
       const actualAgentInventory = JSON.stringify(indianaJones.getAllItems().map(e => e.name));
       expect(actualAgentInventory).toEqual(expectedAgentInventory);
-    });*/
+    }); */
   });
 
   describe('Destroy', () => {
