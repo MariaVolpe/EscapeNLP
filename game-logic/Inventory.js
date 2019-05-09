@@ -16,12 +16,18 @@ class Inventory {
 
   removeItem(itemName) {
     if (!this.items.has(itemName)) return null;
-    return this.items.get(itemName).pop();
+    const item = this.items.get(itemName).pop();
+    if (!this.items.get(itemName).length) this.items.delete(itemName);
+    return item;
   }
 
   addItem(item) {
     if (!this.items.has(item.name)) this.items.set(item.name, []);
     this.items.get(item.name).push(item);
+  }
+
+  inventoryHasItem(itemName) {
+    return this.items.has(itemName);
   }
 
   // returns a list of all items in inventory
