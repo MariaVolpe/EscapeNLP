@@ -73,7 +73,7 @@ class PlayerInfo extends Component {
         name = this.props.playerInfo.name;
       }
       return(
-        <div className={playerCardStyle}>
+        <div className="card player-box">
           <div className="content">
             <img
               className="left floated mini ui image"
