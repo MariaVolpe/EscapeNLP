@@ -1,17 +1,6 @@
 const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
-
-const stripNames = (matrix) => {
-  const namesMatrix = Array.from({ length: matrix.length },
-    () => Array.from({ length: matrix[0].length },
-      () => Array.from({ length: 0 },
-        () => '')));
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      namesMatrix.push(...matrix[i][j].map(e => e.name));
-    }
-  } return namesMatrix;
-};
+const { stripNames } = require('./util');
 
 describe('Grid functionality tests', () => {
   // This needs to be changed to use Structure objects to work //

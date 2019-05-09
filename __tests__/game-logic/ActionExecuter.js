@@ -3,18 +3,7 @@ const Structure = require('../../game-logic/Structure');
 const Agent = require('../../game-logic/Agent');
 const Item = require('../../game-logic/Item');
 const ActionExecuter = require('../../nlp/ActionExecuter');
-
-const stripNames = (matrix) => {
-  const namesMatrix = Array.from({ length: matrix.length },
-    () => Array.from({ length: matrix[0].length },
-      () => Array.from({ length: 0 },
-        () => '')));
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      namesMatrix.push(...matrix[i][j].map(e => e.name));
-    }
-  } return namesMatrix;
-};
+const { stripNames } = require('./util');
 
 describe('ActionExecuter tests', () => {
   describe('Move', () => {
