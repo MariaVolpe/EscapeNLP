@@ -48,7 +48,6 @@
   margin-right: 3%;
   margin-top: 3%;
   padding: 1%;
-  border: 2px solid black;
   border-radius: 5px;
 }
 
@@ -73,24 +72,24 @@
   background-color: white;
 }
 
-.card.player1 {
-  background-color: #fd79a8;
+.right.floated.ui.header.player1 {
+  border: 2px solid #fd79a8;
 }
 
-.card.player3 {
-  background-color: #d63031;
+.right.floated.ui.header.player3 {
+  border: 2px solid #d63031;
 }
 
-.card.player2 {
-  background-color: #7f8c8d;
+.right.floated.ui.header.player2 {
+  border: 2px solid black;
 }
 
-.card.player4 {
-  background-color: white;
+.right.floated.ui.header.player4 {
+  border: 2px solid #4cd137;
 }
 
-.card.player5 {
-  background-color: #3498db;
+.right.floated.ui.header.player5 {
+  border: 2px solid #3498db;
 }
 
 .player-name {

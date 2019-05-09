@@ -17,12 +17,14 @@ class PlayerInfo extends Component {
 
   render() {
     const inventory = this.props.playerInfo.inventory;
-
-    const items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[i]}`} data-for="inv">
-                                               <div className="item-outline">
-                                                <img src='' alt='' className="item-pic" />
-                                               </div>
-                                             </div>);
+    let items = [];
+    if (inventory !== undefined) {
+      items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[i]}`} data-for="inv">
+                                                 <div className="item-outline">
+                                                  <img src='' alt='' className="item-pic" />
+                                                 </div>
+                                               </div>);
+    }
     for (let i = items.length; i < 6; i++) {
       items.push(<div className="item-slot" key={i}>
                    <div className="item-outline">
@@ -48,7 +50,7 @@ class PlayerInfo extends Component {
                      </div>
       }
     }
-    const playerCardStyle = "card player-box player" + this.props.playerInfo.position;
+    const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
 
     // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
@@ -71,7 +73,7 @@ class PlayerInfo extends Component {
         name = this.props.playerInfo.name;
       }
       return(
-        <div className={playerCardStyle}>
+        <div className="card player-box">
           <div className="content">
             <img
               className="left floated mini ui image"
@@ -79,7 +81,7 @@ class PlayerInfo extends Component {
               alt="user icon"
             />
 
-            <div className="right floated ui header player-name">
+            <div className={playerNameStyle}>
               {name}
             </div>
 
