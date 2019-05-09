@@ -1,10 +1,22 @@
 const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
 
+const stripNames = (matrix) => {
+  const namesMatrix = Array.from({ length: matrix.length },
+    () => Array.from({ length: matrix[0].length },
+      () => Array.from({ length: 0 },
+        () => '')));
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      namesMatrix.push(...matrix[i][j].map(e => e.name));
+    }
+  } return namesMatrix;
+};
+
 describe('Grid functionality tests', () => {
   // This needs to be changed to use Structure objects to work //
   describe('Adding and removing elements', () => {
-    const floor = new Structure('floor_switch', 'a', null);
+    const floor = new Structure('floor switch', 'a', null);
     const wall = new Structure('weight', 'b', null);
     const mover = { name: 'object', id: '0', position: { x: 0, y: 0 } };
     const destination = { name: 'destination', id: '1', position: { x: 0, y: 0 } };
@@ -55,36 +67,35 @@ describe('Grid functionality tests', () => {
   });
   describe('Object movement', () => {
     it('should move a named object to a named destination', async () => {
-      const floor = new Structure('floor_switch', 'a', null);
+      const floor = new Structure('floor', 'a', null);
       const mover = new Structure('weight', 'b', null);
-      const wall = new Structure('weight', 'c', null);
-      const destination = new Structure('floor_switch', 'd', null);
+      const wall = new Structure('wall', 'c', null);
+      const destination = new Structure('floor', 'd', null);
+      mover.name = 'mover';
+      destination.name = 'destination';
       const matrix = [
-        [[wall], [floor], [floor]],
+        [[wall], [floor], [floor, mover]],
         [[wall], [floor], [wall]],
-        [[floor], [floor], [wall]],
+        [[floor, destination], [floor], [wall]],
       ];
       const grid = new Grid(matrix);
       // place a moving object and destination at these points //
-      mover.name = 'mover';
-      destination.name = 'destination';
-      grid.add(mover, { x: 0, y: 2 });
-      grid.add(destination, { x: 2, y: 0 });
+      grid.recordObjectInformation();
       // move object
       grid.moveToObject([mover], grid.resolveNameToNearestObject(mover, 'destination'));
       // do checks
-      const expected = JSON.stringify([[[wall], [floor], [floor]], [[wall], [floor], [wall]],
-        [[floor, destination, mover], [floor], [wall]]]);
-      expect(JSON.stringify(grid.matrix)).toEqual(expected);
+      const expected = [[[wall], [floor], [floor]], [[wall], [floor], [wall]],
+        [[floor, destination, mover], [floor], [wall]]];
+      expect(stripNames(grid.matrix)).toEqual(stripNames(expected));
     });
 
     // STRETCH GOAL CODE
     /* it('should move an object in a direction', async () => {
       const grid = new Grid(3);
-      const floor = new Structure('floor_switch', 'a', null);
+      const floor = new Structure('floor switch', 'a', null);
       const mover = new Structure('weight', 'b', null);
       const wall = new Structure('weight', 'c', null);
-      const destination = new Structure('floor_switch', 'd', null);
+      const destination = new Structure('floor switch', 'd', null);
       // hardcode matrices to these //
       grid.setMatrix({
         matrix: [

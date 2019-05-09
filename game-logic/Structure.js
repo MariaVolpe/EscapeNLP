@@ -60,7 +60,7 @@ class Structure extends BoardObject {
 
     this.inspectTextInactive = StructText[name].inspectTextInactive;
     this.inspectTextActive = StructText[name].inspectTextActive;
-
+    this.inspectText = this.activated ? StructText[name].inspectTextActive : StructText[name].inspectTextInactive;
     // this.inspectTextInactive = StructText[name].inspectTextInactive;
     // this.inspectTextActive = StructText[name].inspectTextActive;
     // this.useTextUsed = StructText[name].useTextUsed;
@@ -71,7 +71,8 @@ class Structure extends BoardObject {
 
   inspect() {
     if (this.activated) {
-      return this.inspectTextActive;
+      this.inspectText = this.inspectTextActive;
+      return this.inspectText;
     }
     return this.inspectText;
   }

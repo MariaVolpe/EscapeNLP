@@ -71,8 +71,7 @@
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
         "use": null,
-        "jumpable": null,
-        "passable": false
+        "jumpable": null
     },
     "floor switch": {
         "moveable": false,
@@ -84,7 +83,7 @@
         "manuallyDeactivateable": false,
         "use": "activate",
         "jumpable": null,
-        "passable": false
+        "passable": true
     },
     "pot": {
         "moveable": true,

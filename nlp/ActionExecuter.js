@@ -50,7 +50,7 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjectsNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
-      const object = this.grid.getObject({ centerObj: data.user, identifier: objName });
+      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objName });
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
@@ -61,7 +61,7 @@ class ActionExecuter {
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
       // TODO: include pronoun caching later
-      if (!this.grid.getObject({ centerObj: data.user, identifier: dest })) { return false; }
+      if (!this.grid.getObject({ searchOriginObj: data.user, identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
       this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
@@ -71,13 +71,13 @@ class ActionExecuter {
   executeLook(data) {
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(data.user);
-      return nearbyObjects.filter(e => e.name != 'floor' || e.name != 'wall').map(e => e.inspectText);
+      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspectText);
     }
     // if specified direct objects, look at that those objects
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
-      const object = this.grid.getObject({ centerObj: data.user, identifier: name });
+      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
       if (getDistance(data.user, object) > 2) {
@@ -92,7 +92,7 @@ class ActionExecuter {
     // if there is a source
     for (let i = 0; i < sources.length; i++) {
       const sourceName = sources[i];
-      const sourceObject = this.grid.getObject({ centerObj: data.user, identifier: sourceName });
+      const sourceObject = this.grid.getObject({ searchOriginObj: data.user, identifier: sourceName });
       if (!sourceObject) continue;
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
@@ -105,7 +105,7 @@ class ActionExecuter {
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
-          const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+          const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
           if (getDistance(data.user, object) > 1) {
             this.grid.moveToObject([data.user], object);
           }
@@ -119,7 +119,7 @@ class ActionExecuter {
       // search for it in the grid | TODO: implement stealing if its not on the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
-        const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+        const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
         if (!object) continue;
         if (getDistance(data.user, object) > 1) {
           this.grid.moveToObject([data.user], object);
@@ -137,7 +137,7 @@ class ActionExecuter {
     const objectNames = data.directObjects;
     for (let i = 0; i < recipients.length; i++) {// for all receipients
       const recipientName = recipients[i];
-      const recipient = this.grid.getObject({ centerObj: data.user, identifier: recipientName });
+      const recipient = this.grid.getObject({ searchOriginObj: data.user, identifier: recipientName });
       for (let j = 0; j < objectNames.length; j++) {// for all items
         const objectName = objectNames[j];
         const hasItem = data.user.hasItem(objectName);

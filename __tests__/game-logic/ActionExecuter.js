@@ -42,9 +42,7 @@ describe('ActionExecuter tests', () => {
         user: floor,
         directObjects: [],
       }).filter(text => text !== '');
-      const expected = JSON.stringify([
-        'This door won\'t budge. There has to be a way to open it...',
-        'A really heavy block. Maybe you can move it somewhere...']);
+      const expected = JSON.stringify([door.inspectText, weight.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     it('Should look at a particular object', async () => {
@@ -63,8 +61,7 @@ describe('ActionExecuter tests', () => {
         user: floor,
         directObjects: ['door'],
       }).filter(text => text !== '');
-      const expected = JSON.stringify([
-        'This door won\'t budge. There has to be a way to open it...']);
+      const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     it('Should look around in a larger space', async () => {
@@ -84,8 +81,7 @@ describe('ActionExecuter tests', () => {
         user: floor,
         directObjects: [],
       }).filter(text => text !== '');
-      const expected = JSON.stringify([
-        'This door won\'t budge. There has to be a way to open it...']);
+      const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
     // Stretch goal test
@@ -178,29 +174,29 @@ describe('ActionExecuter tests', () => {
     it('Should steal an item from another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Swiper');
-      const otherAgent = new Agent('Dora');
-      const item = new Item('key', '6', null);
+      const swiper = new Agent('Swiper');
+      const dora = new Agent('Dora');
+      const key = new Item('key', '6', null);
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floor, otherAgent], [wall]],
+        [[wall], [floor, dora], [wall]],
         [[wall], [floor], [wall]],
-        [[wall], [floor, agent], [wall]],
+        [[wall], [floor, swiper], [wall]],
       ];
       const expectedMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floor, otherAgent], [wall]],
-        [[wall], [floor, agent], [wall]],
+        [[wall], [floor, dora], [wall]],
+        [[wall], [floor, swiper], [wall]],
         [[wall], [floor], [wall]],
       ];
 
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
-      otherAgent.takeItem(item);
+      dora.takeItem(key);
       actionExecuter.executeTake({
-        user: agent,
+        user: swiper,
         directObjects: ['key'],
-        indirectObjects: ['Dora'],
+        indirectObjects: ['dora'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
@@ -208,10 +204,10 @@ describe('ActionExecuter tests', () => {
       expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
       // Check that the item was added to the user inventory
       const expectedAgentInventory = JSON.stringify(['key']);
-      const actualAgentInventory = JSON.stringify(agent.getAllItems().map(e => e.name));
+      const actualAgentInventory = JSON.stringify(swiper.getAllItems().map(e => e.name));
       expect(actualAgentInventory).toEqual(expectedAgentInventory);
       const expectedOtherAgentInventory = JSON.stringify([]);
-      const actualOtherAgentInventory = JSON.stringify(otherAgent.getAllItems().map(e => e.name));
+      const actualOtherAgentInventory = JSON.stringify(dora.getAllItems().map(e => e.name));
       expect(actualOtherAgentInventory).toEqual(expectedOtherAgentInventory);
     });
   });
