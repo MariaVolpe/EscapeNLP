@@ -66,10 +66,16 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatMessage', (message) => {
-    if (message.type === 'action') {
-      gameContainer.performAction(socket.gameId, message);
-    }
     io.in(socket.currentRoom).emit('chatMessage', message);
+    if (message.type === 'action') {
+      //gameContainer.performAction(socket.gameId, message);
+      let action = {};
+      action.type = 'interpreted';
+      action.time = message.time;
+      action.commenter = message.commenter;
+      action.mess = 'INTERPRETED ACTION';
+      io.in(socket.currentRoom).emit('chatMessage', action);
+    }
   });
 
   socket.on('getInventories', (inventories) => {

@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
 import defaultIcon from '../images/playericon.png';
-import kirbyIcon from '../images/player.png';
+import kirbyIcon from '../images/kirbyoutline.png';
+import dmc4Icon from '../images/dmc4logo.png';
+import pikachuIcon from '../images/pikachuicon.png';
 
 const icons = {
   'defaultIcon': defaultIcon,
-  'kirbyIcon': kirbyIcon
+  'kirbyIcon': kirbyIcon,
+  'dmc4Icon': dmc4Icon,
+  'pikachuIcon': pikachuIcon
 }
 
 class PlayerInfo extends Component {
 
   render() {
     const inventory = this.props.playerInfo.inventory;
-    const itemsList = Object.keys(inventory);
 
-    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
+    const items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[i]}`} data-for="inv">
                                                <div className="item-outline">
                                                 <img src='' alt='' className="item-pic" />
                                                </div>

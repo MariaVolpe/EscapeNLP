@@ -34,17 +34,7 @@ class Navigation extends Component {
       return (
         <div>
           <Navbar color="danger">
-            <Nav>
-              <NavItem>
-                <PictureModal
-                  isOpen={this.state.isOpen}
-                  onToggle={this.onToggle}
-                  handleSubmit={this.handleSubmit}
-                  onAvatarClick={this.onAvatarClick}
-                />
-                <i onClick={this.onToggle} className="cog icon"/>
-              </NavItem>
-            </Nav>
+            <Nav/>
             <NavbarBrand href='/' className="navbar">EscapeNLP</NavbarBrand>
             <Nav/>
           </Navbar>

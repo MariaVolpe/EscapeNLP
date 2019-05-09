@@ -2,25 +2,33 @@ import React, { Component } from 'react';
 import { Label, Form, FormGroup, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/PictureModal.css';
 import defaultIcon from '../images/playericon.png';
-import kirbyIcon from '../images/player.png';
+import kirbyIcon from '../images/kirbyoutline.png';
+import dmc4Icon from '../images/dmc4logo.png';
+import pikachuIcon from '../images/pikachuicon.png';
 
 class PictureModal extends Component {
 
   render() {
     const playerIconList = [];
-    for (let i=0; i<4; i++) {
-      playerIconList.push(<div
-                          color="danger"
-                          data-dismiss="modal"
+    playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('defaultIcon')}
                         >
                           <img src={defaultIcon} alt='' className="avatar" />
                         </div>);
-    }
     playerIconList.push(<div
-                          color="danger"
-                          data-dismiss="modal"
+                          className="avatar-box centered"
+                          onClick={() => this.props.onAvatarClick('pikachuIcon')}
+                        >
+                          <img src={pikachuIcon} alt='' className="avatar" />
+                        </div>);
+    playerIconList.push(<div
+                          className="avatar-box centered"
+                          onClick={() => this.props.onAvatarClick('dmc4Icon')}
+                        >
+                          <img src={dmc4Icon} alt='' className="avatar" />
+                        </div>);
+    playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('kirbyIcon')}
                         >
