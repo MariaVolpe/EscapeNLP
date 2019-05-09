@@ -3,38 +3,65 @@
     "items_required": [
         {
             "name": "weight",
-            "id": "weight A",
+            "id": "weight_A",
             "isManaged" : false,
             "coordinates": {
-                "x": 5,
-                "y": 2
+                "x": 9,
+                "y": 7
             }
         },
         {
             "name": "weight",
-            "id": "weight B",
+            "id": "weight_B",
             "isManaged" : false,
             "coordinates": {
-                "x": 1,
-                "y": 2
+                "x": 11,
+                "y": 10
             }
         },
         {
-            "name": "floor_switch",
-            "id": "switch A",
-            "isManaged" : true,
+            "name": "floor switch",
+            "id": "switch_A",
+            "isManaged" : false,
             "coordinates": {
-                "x": 1,
-                "y": 5
+                "x": 13,
+                "y": 3
             }
         },
         {
-            "name": "floor_switch",
-            "id" : "switch B",
-            "isManaged" : true,
+            "name": "floor switch",
+            "id" : "switch_B",
+            "isManaged" : false,
             "coordinates": {
-                "x": 5,
-                "y": 5
+                "x": 13,
+                "y": 7
+            }
+        },
+        {
+            "name": "pot",
+            "id" : "pot_A",
+            "isManaged" : false,
+            "coordinates": {
+                "x": 10,
+                "y": 10
+            }
+        },
+        {
+            "name": "pot",
+            "id" : "pot_B",
+            "isManaged" : false,
+            "coordinates": {
+                "x": 11,
+                "y": 9
+            }
+        },
+        {
+            "name": "pot",
+            "id" : "pot_C",
+            "isManaged" : false,
+            "coordinates": {
+                "x": 12,
+                "y": 10
             }
         }
     ]

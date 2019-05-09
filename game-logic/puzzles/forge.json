@@ -1,0 +1,14 @@
+{
+    "puzzle_type": "forge",
+    "items_required": [
+        {
+            "name": "forge",
+            "id": "forge",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 14,
+                "y": 5
+            }
+        }
+    ]
+}

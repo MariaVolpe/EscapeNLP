@@ -1,5 +1,6 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
+const { getDistance } = require('../game-logic/grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -35,7 +36,7 @@ class ActionExecuter {
 
   executeMove(data) {
     // Check for all the direct objects, then indirect
-    const { user } = data.user;
+    const { user } = data;
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
@@ -49,7 +50,7 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjectsNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
-      const object = this.grid.getObject({ centerObj: data.user, identifier: objName });
+      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objName });
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
@@ -60,7 +61,7 @@ class ActionExecuter {
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
       // TODO: include pronoun caching later
-      if (!this.grid.getObject({ centerObj: data.user, identifier: dest })) { return false; }
+      if (!this.grid.getObject({ searchOriginObj: data.user, identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
       this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
@@ -70,16 +71,16 @@ class ActionExecuter {
   executeLook(data) {
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(data.user);
-      return nearbyObjects.map(e => e.inspectText);
+      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspectText);
     }
     // if specified direct objects, look at that those objects
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
-      const object = this.grid.getObject({ centerObj: data.user, identifier: name });
+      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
-      if (this.grid.getDistance(data.user, object) > 2) {
+      if (getDistance(data.user, object) > 2) {
         this.grid.moveToObject([data.user], object);
       } texts.push(object.inspectText);
     } return texts;
@@ -91,12 +92,12 @@ class ActionExecuter {
     // if there is a source
     for (let i = 0; i < sources.length; i++) {
       const sourceName = sources[i];
-      const sourceObject = this.grid.getObject({ centerObj: data.user, identifier: sourceName });
+      const sourceObject = this.grid.getObject({ searchOriginObj: data.user, identifier: sourceName });
       if (!sourceObject) continue;
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
           const objName = objectNames[j];
-          if (this.grid.getDistance(data.user, sourceObject) > 1) {
+          if (getDistance(data.user, sourceObject) > 1) {
             this.grid.moveToObject([data.user], sourceObject);
           }
           sourceObject.giveItem(objName, data.user);  
@@ -104,11 +105,11 @@ class ActionExecuter {
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
-          const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
-          if (this.grid.getDistance(data.user, object) > 1) {
+          const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
+          if (getDistance(data.user, object) > 1) {
             this.grid.moveToObject([data.user], object);
           }
-          data.user.getItem(object);
+          data.user.takeItem(object);
           this.grid.removeFromBoard(object);
         }
       }
@@ -118,12 +119,12 @@ class ActionExecuter {
       // search for it in the grid | TODO: implement stealing if its not on the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
-        const object = this.grid.getObject({ centerObj: data.user, identifier: objectName });
+        const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
         if (!object) continue;
-        if (this.grid.getDistance(data.user, object) > 1) {
+        if (getDistance(data.user, object) > 1) {
           this.grid.moveToObject([data.user], object);
         }
-        data.user.getItem(object);
+        data.user.takeItem(object);
         this.grid.removeFromBoard(object);
       }
     }
@@ -131,7 +132,42 @@ class ActionExecuter {
   }
 
   executeGive(data) {
+    // we can expect receipients whenever an object is given
+    const recipients = data.indirectObjects;
+    const objectNames = data.directObjects;
+    for (let i = 0; i < recipients.length; i++) {// for all receipients
+      const recipientName = recipients[i];
+      const recipient = this.grid.getObject({ searchOriginObj: data.user, identifier: recipientName });
+      for (let j = 0; j < objectNames.length; j++) {// for all items
+        const objectName = objectNames[j];
+        const hasItem = data.user.hasItem(objectName);
+        if (hasItem) {
+          this.grid.moveToObject([data.user], recipient);
+          data.user.giveItem(objectName, recipient);
+        } else {// if item was not already possessed
+          const takeAttemptData = {
+            user: data.user,
+            directObjects: [objectName],
+            indirectObjects: []
+          };
+          const taken = this.executeTake(takeAttemptData);
+          this.grid.moveToObject([data.user], recipient); // move to the recipient
+          const arr = this.grid.matrix[data.user.position.x][data.user.position.y];
+          if (taken) data.user.giveItem(objectName, recipient); // give the item to the recipient
+        }
+      }
+    } return true;
+  }
 
+  executePlace(data) {
+    // if no destinations specified
+    //    for all items
+    //      if we have the item
+    //        place all items at the nearest points
+    // for all destinations
+    //    for all items
+    //
+    
   }
 
   executeDestroy(data) {
@@ -139,10 +175,6 @@ class ActionExecuter {
   }
 
   executeAttack(data) {
-
-  }
-
-  executePlace(data) {
 
   }
 
