@@ -66,13 +66,13 @@ class TextInfo extends Component {
 
     prevMessages.forEach((message, i) => {
       if (message.type === 'action') {
-        textType = "text command";
+        textType = "text command text-message";
       }
       else if (message.type === 'chat') {
-        textType = "text chat";
+        textType = "text chat text-message";
       }
-      if (!sameName && prevName !== message.commenter) {
-        prevName = message.commenter;
+      else if (message.type === 'interpreted') {
+        textType = "text interpreted text-message";
       }
       else if (!sameName && prevName === message.commenter) {
         sameName = true;
