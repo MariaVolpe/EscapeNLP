@@ -49,16 +49,10 @@ class Play extends Component {
             hasLeftGame: player.hasLeftGame,
             iconName: player.iconName
           };
-          console.log(allPlayers[player.name]);
         } else {
-          allPlayers[player.name] = {
-            inventory: [],
-            ready: player.ready,
-            position: player.position,
-            hasLeftGame: player.hasLeftGame,
-            iconName: player.iconName
-          };
-          console.log(allPlayers[player.name]);
+          allPlayers[player.name].position = player.position;
+          allPlayers[player.name].iconName = player.iconName;
+          allPlayers[player.name].inventory = [];
         }
       });
 
