@@ -127,7 +127,6 @@ class Play extends Component {
 
   componentDidMount = () => {
     if (window.sessionStorage.getItem('roomId') !== null) {
-      console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');

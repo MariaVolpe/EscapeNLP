@@ -84,7 +84,7 @@ class Browser extends Component {
           color="success"
           className="lobby-create"
         >
-          <i class="plus icon"></i> Create Lobby
+          <i className="plus icon"></i> Create Lobby
         </Button>
       </div>
     );

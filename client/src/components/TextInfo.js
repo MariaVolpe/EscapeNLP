@@ -29,7 +29,6 @@ class TextInfo extends Component {
   render() {
 
     const prevMessages = this.props.prevMessages;
-    const currPlayer = this.props.currPlayer;
     let comments = [];
     const chatOption = this.props.chatOption;
     let keyPress;

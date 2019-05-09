@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
-import player from '../images/player.png';
 import dragon from '../images/dragonite.png';
 import key from '../images/dragonite.png';
 import floor from '../images/dragonite.png';

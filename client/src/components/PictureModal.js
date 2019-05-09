@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label, Form, FormGroup, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Form, FormGroup, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/PictureModal.css';
 import defaultIcon from '../images/playericon.png';
 import kirbyIcon from '../images/kirbyoutline.png';
@@ -13,24 +13,28 @@ class PictureModal extends Component {
     playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('defaultIcon')}
+                          key='defaultIcon'
                         >
                           <img src={defaultIcon} alt='' className="avatar" />
                         </div>);
     playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('pikachuIcon')}
+                          key='pikachuIcon'
                         >
                           <img src={pikachuIcon} alt='' className="avatar" />
                         </div>);
     playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('dmc4Icon')}
+                          key='dmc4Icon'
                         >
                           <img src={dmc4Icon} alt='' className="avatar" />
                         </div>);
     playerIconList.push(<div
                           className="avatar-box centered"
                           onClick={() => this.props.onAvatarClick('kirbyIcon')}
+                          key='kirbyIcon'
                         >
                           <img src={kirbyIcon} alt='' className="avatar" />
                         </div>);
