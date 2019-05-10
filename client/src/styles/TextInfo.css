@@ -95,8 +95,7 @@
 }
 
 .text-message:hover {
-  font-style: oblique;
-  font-weight: 600;
+  background-color: #ecf0f1;
 }
 
 .bug.icon:hover {
