@@ -78,6 +78,8 @@ class TextInfo extends Component {
                           <div className={textType}
                              onMouseEnter={() => this.props.onMessageHover(i)}
                              onMouseLeave={() => this.props.onMessageLeave(i)}
+                             data-tip={`${message.time}`}
+                             data-for="time"
                           >
                             {message.mess}
                             {hoverOverMessage && <div className="report-button">
@@ -89,7 +91,7 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
-                            {hoverOverMessage && <div className="time-of-message">{message.time}</div>}
+                            <ReactTooltip key="tooltip" id="time" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                         </div>
                       </div>);
       }
