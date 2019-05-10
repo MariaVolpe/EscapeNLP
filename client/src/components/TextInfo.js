@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
@@ -79,7 +80,15 @@ class TextInfo extends Component {
                              onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <div className="report-button"><i className="bug icon" onClick={() => this.props.onMessageClick(i)}/></div> }
+                            {hoverOverMessage && <div className="report-button">
+                                                   <i className="bug icon"
+                                                      onClick={() => this.props.onMessageClick(i)}
+                                                      data-tip="report"
+                                                      data-for="report"
+                                                   />
+                                                   <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
+                                                 </div>
+                            }
                         </div>
                       </div>);
       }
@@ -96,7 +105,15 @@ class TextInfo extends Component {
                                onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <div className="report-button"><i className="bug icon" onClick={() => this.props.onMessageClick(i)}/></div> }
+                            {hoverOverMessage && <div className="report-button">
+                                                   <i className="bug icon"
+                                                      onClick={() => this.props.onMessageClick(i)}
+                                                      data-tip="report"
+                                                      data-for="report"
+                                                   />
+                                                   <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
+                                                 </div>
+                            }
                           </div>
                       </div>);
       }
