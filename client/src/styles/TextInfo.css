@@ -99,11 +99,12 @@
   font-weight: 600;
 }
 
-.thumbs.down.outline.icon {
-  position: absolute;
-  //margin-left: 33.3%;
-}
-
 .thumbs.down.outline.icon:hover {
   cursor: pointer;
+}
+
+.report-button {
+  position: absolute;
+  right: 0px;
+  margin-top: -16.66px;
 }

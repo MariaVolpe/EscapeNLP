@@ -16,16 +16,6 @@ class TextInfo extends Component {
     scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
   }
 
-  findHeightDifference = (samePlayerMessages) => {
-    let change = 1.1;
-    if (samePlayerMessages > 0) {
-      change = 0.45;
-    }
-    let totalMessages = 74.5 / 17 * ((this.props.prevMessages.length - 1) * (change));
-    let heightDiff = 74.5 - totalMessages;
-    return heightDiff;
-  }
-
   render() {
 
     const prevMessages = this.props.prevMessages;
@@ -83,17 +73,15 @@ class TextInfo extends Component {
         prevName = message.commenter;
       }
       if (sameName) {
-        numOfSames += 1;
         comments.push(<div className="content" key={i} >
                           <div className={textType}
                              onMouseEnter={() => this.props.onMessageHover(i)}
                              onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}></i> }
+                            {hoverOverMessage && <div className="report-button"><i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}/></div> }
                         </div>
                       </div>);
-
       }
       else if (!sameName) {
         comments.push(<div className="content message" key={i} >
@@ -108,16 +96,11 @@ class TextInfo extends Component {
                                onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}></i> }
+                            {hoverOverMessage && <div className="report-button"><i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}/></div> }
                           </div>
                       </div>);
-
       }
-
     });
-
-    let heightDiff = this.findHeightDifference(numOfSames) - 10;
-
 
     return(
       <div className="ui minimal comments">
