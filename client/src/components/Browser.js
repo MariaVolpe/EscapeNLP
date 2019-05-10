@@ -16,18 +16,22 @@ class Browser extends Component {
 
     this.socket = socketIOClient('');
 
+    // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
+      // const lobbies = allRooms.map(({ gameName, gameId, playerCount, playerReady}) => {
       const lobbies = allRooms.map(({ gameName, gameId }) => {
-        return (
-          <div className="five wide column" key={gameId}>
-            <Lobby
-              lobbyName={gameName}
-              lobbyId={gameId}
-              className="lobby-box"
-              onLobbyClick={this.onLobbyClick}
-            />
-          </div>
-        );
+        //if(playerCount !== playerReady){
+          return (
+            <div className="five wide column" key={gameId}>
+              <Lobby
+                lobbyName={gameName}
+                lobbyId={gameId}
+                className="lobby-box"
+                onLobbyClick={this.onLobbyClick}
+              />
+            </div>
+          );
+        // }
       });
       this.setState({lobbies});
     });
