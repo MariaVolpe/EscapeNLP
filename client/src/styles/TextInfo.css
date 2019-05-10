@@ -95,6 +95,15 @@
 }
 
 .text-message:hover {
-  border: 3.5px solid black;
+  font-style: oblique;
+  font-weight: 600;
+}
+
+.thumbs.down.outline.icon {
+  position: absolute;
+  //margin-left: 33.3%;
+}
+
+.thumbs.down.outline.icon:hover {
   cursor: pointer;
 }

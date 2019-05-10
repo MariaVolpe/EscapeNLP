@@ -65,6 +65,7 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
       if (message.type === 'action') {
         textType = "text command text-message";
       }
@@ -74,57 +75,43 @@ class TextInfo extends Component {
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
       }
-      else if (!sameName && prevName === message.commenter) {
+      if (prevName === message.commenter) {
         sameName = true;
-        numOfSames += 1;
       }
-      else if (sameName && prevName !== message.commenter) {
+      else if (prevName !== message.commenter) {
         sameName = false;
+        prevName = message.commenter;
       }
       if (sameName) {
         numOfSames += 1;
-        if (message.commenter === currPlayer) {
-          comments.push(<div className="content message" key={i} >
-                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                              {message.mess}
-                            </div>
-                          </div>);
-        }
-        else {
-          comments.push(<div className="content" key={i} >
-                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                              {message.mess}
-                            </div>
-                          </div>);
-        }
+        comments.push(<div className="content" key={i} >
+                          <div className={textType}
+                             onMouseEnter={() => this.props.onMessageHover(i)}
+                             onMouseLeave={() => this.props.onMessageLeave(i)}
+                          >
+                            {message.mess}
+                            {hoverOverMessage && <i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}></i> }
+                        </div>
+                      </div>);
+
       }
       else if (!sameName) {
-        if (message.commenter === currPlayer) {
-          comments.push(<div className="content message" key={i} >
-                            <span className="author">
-                              {"You"}
-                            </span>
-                            <div className="metadata">
-                              <span className="date">{message.time}</span>
-                            </div>
-                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                              {message.mess}
-                            </div>
-                          </div>);
-        }
-        else {
-          comments.push(<div className="content message" key={i} >
-                            <span className="author">
-                              {message.commenter}
-                            </span>
-                            <div className="metadata">
-                              <span className="date">{message.time}</span>
-                            </div>
-                            <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                              {message.mess}
-                            </div>
-                          </div>);
-        }
+        comments.push(<div className="content message" key={i} >
+                          <span className="author">
+                            {message.commenter}
+                          </span>
+                          <div className="metadata">
+                            <span className="date">{message.time}</span>
+                          </div>
+                          <div className={textType}
+                               onMouseEnter={() => this.props.onMessageHover(i)}
+                               onMouseLeave={() => this.props.onMessageLeave(i)}
+                          >
+                            {message.mess}
+                            {hoverOverMessage && <i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}></i> }
+                          </div>
+                      </div>);
+
       }
 
     });
@@ -136,7 +123,7 @@ class TextInfo extends Component {
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
-          <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
+          <div className="comment text-container" >{comments}</div>
         </div>
           <form className="ui form">
             <textarea

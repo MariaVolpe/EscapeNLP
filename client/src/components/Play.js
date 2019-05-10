@@ -7,6 +7,7 @@ import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import TextInfo from './TextInfo';
 import Navigation from './Navigation';
+import ReportModal from './ReportModal';
 import '../styles/Play.css';
 
 class Play extends Component {
@@ -26,7 +27,11 @@ class Play extends Component {
       chatOption: 'chat',
       warningOpen: false,
       numberOfPlayers: 0,
-      timer: 0
+      timer: 0,
+      reportOpen: false,
+      reportedMessage: {},
+      reportHover: false,
+      reportIndex: 0
     }
 
     this.socket = socketIOClient('');
@@ -261,7 +266,22 @@ class Play extends Component {
 
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
+    const reportedMessage = prevMessages[i];
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
+    this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
+  }
+
+  onMessageHover = (i) => {
+    this.setState({reportHover: true, reportIndex: i});
+  }
+
+  onMessageLeave = (i) => {
+    this.setState({reportHover: false, reportIndex: -1});
+  }
+
+  onReportToggle = (event) => {
+    this.setState({reportOpen: !this.state.reportOpen});
+    event.preventDefault();
   }
 
   render() {
@@ -342,8 +362,17 @@ class Play extends Component {
             gameComplete={this.state.gameComplete}
             gameStart={this.state.allPlayersReady}
             onMessageClick={this.onMessageClick}
+            onMessageHover={this.onMessageHover}
+            onMessageLeave={this.onMessageLeave}
+            reportHover={this.state.reportHover}
+            reportIndex={this.state.reportIndex}
           />
         </div>
+        <ReportModal
+          isOpen={this.state.reportOpen}
+          message={this.state.reportedMessage}
+          onToggle={this.onReportToggle}
+        />
       </div>
     )
   }
