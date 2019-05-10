@@ -187,14 +187,13 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-    const user = this.grid.getObject(data.user);
+    const user = this.grid.getObject({ identifier: data.user });
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyActivateable) {
         this.grid.moveToObject([user], subject);
         if (this.grid.getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
-          //Call PuzzleManager.evaluatePuzzleStatus(subject.puzzleType) to check on this item.
         }
       }
     })
@@ -205,8 +204,20 @@ class ActionExecuter {
   }
 
   executeUse(data) {
-
+    const user = this.grid.getObject({ identifier: data.user });
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.use) {
+        if (this.functionMap[subject.use]) {
+          this.functionMap[subject.use](data);
+        }
+        else {
+          //TODO: Account for special use functions
+        }
+      }
+    })
   }
+
 }
 
 module.exports = ActionExecuter;
