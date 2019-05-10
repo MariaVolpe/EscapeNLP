@@ -11,6 +11,13 @@
   margin-top: 1%;
 }
 
+.game-info.winner {
+  float: left;
+  width: 60%;
+  margin-left: 0.25%;
+  margin-top: 1%;
+}
+
 .text-info {
   float: right;
   width: 18.65%;
