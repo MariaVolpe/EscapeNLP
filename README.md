@@ -1,6 +1,6 @@
 # EscapeNLP
 
-![Game Board](https://github.com/MariaVolpe/EscapeNLP/blob/readme-update/client/src/images/game_board.jpeg "EscapeNLP")
+![Game Board](https://github.com/MariaVolpe/EscapeNLP/blob/development/client/src/images/game_board.jpeg "EscapeNLP")
 
 A text-based escape room web application for up to five player.
 It uses natural language processing to interpret player inputs to understand their intentions (put chat messages into actions on the game board)
