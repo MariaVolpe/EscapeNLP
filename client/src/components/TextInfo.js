@@ -79,7 +79,7 @@ class TextInfo extends Component {
                              onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <div className="report-button"><i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}/></div> }
+                            {hoverOverMessage && <div className="report-button"><i className="bug icon" onClick={() => this.props.onMessageClick(i)}/></div> }
                         </div>
                       </div>);
       }
@@ -96,7 +96,7 @@ class TextInfo extends Component {
                                onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
                             {message.mess}
-                            {hoverOverMessage && <div className="report-button"><i className="thumbs down outline icon" onClick={() => this.props.onMessageClick(i)}/></div> }
+                            {hoverOverMessage && <div className="report-button"><i className="bug icon" onClick={() => this.props.onMessageClick(i)}/></div> }
                           </div>
                       </div>);
       }
