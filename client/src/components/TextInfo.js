@@ -89,6 +89,7 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
+                            {hoverOverMessage && <div className="time-of-message">{message.time}</div>}
                         </div>
                       </div>);
       }
