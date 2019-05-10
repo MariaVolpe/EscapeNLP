@@ -187,7 +187,17 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-
+    const user = this.grid.getObject(data.user);
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.manuallyActivateable) {
+        this.grid.moveToObject([user], subject);
+        if (this.grid.getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.activate();
+          //Call PuzzleManager.evaluatePuzzleStatus(subject.puzzleType) to check on this item.
+        }
+      }
+    })
   }
 
   executeDeactivate(data) {
