@@ -271,17 +271,37 @@ class Play extends Component {
     this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
   }
 
-  onMessageHover = (i) => {
-    this.setState({reportHover: true, reportIndex: i});
+  onMessageHover = (index) => {
+    this.setState({reportHover: true, reportIndex: index});
   }
 
-  onMessageLeave = (i) => {
+  onMessageLeave = (index) => {
     this.setState({reportHover: false, reportIndex: -1});
   }
 
   onReportToggle = (event) => {
     this.setState({reportOpen: !this.state.reportOpen});
     event.preventDefault();
+  }
+
+  onInterpretedClick = (index) => {
+    let prevMessages = this.state.prevMessages;
+    if (!prevMessages[index].checked) {
+      prevMessages[index].checked = true;
+      let commenter = prevMessages[index].commenter;
+      let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
+      let date = new Date();
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      const message = { commenter, time, mess, type: 'new interpretation' };
+      prevMessages.push(message);
+      this.setState({prevMessages});
+    }
+  }
+
+  onNewInterpretationClick = (index) => {
+    let prevMessages = this.state.prevMessages;
+    prevMessages.splice(index, 1);
+    this.setState({prevMessages});
   }
 
   render() {
@@ -366,6 +386,8 @@ class Play extends Component {
             onMessageLeave={this.onMessageLeave}
             reportHover={this.state.reportHover}
             reportIndex={this.state.reportIndex}
+            onInterpretedClick={this.onInterpretedClick}
+            onNewInterpretationClick={this.onNewInterpretationClick}
           />
         </div>
         <ReportModal
