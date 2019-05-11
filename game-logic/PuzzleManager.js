@@ -14,6 +14,7 @@ class PuzzleManager {
     this.puzzles = [];
     this.grid = grid;
     this.puzzleProgress = new Map();
+    this.puzzleRewardGranted = new Map();
     this.gameComplete = false;
 
     this.findPuzzles();
@@ -59,11 +60,13 @@ class PuzzleManager {
       this.puzzleProgress.get(puzzleType).push(obj);
     } else {
       this.puzzleProgress.set(puzzleType, [obj]);
+      this.puzzleRewardGranted.set(puzzleType, false);
     }
   }
 
   evaluatePuzzleStatus(puzzleType) {
-    if (!this.checkPuzzleComplete(puzzleType)) {
+    //Leave if the Puzzle hasn't been completed, or if its reward has been granted already
+    if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
       return;
     }
     switch (puzzleType) { // eslint-disable-line default-case
@@ -80,6 +83,7 @@ class PuzzleManager {
         this.gameComplete = true;
         break;
     }
+    this.puzzleRewardGranted.set(puzzleType, true);
   }
 
   checkPuzzleComplete(puzzleType) {
@@ -89,6 +93,11 @@ class PuzzleManager {
       }
     });
     return true;
+  }
+
+  //This ensures puzzle logic isn't repeated once the puzzle is complete
+  checkRewardGranted(puzzleType) {
+    return this.puzzleRewardGranted.get(puzzleType);
   }
 
   checkGameComplete() {
