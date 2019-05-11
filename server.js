@@ -120,8 +120,11 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
-    const { playerId, name } = playerInfo;
-    gameContainer.setPlayerName(playerId, name);
+    if (playerInfo !== '') {
+      const { playerId, name } = playerInfo;
+      gameContainer.setPlayerName(playerId, name);
+      console.log('it worked!');
+    }
 
     socket.playerInfo.position = socket.playerNumber;
     updatePlayers('', socket.currentRoom, {});

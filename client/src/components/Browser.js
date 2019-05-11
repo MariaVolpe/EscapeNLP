@@ -60,6 +60,7 @@ class Browser extends Component {
         window.sessionStorage.setItem('roomId', id);
         axios.post(`/game/${id}/player`).then(res => {
           const playerId = res.data.playerId;
+          window.sessionStorage.setItem('playerId', playerId);
           window.location.replace('/play');
         });
       });
