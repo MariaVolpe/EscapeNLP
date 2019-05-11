@@ -65,7 +65,7 @@ class PuzzleManager {
   }
 
   evaluatePuzzleStatus(puzzleType) {
-    //Leave if the Puzzle hasn't been completed, or if its reward has been granted already
+    // Leave if the Puzzle hasn't been completed, or if its reward has been granted already
     if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
       return;
     }
@@ -98,7 +98,7 @@ class PuzzleManager {
     return true;
   }
 
-  //This ensures puzzle logic isn't repeated once the puzzle is complete
+  // This ensures puzzle logic isn't repeated once the puzzle is complete
   checkRewardGranted(puzzleType) {
     if (!puzzleType) {
       return false;

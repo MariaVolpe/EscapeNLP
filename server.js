@@ -68,12 +68,12 @@ io.on('connection', (socket) => {
   socket.on('chatMessage', (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
-      //gameContainer.performAction(socket.gameId, message);
-      let action = {
+      // gameContainer.performAction(socket.gameId, message);
+      const action = {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
-        mess: 'INTERPRETED ACTION'
+        mess: 'INTERPRETED ACTION',
       };
       io.in(socket.currentRoom).emit('chatMessage', action);
     }
@@ -120,8 +120,8 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
-    const { playerId, playerName } = playerInfo;
-    gameContainer.setPlayerName(playerId, playerName);
+    const { playerId, name } = playerInfo;
+    gameContainer.setPlayerName(playerId, name);
 
     socket.playerInfo.position = socket.playerNumber;
     updatePlayers('', socket.currentRoom, {});

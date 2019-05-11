@@ -58,7 +58,7 @@ class GameSessionsContainer {
     return { error: null };
   }
 
-  setPlayerName(playerId, playerName){
+  setPlayerName(playerId, playerName) {
   }
 
   addPlayerToSession(gameId, loggedInPlayerId) {
