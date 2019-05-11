@@ -48,9 +48,10 @@ class ActionExecuter {
     } else { destinations = data.directObjects; }
 
     // validate moving objects
-    for (let i = 0; i < movingObjectsNames.length; i++) {
+    for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objName });
+      console.log(object);
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
@@ -64,7 +65,8 @@ class ActionExecuter {
       if (!this.grid.getObject({ searchOriginObj: data.user, identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
-      this.grid.moveToObject(movingObjects, this.grid.resolveNameToNearestObject(destinations[i]));
+      console.log('moving');
+      this.grid.moveToObject(movingObjects, this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] }))
     } return true;
   }
 
@@ -80,9 +82,9 @@ class ActionExecuter {
       const object = this.grid.getObject({ searchOriginObj: data.user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
-      if (getDistance(data.user, object) > 2) {
-        this.grid.moveToObject([data.user], object);
-      } texts.push(object.inspectText);
+      // if still too far, then we cant look at this object
+      if (!this.attemptMoveCloser(data.user, object, 2)) continue;
+      texts.push(object.inspectText);
     } return texts;
   }
 
@@ -97,18 +99,14 @@ class ActionExecuter {
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
           const objName = objectNames[j];
-          if (getDistance(data.user, sourceObject) > 1) {
-            this.grid.moveToObject([data.user], sourceObject);
-          }
+          if (!this.attemptMoveCloser(data.user, sourceObject, 1)) continue;
           sourceObject.giveItem(objName, data.user);  
         }
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
           const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
-          if (getDistance(data.user, object) > 1) {
-            this.grid.moveToObject([data.user], object);
-          }
+          if (!this.attemptMoveCloser(data.user, object, 1)) continue;
           data.user.takeItem(object);
           this.grid.removeFromBoard(object);
         }
@@ -121,9 +119,7 @@ class ActionExecuter {
         const objectName = objectNames[j];
         const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
         if (!object) continue;
-        if (getDistance(data.user, object) > 1) {
-          this.grid.moveToObject([data.user], object);
-        }
+        if (!this.attemptMoveCloser(data.user, object, 1)) continue;
         data.user.takeItem(object);
         this.grid.removeFromBoard(object);
       }
@@ -142,7 +138,7 @@ class ActionExecuter {
         const objectName = objectNames[j];
         const hasItem = data.user.hasItem(objectName);
         if (hasItem) {
-          this.grid.moveToObject([data.user], recipient);
+          if (!this.attemptMoveCloser(data.user, recipient, 1)) continue;
           data.user.giveItem(objectName, recipient);
         } else {// if item was not already possessed
           const takeAttemptData = {
@@ -151,8 +147,7 @@ class ActionExecuter {
             indirectObjects: []
           };
           const taken = this.executeTake(takeAttemptData);
-          this.grid.moveToObject([data.user], recipient); // move to the recipient
-          const arr = this.grid.matrix[data.user.position.x][data.user.position.y];
+          if (!this.attemptMoveCloser(data.user, recipient, 1)) continue;
           if (taken) data.user.giveItem(objectName, recipient); // give the item to the recipient
         }
       }
@@ -160,14 +155,55 @@ class ActionExecuter {
   }
 
   executePlace(data) {
-    // if no destinations specified
-    //    for all items
-    //      if we have the item
-    //        place all items at the nearest points
-    // for all destinations
-    //    for all items
-    //
-    
+    const destinations = data.indirectObjects;
+    const objectNames = data.directObjects;
+    const { user } = data;
+    if (!destinations.length) { // if no destinations specified
+      for (let i = 0; i < objectNames.length; i++) {
+        const objName = objectNames[i];
+        if (user.hasItem(objName)) {
+          const object = user.inventory.removeItem(objName);
+          this.grid.dropOntoBoard({ searchOriginObj: user, droppedObject: object });
+        }
+      }
+    }
+    // if there were destinations specified
+    for (let i = 0; i < destinations.length; i++) {
+      const destinationName = destinations[i];
+      const destinationObj = this.grid.getObject({ searchOriginObj: user, identifier: destinationName });
+      for (let j = 0; j < objectNames.length; j++) {
+        const objName = objectNames[j];
+        let object;
+        if (user.hasItem(objName)) {
+          object = user.inventory.getItem(objName);
+        } else {
+          object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
+        }
+        if (object.possesable) {
+          if (!user.hasItem(objName)) { // if not already possessed
+            const takeAttemptData = {
+              user: data.user,
+              directObjects: [objName],
+              indirectObjects: []
+            };
+            this.executeTake(takeAttemptData);
+          }
+          if (!this.attemptMoveCloser(user, destinationObj, 1, false)) continue;
+          const object = user.inventory.removeItem(objName);
+          // if a specific destination is specified, we need to be able to have more than 
+          // 2 things on a square?
+          this.grid.dropOntoBoard({ searchOriginObj: destinationObj, droppedObject: object },
+            Number.MAX_VALUE);
+        } else { // if we cant possess the object we have to try to move it
+          const moveAttemptData = {
+            user: user,
+            directObjects: [objName, user.name],
+            indirectObjects: [destinationName]
+          };
+          this.executeMove(moveAttemptData);
+        }
+      }
+    }
   }
 
   executeDestroy(data) {
@@ -197,6 +233,19 @@ class ActionExecuter {
   executeUse(data) {
 
   }
+
+  /* util method that moves an object closer to a destination | called in executeMethods
+      acceptableDistance: describes how far an agent can be from the destination to consider it
+      a successful move
+      onTop: describes whether we want the agent to be on top of the destination if possible
+      false otherwise
+   */
+  attemptMoveCloser(movingObj, destinationObj, acceptableDistance=1, onTop = true) {
+    if (getDistance(movingObj, destinationObj) > acceptableDistance) {
+      this.grid.moveToObject([movingObj], destinationObj, onTop);
+    } return getDistance(movingObj, destinationObj) <= acceptableDistance;
+  }
+
 }
 
 module.exports = ActionExecuter;

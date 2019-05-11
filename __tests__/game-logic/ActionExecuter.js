@@ -323,12 +323,13 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Place', () => {
-    /* it('Should place an item already possessed onto the board', async () => {
+    it('Should place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor_switch', '3', null);
+      const floorSwitch = new Structure('floor switch', '3', null);
       const indianaJones = new Agent('Indiana Jones');
-      const idol = new Item('Idol', '6', null);
+      const idol = new Item('key', '6', null);
+      idol.name = 'idol';
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -348,7 +349,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executePlace({
         user: indianaJones,
         directObjects: ['idol'],
-        indirectObjects: ['floor_switch'],
+        indirectObjects: ['floor switch'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
@@ -358,7 +359,116 @@ describe('ActionExecuter tests', () => {
       const expectedAgentInventory = JSON.stringify([]);
       const actualAgentInventory = JSON.stringify(indianaJones.getAllItems().map(e => e.name));
       expect(actualAgentInventory).toEqual(expectedAgentInventory);
-    }); */
+    });
+
+    it('Should move to place an item already possessed onto the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('floor switch', '3', null);
+      const indianaJones = new Agent('Indiana Jones');
+      const idol = new Item('key', '6', null);
+      idol.name = 'idol';
+      indianaJones.takeItem(idol);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch, idol], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executePlace({
+        user: indianaJones,
+        directObjects: ['idol'],
+        indirectObjects: ['floor switch'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify([]);
+      const actualAgentInventory = JSON.stringify(indianaJones.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+    });
+
+    it('Should move to place an item not already possessed onto the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('floor switch', '3', null);
+      const indianaJones = new Agent('Indiana Jones');
+      const idol = new Item('key', '6', null);
+      idol.name = 'idol';
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[floor, idol], [floor], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch, idol], [wall]],
+        [[floor], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executePlace({
+        user: indianaJones,
+        directObjects: ['idol'],
+        indirectObjects: ['floor switch'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedAgentInventory = JSON.stringify([]);
+      const actualAgentInventory = JSON.stringify(indianaJones.getAllItems().map(e => e.name));
+      expect(actualAgentInventory).toEqual(expectedAgentInventory);
+    });
+
+    // REVISIT THIS TEST WHEN MOVE METHOD TESTS ARE WRITTEN
+    /*it('Should place an item not possessable somewhere else on the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('floor switch', '3', null);
+      const indianaJones = new Agent('Indiana Jones');
+      const weight = new Structure('weight', '6', null);
+      weight.name = 'weight';
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[floor, weight], [floor], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch, weight], [wall]],
+        [[floor], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executePlace({
+        user: indianaJones,
+        directObjects: ['weight'],
+        indirectObjects: ['floor switch'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was placed correctly
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+    });*/
   });
 
   describe('Destroy', () => {
