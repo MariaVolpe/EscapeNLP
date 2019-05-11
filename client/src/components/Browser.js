@@ -18,9 +18,8 @@ class Browser extends Component {
 
     // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      // const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
-      const lobbies = allRooms.map(({ gameName, gameId }) => {
-        //if(!inProgress){
+      const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
+        if(inProgress === false){
           return (
             <div className="five wide column" key={gameId}>
               <Lobby
@@ -31,7 +30,7 @@ class Browser extends Component {
               />
             </div>
           );
-        // }
+        }
       });
       this.setState({lobbies});
     });
