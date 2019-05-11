@@ -72,7 +72,7 @@ class ActionExecuter {
   executeLook(data) {
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(data.user);
-      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspectText);
+      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspect());
     }
     // if specified direct objects, look at that those objects
     const texts = [];

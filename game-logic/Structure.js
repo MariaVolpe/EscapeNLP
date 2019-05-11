@@ -70,15 +70,17 @@ class Structure extends BoardObject {
   }
 
   inspect() {
-    if (this.activated) {
-      this.inspectText = this.inspectTextActive;
-      return this.inspectText;
-    }
     return this.inspectText;
   }
 
   activate() {
     this.activated = true;
+    this.inspectText = this.inspectTextActive;
+  }
+
+  deactivate() {
+    this.activated = false;
+    this.inspectText = this.inspectTextInactive;
   }
 
   getSpriteName() {
