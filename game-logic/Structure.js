@@ -26,19 +26,22 @@ class Structure extends BoardObject {
       id,
       moveable: StructLib[name].moveable,
       possesable: false,
+      usable: StructLib[name].usable,
       attackable: StructLib[name].attackable,
       transferable: false,
       passable: StructLib[name].passable,
-      speakable: StructLib[name].speakable,
-      manuallyActivateable: StructLib[name].manuallyActivateable,
-      manuallyDeactivateable: StructLib[name].manuallyDeactivateable,
       inspectable: true,
-      jumpable: StructLib[name].jumpable,
-      placeable: false,
       destructable: StructLib[name].destructable,
       puzzleType,
       objectType: 'Structure',
     });
+    this.use = StructLib[name].use;
+    this.jumpable = StructLib[name].jumpable;
+    this.placeable = StructLib[name].placeable;
+    this.manuallyActivateable = StructLib[name].manuallyActivateable;
+    this.manuallyDeactivateable = StructLib[name].manuallyDeactivateable;
+    this.speakable = StructLib[name].speakable;
+
 
     this.activated = false;
 
@@ -69,16 +72,18 @@ class Structure extends BoardObject {
     // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
-  inspect() {
-    if (this.activated) {
-      this.inspectText = this.inspectTextActive;
-      return this.inspectText;
-    }
-    return this.inspectText;
-  }
-
   activate() {
     this.activated = true;
+    this.inspectText = this.inspectTextActive;
+  }
+
+  deactivate() {
+    this.activated = false;
+    this.inspectText = this.inspectTextInactive;
+  }
+
+  setPassable(boolean) {
+    this.passable = boolean;
   }
 
   getSpriteName() {
