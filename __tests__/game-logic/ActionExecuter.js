@@ -440,7 +440,7 @@ describe('ActionExecuter tests', () => {
     });
 
     // REVISIT THIS TEST WHEN MOVE METHOD TESTS ARE WRITTEN
-    /*it('Should place an item not possessable somewhere else on the board', async () => {
+    /* it('Should place an item not possessable somewhere else on the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor switch', '3', null);
@@ -471,7 +471,7 @@ describe('ActionExecuter tests', () => {
       const expectedNamesMatrix = stripNames(expectedMatrix);
       // Check that the item was placed correctly
       expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
-    });*/
+    }); */
   });
 
   describe('Destroy', () => {
