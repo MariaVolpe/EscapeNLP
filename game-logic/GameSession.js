@@ -22,20 +22,9 @@ class GameSession {
   }
 
   setPlayerName(playerId, playerName) {
-    console.log(playerId);
-    console.log(typeof playerId);
-
-    console.log(playerName);
-    console.log(typeof playerName);
-
-
     this.agents.forEach((agent) => {
-      if ((agent.id === playerId)) {
-        console.log('existing name', agent.name)
-        console.log(playerName);
+      if ((agent.id === parseInt(playerId, 10))) {
         agent.name = playerName;
-        console.log('new name', agent.name)
-
       }
     });
   }

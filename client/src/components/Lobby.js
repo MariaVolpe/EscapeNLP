@@ -34,15 +34,12 @@ class Lobby extends Component {
       if (isJoinable) {
         window.sessionStorage.setItem('roomName', this.props.lobbyName);
         window.sessionStorage.setItem('roomId', this.props.lobbyId);
-        
 
         axios.post(`/game/${this.props.lobbyId}/player`).then((res) => {
-          const playerId = res.data.playerId;
-          console.log('in post', res)
+          const playerId = res.data.data.playerId;
           window.sessionStorage.setItem('playerId', playerId);
-
+          window.location.replace('/play');
         })
-        window.location.replace('/play');
       } else {
         this.setState({
           confirmOpen: !this.state.confirmOpen,
