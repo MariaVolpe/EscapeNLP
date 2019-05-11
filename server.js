@@ -116,8 +116,6 @@ io.on('connection', (socket) => {
     if (reason === 'disconnected' && allPlayerNames.length > 0 && io.sockets.adapter.rooms[room].gameStart) {
       disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
-    } else {
-      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
     }
 
     io.in(room).emit('setNames', allPlayerNames);
@@ -163,6 +161,7 @@ io.on('connection', (socket) => {
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const mess = `${socket.playerInfo.name} has disconnected`;
       const message = { commenter: time, time: '', mess };
+      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
       if (io.nsps['/'].adapter.rooms[socket.currentRoom].gameStart) {

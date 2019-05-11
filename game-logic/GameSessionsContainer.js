@@ -72,7 +72,7 @@ class GameSessionsContainer {
     this.games.get(gameId).setPlayerName(playerId, playerName);
   }
 
-  addPlayerToSession(gameId, loggedInPlayerId) {
+  addPlayerToSession(gameId) {
     if (!this.games.has(gameId)) {
       return notFoundErr(gameId);
     }
@@ -81,11 +81,8 @@ class GameSessionsContainer {
     return { data: { playerId } };
   }
 
-  dropPlayerFromSession(gameId, playerId) {
-    if (!this.games.has(gameId)) {
-      return notFoundErr(gameId);
-    }
-    return this.games.get(gameId).dropPlayerFromSession(playerId);
+  dropPlayerFromSession(gameId, playerName) {
+    this.games.get(gameId).dropPlayerFromSession(playerName);
   }
 }
 
