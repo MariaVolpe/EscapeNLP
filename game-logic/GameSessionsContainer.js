@@ -31,7 +31,7 @@ class GameSessionsContainer {
     if (!this.games.has(id)) {
       return notFoundErr(id);
     }
-    this.games.get(id).generateGame();
+    this.games.get(id).startGame();
   }
 
   getAllSessions() {

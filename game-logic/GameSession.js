@@ -11,6 +11,7 @@ class GameSession {
     this.puzzleManager = null;
     this.id = id;
     this.name = name;
+    this.inProgress = false;
   }
 
   getFormattedBoard() {
@@ -29,6 +30,11 @@ class GameSession {
 
     this.agents = newAgents;
     return { error: null };
+  }
+
+  startGame() {
+    this.inProgress = true;
+    this.generateGame();
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
