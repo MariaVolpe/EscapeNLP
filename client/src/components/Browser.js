@@ -18,9 +18,9 @@ class Browser extends Component {
 
     // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      // const lobbies = allRooms.map(({ gameName, gameId, playerCount, playerReady}) => {
+      // const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
       const lobbies = allRooms.map(({ gameName, gameId }) => {
-        //if(playerCount !== playerReady){
+        //if(!inProgress){
           return (
             <div className="five wide column" key={gameId}>
               <Lobby
