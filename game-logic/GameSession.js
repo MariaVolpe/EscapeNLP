@@ -10,6 +10,7 @@ class GameSession {
     this.agents = [];
     this.id = id;
     this.name = name;
+    this.inProgress = false;
   }
 
   getFormattedBoard() {
@@ -20,6 +21,14 @@ class GameSession {
     this.agents.push(new Agent(id));
   }
 
+  setPlayerName(playerId, playerName) {
+    this.agents.forEach((agent) => {
+      if ((agent.id === parseInt(playerId, 10))) {
+        agent.name = playerName;
+      }
+    });
+  }
+
   dropPlayerFromSession(id) {
     const newAgents = this.agents.filter(agent => agent.id !== id);
     if (newAgents.length === this.agents.length) {
@@ -28,6 +37,11 @@ class GameSession {
 
     this.agents = newAgents;
     return { error: null };
+  }
+
+  startGame() {
+    this.inProgress = true;
+    this.generateGame();
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
@@ -47,7 +61,13 @@ class GameSession {
 
   // drop everyone onto map AFTER game starts, again unless performance is poor
   addAgentsToMap() {
-    const spawnPoints = [{ x: 1, y: 7 }, { x: 1, y: 9 }, { x: 4, y: 7 }, { x: 4, y: 9 }, { x: 2, y: 8 }];
+    const spawnPoints = [
+      { x: 1, y: 7 },
+      { x: 1, y: 9 },
+      { x: 4, y: 7 },
+      { x: 4, y: 9 },
+      { x: 2, y: 8 },
+    ];
     this.agents.forEach((agent) => {
       this.grid.add(agent, spawnPoints.pop());
     });

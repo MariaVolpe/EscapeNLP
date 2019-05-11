@@ -29,6 +29,13 @@ class Inventory {
   inventoryHasItem(itemName) {
     return this.items.has(itemName);
   }
+  
+  // returns the reference to an item without removing it from inventory
+  getItem(itemName) {
+    if (!this.items.has(itemName)) return null;
+    const list = this.items.get(itemName);
+    return list[0];
+  }
 
   // returns a list of all items in inventory
   flattenInventory() {

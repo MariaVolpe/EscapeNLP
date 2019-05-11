@@ -72,16 +72,14 @@ class Structure extends BoardObject {
     // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
-  inspect() {
-    if (this.activated) {
-      this.inspectText = this.inspectTextActive;
-      return this.inspectText;
-    }
-    return this.inspectText;
-  }
-
   activate() {
     this.activated = true;
+    this.inspectText = this.inspectTextActive;
+  }
+
+  deactivate() {
+    this.activated = false;
+    this.inspectText = this.inspectTextInactive;
   }
 
   setPassable(boolean) {
