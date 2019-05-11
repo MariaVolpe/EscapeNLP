@@ -8,12 +8,11 @@ class NLInterpreter {
     1) grid: wrapper object that contains BoardObjects and the grid that contains them
     2) agents: list of agents in the game
   */
-  constructor(grid, agents, boardObjects) {
+  constructor(grid) {
     this.grid = grid;
-    this.agents = agents;
     this.actionQueue = []; // queue object that holds actions to be executed | MAY NOT NEED THIS IF TURN BASED
     this.nlp = new NLAnalyzer();
-    this.actionExecuter = new ActionExecuter(grid, boardObjects);
+    this.actionExecuter = new ActionExecuter({ grid: grid });
   }
 
   /*
@@ -21,18 +20,21 @@ class NLInterpreter {
     @params: input = {user: username, inputStr: data}
   */
   executeInput(input) {
-    const userName = input.userName; // the user who typed in the data
+    const userName = input.userName.toLowerCase(); // the user who typed in the data
     const metaData = this.nlp.getActions(input.data); // data about the actions
+    const results = [];
     for (let data of metaData) data.userName = userName; // add user field to metaData
-    for (const data of metaData) this.doAction(data);
+    for (const data of metaData) results.push(this.doAction(data));
+    return results;
   }
 
   /* Tries action type with associated data, if valid returns true */
   doAction(data) {
     const classifications = data.classifications;
-    for (const actionType of classifications) {
+    for (const classification of classifications) {
+      const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
-      if (result) { return true; } // else keep trying other actions
+      if (result) { return result; } // else keep trying other actions
     }
   }
 }

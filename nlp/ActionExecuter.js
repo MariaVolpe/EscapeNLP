@@ -31,7 +31,7 @@ class ActionExecuter {
 
   // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction()
   executeAction(actionType, data) {
-    return this.functionMap[actionType](data);
+    return this.functionMap[actionType].bind(this)(data);
   }
 
   executeMove(data) {
@@ -70,15 +70,23 @@ class ActionExecuter {
   }
 
   executeLook(data) {
+    const texts = [];
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
-
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(user);
-      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspect());
+      return {
+        action: 'look',
+        result: nearbyObjects.filter(e => e.name != 'floor'
+          && e.name != 'wall'
+          && e.inspectText != '').map(e => ({
+            objectName: e.name,
+            inspectText: e.inspect()
+        }))
+      };
     }
     // if specified direct objects, look at that those objects
-    const texts = [];
+    
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
       const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
@@ -86,8 +94,11 @@ class ActionExecuter {
       // if the user is too far from the object move them to it
       // if still too far, then we cant look at this object
       if (!this.attemptMoveCloser(user, object, 2)) continue;
-      texts.push(object.inspectText);
-    } return texts;
+      texts.push({
+        objectName: name,
+        inspectText: object.inspect(),
+      });
+    } return { action: 'look', result: texts };
   }
 
   executeTake(data) {

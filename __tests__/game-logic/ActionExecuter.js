@@ -31,7 +31,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText, weight.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -51,7 +51,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: ['door'],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -72,7 +72,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
