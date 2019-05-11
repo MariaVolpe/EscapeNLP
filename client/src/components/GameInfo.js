@@ -10,11 +10,12 @@ import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
 import floor_switch from '../images/floor_switch.png'
 import floor_switch_activated from '../images/floor_switch_activated.png';
-import player1 from '../images/pink.png';
-import player2 from '../images/red.png';
-import player3 from '../images/black.png';
-import player4 from '../images/white.png';
-import player5 from '../images/blue.png';
+import player0 from '../images/pink.png';
+import player1 from '../images/red.png';
+import player2 from '../images/black.png';
+import player3 from '../images/white.png';
+import player4 from '../images/blue.png';
+import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
@@ -45,11 +46,12 @@ const pictures = {
   'forge': forge,
   'pot': pot,
   'exit': exit,
+  'player0': player0,
   'player1': player1,
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5
+  'playerDefault': playerDefault
 }
 
 class GameInfo extends Component {
@@ -80,12 +82,10 @@ class GameInfo extends Component {
 
     let seconds = Math.round(this.props.timer/1000);
     let minutes = Math.round(seconds / 60);
-    let hours = Math.round(minutes / 60);
     seconds = seconds % 60;
     minutes = minutes % 60;
     let timerSeconds = '';
     let timerMinutes = '';
-    let timerHours = '';
     if (seconds < 10) {
       timerSeconds = '0' + seconds.toString();
     } else {
@@ -96,13 +96,8 @@ class GameInfo extends Component {
     } else {
       timerMinutes = minutes.toString();
     }
-    if (hours < 10) {
-      timerHours = '0' + hours.toString();
-    } else {
-      timerHours = hours.toString();
-    }
 
-    const time = `Timer ${timerHours}:${timerMinutes}:${timerSeconds}`;
+    const time = `Timer ${timerMinutes}:${timerSeconds}`;
 
     for (let i=0; i<16; i++) {
       if (i !== 0) {

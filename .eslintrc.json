@@ -7,7 +7,8 @@
         "max-len": ["error", {
             "code": 110
         }],
-        "prefer-destructuring": "warn"
+        "prefer-destructuring": "warn",
+        "no-cond-assign": "off"
     },
     "settings": {
         "react": {

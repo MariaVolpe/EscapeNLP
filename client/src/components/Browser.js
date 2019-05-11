@@ -16,18 +16,21 @@ class Browser extends Component {
 
     this.socket = socketIOClient('');
 
+    // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      const lobbies = allRooms.map(({ gameName, gameId }) => {
-        return (
-          <div className="five wide column" key={gameId}>
-            <Lobby
-              lobbyName={gameName}
-              lobbyId={gameId}
-              className="lobby-box"
-              onLobbyClick={this.onLobbyClick}
-            />
-          </div>
-        );
+      const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
+        if(inProgress === false){
+          return (
+            <div className="five wide column" key={gameId}>
+              <Lobby
+                lobbyName={gameName}
+                lobbyId={gameId}
+                className="lobby-box"
+                onLobbyClick={this.onLobbyClick}
+              />
+            </div>
+          );
+        }
       });
       this.setState({lobbies});
     });
@@ -59,6 +62,9 @@ class Browser extends Component {
         const id = res.data.data.gameId;
         window.sessionStorage.setItem('roomId', id);
         axios.post(`/game/${id}/player`).then(res => {
+          const playerId = res.data.data.playerId;
+          console.log('playerID in confirm join', playerId);
+          window.sessionStorage.setItem('playerId', playerId);
           window.location.replace('/play');
         });
       });

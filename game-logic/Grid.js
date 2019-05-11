@@ -42,8 +42,8 @@ class Grid {
   }
 
   getFormattedGrid() {
-    const frontEndMatrix = Array.from({ length: 15 },
-      () => Array.from({ length: 12 },
+    const frontEndMatrix = Array.from({ length: this.matrix[0].length },
+      () => Array.from({ length: this.matrix.length },
         () => []));
 
     for (let i = 0; i < this.matrix.length; i++) {
@@ -72,8 +72,8 @@ class Grid {
   }
 
   // drops the specified object to the nearest point to the center object
-  dropOntoBoard({ centerObj, droppedObject }) {
-    const p = this.pathFinder.getClosestFreePoint(centerObj.position, droppedObject);
+  dropOntoBoard({ searchOriginObj, droppedObject }, maxItemsOnSquare = 2) {
+    const p = this.pathFinder.getClosestFreePoint(searchOriginObj.position, maxItemsOnSquare);
     this.add(droppedObject, { x: p.x, y: p.y });
   }
 
@@ -114,13 +114,15 @@ class Grid {
 
   // Given a destination object, call pathfinder to find a suitable path towards it
   // movingObjs is a list of objects that are moving ordered by following to leading
-  moveToObject(movingObjs, destinationObj) {
+  // onTop: true when mover moves on top of the destinationObj if possible, false otherwise
+  moveToObject(movingObjs, destinationObj, onTop = true) {
     const destinationPoint = destinationObj.position;
     for (let i = 0; i < movingObjs.length; i++) {
       const movingObj = movingObjs[i];
       const startPoint = movingObj.position;
       const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
       if (!path.length) continue;
+      if (!onTop) path.pop();
       // offset by how many things we are moving
       const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       // update matrix @ previous point //
