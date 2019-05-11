@@ -479,7 +479,53 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Activate', () => {
+    it('Should activate the object and move the player', async() => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const door = new Structure('door', '3', null);
+      const player = new Agent('player')
+      const initMatrix = [
+      [[floor], [floor], [floor]],
+      [[player], [floor], [door]],
+      [[floor], [floor], [floor]]
+      ];
+      const finalMatrix = [
+      [[floor], [floor], [floor]],
+      [[], [floor, player], [door]],
+      [[floor], [floor], [floor]]
+      ];
 
+      const grid = new Grid(initMatrix);
+      const actionExecuter = new ActionExecuter({ grid: grid});
+      const activateResponse = actionExecuter.executeActivate({
+        user: 'player',
+        directObjects: ['door']
+      });
+
+      expect(door.activated).toEqual(true);
+      expect(JSON.stringify(stripNames(grid.matrix))).toEqual(JSON.stringify(stripNames(finalMatrix)));
+    })
+
+    it('Should NOT activate the object', async() => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const door = new Structure('door', '3', null);
+      const player = new Agent('player')
+      const matrix = [
+      [[floor], [wall], [floor]],
+      [[player], [wall], [door]],
+      [[floor], [wall], [floor]]
+      ];
+
+      const grid = new Grid(matrix);
+      const actionExecuter = new ActionExecuter({ grid: grid});
+      const activateResponse = actionExecuter.executeActivate({
+        user: 'player',
+        directObjects: ['door']
+      });
+      expect(door.activated).toEqual(false);
+      expect(JSON.stringify(stripNames(grid.matrix))).toEqual(JSON.stringify(stripNames(matrix)));
+    })
   });
 
   describe('Deactivate', () => {

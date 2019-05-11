@@ -230,7 +230,20 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-
+    const user = this.grid.getObject({ identifier: data.user });
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.manuallyActivateable) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.activate();
+        }
+      }
+      else {
+        return false;
+      }
+    })
+    return true;
   }
 
   executeDeactivate(data) {
@@ -238,7 +251,20 @@ class ActionExecuter {
   }
 
   executeUse(data) {
-
+    const user = this.grid.getObject({ identifier: data.user });
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.use) {
+        if (this.functionMap[subject.use]) {
+          return this.functionMap[subject.use](data);
+        }
+        else {
+          //TODO: Account for special use functions
+        }
+      }
+      return false;
+    })
+    return true;
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods
@@ -252,7 +278,7 @@ class ActionExecuter {
       this.grid.moveToObject([movingObj], destinationObj, onTop);
     } return getDistance(movingObj, destinationObj) <= acceptableDistance;
   }
-
+  
 }
 
 module.exports = ActionExecuter;

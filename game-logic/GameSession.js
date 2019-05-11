@@ -8,7 +8,6 @@ class GameSession {
     this.puzzleManager = null;
     this.grid = null;
     this.agents = [];
-    this.puzzleManager = null;
     this.id = id;
     this.name = name;
     this.inProgress = false;
