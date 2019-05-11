@@ -43,14 +43,14 @@ class Play extends Component {
       players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
-            inventory: {},
+            inventory: [],
             ready: player.ready,
             position: player.position,
             hasLeftGame: player.hasLeftGame
           };
         } else {
           allPlayers[player.name] = {
-            inventory: {},
+            inventory: [],
             ready: player.ready,
             position: player.position,
             hasLeftGame: player.hasLeftGame
@@ -61,7 +61,14 @@ class Play extends Component {
       this.setState({allPlayers});
     });
 
-    this.socket.on('updatePlayers', (allPlayers) => {
+    this.socket.on('updatePlayers', (players) => {
+      let allPlayers = this.state.allPlayers;
+      Object.keys(players).forEach((player) => {
+        if (allPlayers.hasOwnProperty(player)) {
+          allPlayers[player].inventory = player.inventory;
+          allPlayers[player].id = player.id;
+        }
+      });
       this.setState({allPlayers})
     });
 
