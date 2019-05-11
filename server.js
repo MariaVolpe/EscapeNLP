@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
     if (message.type === 'action') {
       const gameComplete = false;
       // await gameContainer.performAction(socket.gameId, message);
-      // pull off if game has started here
+      // set gameComplete to true if necessary
       const action = {
         type: 'interpreted',
         time: message.time,
