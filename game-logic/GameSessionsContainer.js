@@ -17,7 +17,6 @@ class GameSessionsContainer {
   constructor() {
     this.games = new Map();
     this.gameIdCounter = 0;
-    this.playerIdCounter = 0;
   }
 
   getFormattedBoard(id) {
@@ -69,9 +68,7 @@ class GameSessionsContainer {
     if (!this.games.has(gameId)) {
       return notFoundErr(gameId);
     }
-    const playerId = loggedInPlayerId || this.playerIdCounter;
-    this.games.get(gameId).addPlayerToSession(playerId);
-    this.playerIdCounter++;
+    const playerId = this.games.get(gameId).addPlayerToSession();
     return { data: { playerId } };
   }
 

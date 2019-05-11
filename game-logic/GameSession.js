@@ -11,14 +11,16 @@ class GameSession {
     this.puzzleManager = null;
     this.id = id;
     this.name = name;
+    this.playerIdCounter = 0;
   }
 
   getFormattedBoard() {
     return this.grid.getFormattedGrid();
   }
 
-  addPlayerToSession(id) {
-    this.agents.push(new Agent(id));
+  addPlayerToSession() {
+    this.agents.push(new Agent(this.playerIdCounter));
+    return this.playerIdCounter++;
   }
 
   dropPlayerFromSession(id) {
