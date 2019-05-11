@@ -24,7 +24,7 @@ class GameSession {
 
   setPlayerName(playerId, playerName) {
     this.agents.forEach((agent) => {
-      if ((agent.id = playerId)) {
+      if ((agent.id === parseInt(playerId, 10))) {
         agent.name = playerName;
       }
     });
