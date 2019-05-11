@@ -57,6 +57,7 @@ class TextInfo extends Component {
 
     prevMessages.forEach((message, i) => {
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
+      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
       let entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
                             {message.mess}
                           </div>;
@@ -77,8 +78,8 @@ class TextInfo extends Component {
         entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
                           {message.mess}
                           <div>
-                            <button onClick={() => this.props.onNewInterpretationClick(i)}>Yes</button>
-                            <button onClick={() => this.props.onNewInterpretationClick(i)}>No</button>
+                            <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
+                            <button onClick={() => this.props.onNewInterpretationClick(i, 'no')}>No</button>
                           </div>
                         </div>;
       }
@@ -95,7 +96,8 @@ class TextInfo extends Component {
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
-                            {hoverOverMessage && <div className="report-button">
+                            {!isInterpretMessage && hoverOverMessage &&
+                                                 <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
                                                       data-tip="report"
@@ -117,7 +119,8 @@ class TextInfo extends Component {
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            {hoverOverMessage && <div className="report-button">
+                            {!isInterpretMessage && hoverOverMessage &&
+                                                 <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
                                                       data-tip="report"

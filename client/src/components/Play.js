@@ -298,10 +298,14 @@ class Play extends Component {
     }
   }
 
-  onNewInterpretationClick = (index) => {
+  onNewInterpretationClick = (index, buttonType) => {
     let prevMessages = this.state.prevMessages;
+    let reportOpen = false;
     prevMessages.splice(index, 1);
-    this.setState({prevMessages});
+    if (buttonType === 'yes') {
+      reportOpen = true;
+    }
+    this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
   }
 
   render() {

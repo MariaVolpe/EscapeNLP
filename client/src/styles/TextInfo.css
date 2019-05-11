@@ -94,6 +94,10 @@
   border: 3px solid white;
 }
 
+.interpreted:hover {
+  cursor: pointer;
+}
+
 .text.text-message {
   padding-left: 3%;
   padding-bottom: 3%;
