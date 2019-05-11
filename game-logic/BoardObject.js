@@ -29,7 +29,6 @@ class BoardObject {
     name, id, moveable, possesable, transferable,
     usable, passable, inspectable, destructable, puzzleType, objectType,
   }) {
-    console.log('in board', id);
     this.name = name;
     this.id = id;
     this.moveable = moveable;

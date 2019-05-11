@@ -121,7 +121,6 @@ io.on('connection', (socket) => {
     socket.playerInfo = playerInfo;
     if (playerInfo !== '') {
       const { playerId, name } = playerInfo;
-      console.log('playerId in getName', playerId)
       await gameContainer.setPlayerName(socket.gameId, playerId, name);
       console.log('it worked!');
     }

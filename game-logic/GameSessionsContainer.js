@@ -59,8 +59,6 @@ class GameSessionsContainer {
   }
 
   setPlayerName(gameId, playerId, playerName) {
-    console.log('called setPlayerName');
-    console.log(gameId)
     this.games.get(gameId).setPlayerName(playerId, playerName);
   }
 
