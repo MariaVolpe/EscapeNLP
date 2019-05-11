@@ -69,10 +69,6 @@ class Structure extends BoardObject {
     // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
-  inspect() {
-    return this.inspectText;
-  }
-
   activate() {
     this.activated = true;
     this.inspectText = this.inspectTextActive;

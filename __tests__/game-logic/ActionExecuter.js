@@ -20,15 +20,16 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
+      const agent = new Agent('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
-        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
         [[wall], [wall], [wall]],
       ];
       const g = new Grid(matrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
-        user: floor,
+        userName: 'james bond',
         directObjects: [],
       }).filter(text => text !== '');
       const expected = JSON.stringify([door.inspectText, weight.inspectText]);
@@ -39,15 +40,16 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
+      const agent = new Agent('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
-        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
         [[wall], [wall], [wall]],
       ];
       const g = new Grid(matrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
-        user: floor,
+        userName: 'james bond',
         directObjects: ['door'],
       }).filter(text => text !== '');
       const expected = JSON.stringify([door.inspectText]);
@@ -58,16 +60,17 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
+      const agent = new Agent('James Bond');
       const matrix = [
         [[weight], [wall], [wall]],
         [[wall], [door], [wall]],
-        [[wall], [new Structure('floor', 6, null)], [wall]],
+        [[wall], [floor, agent], [wall]],
         [[wall], [floor], [wall]],
       ];
       const g = new Grid(matrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       const lookResponse = actionExecuter.executeLook({
-        user: floor,
+        userName: 'james bond',
         directObjects: [],
       }).filter(text => text !== '');
       const expected = JSON.stringify([door.inspectText]);
@@ -113,7 +116,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeTake({
-        user: agent,
+        userName: 'agent',
         directObjects: ['key'],
         indirectObjects: [],
       });
@@ -146,7 +149,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeTake({
-        user: agent,
+        userName: 'agent',
         directObjects: ['key'],
         indirectObjects: [],
       });
@@ -183,7 +186,7 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       dora.takeItem(key);
       actionExecuter.executeTake({
-        user: swiper,
+        userName: 'swiper',
         directObjects: ['key'],
         indirectObjects: ['dora'],
       });
@@ -225,7 +228,7 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       swiper.takeItem(item);
       actionExecuter.executeGive({
-        user: swiper,
+        userName: 'swiper',
         directObjects: ['key'],
         indirectObjects: ['dora'],
       });
@@ -265,7 +268,7 @@ describe('ActionExecuter tests', () => {
       const actionExecuter = new ActionExecuter({ grid: g });
       swiper.takeItem(item);
       actionExecuter.executeGive({
-        user: swiper,
+        userName: 'swiper',
         directObjects: ['key'],
         indirectObjects: ['dora'],
       });
@@ -304,7 +307,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeGive({
-        user: swiper,
+        userName: 'swiper',
         directObjects: ['key'],
         indirectObjects: ['dora'],
       });
@@ -347,7 +350,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executePlace({
-        user: indianaJones,
+        userName: 'indiana jones',
         directObjects: ['idol'],
         indirectObjects: ['floor switch'],
       });
@@ -385,7 +388,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executePlace({
-        user: indianaJones,
+        userName: 'indiana jones',
         directObjects: ['idol'],
         indirectObjects: ['floor switch'],
       });
@@ -422,7 +425,7 @@ describe('ActionExecuter tests', () => {
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executePlace({
-        user: indianaJones,
+        userName: 'indiana jones',
         directObjects: ['idol'],
         indirectObjects: ['floor switch'],
       });

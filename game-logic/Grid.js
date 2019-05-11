@@ -42,8 +42,8 @@ class Grid {
   }
 
   getFormattedGrid() {
-    const frontEndMatrix = Array.from({ length: 15 },
-      () => Array.from({ length: 12 },
+    const frontEndMatrix = Array.from({ length: this.matrix[0].length },
+      () => Array.from({ length: this.matrix.length },
         () => []));
 
     for (let i = 0; i < this.matrix.length; i++) {

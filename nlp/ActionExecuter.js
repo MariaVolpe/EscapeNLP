@@ -36,7 +36,8 @@ class ActionExecuter {
 
   executeMove(data) {
     // Check for all the direct objects, then indirect
-    const { user } = data;
+    const { userName } = data;
+    const user = this.grid.getObject({ identifier: userName });
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
@@ -50,7 +51,7 @@ class ActionExecuter {
     // validate moving objects
     for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
-      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objName });
+      const object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
@@ -61,28 +62,30 @@ class ActionExecuter {
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
       // TODO: include pronoun caching later
-      if (!this.grid.getObject({ searchOriginObj: data.user, identifier: dest })) { return false; }
+      if (!this.grid.getObject({ searchOriginObj: user, identifier: dest })) { return false; }
     }
     for (let i = 0; i < destinations.length; i++) {
-      console.log('moving');
       this.grid.moveToObject(movingObjects, this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] }))
     } return true;
   }
 
   executeLook(data) {
+    const { userName } = data;
+    const user = this.grid.getObject({ identifier: userName });
+
     if (!data.directObjects.length) { // if no specified object to look at, look around
-      const nearbyObjects = this.grid.getNearbyObjects(data.user);
+      const nearbyObjects = this.grid.getNearbyObjects(user);
       return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspect());
     }
     // if specified direct objects, look at that those objects
     const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
-      const object = this.grid.getObject({ searchOriginObj: data.user, identifier: name });
+      const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
       if (!object) return false;
       // if the user is too far from the object move them to it
       // if still too far, then we cant look at this object
-      if (!this.attemptMoveCloser(data.user, object, 2)) continue;
+      if (!this.attemptMoveCloser(user, object, 2)) continue;
       texts.push(object.inspectText);
     } return texts;
   }
@@ -90,23 +93,25 @@ class ActionExecuter {
   executeTake(data) {
     const sources = data.indirectObjects;
     const objectNames = data.directObjects;
+    const { userName } = data;
+    const user = this.grid.getObject({ identifier: userName });
     // if there is a source
     for (let i = 0; i < sources.length; i++) {
       const sourceName = sources[i];
-      const sourceObject = this.grid.getObject({ searchOriginObj: data.user, identifier: sourceName });
+      const sourceObject = this.grid.getObject({ searchOriginObj: user, identifier: sourceName });
       if (!sourceObject) continue;
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
           const objName = objectNames[j];
-          if (!this.attemptMoveCloser(data.user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objName, data.user);  
+          if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
+          sourceObject.giveItem(objName, user);  
         }
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
-          const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
-          if (!this.attemptMoveCloser(data.user, object, 1)) continue;
-          data.user.takeItem(object);
+          const object = this.grid.getObject({ searchOriginObj: user, identifier: objectName });
+          if (!this.attemptMoveCloser(user, object, 1)) continue;
+          user.takeItem(object);
           this.grid.removeFromBoard(object);
         }
       }
@@ -116,10 +121,10 @@ class ActionExecuter {
       // search for it in the grid | TODO: implement stealing if its not on the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
-        const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objectName });
+        const object = this.grid.getObject({ searchOriginObj: user, identifier: objectName });
         if (!object) continue;
-        if (!this.attemptMoveCloser(data.user, object, 1)) continue;
-        data.user.takeItem(object);
+        if (!this.attemptMoveCloser(user, object, 1)) continue;
+        user.takeItem(object);
         this.grid.removeFromBoard(object);
       }
     }
@@ -127,27 +132,29 @@ class ActionExecuter {
   }
 
   executeGive(data) {
+    const { userName } = data;
+    const user = this.grid.getObject({ identifier: userName });
     // we can expect receipients whenever an object is given
     const recipients = data.indirectObjects;
     const objectNames = data.directObjects;
     for (let i = 0; i < recipients.length; i++) {// for all receipients
       const recipientName = recipients[i];
-      const recipient = this.grid.getObject({ searchOriginObj: data.user, identifier: recipientName });
+      const recipient = this.grid.getObject({ searchOriginObj: user, identifier: recipientName });
       for (let j = 0; j < objectNames.length; j++) {// for all items
         const objectName = objectNames[j];
-        const hasItem = data.user.hasItem(objectName);
+        const hasItem = user.hasItem(objectName);
         if (hasItem) {
-          if (!this.attemptMoveCloser(data.user, recipient, 1)) continue;
-          data.user.giveItem(objectName, recipient);
+          if (!this.attemptMoveCloser(user, recipient, 1)) continue;
+          user.giveItem(objectName, recipient);
         } else {// if item was not already possessed
           const takeAttemptData = {
-            user: data.user,
+            userName: userName,
             directObjects: [objectName],
             indirectObjects: []
           };
           const taken = this.executeTake(takeAttemptData);
-          if (!this.attemptMoveCloser(data.user, recipient, 1)) continue;
-          if (taken) data.user.giveItem(objectName, recipient); // give the item to the recipient
+          if (!this.attemptMoveCloser(user, recipient, 1)) continue;
+          if (taken) user.giveItem(objectName, recipient); // give the item to the recipient
         }
       }
     } return true;
@@ -156,7 +163,8 @@ class ActionExecuter {
   executePlace(data) {
     const destinations = data.indirectObjects;
     const objectNames = data.directObjects;
-    const { user } = data;
+    const { userName } = data;
+    const user = this.grid.getObject({ identifier: userName });
     if (!destinations.length) { // if no destinations specified
       for (let i = 0; i < objectNames.length; i++) {
         const objName = objectNames[i];
@@ -181,7 +189,7 @@ class ActionExecuter {
         if (object.possesable) {
           if (!user.hasItem(objName)) { // if not already possessed
             const takeAttemptData = {
-              user: data.user,
+              userName: userName,
               directObjects: [objName],
               indirectObjects: []
             };
@@ -195,8 +203,8 @@ class ActionExecuter {
             Number.MAX_VALUE);
         } else { // if we cant possess the object we have to try to move it
           const moveAttemptData = {
-            user: user,
-            directObjects: [objName, user.name],
+            userName: userName,
+            directObjects: [objName, userName],
             indirectObjects: [destinationName]
           };
           this.executeMove(moveAttemptData);
