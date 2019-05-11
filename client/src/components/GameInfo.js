@@ -15,7 +15,7 @@ import player1 from '../images/red.png';
 import player2 from '../images/black.png';
 import player3 from '../images/white.png';
 import player4 from '../images/blue.png';
-import player5 from '../images/yellow.png';
+import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
@@ -51,7 +51,7 @@ const pictures = {
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5
+  'playerDefault': playerDefault
 }
 
 class GameInfo extends Component {
