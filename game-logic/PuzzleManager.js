@@ -87,6 +87,9 @@ class PuzzleManager {
   }
 
   checkPuzzleComplete(puzzleType) {
+    if (!puzzleType) {
+      return false;
+    }
     this.puzzleProgress.get(puzzleType).forEach((obj) => {
       if (!obj.activated) {
         return false;
@@ -97,6 +100,9 @@ class PuzzleManager {
 
   //This ensures puzzle logic isn't repeated once the puzzle is complete
   checkRewardGranted(puzzleType) {
+    if (!puzzleType) {
+      return false;
+    }
     return this.puzzleRewardGranted.get(puzzleType);
   }
 
