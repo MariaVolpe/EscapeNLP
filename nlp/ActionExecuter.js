@@ -51,7 +51,6 @@ class ActionExecuter {
     for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ searchOriginObj: data.user, identifier: objName });
-      console.log(object);
       // TODO: include pronoun caching
       if (!object || !object.isMovable()) {
         return false;
