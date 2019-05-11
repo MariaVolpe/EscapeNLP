@@ -68,7 +68,9 @@ io.on('connection', (socket) => {
   socket.on('chatMessage', async (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
+      const gameComplete = false;
       // await gameContainer.performAction(socket.gameId, message);
+      // pull off if game has started here
       const action = {
         type: 'interpreted',
         time: message.time,
@@ -78,7 +80,7 @@ io.on('connection', (socket) => {
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
       io.in(socket.currentRoom).emit('chatMessage', action);
-      io.in(socket.currentRoom).emit('updateBoard', board);
+      io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
       io.in(socket.currentRoom).emit('updatePlayers', players);
     }
   });
@@ -90,7 +92,7 @@ io.on('connection', (socket) => {
   socket.on('startGame', async () => {
     await gameContainer.startGame(socket.gameId);
     const board = await gameContainer.getFormattedBoard(socket.gameId);
-    console.log(board);
+    console.log('start game!');
     io.in(socket.currentRoom).emit('updateBoard', board, false);
   });
 

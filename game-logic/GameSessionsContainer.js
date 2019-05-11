@@ -64,10 +64,11 @@ class GameSessionsContainer {
     return { error: null };
   }
 
-  addPlayerToSession(gameId, loggedInPlayerId) {
+  addPlayerToSession(gameId) {
     if (!this.games.has(gameId)) {
       return notFoundErr(gameId);
     }
+
     const playerId = this.games.get(gameId).addPlayerToSession();
     return { data: { playerId } };
   }
