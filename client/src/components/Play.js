@@ -48,7 +48,6 @@ class Play extends Component {
             position: player.position,
             hasLeftGame: player.hasLeftGame
           };
-          console.log(allPlayers[player.name]);
         } else {
           allPlayers[player.name] = {
             inventory: {},
@@ -56,7 +55,6 @@ class Play extends Component {
             position: player.position,
             hasLeftGame: player.hasLeftGame
           };
-          console.log(allPlayers[player.name]);
         }
       });
 
@@ -124,14 +122,12 @@ class Play extends Component {
 
   componentDidMount = () => {
     if (window.sessionStorage.getItem('roomId') !== null) {
-      console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({board});
     } else {
-      console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');
     }
   }

@@ -56,7 +56,6 @@ class GameSession {
   }
 
   startGame() {
-    console.log('startGame');
     this.inProgress = true;
     this.generateGame();
   }
