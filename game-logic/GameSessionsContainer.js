@@ -58,6 +58,10 @@ class GameSessionsContainer {
     return { error: null };
   }
 
+  setPlayerName(gameId, playerId, playerName) {
+    this.games.get(gameId).setPlayerName(playerId, playerName);
+  }
+
   addPlayerToSession(gameId, loggedInPlayerId) {
     if (!this.games.has(gameId)) {
       return notFoundErr(gameId);
