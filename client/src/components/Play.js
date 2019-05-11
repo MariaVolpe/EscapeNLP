@@ -292,6 +292,11 @@ class Play extends Component {
       let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      prevMessages.forEach((message, i) => {
+        if (message.type === 'new interpretation') {
+          prevMessages.splice(i, 1);
+        }
+      });
       const message = { commenter, time, mess, type: 'new interpretation' };
       prevMessages.push(message);
       this.setState({prevMessages});
