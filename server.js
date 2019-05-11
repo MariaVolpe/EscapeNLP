@@ -73,8 +73,7 @@ io.on('connection', (socket) => {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
-        mess: 'INTERPRETED ACTION',
-        checked: false
+        mess: 'INTERPRETED ACTION'
       };
       io.in(socket.currentRoom).emit('chatMessage', action);
     }
