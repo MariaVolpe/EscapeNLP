@@ -219,7 +219,9 @@ class ActionExecuter {
           //TODO: Account for special use functions
         }
       }
+      return false;
     })
+    return true;
   }
 
 }
