@@ -75,7 +75,7 @@
   border-bottom: 1px solid black;
 }
 
-.command {
+.command > div {
   background-color: #B9C1A3;
   border: 3px solid #B9C1A3;
 }
@@ -84,18 +84,25 @@
   margin-bottom: -6.66px;
 }
 
-.chat {
+.chat > div {
   border: 3px solid white;
   z-index: 1;
 }
 
-.interpreted {
+.interpreted > div {
   font-style: italic;
   border: 3px solid white;
 }
 
-.text-message:hover {
+.text.text-message {
+  padding-left: 3%;
+  padding-bottom: 3%;
+}
+
+.text.text-message:hover > div{
   background-color: #ecf0f1;
+  font-weight: 600;
+  font-style: oblique;
 }
 
 .bug.icon:hover {
@@ -103,13 +110,11 @@
 }
 
 .report-button {
-  position: absolute;
-  right: 0px;
-  margin-top: -16.66px;
+  float: right;
+  width: 10%;
 }
 
-.time-of-message {
-  position: absolute;
-  left: 0px;
-  margin-top: -16.66px;
+.message-body {
+  float: left;
+  width: 90%;
 }

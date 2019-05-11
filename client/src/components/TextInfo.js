@@ -81,7 +81,9 @@ class TextInfo extends Component {
                              data-tip={`${message.time}`}
                              data-for="time"
                           >
-                            {message.mess}
+                            <div className="message-body">
+                              {message.mess}
+                            </div>
                             {hoverOverMessage && <div className="report-button">
                                                    <i className="bug icon"
                                                       onClick={() => this.props.onMessageClick(i)}
@@ -107,7 +109,9 @@ class TextInfo extends Component {
                                onMouseEnter={() => this.props.onMessageHover(i)}
                                onMouseLeave={() => this.props.onMessageLeave(i)}
                           >
-                            {message.mess}
+                            <div className="message-body">
+                              {message.mess}
+                            </div>
                             {hoverOverMessage && <div className="report-button">
                                                    <i className="bug icon"
                                                       onClick={() => this.props.onMessageClick(i)}
