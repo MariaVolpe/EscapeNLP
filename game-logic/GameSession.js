@@ -32,7 +32,7 @@ class GameSession {
   dropPlayerFromSession(id) {
     const newAgents = this.agents.filter(agent => agent.id !== id);
     if (newAgents.length === this.agents.length) {
-      return { error: { status: 404, source: "playerId" } };
+      return { error: { status: 404, source: 'playerId' } };
     }
 
     this.agents = newAgents;
@@ -61,9 +61,9 @@ class GameSession {
       { x: 1, y: 9 },
       { x: 4, y: 7 },
       { x: 4, y: 9 },
-      { x: 2, y: 8 }
+      { x: 2, y: 8 },
     ];
-    this.agents.forEach(agent => {
+    this.agents.forEach((agent) => {
       this.grid.add(agent, spawnPoints.pop());
     });
   }
