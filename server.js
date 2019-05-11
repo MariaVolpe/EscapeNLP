@@ -65,17 +65,21 @@ io.on('connection', (socket) => {
     socket.emit('refreshRoomsReceived', getGames());
   });
 
-  socket.on('chatMessage', (message) => {
+  socket.on('chatMessage', async (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
-      //gameContainer.performAction(socket.gameId, message);
-      let action = {
+      // await gameContainer.performAction(socket.gameId, message);
+      const action = {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
-        mess: 'INTERPRETED ACTION'
+        mess: 'INTERPRETED ACTION',
       };
+      const board = await gameContainer.getFormattedBoard(socket.gameId);
+      const players = await gameContainer.getFormattedPlayersList(socket.gameId);
       io.in(socket.currentRoom).emit('chatMessage', action);
+      io.in(socket.currentRoom).emit('updateBoard', board);
+      io.in(socket.currentRoom).emit('updatePlayers', players);
     }
   });
 
