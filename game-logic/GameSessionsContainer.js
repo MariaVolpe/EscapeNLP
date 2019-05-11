@@ -42,6 +42,13 @@ class GameSessionsContainer {
     return { data: games };
   }
 
+  getFormattedPlayersList(id) {
+    if (!this.games.has(id)) {
+      return notFoundErr(id);
+    }
+    return this.games.get(id).getFormattedPlayersList();
+  }
+
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame(name) {

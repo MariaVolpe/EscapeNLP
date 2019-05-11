@@ -31,6 +31,24 @@ class GameSession {
     return { error: null };
   }
 
+  // formats players array into the object format used on frontend
+  // this object format may not be optimal but we'd have to rewrite
+  // a good chunk of the frontend to fix it
+  getFormattedPlayersList() {
+    const formattedObj = {};
+    const agentObjs = this.agents.map((agent) => ({
+      name: agent.name,
+      id: agent.id,
+      inventory: agent.getFormattedInventory(),
+    }));
+
+    this.agents.forEach((agent, index) => {
+      formattedObj[agent.name] = agentObjs[index];
+    });
+
+    return formattedObj;
+  }
+
   // right now, it makes sense to generate the game AFTER all players have joined
   // to make sure the game is calibrated for the right number of players
   // however if the performance on this is poor, we can optimize by adding puzzles
