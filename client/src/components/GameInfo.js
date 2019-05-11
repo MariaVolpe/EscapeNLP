@@ -25,7 +25,7 @@ import door from '../images/door.png';
 import forge from '../images/forge.png';
 import pot from '../images/pot.png';
 import exit from '../images/exit.png';
-
+import VictoryModal from './VictoryModal';
 
 const pictures = {
   'dragon': dragon,
@@ -53,10 +53,22 @@ const pictures = {
 }
 
 class GameInfo extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {victory: true};
+    this.stayOnPage = this.stayOnPage.bind(this);
+  }
+
+  stayOnPage = (event) => {
+    this.setState({victory: !this.state.victory});
+    event.preventDefault();
+  }
+
   render() {
     let board = this.props.board;
     let mapData = [];
-    let victory = false; // get real state from backend
+    let victory = true; // get real state from backend
 
     if(victory === true){
       for (let i=0; i<12; i++) {
@@ -173,6 +185,7 @@ class GameInfo extends Component {
     return(
       <div className="ui grid">
         {mapData}
+        <VictoryModal isOpen={this.state.victory} stayOnPage={this.stayOnPage}/>
       </div>
     )
   }
