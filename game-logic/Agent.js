@@ -46,7 +46,7 @@ class Agent extends BoardObject {
 
   getSpriteName() {
     if (this.id >= 5){
-      return 'player0';
+      return 'player5';
     }
     else {
       return `player${this.id}`;
