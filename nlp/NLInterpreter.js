@@ -21,16 +21,17 @@ class NLInterpreter {
     @params: input = {user: username, inputStr: data}
   */
   executeInput(input) {
-    const user = input.user; // the user who typed in the data
+    const userName = input.userName; // the user who typed in the data
     const metaData = this.nlp.getActions(input.data); // data about the actions
-    for (const data of metaData) this.doAction(user, data);
+    for (let data of metaData) data.userName = userName; // add user field to metaData
+    for (const data of metaData) this.doAction(data);
   }
 
   /* Tries action type with associated data, if valid returns true */
-  doAction(user, data) {
+  doAction(data) {
     const classifications = data.classifications;
     for (const actionType of classifications) {
-      const result = this.actionExecuter.executeAction(user, actionType, data);
+      const result = this.actionExecuter.executeAction(actionType, data);
       if (result) { return true; } // else keep trying other actions
     }
   }

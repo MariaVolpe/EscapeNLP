@@ -68,8 +68,8 @@ io.on('connection', (socket) => {
   socket.on('chatMessage', (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
-      //gameContainer.performAction(socket.gameId, message);
-      let action = {
+      // gameContainer.performAction(socket.gameId, message);
+      const action = {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
@@ -87,7 +87,6 @@ io.on('connection', (socket) => {
   socket.on('startGame', async () => {
     await gameContainer.startGame(socket.gameId);
     const board = await gameContainer.getFormattedBoard(socket.gameId);
-    console.log(board);
     io.in(socket.currentRoom).emit('updateBoard', board, false);
   });
 
@@ -121,6 +120,12 @@ io.on('connection', (socket) => {
 
   socket.on('getName', (playerInfo) => {
     socket.playerInfo = playerInfo;
+    if (playerInfo !== '') {
+      const { playerId, name } = playerInfo;
+      gameContainer.setPlayerName(socket.gameId, playerId, name);
+      console.log('it worked!');
+    }
+
     socket.playerInfo.position = socket.playerNumber;
     updatePlayers('', socket.currentRoom, {});
   });
@@ -136,14 +141,16 @@ io.on('connection', (socket) => {
       allReady.push(player.playerInfo.ready);
     });
 
-    io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
-    if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+    const shouldStart = !(allReady.indexOf(false) >= 0);
+    io.sockets.adapter.rooms[socket.currentRoom].gameStart = shouldStart;
+
+    if (shouldStart) {
       io.sockets.adapter.rooms[socket.currentRoom].startTime = Date.now();
     }
 
     io
       .in(socket.currentRoom)
-      .emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
+      .emit('readyUp', socket.playerInfo, shouldStart);
   });
 
   socket.on('disconnect', () => {

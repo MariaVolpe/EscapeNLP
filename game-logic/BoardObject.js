@@ -44,6 +44,10 @@ class BoardObject {
     this.inspectText = '';
   }
 
+  inspect() {
+    return this.inspectText;
+  }
+
   isPassable() {
     return this.passable;
   }

@@ -48,8 +48,6 @@
   margin-right: 3%;
   margin-top: 3%;
   padding: 1%;
-  border: 2px solid black;
-  border-radius: 5px;
 }
 
 .item-pic {
@@ -66,31 +64,11 @@
 .item-outline {
   height: 3.75vh;
   width: 3.75vh;
-  border: 0.5vh solid silver;
+  border: 0.2vh solid silver;
   border-radius: 15%;
   margin-right: 5px;
   margin-top: -5px;
   background-color: white;
-}
-
-.card.player1 {
-  background-color: #fd79a8;
-}
-
-.card.player3 {
-  background-color: #d63031;
-}
-
-.card.player2 {
-  background-color: #7f8c8d;
-}
-
-.card.player4 {
-  background-color: white;
-}
-
-.card.player5 {
-  background-color: #3498db;
 }
 
 .player-name {
