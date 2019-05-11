@@ -17,7 +17,6 @@ class Agent extends BoardObject {
       objectType: 'Agent',
     });
     this.inventory = new Inventory();
-    this.spriteId = null;
   }
 
   // Checks if an agent has an item in their inventory
@@ -46,7 +45,12 @@ class Agent extends BoardObject {
   }
 
   getSpriteName() {
-    return this.spriteId;
+    if (this.id >= 5){
+      return 'player0';
+    }
+    else {
+      return `player${this.id}`;
+    }
   }
 }
 
