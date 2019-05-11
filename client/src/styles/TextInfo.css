@@ -101,6 +101,7 @@
 
 .text.text-message:hover > div{
   background-color: #ecf0f1;
+  border: 3px solid #ecf0f1;
 }
 
 .question.circle.icon:hover {
