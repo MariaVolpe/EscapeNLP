@@ -140,14 +140,16 @@ io.on('connection', (socket) => {
       allReady.push(player.playerInfo.ready);
     });
 
-    io.sockets.adapter.rooms[socket.currentRoom].gameStart = !(allReady.indexOf(false) >= 0);
-    if (io.sockets.adapter.rooms[socket.currentRoom].gameStart) {
+    const shouldStart = !(allReady.indexOf(false) >= 0);
+    io.sockets.adapter.rooms[socket.currentRoom].gameStart = shouldStart;
+
+    if (shouldStart) {
       io.sockets.adapter.rooms[socket.currentRoom].startTime = Date.now();
     }
 
     io
       .in(socket.currentRoom)
-      .emit('readyUp', socket.playerInfo, io.sockets.adapter.rooms[socket.currentRoom].gameStart);
+      .emit('readyUp', socket.playerInfo, shouldStart);
   });
 
   socket.on('disconnect', () => {

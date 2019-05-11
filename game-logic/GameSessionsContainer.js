@@ -31,13 +31,15 @@ class GameSessionsContainer {
     if (!this.games.has(id)) {
       return notFoundErr(id);
     }
-    this.games.get(id).generateGame();
+    this.games.get(id).startGame();
   }
 
   getAllSessions() {
     const games = [];
-    this.games.forEach(({ playerCount, id: gameId, name: gameName }) => {
-      games.push({ gameId, gameName, playerCount });
+    this.games.forEach(({ playerCount, id: gameId, name: gameName, inProgress }) => {
+      games.push({
+        gameId, gameName, playerCount, inProgress,
+      });
     });
     return { data: games };
   }
