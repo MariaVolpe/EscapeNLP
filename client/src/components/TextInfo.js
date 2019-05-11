@@ -95,7 +95,6 @@ class TextInfo extends Component {
         comments.push(<div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                             {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
@@ -107,6 +106,7 @@ class TextInfo extends Component {
                                                  </div>
                             }
                         </div>
+                        <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                       </div>);
       }
       else if (!sameName) {
