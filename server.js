@@ -122,7 +122,7 @@ io.on('connection', (socket) => {
     socket.playerInfo = playerInfo;
     if (playerInfo !== '') {
       const { playerId, name } = playerInfo;
-      gameContainer.setPlayerName(playerId, name);
+      gameContainer.setPlayerName(socket.gameId, playerId, name);
       console.log('it worked!');
     }
 
