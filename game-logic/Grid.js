@@ -42,8 +42,8 @@ class Grid {
   }
 
   getFormattedGrid() {
-    const frontEndMatrix = Array.from({ length: this.matrix[0].length },
-      () => Array.from({ length: this.matrix.length },
+    const frontEndMatrix = Array.from({ length: this.matrix.length },
+      () => Array.from({ length: this.matrix[0].length },
         () => []));
 
     for (let i = 0; i < this.matrix.length; i++) {
@@ -234,7 +234,6 @@ class Grid {
   }
 
   addToNameToObjectsMap(obj) {
-    console.log(typeof obj.name);
     const name = obj.name.toLowerCase();
     if (!this.nameToObjsList.has(name)) this.nameToObjsList.set(name, []);
 

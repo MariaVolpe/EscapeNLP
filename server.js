@@ -128,7 +128,6 @@ io.on('connection', (socket) => {
     if (playerInfo !== '') {
       const { playerId, name } = playerInfo;
       await gameContainer.setPlayerName(socket.gameId, playerId, name);
-      console.log('it worked!');
     }
 
     socket.playerInfo.position = socket.playerNumber;
