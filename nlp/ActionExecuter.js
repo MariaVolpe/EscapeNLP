@@ -192,8 +192,9 @@ class ActionExecuter {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyActivateable) {
         this.grid.moveToObject([user], subject);
-        if (this.grid.getDistance(user, subject) < 2){ //Check Agent is next to subject
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
+
         }
       }
     })
