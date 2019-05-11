@@ -3,6 +3,7 @@ const Inventory = require('./Inventory');
 
 class Agent extends BoardObject {
   constructor(id) {
+    console.log(id)
     super({
       name: null,
       id,
@@ -16,6 +17,7 @@ class Agent extends BoardObject {
       puzzleType: null,
       objectType: 'Agent',
     });
+    console.log('this.id', this.id)
     this.inventory = new Inventory();
   }
 
@@ -45,6 +47,7 @@ class Agent extends BoardObject {
   }
 
   getSpriteName() {
+    console.log('in getSpriteName ', this.id)
     if (this.id >= 5){
       return 'player0';
     }

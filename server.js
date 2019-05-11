@@ -117,11 +117,12 @@ io.on('connection', (socket) => {
     io.in(room).emit('setNames', allPlayerNames);
   };
 
-  socket.on('getName', (playerInfo) => {
+  socket.on('getName', async (playerInfo) => {
     socket.playerInfo = playerInfo;
     if (playerInfo !== '') {
       const { playerId, name } = playerInfo;
-      gameContainer.setPlayerName(socket.gameId, playerId, name);
+      console.log('playerId in getName', playerId)
+      await gameContainer.setPlayerName(socket.gameId, playerId, name);
       console.log('it worked!');
     }
 
