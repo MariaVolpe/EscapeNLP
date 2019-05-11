@@ -244,7 +244,7 @@ class Play extends Component {
     this.setState({ playerName });
     const takenName = allPlayers.hasOwnProperty(playerName);
     if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      const playerInfo = { name: playerName, ready: false, position: 0 };
+      const playerInfo = { name: playerName, ready: false, position: 0, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }

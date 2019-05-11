@@ -80,12 +80,10 @@ class GameInfo extends Component {
 
     let seconds = Math.round(this.props.timer/1000);
     let minutes = Math.round(seconds / 60);
-    let hours = Math.round(minutes / 60);
     seconds = seconds % 60;
     minutes = minutes % 60;
     let timerSeconds = '';
     let timerMinutes = '';
-    let timerHours = '';
     if (seconds < 10) {
       timerSeconds = '0' + seconds.toString();
     } else {
@@ -96,13 +94,8 @@ class GameInfo extends Component {
     } else {
       timerMinutes = minutes.toString();
     }
-    if (hours < 10) {
-      timerHours = '0' + hours.toString();
-    } else {
-      timerHours = hours.toString();
-    }
 
-    const time = `Timer ${timerHours}:${timerMinutes}:${timerSeconds}`;
+    const time = `Timer ${timerMinutes}:${timerSeconds}`;
 
     for (let i=0; i<16; i++) {
       if (i !== 0) {

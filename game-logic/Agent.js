@@ -4,7 +4,7 @@ const Inventory = require('./Inventory');
 class Agent extends BoardObject {
   constructor(id) {
     super({
-      name: id,
+      name: null,
       id,
       moveable: false,
       possesable: false,
