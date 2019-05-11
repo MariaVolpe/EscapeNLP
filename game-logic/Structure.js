@@ -60,7 +60,7 @@ class Structure extends BoardObject {
 
     this.inspectTextInactive = StructText[name].inspectTextInactive;
     this.inspectTextActive = StructText[name].inspectTextActive;
-
+    this.inspectText = this.activated ? StructText[name].inspectTextActive : StructText[name].inspectTextInactive;
     // this.inspectTextInactive = StructText[name].inspectTextInactive;
     // this.inspectTextActive = StructText[name].inspectTextActive;
     // this.useTextUsed = StructText[name].useTextUsed;
@@ -69,15 +69,14 @@ class Structure extends BoardObject {
     // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
-  inspect() {
-    if (this.activated) {
-      return this.inspectTextActive;
-    }
-    return this.inspectText;
-  }
-
   activate() {
     this.activated = true;
+    this.inspectText = this.inspectTextActive;
+  }
+
+  deactivate() {
+    this.activated = false;
+    this.inspectText = this.inspectTextInactive;
   }
 
   getSpriteName() {

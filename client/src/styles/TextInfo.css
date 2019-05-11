@@ -80,11 +80,6 @@
   border: 3px solid #B9C1A3;
 }
 
-.command:hover {
-  border: 3.5px solid black;
-  cursor: pointer;
-}
-
 .message {
   margin-bottom: -6.66px;
 }
@@ -94,7 +89,12 @@
   z-index: 1;
 }
 
-.chat:hover {
+.interpreted {
+  font-style: italic;
+  border: 3px solid white;
+}
+
+.text-message:hover {
   border: 3.5px solid black;
   cursor: pointer;
 }
