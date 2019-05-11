@@ -194,10 +194,13 @@ class ActionExecuter {
         this.grid.moveToObject([user], subject);
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
-
         }
       }
+      else {
+        return false;
+      }
     })
+    return true;
   }
 
   executeDeactivate(data) {
@@ -210,7 +213,7 @@ class ActionExecuter {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.use) {
         if (this.functionMap[subject.use]) {
-          this.functionMap[subject.use](data);
+          return this.functionMap[subject.use](data);
         }
         else {
           //TODO: Account for special use functions
