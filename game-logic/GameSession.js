@@ -36,7 +36,7 @@ class GameSession {
   // a good chunk of the frontend to fix it
   getFormattedPlayersList() {
     const formattedObj = {};
-    const agentObjs = this.agents.map((agent) => ({
+    const agentObjs = this.agents.map(agent => ({
       name: agent.name,
       id: agent.id,
       inventory: agent.getFormattedInventory(),

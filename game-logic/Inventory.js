@@ -5,6 +5,16 @@ class Inventory {
     this.items = new Map();
   }
 
+  getFormattedInventory() {
+    const inventoryArr = [];
+    this.items.forEach((value, key) => {
+      value.forEach(() => {
+        inventoryArr.push(key);
+      });
+    });
+    return inventoryArr;
+  }
+
   useItem(itemName) {
     if (!this.items.has(itemName)) {
       // todo: catch
