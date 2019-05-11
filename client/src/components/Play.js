@@ -247,7 +247,7 @@ class Play extends Component {
       } else {
         playerIcon = 'defaultIcon';
       }
-      const playerInfo = { name: playerName, ready: false, position: 0, iconName: playerIcon };
+      const playerInfo = { name: playerName, ready: false, position: 0, iconName: playerIcon, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
