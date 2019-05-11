@@ -75,17 +75,13 @@ class TextInfo extends Component {
       }
       if (sameName) {
         comments.push(<div className="content" key={i} >
-                          <div className={textType}
-                             onMouseEnter={() => this.props.onMessageHover(i)}
-                             onMouseLeave={() => this.props.onMessageLeave(i)}
-                             data-tip={`${message.time}`}
-                             data-for="time"
-                          >
-                            <div className="message-body">
+                          <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
+                            <div className="message-body" data-tip={`${message.time}`} data-for="time">
                               {message.mess}
                             </div>
+                            <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                             {hoverOverMessage && <div className="report-button">
-                                                   <i className="bug icon"
+                                                   <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
                                                       data-tip="report"
                                                       data-for="report"
@@ -93,7 +89,6 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
-                            <ReactTooltip key="tooltip" id="time" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                         </div>
                       </div>);
       }
@@ -105,15 +100,12 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{message.time}</span>
                           </div>
-                          <div className={textType}
-                               onMouseEnter={() => this.props.onMessageHover(i)}
-                               onMouseLeave={() => this.props.onMessageLeave(i)}
-                          >
+                          <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             <div className="message-body">
                               {message.mess}
                             </div>
                             {hoverOverMessage && <div className="report-button">
-                                                   <i className="bug icon"
+                                                   <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
                                                       data-tip="report"
                                                       data-for="report"

@@ -101,11 +101,9 @@
 
 .text.text-message:hover > div{
   background-color: #ecf0f1;
-  font-weight: 600;
-  font-style: oblique;
 }
 
-.bug.icon:hover {
+.question.circle.icon:hover {
   cursor: pointer;
 }
 
