@@ -8,8 +8,8 @@ class Inventory {
   getFormattedInventory() {
     const inventoryArr = [];
     this.items.forEach((value, key) => {
-      value.forEach(() => {
-        inventoryArr.push(key);
+      value.forEach((item) => {
+        inventoryArr.push({ name: key, sprite: item.getSpriteName() });
       });
     });
     return inventoryArr;

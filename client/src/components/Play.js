@@ -74,12 +74,13 @@ class Play extends Component {
 
     this.socket.on('updatePlayers', (players) => {
       let allPlayers = this.state.allPlayers;
-      Object.keys(players).forEach((player) => {
-        if (allPlayers.hasOwnProperty(player)) {
-          allPlayers[player].inventory = player.inventory;
-          allPlayers[player].id = player.id;
+      for (let i=0; i<allPlayers.length; i++) {
+        let name = allPlayers[i].name;
+        if (players.hasOwnProperty(name)) {
+          allPlayers[i].inventory = players[name].inventory;
+          allPlayers[i].id = players[name].id;
         }
-      });
+      }
       this.setState({allPlayers})
     });
 
