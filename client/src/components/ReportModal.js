@@ -20,7 +20,7 @@ class ReportModal extends Component {
               <div className="ui grid" style={{marginLeft: '5%', marginRight: '2%'}}>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Move
@@ -28,7 +28,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Look
@@ -36,7 +36,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Take
@@ -44,7 +44,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Give
@@ -52,7 +52,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Destroy
@@ -60,7 +60,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Attack
@@ -68,7 +68,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Place
@@ -76,7 +76,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Jump
@@ -84,7 +84,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Activate
@@ -92,7 +92,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Turn Off
@@ -100,7 +100,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Use
@@ -108,7 +108,7 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-                    className="tiny ui button"
+                    className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
                     Other
