@@ -5,8 +5,6 @@ import defaultIcon from '../images/playericon.png';
 import kirbyIcon from '../images/kirbyoutline.png';
 import dmc4Icon from '../images/dmc4logo.png';
 import pikachuIcon from '../images/pikachuicon.png';
-import ikeIcon from '../images/ikeheadicon.png';
-import luciferIcon from '../images/lucifericon.jpeg';
 import segwayIcon from '../images/segwaypoloicon.png';
 
 const icons = {
@@ -14,8 +12,6 @@ const icons = {
   'kirbyIcon': kirbyIcon,
   'dmc4Icon': dmc4Icon,
   'pikachuIcon': pikachuIcon,
-  'ikeIcon': ikeIcon,
-  'luciferIcon': luciferIcon,
   'segwayIcon': segwayIcon
 }
 

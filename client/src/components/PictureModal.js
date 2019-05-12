@@ -5,8 +5,6 @@ import defaultIcon from '../images/playericon.png';
 import kirbyIcon from '../images/kirbyoutline.png';
 import dmc4Icon from '../images/dmc4logo.png';
 import pikachuIcon from '../images/pikachuicon.png';
-import ikeIcon from '../images/ikeheadicon.png';
-import luciferIcon from '../images/lucifericon.jpeg';
 import segwayIcon from '../images/segwaypoloicon.png';
 
 class PictureModal extends Component {
@@ -40,20 +38,6 @@ class PictureModal extends Component {
                           key='kirbyIcon'
                         >
                           <img src={kirbyIcon} alt='' className="avatar" />
-                        </div>);
-    playerIconList.push(<div
-                          className="avatar-box centered"
-                          onClick={() => this.props.onAvatarClick('ikeIcon')}
-                          key='ikeIcon'
-                        >
-                          <img src={ikeIcon} alt='' className="avatar" />
-                        </div>);
-    playerIconList.push(<div
-                          className="avatar-box centered"
-                          onClick={() => this.props.onAvatarClick('luciferIcon')}
-                          key='luciferIcon'
-                        >
-                          <img src={luciferIcon} alt='' className="avatar" />
                         </div>);
     playerIconList.push(<div
                           className="avatar-box centered"
