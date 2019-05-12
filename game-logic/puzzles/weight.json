@@ -20,8 +20,8 @@
             }
         },
         {
-            "name": "floor switch",
-            "id": "switch_A",
+            "name": "impression",
+            "id": "impression_A",
             "isManaged" : false,
             "coordinates": {
                 "x": 13,
@@ -29,8 +29,8 @@
             }
         },
         {
-            "name": "floor switch",
-            "id" : "switch_B",
+            "name": "impression",
+            "id" : "impression_B",
             "isManaged" : false,
             "coordinates": {
                 "x": 13,

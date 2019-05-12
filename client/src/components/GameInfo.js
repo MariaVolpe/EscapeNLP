@@ -6,8 +6,8 @@ import floor from '../images/dragonite.png';
 import button from '../images/dragonite.png';
 import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
-import floor_switch from '../images/floor_switch.png'
-import floor_switch_activated from '../images/floor_switch_activated.png';
+import impression from '../images/impression.png'
+import impression_activated from '../images/impression_activated.png';
 import key from '../images/key.png';
 import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
@@ -21,8 +21,8 @@ import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
-import binary_switch from '../images/binary_switch.png';
-import binary_switch_activated from '../images/binary_switch_activated.png';
+import lever from '../images/lever.png';
+import lever_activated from '../images/lever_activated.png';
 import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
 import door_activated from '../images/door_activated.png'
@@ -36,14 +36,14 @@ const pictures = {
   'key': key,
   'weight': weight,
   'wall': wall,
-  'floor switch': floor_switch,
-  'floor_switch_activated': floor_switch_activated,
+  'impression': impression,
+  'impression_activated': impression_activated,
   'button': button,
   'block': block,
   'wep': wep,
   'poster': poster,
-  'switch': binary_switch,
-  'binary_switch_activated' : binary_switch_activated,
+  'lever': lever,
+  'lever_activated' : lever_activated,
   'bookshelf': bookshelf,
   'door': door,
   'door_activated': door_activated,
