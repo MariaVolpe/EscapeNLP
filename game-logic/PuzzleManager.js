@@ -63,9 +63,9 @@ class PuzzleManager {
   }
 
   evaluateAllPuzzles() {
-    this.puzzles.forEach( ({puzzle_type}) => {
+    this.puzzles.forEach(({ puzzle_type }) => {
       this.evaluatePuzzleStatus(puzzle_type);
-    })
+    });
   }
 
   evaluatePuzzleStatus(puzzleType) {
@@ -98,8 +98,8 @@ class PuzzleManager {
       return false;
     }
     const managedObjs = this.puzzleProgress.get(puzzleType);
-      if(managedObjs) { 
-        managedObjs.forEach((obj) => {
+    if (managedObjs) {
+      managedObjs.forEach((obj) => {
         if (!obj.activated) {
           return false;
         }

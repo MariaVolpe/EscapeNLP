@@ -65,12 +65,12 @@ class GameInfo extends Component {
   constructor(props){
     super(props);
 
-    this.state = { victory: true };
+    this.state = { showVictoryModal: false };   // get real state from backend
     this.stayOnPage = this.stayOnPage.bind(this);
   }
 
   stayOnPage = (event) => {
-    this.setState({victory: !this.state.victory});
+    this.setState({showVictoryModal: !this.state.showVictoryModal});
     event.preventDefault();
   }
 
@@ -194,7 +194,7 @@ class GameInfo extends Component {
     return(
       <div className="ui grid">
         {mapData}
-        <VictoryModal isOpen={this.state.victory} stayOnPage={this.stayOnPage}/>
+        <VictoryModal isOpen={this.state.showVictoryModal} stayOnPage={this.stayOnPage}/>
       </div>
     )
   }
