@@ -93,7 +93,11 @@ class ActionExecuter {
           && e.name != 'wall'
           && e.inspectText != '').map(e => ({
             objectName: e.name,
+<<<<<<< HEAD
             text: e.inspect()
+=======
+            inspectText: e.inspect()
+>>>>>>> development
         }))
       };
     }
@@ -108,7 +112,11 @@ class ActionExecuter {
       if (!this.attemptMoveCloser(user, object, 2)) continue;
       texts.push({
         objectName: name,
+<<<<<<< HEAD
         text: object.inspect(),
+=======
+        inspectText: object.inspect(),
+>>>>>>> development
       });
     } return { userName: user.name, action: 'look', result: texts };
   }
@@ -257,7 +265,7 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-    const user = this.grid.getObject({ identifier: data.user });
+    const user = this.grid.getObject({ identifier: data.userName });
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyActivateable) {
@@ -278,12 +286,12 @@ class ActionExecuter {
   }
 
   executeUse(data) {
-    const user = this.grid.getObject({ identifier: data.user });
+    const user = this.grid.getObject({ identifier: data.userName });
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.use) {
         if (this.functionMap[subject.use]) {
-          return this.functionMap[subject.use](data);
+          return this.functionMap[subject.use].bind(this)(data);
         }
         else {
           //TODO: Account for special use functions

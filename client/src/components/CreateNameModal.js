@@ -14,7 +14,7 @@ class CreateNameModal extends Component {
       warningLabel = <div class="ui negative message">
                         <i class="close icon" onClick={this.props.onWarningClose}></i>
                         <div class="header">
-                          Name has already been taken or is too short!
+                          Name must be larger than 2 characters and must only contain letters and/or numbers OR the name has already been taken!
                         </div>
                       </div>
     }

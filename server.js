@@ -69,13 +69,14 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
       const gameComplete = false;
-      // await gameContainer.performAction(socket.gameId, message);
+      const actionResults = await gameContainer.performAction(socket.gameId, message);
+
       // set gameComplete to true if necessary
       const action = {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
-        mess: 'INTERPRETED ACTION',
+        mess: 'INTERPRETED ACTION'
       };
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
