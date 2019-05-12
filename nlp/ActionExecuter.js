@@ -93,11 +93,7 @@ class ActionExecuter {
           && e.name != 'wall'
           && e.inspectText != '').map(e => ({
             objectName: e.name,
-<<<<<<< HEAD
             text: e.inspect()
-=======
-            inspectText: e.inspect()
->>>>>>> development
         }))
       };
     }
@@ -112,11 +108,7 @@ class ActionExecuter {
       if (!this.attemptMoveCloser(user, object, 2)) continue;
       texts.push({
         objectName: name,
-<<<<<<< HEAD
         text: object.inspect(),
-=======
-        inspectText: object.inspect(),
->>>>>>> development
       });
     } return { userName: user.name, action: 'look', result: texts };
   }
@@ -172,6 +164,7 @@ class ActionExecuter {
     // we can expect receipients whenever an object is given
     const recipients = data.indirectObjects;
     const objectNames = data.directObjects;
+    const results = [];
     for (let i = 0; i < recipients.length; i++) {// for all receipients
       const recipientName = recipients[i];
       const recipient = this.grid.getObject({ searchOriginObj: user, identifier: recipientName });
@@ -191,8 +184,9 @@ class ActionExecuter {
           if (!this.attemptMoveCloser(user, recipient, 1)) continue;
           if (taken) user.giveItem(objectName, recipient); // give the item to the recipient
         }
+        results.push({ objectName: objectName, recipient: recipient.name });
       }
-    } return true;
+    } return { userName: user.name, action: 'give', result: results };
   }
 
   executePlace(data) {

@@ -570,7 +570,7 @@ describe('ActionExecuter tests', () => {
       const grid = new Grid(initMatrix);
       const actionExecuter = new ActionExecuter({ grid: grid });
       const activateResponse = actionExecuter.executeActivate({
-        user: 'player',
+        userName: 'player',
         directObjects: ['door'],
       });
 
@@ -593,7 +593,7 @@ describe('ActionExecuter tests', () => {
       const grid = new Grid(matrix);
       const actionExecuter = new ActionExecuter({ grid: grid });
       const activateResponse = actionExecuter.executeActivate({
-        user: 'player',
+        userName: 'player',
         directObjects: ['door'],
       });
       expect(door.activated).toEqual(false);
