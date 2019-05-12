@@ -5,6 +5,16 @@ class Inventory {
     this.items = new Map();
   }
 
+  getFormattedInventory() {
+    const inventoryArr = [];
+    this.items.forEach((value, key) => {
+      value.forEach(() => {
+        inventoryArr.push(key);
+      });
+    });
+    return inventoryArr;
+  }
+
   useItem(itemName) {
     if (!this.items.has(itemName)) {
       // todo: catch
@@ -30,6 +40,13 @@ class Inventory {
     return this.items.has(itemName);
   }
   
+  // returns the reference to an item without removing it from inventory
+  getItem(itemName) {
+    if (!this.items.has(itemName)) return null;
+    const list = this.items.get(itemName);
+    return list[0];
+  }
+
   // returns the reference to an item without removing it from inventory
   getItem(itemName) {
     if (!this.items.has(itemName)) return null;

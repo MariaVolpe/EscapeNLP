@@ -7,14 +7,18 @@ class PlayerInfo extends Component {
 
   render() {
     const inventory = this.props.playerInfo.inventory;
-    const itemsList = Object.keys(inventory);
+    let size = 0;
+    let items = [];
+    if (inventory !== undefined) {
+      size = inventory.length;
+      let items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
+                                                 <div className="item-outline">
+                                                  <img src='' alt='' className="item-pic" />
+                                                 </div>
+                                               </div>);
+    }
 
-    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
-                                               <div className="item-outline">
-                                                <img src='' alt='' className="item-pic" />
-                                               </div>
-                                             </div>);
-    for (let i = items.length; i < 6; i++) {
+    for (let i = size; i < 6; i++) {
       items.push(<div className="item-slot" key={i}>
                    <div className="item-outline">
                     <img src='' alt='' className="item-pic" />
@@ -57,7 +61,7 @@ class PlayerInfo extends Component {
     } else {
       let name;
       if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
-        name = this.props.playerInfo.name + " (you)";
+        name = this.props.playerInfo.name;
       } else {
         name = this.props.playerInfo.name;
       }

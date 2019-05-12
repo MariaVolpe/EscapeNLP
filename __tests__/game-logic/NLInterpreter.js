@@ -11,7 +11,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      const agent = new Agent('James Bond');
+      const agent = new Agent(0);
+      agent.setName('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
         [[wall], [floor, agent], [wall]],
@@ -42,7 +43,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      const agent = new Agent('James Bond');
+      const agent = new Agent(0);
+      agent.setName('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
         [[wall], [floor, agent], [wall]],
@@ -72,7 +74,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
     it('Should take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Agent');
+      const agent = new Agent(0);
+      agent.setName('Agent');
       const item = new Item('key', '5', null);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -102,7 +105,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
     it('Should move to take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Agent');
+      const agent = new Agent(0);
+      agent.setName('Agent');
       const item = new Item('key', '5', null);
       const startingMatrix = [
         [[wall], [wall], [wall]],

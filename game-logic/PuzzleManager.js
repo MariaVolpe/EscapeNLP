@@ -20,7 +20,6 @@ class PuzzleManager {
     this.findPuzzles();
   }
 
-  // todo: set puzzles on this.puzzles, dynamically
   findPuzzles() {
     this.puzzles.push(Door);
     this.puzzles.push(Weight);
@@ -65,11 +64,14 @@ class PuzzleManager {
   }
 
   evaluatePuzzleStatus(puzzleType) {
-    //Leave if the Puzzle hasn't been completed, or if its reward has been granted already
+    // Leave if the Puzzle hasn't been completed, or if its reward has been granted already
     if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
       return;
     }
-    switch (puzzleType) { // eslint-disable-line default-case
+    switch (puzzleType) {
+      case "door":
+        let doorObj = this.puzzleProgress.get("door")[0];
+        doorObj.setPassable(true);
       case 'weight':
         this.grid.add(new Item('sword_blade'));
         break;
@@ -98,7 +100,7 @@ class PuzzleManager {
     return true;
   }
 
-  //This ensures puzzle logic isn't repeated once the puzzle is complete
+  // This ensures puzzle logic isn't repeated once the puzzle is complete
   checkRewardGranted(puzzleType) {
     if (!puzzleType) {
       return false;
