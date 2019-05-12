@@ -69,8 +69,8 @@ class PuzzleManager {
       return;
     }
     switch (puzzleType) {
-      case "door":
-        let doorObj = this.puzzleProgress.get("door")[0];
+      case 'door':
+        const doorObj = this.puzzleProgress.get('door')[0];
         doorObj.setPassable(true);
       case 'weight':
         this.grid.add(new Item('sword_blade'));

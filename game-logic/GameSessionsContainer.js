@@ -33,6 +33,10 @@ class GameSessionsContainer {
     this.games.get(id).startGame();
   }
 
+  performAction(gameId, message) {
+    return this.games.get(gameId).performAction(message);
+  }
+
   getAllSessions() {
     const games = [];
     this.games.forEach(({
@@ -83,6 +87,9 @@ class GameSessionsContainer {
 
   dropPlayerFromSession(gameId, playerName) {
     this.games.get(gameId).dropPlayerFromSession(playerName);
+    if (this.games.get(gameId).playerCount <= 0) {
+      this.games.delete(gameId);
+    }
   }
 }
 

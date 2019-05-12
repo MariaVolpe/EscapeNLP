@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
@@ -14,16 +15,6 @@ class TextInfo extends Component {
   scrollToBottom = () => {
     let scrollElement = document.getElementsByClassName("text-box");
     scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
-  }
-
-  findHeightDifference = (samePlayerMessages) => {
-    let change = 1.1;
-    if (samePlayerMessages > 0) {
-      change = 0.45;
-    }
-    let totalMessages = 74.5 / 17 * ((this.props.prevMessages.length - 1) * (change - 1));
-    let heightDiff = 74.5 - totalMessages;
-    return heightDiff;
   }
 
   render() {
@@ -64,6 +55,11 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
+      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
+      let entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+                            {message.mess}
+                          </div>;
       if (message.type === 'action') {
         textType = "text command text-message";
       }
@@ -72,6 +68,19 @@ class TextInfo extends Component {
       }
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
+        entireMessage = <div className="message-body" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+                          {message.mess}
+                        </div>;
+      }
+      else if (message.type === 'new interpretation') {
+        textType = "text new-interpreted text-message";
+        entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+                          {message.mess}
+                          <div>
+                            <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
+                            <button onClick={() => this.props.onNewInterpretationClick(i, 'no')}>No</button>
+                          </div>
+                        </div>;
       }
       if (prevName === message.commenter) {
         sameName = true;
@@ -80,15 +89,26 @@ class TextInfo extends Component {
         sameName = false;
         prevName = message.commenter;
       }
+
       if (sameName) {
         comments.push(<div className="content" key={i} >
-                          <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                            {message.mess}
-                          </div>
-                        </div>);
+                          <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
+                            {entireMessage}
+                            {!isInterpretMessage && hoverOverMessage &&
+                                                 <div className="report-button">
+                                                   <i className="question circle icon"
+                                                      onClick={() => this.props.onMessageClick(i)}
+                                                      data-tip="report"
+                                                      data-for="report"
+                                                   />
+                                                   <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
+                                                 </div>
+                            }
+                        </div>
+                        <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
+                      </div>);
       }
       else if (!sameName) {
-        numOfSames += 1;
         comments.push(<div className="content message" key={i} >
                           <span className="author">
                             {message.commenter}
@@ -96,22 +116,35 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{message.time}</span>
                           </div>
-                          <div className={textType} onClick={() => this.props.onMessageClick(i)}>
-                            {message.mess}
+                          <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
+                            {entireMessage}
+                            {!isInterpretMessage && hoverOverMessage &&
+                                                 <div className="report-button">
+                                                   <i className="question circle icon"
+                                                      onClick={() => this.props.onMessageClick(i)}
+                                                      data-tip="report"
+                                                      data-for="report"
+                                                   />
+                                                   <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
+                                                 </div>
+                            }
                           </div>
-                        </div>);
+                      </div>);
       }
-
     });
 
-    let heightDiff = this.findHeightDifference(numOfSames) - 10;
-
+    let passIn;
+    if(this.props.chatOption === 'chat')
+      passIn = 'Toggle Action';
+    else {
+      passIn = 'Toggle Chat';
+    }
 
     return(
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
-          <div className="comment text-container" style={{"bottom": "-" + heightDiff + "vh"}} >{comments}</div>
+          <div className="comment text-container" >{comments}</div>
         </div>
           <form className="ui form">
             <textarea
@@ -129,7 +162,7 @@ class TextInfo extends Component {
             onClick={this.props.onChatOptionChange}
             style={{width: '99.5%', marginLeft: '2.5%', marginTop: '0.75%'}}
           >
-            {this.props.chatOption}
+            {passIn}
           </button>
       </div>
     )
