@@ -244,7 +244,8 @@ class ActionExecuter {
   }
 
   executeDestroy(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
   }
 
   executeAttack(data) {
