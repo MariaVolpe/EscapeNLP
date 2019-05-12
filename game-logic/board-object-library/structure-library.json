@@ -75,7 +75,6 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
-        "usable": false,
         "use": null,
         "jumpable": null
     },
