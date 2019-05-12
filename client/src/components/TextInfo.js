@@ -55,8 +55,9 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
-      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
+      const isSystemMessage = message.type === 'interpreted' || message.type === 'new interpretation' || message.type === 'flavor';
       let entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
                             {message.mess}
                           </div>;
@@ -69,6 +70,12 @@ class TextInfo extends Component {
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
         entireMessage = <div className="message-body" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+                          {message.mess}
+                        </div>;
+      }
+      else if (message.type === 'flavor') {
+        textType = "text text-message flavor-text";
+        entireMessage = <div className="message-body">
                           {message.mess}
                         </div>;
       }
@@ -94,7 +101,7 @@ class TextInfo extends Component {
         comments.push(<div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            {!isInterpretMessage && hoverOverMessage &&
+                            {!isSystemMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
@@ -114,11 +121,11 @@ class TextInfo extends Component {
                             {message.commenter}
                           </span>
                           <div className="metadata">
-                            <span className="date">{message.time}</span>
+                            <span className="date">{timeOf}</span>
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            {!isInterpretMessage && hoverOverMessage &&
+                            {!isSystemMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
