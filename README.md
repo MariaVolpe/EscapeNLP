@@ -29,6 +29,12 @@ Now that you are in the EscapeNLP, use the command
 npm install
 ```
 
+Now you'll have to make a minor change to the node modules. Use the command
+```
+cat ./nlp-classifier/nlp-classifier.js > ./node_modules/node-nlp/lib/nlp/nlp-classifier.js
+```
+This extends Node NLP's functionality to allow some more magic for EscapeNLP.
+
 Once that is finished, let's start up the server by using the command 
 ```
 npm start
