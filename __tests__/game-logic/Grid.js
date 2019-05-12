@@ -5,16 +5,16 @@ const { stripNames } = require('./util');
 describe('Grid functionality tests', () => {
   // This needs to be changed to use Structure objects to work //
   describe('Adding and removing elements', () => {
-    const floor = new Structure('floor switch', 'a', null);
+    const impression = new Structure('impression', 'a', null);
     const wall = new Structure('weight', 'b', null);
     const mover = { name: 'object', id: '0', position: { x: 0, y: 0 } };
     const destination = { name: 'destination', id: '1', position: { x: 0, y: 0 } };
     let expected;
     it('should add elements', async () => {
       const matrix = [
-        [[wall], [floor], [floor]],
-        [[wall], [floor], [wall]],
-        [[floor], [floor], [wall]],
+        [[wall], [impression], [impression]],
+        [[wall], [impression], [wall]],
+        [[impression], [impression], [wall]],
       ];
       const addingGrid = new Grid(matrix);
       // place a moving object and destination at these points //
@@ -22,9 +22,9 @@ describe('Grid functionality tests', () => {
       addingGrid.add(destination, { x: 2, y: 0 });
       expected = JSON.stringify(
         [
-          [[wall], [floor], [floor, mover]],
-          [[wall], [floor], [wall]],
-          [[floor, destination], [floor], [wall]],
+          [[wall], [impression], [impression, mover]],
+          [[wall], [impression], [wall]],
+          [[impression, destination], [impression], [wall]],
         ],
       );
       expect(JSON.stringify(addingGrid.matrix)).toEqual(expected);
@@ -32,9 +32,9 @@ describe('Grid functionality tests', () => {
 
     it('should remove elements', async () => {
       const matrix = [
-        [[wall], [floor], [floor]],
-        [[wall], [floor], [wall]],
-        [[floor], [floor], [wall]],
+        [[wall], [impression], [impression]],
+        [[wall], [impression], [wall]],
+        [[impression], [impression], [wall]],
       ];
       const removingGrid = new Grid(matrix);
       // place a moving object and destination at these points //
@@ -46,9 +46,9 @@ describe('Grid functionality tests', () => {
       removingGrid.removeFromBoard(destination);
       expected = JSON.stringify(
         [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor], [wall]],
+          [[wall], [impression], [impression]],
+          [[wall], [impression], [wall]],
+          [[impression], [impression], [wall]],
         ],
       );
       expect(JSON.stringify(removingGrid.matrix)).toEqual(expected);
@@ -81,16 +81,16 @@ describe('Grid functionality tests', () => {
     // STRETCH GOAL CODE
     /* it('should move an object in a direction', async () => {
       const grid = new Grid(3);
-      const floor = new Structure('floor switch', 'a', null);
+      const impression = new Structure('impression', 'a', null);
       const mover = new Structure('weight', 'b', null);
       const wall = new Structure('weight', 'c', null);
-      const destination = new Structure('floor switch', 'd', null);
+      const destination = new Structure('impression', 'd', null);
       // hardcode matrices to these //
       grid.setMatrix({
         matrix: [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor], [wall]],
+          [[wall], [impression], [impression]],
+          [[wall], [impression], [wall]],
+          [[impression], [impression], [wall]],
         ],
       });
       // place a moving object and destination at these points //
@@ -103,9 +103,9 @@ describe('Grid functionality tests', () => {
       // do checks
       const expected = JSON.stringify(
         [
-          [[wall], [floor], [floor]],
-          [[wall], [floor], [wall]],
-          [[floor], [floor, mover], [wall]],
+          [[wall], [impression], [impression]],
+          [[wall], [impression], [wall]],
+          [[impression], [impression, mover], [wall]],
         ],
       );
       expect(JSON.stringify(grid.matrix)).toEqual(expected);

@@ -257,7 +257,6 @@ class ActionExecuter {
         results.push(this.executeMove());
       }
     }
-
   }
 
   executeAttack(data) {
