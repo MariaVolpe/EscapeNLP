@@ -12,129 +12,121 @@ class ReportModal extends Component {
               Was this the Wrong Action?
             </ModalHeader>
             <ModalBody>
-              <Form >
-                <FormGroup row>
-                  <Label className="centered">
-                    {'Did you mean to use one of these ACTIONS?'}
-                  </Label>
-                </FormGroup>
-                <FormGroup row>
-                  <Col>
+              <FormGroup row>
+                <Label className="centered">
+                  {'Did you mean to use one of these ACTIONS?'}
+                </Label>
+              </FormGroup>
+              <div className="ui grid" style={{marginLeft: '5%', marginRight: '2%'}}>
+                <div className="four wide column">
                   <button
-                    className="red ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Move
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="orange ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Look
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="yellow ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Take
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="green ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Give
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="blue ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Destroy
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="purple ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Attack
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="pink ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Place
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="brown ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Jump
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="violet ui button"
-                    onClick={this.props.onToggle}
-                  >
-                    Speak
-                  </button>
-                  </Col>
-                  <Col>
-                  <button
-                    className="teal ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Activate
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="olive ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
-                    Deactivate
+                    Turn Off
                   </button>
-                  </Col>
-                  <Col>
+                </div>
+                <div className="four wide column">
                   <button
-                    className="primary ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
                   >
                     Use
                   </button>
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col>
-                    <button
-                      className="ui button"
-                      onClick={this.props.onToggle}
-                    >
-                      Correct Action Missing
-                    </button>
-                  </Col>
-                  <Col>
-                    <button
-                      className="ui button"
-                      onClick={this.props.onToggle}
-                    >
-                      Cancel
-                    </button>
-                  </Col>
-                </FormGroup>
-              </Form>
+                </div>
+              </div>
+              <div className="ui grid centered" style={{marginLeft: '0%'}}>
+                <div className="six wide column">
+                  <button
+                    className="ui button"
+                    onClick={this.props.onToggle}
+
+                  >
+                    Other
+                  </button>
+                </div>
+                <div className="six wide column">
+                  <button
+                    className="ui button"
+                    onClick={this.props.onToggle}
+
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </ModalBody>
           </Modal>
         </div>
