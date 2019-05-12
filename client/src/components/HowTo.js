@@ -30,9 +30,8 @@ class HowTo extends React.Component {
             lobby say that they are ready. Once the game begins, you are able to either chat with
             the other players in the game or if its your turn you type in your action. The most important
             thing of them all is to...
-            <h1>Have fun!</h1>
           </p>
-
+          <h1>Have fun!</h1>
 
       </div>
     );

@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
-    }); // force current socket to only belong to one room when they join a game
+    }); //force current socket to only belong to one room when they join a game
     socket.join(roomId);
     const roomSize = io.nsps['/'].adapter.rooms[roomId].length;
     socket.currentRoom = roomId;
@@ -178,6 +178,13 @@ io.on('connection', (socket) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
 
+  socket.on('updatePlayerIcon', (iconName) => {
+    if (socket.playerInfo) {
+      socket.playerInfo.iconName = iconName;
+    }
+    updatePlayers('', socket.currentRoom, {});
+  });
+
   setInterval(() => {
     if (socket.currentRoom) {
       if (io.sockets.adapter.rooms[socket.currentRoom]) {
@@ -189,4 +196,5 @@ io.on('connection', (socket) => {
       }
     }
   }, 1000);
+
 });
