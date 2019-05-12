@@ -1,9 +1,9 @@
 {
-    "puzzle_type": "switch",
+    "puzzle_type": "lever",
     "items_required": [
         {
-            "name": "switch",
-            "id": "left_switch",
+            "name": "lever",
+            "id": "left_lever",
             "isManaged" : true,
             "coordinates": {
                 "x": 1,
@@ -11,8 +11,8 @@
             }
         },
         {
-            "name": "switch",
-            "id": "middle_switch",
+            "name": "lever",
+            "id": "middle_lever",
             "isManaged" : true,
             "coordinates": {
                 "x": 1,
@@ -20,8 +20,8 @@
             }
         },
         {
-            "name": "switch",
-            "id": "right_switch",
+            "name": "lever",
+            "id": "right_lever",
             "isManaged" : true,
             "coordinates": {
                 "x": 1,
@@ -30,7 +30,7 @@
         },
         {
             "name": "poster",
-            "id": "binary_switch_hint_poster",
+            "id": "lever_hint_poster",
             "isManaged" : true,
             "coordinates": {
                 "x": 3,
