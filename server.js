@@ -53,7 +53,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('confirmJoin', (roomInfo) => {
+    const gameStart = io.sockets.adapter.rooms[roomInfo].gameStart;
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
+      socket.emit('confirmJoin', false);
+    } else if (gameStart) {
       socket.emit('confirmJoin', false);
     } else {
       socket.emit('confirmJoin', true);
