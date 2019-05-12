@@ -58,7 +58,7 @@ class PictureModal extends Component {
               <FormGroup row>
                 {playerIconList}
               </FormGroup>
-              <FormGroup>
+              <FormGroup row style={{marginLeft: '0%'}}>
                 <button
                   data-dismiss="modal"
                   className="ui button"
