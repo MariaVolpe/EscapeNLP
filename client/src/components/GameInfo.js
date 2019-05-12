@@ -65,7 +65,7 @@ class GameInfo extends Component {
   constructor(props){
     super(props);
 
-    this.state = {victory: false};
+    this.state = { victory: true };
     this.stayOnPage = this.stayOnPage.bind(this);
   }
 
@@ -77,9 +77,9 @@ class GameInfo extends Component {
   render() {
     let board = this.props.board;
     let mapData = [];
-    let victory = true; // get real state from backend
+    let victory = false; // get real state from backend
 
-    if(this.state.victory === true){
+    if(victory){
       for (let i=0; i<12; i++) {
         for (let k=0; k<15; k++) {
           if (k === 0) {
