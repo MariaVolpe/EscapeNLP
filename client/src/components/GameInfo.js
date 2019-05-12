@@ -21,8 +21,8 @@ import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
-import binary_switch from '../images/binary_switch.png';
-import binary_switch_activated from '../images/binary_switch_activated.png';
+import lever from '../images/lever.png';
+import lever_activated from '../images/lever_activated.png';
 import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
 import door_activated from '../images/door_activated.png'
@@ -42,8 +42,8 @@ const pictures = {
   'block': block,
   'wep': wep,
   'poster': poster,
-  'switch': binary_switch,
-  'binary_switch_activated' : binary_switch_activated,
+  'lever': lever,
+  'lever_activated' : lever_activated,
   'bookshelf': bookshelf,
   'door': door,
   'door_activated': door_activated,

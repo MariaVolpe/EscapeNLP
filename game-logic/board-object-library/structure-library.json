@@ -26,7 +26,7 @@
         "jumpable": null,
         "passable": false
     },
-    "switch": {
+    "lever": {
         "moveable": false,
         "possesable": false,
         "destructable": false,

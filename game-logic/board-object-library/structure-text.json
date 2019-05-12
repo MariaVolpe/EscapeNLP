@@ -35,23 +35,23 @@
         "inspectTextInactive": "It's a locked door.",
         "inspectTextActive": "The door is unlocked now!"
     },
-    "switch": {
-        "moveFalseText": "You can't move the switch. It's bolted to the floor.",
+    "lever": {
+        "moveFalseText": "You can't move the lever. It's bolted to the floor.",
         "moveTrueText": null,
-        "takeFalseText": "The switch is bolted to the floor. Lifting it doesn't work.",
+        "takeFalseText": "The lever is bolted to the floor. Lifting it doesn't work.",
         "takeTrueText": null,
-        "destroyFalseText": "The switch is made of metal. Nothing happens when you try to attack it.",
+        "destroyFalseText": "The lever is made of metal. Nothing happens when you try to attack it.",
         "destroyTrueText": null,
-        "attackFalseText": "The switch is made of metal. Nothing happens when you try to attack it.",
+        "attackFalseText": "The lever is made of metal. Nothing happens when you try to attack it.",
         "attackTrueText": null,
-        "speakFalseText": "You ask the switch if it comes here often. The switch doesn't respond. Tough crowd.",
+        "speakFalseText": "You ask the lever if it comes here often. The lever doesn't respond. Tough crowd.",
         "speakTrueText": null,
-        "activateTrueText": "You pull the switch into the 'on' position.",
-        "activateFalseText": "The switch is already on.",
-        "deactivateTrueText": "You turn the switch off.",
-        "deactivateFalseText": "The switch is already off.",
-        "inspectTextInactive": "A switch. It's looks like it's in the 'off' position.",
-        "inspectTextActive": "A switch. It's looks like it's in the 'on' position."
+        "activateTrueText": "You pull the lever into the 'on' position.",
+        "activateFalseText": "The lever is already on.",
+        "deactivateTrueText": "You turn the lever off.",
+        "deactivateFalseText": "The lever is already off.",
+        "inspectTextInactive": "A lever. It's looks like it's in the 'off' position.",
+        "inspectTextActive": "A lever. It's looks like it's in the 'on' position."
     },
     "weight": {
         "moveFalseText": "The block is locked onto the impression now. You struggle to push it, but it won't budge.",
