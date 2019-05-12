@@ -8,9 +8,9 @@ class GameSession {
     this.puzzleManager = null;
     this.grid = null;
     this.agents = [];
-    this.puzzleManager = null;
     this.id = id;
     this.name = name;
+    this.playerIdCounter = 0;
     this.inProgress = false;
   }
 
@@ -18,26 +18,40 @@ class GameSession {
     return this.grid.getFormattedGrid();
   }
 
-  addPlayerToSession(id) {
-    this.agents.push(new Agent(id));
+  addPlayerToSession() {
+    this.agents.push(new Agent(this.playerIdCounter));
+    return this.playerIdCounter++;
   }
 
   setPlayerName(playerId, playerName) {
     this.agents.forEach((agent) => {
-      if ((agent.id = playerId)) {
+      if ((agent.id === parseInt(playerId, 10))) {
         agent.name = playerName;
       }
     });
   }
 
-  dropPlayerFromSession(id) {
-    const newAgents = this.agents.filter(agent => agent.id !== id);
-    if (newAgents.length === this.agents.length) {
-      return { error: { status: 404, source: 'playerId' } };
-    }
-
+  dropPlayerFromSession(playerName) {
+    const newAgents = this.agents.filter(agent => agent.name !== playerName);
     this.agents = newAgents;
-    return { error: null };
+  }
+
+  // formats players array into the object format used on frontend
+  // this object format may not be optimal but we'd have to rewrite
+  // a good chunk of the frontend to fix it
+  getFormattedPlayersList() {
+    const formattedObj = {};
+    const agentObjs = this.agents.map(agent => ({
+      name: agent.name,
+      id: agent.id,
+      inventory: agent.getFormattedInventory(),
+    }));
+
+    this.agents.forEach((agent, index) => {
+      formattedObj[agent.name] = agentObjs[index];
+    });
+
+    return formattedObj;
   }
 
   startGame() {

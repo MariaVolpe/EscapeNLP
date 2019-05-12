@@ -9,11 +9,12 @@ import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
 import floor_switch from '../images/floor_switch.png'
 import floor_switch_activated from '../images/floor_switch_activated.png';
-import player1 from '../images/pink.png';
-import player2 from '../images/red.png';
-import player3 from '../images/black.png';
-import player4 from '../images/white.png';
-import player5 from '../images/blue.png';
+import player0 from '../images/pink.png';
+import player1 from '../images/red.png';
+import player2 from '../images/black.png';
+import player3 from '../images/white.png';
+import player4 from '../images/blue.png';
+import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
@@ -44,11 +45,12 @@ const pictures = {
   'forge': forge,
   'pot': pot,
   'exit': exit,
+  'player0': player0,
   'player1': player1,
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5
+  'playerDefault': playerDefault
 }
 
 class GameInfo extends Component {

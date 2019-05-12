@@ -54,11 +54,17 @@ class Play extends Component {
       //     allPlayers[player.name].iconName = player.iconName;
       //   }
       // });
-
       this.setState({allPlayers});
     });
 
-    this.socket.on('updatePlayers', (allPlayers) => {
+    this.socket.on('updatePlayers', (players) => {
+      let allPlayers = this.state.allPlayers;
+      Object.keys(players).forEach((player) => {
+        if (allPlayers.hasOwnProperty(player)) {
+          allPlayers[player].inventory = player.inventory;
+          allPlayers[player].id = player.id;
+        }
+      });
       this.setState({allPlayers})
     });
 
@@ -137,7 +143,6 @@ class Play extends Component {
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({board});
     } else {
-      console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');
     }
   }
