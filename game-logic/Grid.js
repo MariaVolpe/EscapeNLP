@@ -206,7 +206,7 @@ class Grid {
   }
 
   // Given a center object get all objects within a threshold distance
-  getNearbyObjects(searchOriginObj, maxDistance = 2) {
+  getNearbyObjects(searchOriginObj, maxDistance = 3) {
     return this.pathFinder.getNearbyObjects(searchOriginObj.position, maxDistance, false);
   }
 

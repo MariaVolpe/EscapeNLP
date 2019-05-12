@@ -67,6 +67,7 @@ io.on('connection', (socket) => {
 
   socket.on('chatMessage', async (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
+
     if (message.type === 'action') {
       const gameComplete = false;
       const actionResults = await gameContainer.performAction(socket.gameId, message);
@@ -76,15 +77,28 @@ io.on('connection', (socket) => {
       // set gameComplete to true if necessary
 
       actionResults.forEach((action) => {
-        let interprettedMsg = `action: ${action.action}, `;
-        interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+        let interprettedMsg = '';
+        if (!action.action) {
+          const flavorMsg = {
+            type: 'flavor',
+            time: message.time,
+            commenter: message.commenter,
+            mess: 'You can\'t do that.',
+          };
+          return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
+        }
 
-        // quick n dirty string handling
-        action.result.forEach((result) => {
-          interprettedMsg = `${interprettedMsg}${result.objectName}, `;
-        });
-        interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+        interprettedMsg = `action: ${action.action}, `;
 
+        if (action.result) {
+          interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+
+          // quick n dirty string handling
+          action.result.forEach((result) => {
+            interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+          });
+          interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+        }
         const actionMsg = {
           type: 'interpreted',
           time: message.time,
