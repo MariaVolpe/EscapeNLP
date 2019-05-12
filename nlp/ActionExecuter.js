@@ -246,6 +246,17 @@ class ActionExecuter {
   executeDestroy(data) {
     const user = this.grid.getObject({ identifier: data.userName });
     const results = [];
+    const targets = data.directObjects; // assume targets are direct objects
+
+    for (let i = 0; i < targets.length; i++) {
+      const targetName = targets[i];
+      const targetObj = this.grid.getObject({ searchOriginObj: user, identifier: targetName });
+      if (!targetObj)
+        results.push({ objectName: targetName, successful: false });
+      if (getDistance(user, targetObj) > 1) {
+        results.push(this.executeMove());
+      }
+    }
   }
 
   executeAttack(data) {

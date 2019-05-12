@@ -10,13 +10,15 @@ const Dragon = require('./puzzles/dragon');
 const Pots = require('./puzzles/pots');
 
 class PuzzleManager {
-  constructor(grid) {
+  constructor(grid, testingMode = false) {
     this.puzzles = [];
     this.grid = grid;
     this.puzzleProgress = new Map();
     this.puzzleRewardGranted = new Map();
     this.gameComplete = false;
-    this.findPuzzles();
+    if (!testingMode) {
+      this.findPuzzles();
+    }
   }
 
   findPuzzles() {
@@ -81,10 +83,11 @@ class PuzzleManager {
         this.grid.add(new Item('sword_blade'));
         break;
       case 'binary':
-        this.grid.add(new Item('sword_hilt'));
+        this.grid.add(new Item('sword_hilt'), {});
         break;
       case 'pots':
         this.grid.add(new Item('key'));
+        // and return { id: name: spirte, coordinate }
         break;
       case 'goal':
         this.gameComplete = true;

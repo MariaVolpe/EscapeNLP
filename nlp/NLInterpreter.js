@@ -35,6 +35,7 @@ class NLInterpreter {
   doAction(data) {
     const classifications = data.classifications;
     for (const classification of classifications) {
+      // [ { actionResults, puzzleManagerResults }, {},  {}]
       const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
       if (result) { return result; } // else keep trying other actions
