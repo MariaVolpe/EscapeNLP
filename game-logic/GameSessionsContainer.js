@@ -33,6 +33,10 @@ class GameSessionsContainer {
     this.games.get(id).startGame();
   }
 
+  performAction(gameId, message) {
+    return this.games.get(gameId).performAction(message);
+  }
+
   getAllSessions() {
     const games = [];
     this.games.forEach(({
