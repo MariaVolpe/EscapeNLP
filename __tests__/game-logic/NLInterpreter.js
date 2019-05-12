@@ -26,6 +26,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const results = interpreter.executeInput(input);
       const expected = [
         {
+          userName: 'James Bond',
           action: 'look',
           result: [
             { objectName: 'door', inspectText: 'It\'s a closed door.' },
@@ -56,6 +57,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const results = interpreter.executeInput(input);
       const expected = [
         {
+          userName: 'James Bond',
           action: 'look',
           result: [
             { objectName: 'door', inspectText: 'It\'s a closed door.' },
@@ -63,6 +65,75 @@ describe('Natural Language (NLInterpreter) tests', () => {
         },
       ];
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+  });
+
+  describe('Take', () => {
+    it('Should take an item off the grid', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const agent = new Agent('Agent');
+      const item = new Item('key', '5', null);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, item], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [wall], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid);
+      const input = {
+        userName: 'agent',
+        data: 'I take the key',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Agent',
+          action: 'take',
+          result: [
+            { objectName: 'key', source: '' },
+          ],
+        },
+      ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+
+    it('Should move to take an item off the grid', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const agent = new Agent('Agent');
+      const item = new Item('key', '5', null);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, item], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid);
+      const input = {
+        userName: 'agent',
+        data: 'I take the key',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Agent',
+          action: 'move',
+          result: [
+            { destination: 'key' },
+          ],
+        },
+        {
+          userName: 'Agent',
+          action: 'take',
+          result: [
+            { objectName: 'key', source: '' },
+          ],
+        },
+      ];
+      //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
 });

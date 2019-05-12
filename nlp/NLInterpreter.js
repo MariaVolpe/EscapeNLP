@@ -22,9 +22,12 @@ class NLInterpreter {
   executeInput(input) {
     const userName = input.userName.toLowerCase(); // the user who typed in the data
     const metaData = this.nlp.getActions(input.data); // data about the actions
-    const results = [];
+    let results = [];
     for (let data of metaData) data.userName = userName; // add user field to metaData
-    for (const data of metaData) results.push(this.doAction(data));
+    for (const data of metaData) { 
+      results.push(this.doAction(data));
+      results = results.reduce((acc, val) => acc.concat(val), []);
+    }
     return results;
   }
 

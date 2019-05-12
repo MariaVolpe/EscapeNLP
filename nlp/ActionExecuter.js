@@ -76,6 +76,7 @@ class ActionExecuter {
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(user);
       return {
+        userName: user.name,
         action: 'look',
         result: nearbyObjects.filter(e => e.name != 'floor'
           && e.name != 'wall'
@@ -98,7 +99,7 @@ class ActionExecuter {
         objectName: name,
         inspectText: object.inspect(),
       });
-    } return { action: 'look', result: texts };
+    } return { userName: user.name, action: 'look', result: texts };
   }
 
   executeTake(data) {
@@ -106,6 +107,7 @@ class ActionExecuter {
     const objectNames = data.directObjects;
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
+    const taken = [];
     // if there is a source
     for (let i = 0; i < sources.length; i++) {
       const sourceName = sources[i];
@@ -113,9 +115,10 @@ class ActionExecuter {
       if (!sourceObject) continue;
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
-          const objName = objectNames[j];
+          const objectName = objectNames[j];
           if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objName, user);  
+          sourceObject.giveItem(objectName, user); 
+          taken.push({ objectName: objectName, source: sourceName });
         }
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
@@ -124,6 +127,7 @@ class ActionExecuter {
           if (!this.attemptMoveCloser(user, object, 1)) continue;
           user.takeItem(object);
           this.grid.removeFromBoard(object);
+          taken.push({ objectName: objectName, source: sourceName });
         }
       }
     }
@@ -137,9 +141,10 @@ class ActionExecuter {
         if (!this.attemptMoveCloser(user, object, 1)) continue;
         user.takeItem(object);
         this.grid.removeFromBoard(object);
+        taken.push({ objectName: objectName, source: '' });
       }
     }
-    return true;
+    return { userName: user.name, action: 'take', result: taken };
   }
 
   executeGive(data) {
