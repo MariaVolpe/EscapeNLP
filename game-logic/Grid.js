@@ -117,23 +117,28 @@ class Grid {
   // onTop: true when mover moves on top of the destinationObj if possible, false otherwise
   moveToObject(movingObjs, destinationObj, onTop = true) {
     const destinationPoint = destinationObj.position;
+    const pathsTaken = [];
     for (let i = 0; i < movingObjs.length; i++) {
       const movingObj = movingObjs[i];
+      if (!movingObj.isMovable()) { pathsTaken.push([]); continue; }
       const startPoint = movingObj.position;
-      const path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
-      if (!path.length) continue;
-      if (!onTop) path.pop();
+      let path = this.pathFinder.getPathByDestination(startPoint, destinationPoint);
+      if (!path.length) { pathsTaken.push([]); continue; }
+      if (!onTop && destinationObj.isPassable()) path.pop();
       // offset by how many things we are moving
-      const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
+      path = i + 1 <= path.length ? path.slice(0, path.length - i) : path.slice(0, 1);
+      //const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
+      const lastPoint = path[path.length - 1];
+      pathsTaken.push(path); //slice arrays and store the result
       // update matrix @ previous point //
       this.removeFromStack(movingObj);
       // update matrix @ current point //
       this.pushOnMatrix(lastPoint.x, lastPoint.y, movingObj);
-      // in the middle of the stack
       // update position of object
       movingObj.position.x = lastPoint.x;
       movingObj.position.y = lastPoint.y;
     }
+    return pathsTaken;
   }
 
   // TODO: STRETCH GOAL CODE
@@ -236,7 +241,6 @@ class Grid {
   addToNameToObjectsMap(obj) {
     const name = obj.name.toLowerCase();
     if (!this.nameToObjsList.has(name)) this.nameToObjsList.set(name, []);
-
     this.nameToObjsList.get(name).push(obj);
   }
 

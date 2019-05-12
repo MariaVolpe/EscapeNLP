@@ -1,6 +1,6 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
-const { getDistance } = require('../game-logic/grid');
+const { getDistance } = require('../game-logic/Grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -41,32 +41,43 @@ class ActionExecuter {
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
-    // if there are indirect objects, use those as the destination
-    if (data.indirectObjects.length) {
+    const destinationObjects = [];
+    const results = [];
+    if (data.indirectObjects.length) { // if there are indirect objects, use those as the destination
       destinations = data.indirectObjects;
       movingObjectNames = data.directObjects;
-      // else: there are only direct objects, use those as the destination
-    } else { destinations = data.directObjects; }
-
+      movingObjectNames.push(user.name);
+    } else { // else: there are only direct objects, use those as the destination
+      movingObjects.push(user);
+      destinations = data.directObjects;
+    }
     // validate moving objects
     for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
-      // TODO: include pronoun caching
-      if (!object || !object.isMovable()) {
-        return false;
-      }
+      if (!object) continue;
       movingObjects.push(object);
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      // TODO: include pronoun caching later
-      if (!this.grid.getObject({ searchOriginObj: user, identifier: dest })) { return false; }
+      const destinationObject = this.grid.getObject({ searchOriginObj: user, identifier: dest }); 
+      if (!destinationObject) continue;
+      destinationObjects.push(destinationObject);
     }
-    for (let i = 0; i < destinations.length; i++) {
-      this.grid.moveToObject(movingObjects, this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] }))
-    } return true;
+    for (let i = 0; i < destinationObjects.length; i++) {
+      const destinationObject = destinationObjects[i];//this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] })
+      const paths = this.grid.moveToObject(movingObjects, destinationObject);
+      for (let i = 0; i < movingObjects.length; i++) {
+        const movingObject = movingObjects[i];
+        results.push({
+          objectName: movingObject.name,
+          destination: destinationObject.name,
+          path: paths[i],
+        });
+      } 
+    }
+    return { userName: user.name, action: 'move', result: results }
   }
 
   executeLook(data) {
@@ -82,12 +93,12 @@ class ActionExecuter {
           && e.name != 'wall'
           && e.inspectText != '').map(e => ({
             objectName: e.name,
-            inspectText: e.inspect()
+            text: e.inspect()
         }))
       };
     }
     // if specified direct objects, look at that those objects
-    
+
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
       const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
@@ -97,7 +108,7 @@ class ActionExecuter {
       if (!this.attemptMoveCloser(user, object, 2)) continue;
       texts.push({
         objectName: name,
-        inspectText: object.inspect(),
+        text: object.inspect(),
       });
     } return { userName: user.name, action: 'look', result: texts };
   }
@@ -117,7 +128,7 @@ class ActionExecuter {
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
           if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objectName, user); 
+          sourceObject.giveItem(objectName, user);
           taken.push({ objectName: objectName, source: sourceName });
         }
       } else { // take from the grid
@@ -153,6 +164,7 @@ class ActionExecuter {
     // we can expect receipients whenever an object is given
     const recipients = data.indirectObjects;
     const objectNames = data.directObjects;
+    const results = [];
     for (let i = 0; i < recipients.length; i++) {// for all receipients
       const recipientName = recipients[i];
       const recipient = this.grid.getObject({ searchOriginObj: user, identifier: recipientName });
@@ -172,8 +184,9 @@ class ActionExecuter {
           if (!this.attemptMoveCloser(user, recipient, 1)) continue;
           if (taken) user.giveItem(objectName, recipient); // give the item to the recipient
         }
+        results.push({ objectName: objectName, recipient: recipient.name });
       }
-    } return true;
+    } return { userName: user.name, action: 'give', result: results };
   }
 
   executePlace(data) {
@@ -213,7 +226,7 @@ class ActionExecuter {
           }
           if (!this.attemptMoveCloser(user, destinationObj, 1, false)) continue;
           const object = user.inventory.removeItem(objName);
-          // if a specific destination is specified, we need to be able to have more than 
+          // if a specific destination is specified, we need to be able to have more than
           // 2 things on a square?
           this.grid.dropOntoBoard({ searchOriginObj: destinationObj, droppedObject: object },
             Number.MAX_VALUE);
