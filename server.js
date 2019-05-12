@@ -76,7 +76,7 @@ io.on('connection', (socket) => {
         type: 'interpreted',
         time: message.time,
         commenter: message.commenter,
-        mess: 'INTERPRETED ACTION',
+        mess: 'INTERPRETED ACTION'
       };
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
