@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
             const flavorText = {
               type: 'flavor',
               time: message.time,
-              commenter: 'System',
+              commenter: message.commenter,
               mess: item.text,
             };
             io.in(socket.currentRoom).emit('chatMessage', flavorText);
