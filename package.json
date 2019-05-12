@@ -15,7 +15,7 @@
     "lint-nofix": "eslint .",
     "test": "Jest",
     "start": "node server.js",
-    "heroku-postbuild": "mv ./nlp-classifier/nlp-classifier.js ./node_modules/node-nlp/lib/nlp/nlp-classifier.js NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "cat ./nlp-classifier/nlp-classifier.js > ./node_modules/node-nlp/lib/nlp/nlp-classifier.js && NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "husky": {
     "hooks": {
