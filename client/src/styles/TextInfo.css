@@ -90,6 +90,10 @@
 }
 
 .interpreted > div {
+  border: 3px solid white;
+}
+
+.flavor-text > div {
   font-style: italic;
   border: 3px solid white;
 }

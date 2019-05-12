@@ -117,9 +117,9 @@ io.on('connection', (socket) => {
       if (actionResults[0].result) {
         actionResults[0].result.forEach((item) => {
           const flavorText = {
-            type: 'chat',
+            type: 'flavor',
             time: message.time,
-            commenter: message.commenter,
+            commenter: 'System',
             mess: item.text,
           };
           io.in(socket.currentRoom).emit('chatMessage', flavorText);

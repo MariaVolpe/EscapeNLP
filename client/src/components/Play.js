@@ -339,7 +339,7 @@ class Play extends Component {
     if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
       prevMessages[index].checked = true;
       let commenter = prevMessages[index].commenter;
-      let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
+      let mess = 'Was \'' + prevMessages[index].mess + '\' incorrect?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       prevMessages.forEach((message, i) => {
