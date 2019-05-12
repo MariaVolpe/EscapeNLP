@@ -78,6 +78,7 @@ class GameSession {
     this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
+    console.log(this.puzzleManager);
     this.interpreter = new NLInterpreter(this.grid, this.puzzleManager);
     // todo: generate player starting locations
     this.addAgentsToMap();

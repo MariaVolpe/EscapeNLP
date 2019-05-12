@@ -1,5 +1,6 @@
-const { Grid } = require('../../game-logic/Grid');
 const NLInterpreter = require('../../nlp/NLInterpreter');
+const PuzzleManager = require('../../game-logic/PuzzleManager');
+const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
 const Agent = require('../../game-logic/Agent');
 const Item = require('../../game-logic/Item');
@@ -19,7 +20,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor, sonic], [wall]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'sonic',
         data: 'I walk to the door',
@@ -51,7 +52,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor, sonic], [wall]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'sonic',
         data: 'I walk to the door',
@@ -86,7 +87,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [wall], [wall]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'james bond',
         data: 'I look around',
@@ -118,7 +119,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [wall], [wall]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'james bond',
         data: 'I look at the door',
@@ -151,7 +152,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [wall], [wall]],
       ];
       const grid = new Grid(startingMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'agent',
         data: 'I take the key',
@@ -225,7 +226,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor], [wall]],
       ];
       const grid = new Grid(startingMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Swiper',
         data: 'i give the key to dora',
@@ -261,7 +262,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor], [wall]],
       ];
       const grid = new Grid(startingMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Indiana Jones',
         data: 'i put it down the idol on the impression',
@@ -294,7 +295,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[floor], [floor], [floor]],
       ];
       const grid = new Grid(initMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Player',
         data: 'I open the door',
@@ -324,7 +325,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[floor], [wall], [floor]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Player',
         data: 'I open the door',
@@ -342,5 +343,4 @@ describe('Natural Language (NLInterpreter) tests', () => {
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
-
 });
