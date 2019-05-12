@@ -121,8 +121,8 @@ describe('ActionExecuter tests', () => {
       const matrix = [
         [[weight], [wall], [wall]],
         [[wall], [door], [wall]],
-        [[wall], [floor, agent], [wall]],
         [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
       ];
       const g = new Grid(matrix);
       const actionExecuter = new ActionExecuter({ grid: g });
