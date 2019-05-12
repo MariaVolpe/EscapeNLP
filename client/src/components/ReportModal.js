@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Modal, ModalHeader, ModalBody, Col } from 'reactstrap';
+import { Form, Button, FormGroup, Label, Modal, ModalHeader, ModalBody, Col } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
 class ReportModal extends Component {
@@ -145,22 +145,24 @@ class ReportModal extends Component {
                     {this.props.message.mess + ' writen by ' + this.props.message.commenter}
                   </Label>
                 </FormGroup>
-                <FormGroup row>
+                <FormGroup row style={{marginLeft: '0%'}}>
                   <Col>
-                    <button
-                      className="ui button"
+                    <Button
+                      color="danger"
                       onClick={this.props.onToggle}
-                    >
-                      Report
-                    </button>
-                  </Col>
-                  <Col>
-                    <button
-                      className="ui button"
-                      onClick={this.props.onToggle}
+                      style={{width: '90%'}}
                     >
                       Cancel
-                    </button>
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      color="success"
+                      onClick={this.props.onToggle}
+                      style={{width: '90%'}}
+                    >
+                      Report
+                    </Button>
                   </Col>
                 </FormGroup>
               </Form>
