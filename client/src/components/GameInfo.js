@@ -10,6 +10,11 @@ import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
 import floor_switch from '../images/floor_switch.png'
 import floor_switch_activated from '../images/floor_switch_activated.png';
+import key from '../images/key.png';
+import sword from '../images/sword.png';
+import hilt from '../images/hilt.png';
+import blade from '../images/blade.png';
+
 import player0 from '../images/pink.png';
 import player1 from '../images/red.png';
 import player2 from '../images/black.png';
@@ -48,6 +53,10 @@ const pictures = {
   'forge': forge,
   'pot': pot,
   'exit': exit,
+  'key': key,
+  'sword': sword,
+  'blade': blade,
+  'hilt': hilt,
   'player0': player0,
   'player1': player1,
   'player2': player2,
