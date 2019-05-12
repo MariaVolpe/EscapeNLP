@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
     "lint": "eslint . --fix; exit 0",
     "lint-nofix": "eslint .",
     "test": "Jest",
@@ -41,6 +44,7 @@
     "@ljharb/eslint-config": "^13.1.1",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
+    "concurrently": "^4.1.0",
     "eslint": "5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",

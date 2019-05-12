@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
-import player from '../images/player.png';
 import dragon from '../images/dragonite.png';
-import key from '../images/dragonite.png';
 import floor from '../images/dragonite.png';
 import button from '../images/dragonite.png';
 import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
 import floor_switch from '../images/floor_switch.png'
 import floor_switch_activated from '../images/floor_switch_activated.png';
-import player1 from '../images/pink.png';
-import player2 from '../images/red.png';
-import player3 from '../images/black.png';
-import player4 from '../images/white.png';
-import player5 from '../images/blue.png';
+import key from '../images/key.png';
+import sword from '../images/sword.png';
+import hilt from '../images/hilt.png';
+import blade from '../images/blade.png';
+import player0 from '../images/pink.png';
+import player1 from '../images/red.png';
+import player2 from '../images/black.png';
+import player3 from '../images/white.png';
+import player4 from '../images/blue.png';
+import playerDefault from '../images/yellow.png';
 import wall from '../images/wall.png';
 import weight from '../images/weight.png';
 import poster from '../images/poster.png';
@@ -22,6 +25,7 @@ import binary_switch from '../images/binary_switch.png';
 import binary_switch_activated from '../images/binary_switch_activated.png';
 import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
+import door_activated from '../images/door_activated.png'
 import forge from '../images/forge.png';
 import pot from '../images/pot.png';
 import exit from '../images/exit.png';
@@ -42,14 +46,19 @@ const pictures = {
   'binary_switch_activated' : binary_switch_activated,
   'bookshelf': bookshelf,
   'door': door,
+  'door_activated': door_activated,
   'forge': forge,
   'pot': pot,
   'exit': exit,
+  'sword': sword,
+  'blade': blade,
+  'hilt': hilt,
+  'player0': player0,
   'player1': player1,
   'player2': player2,
   'player3': player3,
   'player4': player4,
-  'player5': player5
+  'playerDefault': playerDefault
 }
 
 class GameInfo extends Component {

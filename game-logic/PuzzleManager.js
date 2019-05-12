@@ -16,11 +16,9 @@ class PuzzleManager {
     this.puzzleProgress = new Map();
     this.puzzleRewardGranted = new Map();
     this.gameComplete = false;
-
     this.findPuzzles();
   }
 
-  // todo: set puzzles on this.puzzles, dynamically
   findPuzzles() {
     this.puzzles.push(Door);
     this.puzzles.push(Weight);
@@ -64,12 +62,21 @@ class PuzzleManager {
     }
   }
 
+  evaluateAllPuzzles() {
+    this.puzzles.forEach( ({puzzle_type}) => {
+      this.evaluatePuzzleStatus(puzzle_type);
+    })
+  }
+
   evaluatePuzzleStatus(puzzleType) {
     // Leave if the Puzzle hasn't been completed, or if its reward has been granted already
     if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
       return;
     }
-    switch (puzzleType) { // eslint-disable-line default-case
+    switch (puzzleType) {
+      case 'door':
+        const doorObj = this.puzzleProgress.get('door')[0];
+        doorObj.setPassable(true);
       case 'weight':
         this.grid.add(new Item('sword_blade'));
         break;
@@ -90,12 +97,15 @@ class PuzzleManager {
     if (!puzzleType) {
       return false;
     }
-    this.puzzleProgress.get(puzzleType).forEach((obj) => {
-      if (!obj.activated) {
-        return false;
-      }
-    });
-    return true;
+    const managedObjs = this.puzzleProgress.get(puzzleType);
+      if(managedObjs) { 
+        managedObjs.forEach((obj) => {
+        if (!obj.activated) {
+          return false;
+        }
+      });
+      return true;
+    }
   }
 
   // This ensures puzzle logic isn't repeated once the puzzle is complete

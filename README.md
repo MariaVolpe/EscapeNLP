@@ -13,42 +13,65 @@ Once every player pressed the ready button and the game has started, players can
 ### Installing the Environment
 EscapeNLP uses Node.js, so go ahead click this [link](https://nodejs.org/en/) which will take you to the Node.js home page. Once you are there, click on the download tab and follow the appropriate steps for your operating system. In the next section you will need to use 'npm' for multiple commands, 'npm' is automatically installed when you download Node.js so no need to do any extra work.
 
-### Installing EscapeNLP
+### Installing EscapeNLP - Easy Install
+First, clone this repository to your local machine and go into the directory by using the commands 
+```
+$ git clone https://github.com/MariaVolpe/EscapeNLP.git
+$ cd EscapeNLP
+```
+
+Then run
+```
+$ chmod u+x setup.sh
+$ setup.sh
+```
+This will make the bash script executable, and run it, which will then install all dependencies for you.
+
+Then you can run the game locally at `localhost:3000` in your browser using
+```
+$ npm run dev
+```
+
+### Installing EscapeNLP - Manual Install
 First, go ahead and clone this repository to your local machine by using the command 
 ```
-git clone https://github.com/MariaVolpe/EscapeNLP.git
+$ git clone https://github.com/MariaVolpe/EscapeNLP.git
 ```
 
 Once it has finished cloning to your local machine, go into the EscapeNLP directory by using the command
 ```
-cd EscapeNLP/
+$ cd EscapeNLP/
 ```
 
 Now that you are in the EscapeNLP, use the command 
 ```
-npm install
+$ npm install
 ```
 
-Once that is finished, let's start up the server by using the command 
+Now you'll have to make a minor change to the node modules. Use the command
 ```
-npm start
+$ cat ./nlp-classifier/nlp-classifier.js > ./node_modules/node-nlp/lib/nlp/nlp-classifier.js
 ```
+This extends Node NLP's functionality to allow some more magic for EscapeNLP.
 
-Now the server is up, but we still have to start up the rest of the game. Start by opening up another terminal window or tab,
-while keeping the terminal that was used to start up the server open, and go back in the EscapeNLP directory. Now that you are
-the EscapeNLP directory in the second terminal window, go into the client directory by using the command
+Go into the client directory by using the command
 ```
-cd client/
+$ cd client/
 ```
 
 Now that you are in the EscapeNLP/client/, use the command 
 ```
-npm install
+$ npm install
 ```
 
-Once that is finished, let's start up EscapeNLP by using the command 
+Once that is finished, go back to the main EscapeNLP directory:
 ```
-npm start
+$ cd ..
+```
+
+let's start up EscapeNLP by using the command 
+```
+$ npm run dev
 ```
 
 Lastly... ENJOY THE GAME!

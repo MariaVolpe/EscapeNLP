@@ -75,7 +75,7 @@
   border-bottom: 1px solid black;
 }
 
-.command {
+.command > div {
   background-color: #B9C1A3;
   border: 3px solid #B9C1A3;
 }
@@ -84,17 +84,40 @@
   margin-bottom: -6.66px;
 }
 
-.chat {
+.chat > div {
   border: 3px solid white;
   z-index: 1;
 }
 
-.interpreted {
+.interpreted > div {
   font-style: italic;
   border: 3px solid white;
 }
 
-.text-message:hover {
-  border: 3.5px solid black;
+.interpreted:hover {
   cursor: pointer;
+}
+
+.text.text-message {
+  padding-left: 3%;
+  padding-bottom: 3%;
+}
+
+.text.text-message:hover > div{
+  background-color: #ecf0f1;
+  border: 3px solid #ecf0f1;
+}
+
+.question.circle.icon:hover {
+  cursor: pointer;
+}
+
+.report-button {
+  float: right;
+  width: 10%;
+}
+
+.message-body {
+  float: left;
+  width: 90%;
 }

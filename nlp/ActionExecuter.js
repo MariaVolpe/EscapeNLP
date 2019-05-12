@@ -1,6 +1,7 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
-const { getDistance } = require('../game-logic/grid');
+const Structure = require('../game-logic/Structure');
+const { getDistance } = require('../game-logic/Grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -31,7 +32,7 @@ class ActionExecuter {
 
   // User function to call appropriate function designated by actionType | Called in EscapeNLP.doAction()
   executeAction(actionType, data) {
-    return this.functionMap[actionType](data);
+    return this.functionMap[actionType].bind(this)(data);
   }
 
   executeMove(data) {
@@ -41,44 +42,63 @@ class ActionExecuter {
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
-    // if there are indirect objects, use those as the destination
-    if (data.indirectObjects.length) {
+    const destinationObjects = [];
+    const results = [];
+    if (data.indirectObjects.length) { // if there are indirect objects, use those as the destination
       destinations = data.indirectObjects;
       movingObjectNames = data.directObjects;
-      // else: there are only direct objects, use those as the destination
-    } else { destinations = data.directObjects; }
-
+      movingObjectNames.push(user.name);
+    } else { // else: there are only direct objects, use those as the destination
+      movingObjects.push(user);
+      destinations = data.directObjects;
+    }
     // validate moving objects
     for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
-      // TODO: include pronoun caching
-      if (!object || !object.isMovable()) {
-        return false;
-      }
+      if (!object) continue;
       movingObjects.push(object);
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      // TODO: include pronoun caching later
-      if (!this.grid.getObject({ searchOriginObj: user, identifier: dest })) { return false; }
+      const destinationObject = this.grid.getObject({ searchOriginObj: user, identifier: dest }); 
+      if (!destinationObject) continue;
+      destinationObjects.push(destinationObject);
     }
-    for (let i = 0; i < destinations.length; i++) {
-      this.grid.moveToObject(movingObjects, this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] }))
-    } return true;
+    for (let i = 0; i < destinationObjects.length; i++) {
+      const destinationObject = destinationObjects[i];//this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] })
+      const paths = this.grid.moveToObject(movingObjects, destinationObject);
+      for (let i = 0; i < movingObjects.length; i++) {
+        const movingObject = movingObjects[i];
+        results.push({
+          objectName: movingObject.name,
+          destination: destinationObject.name,
+          path: paths[i],
+        });
+      } 
+    }
+    return { userName: user.name, action: 'move', result: results }
   }
 
   executeLook(data) {
+    const texts = [];
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
-
     if (!data.directObjects.length) { // if no specified object to look at, look around
       const nearbyObjects = this.grid.getNearbyObjects(user);
-      return nearbyObjects.filter(e => e.name != 'floor' && e.name != 'wall').map(e => e.inspect());
+      return {
+        userName: user.name,
+        action: 'look',
+        result: nearbyObjects.filter(e => e.name != 'floor'
+          && e.name != 'wall'
+          && e.inspectText != '').map(e => ({
+            objectName: e.name,
+            text: e.inspect()
+        }))
+      };
     }
     // if specified direct objects, look at that those objects
-    const texts = [];
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
       const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
@@ -86,8 +106,11 @@ class ActionExecuter {
       // if the user is too far from the object move them to it
       // if still too far, then we cant look at this object
       if (!this.attemptMoveCloser(user, object, 2)) continue;
-      texts.push(object.inspectText);
-    } return texts;
+      texts.push({
+        objectName: name,
+        text: object.inspect(),
+      });
+    } return { userName: user.name, action: 'look', result: texts };
   }
 
   executeTake(data) {
@@ -95,6 +118,7 @@ class ActionExecuter {
     const objectNames = data.directObjects;
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
+    const taken = [];
     // if there is a source
     for (let i = 0; i < sources.length; i++) {
       const sourceName = sources[i];
@@ -102,9 +126,10 @@ class ActionExecuter {
       if (!sourceObject) continue;
       if (sourceObject instanceof Agent) { // you can take items from other agents
         for (let j = 0; j < objectNames.length; j++) {
-          const objName = objectNames[j];
+          const objectName = objectNames[j];
           if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objName, user);  
+          sourceObject.giveItem(objectName, user);
+          taken.push({ objectName: objectName, source: sourceName });
         }
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
@@ -113,6 +138,7 @@ class ActionExecuter {
           if (!this.attemptMoveCloser(user, object, 1)) continue;
           user.takeItem(object);
           this.grid.removeFromBoard(object);
+          taken.push({ objectName: objectName, source: sourceName });
         }
       }
     }
@@ -126,9 +152,10 @@ class ActionExecuter {
         if (!this.attemptMoveCloser(user, object, 1)) continue;
         user.takeItem(object);
         this.grid.removeFromBoard(object);
+        taken.push({ objectName: objectName, source: '' });
       }
     }
-    return true;
+    return { userName: user.name, action: 'take', result: taken };
   }
 
   executeGive(data) {
@@ -137,6 +164,7 @@ class ActionExecuter {
     // we can expect receipients whenever an object is given
     const recipients = data.indirectObjects;
     const objectNames = data.directObjects;
+    const results = [];
     for (let i = 0; i < recipients.length; i++) {// for all receipients
       const recipientName = recipients[i];
       const recipient = this.grid.getObject({ searchOriginObj: user, identifier: recipientName });
@@ -156,8 +184,9 @@ class ActionExecuter {
           if (!this.attemptMoveCloser(user, recipient, 1)) continue;
           if (taken) user.giveItem(objectName, recipient); // give the item to the recipient
         }
+        results.push({ objectName: objectName, recipient: recipient.name });
       }
-    } return true;
+    } return { userName: user.name, action: 'give', result: results };
   }
 
   executePlace(data) {
@@ -165,12 +194,14 @@ class ActionExecuter {
     const objectNames = data.directObjects;
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
+    const results = [];
     if (!destinations.length) { // if no destinations specified
       for (let i = 0; i < objectNames.length; i++) {
         const objName = objectNames[i];
         if (user.hasItem(objName)) {
           const object = user.inventory.removeItem(objName);
           this.grid.dropOntoBoard({ searchOriginObj: user, droppedObject: object });
+          results.push({ objectName: object.name, destination: '' });
         }
       }
     }
@@ -181,11 +212,9 @@ class ActionExecuter {
       for (let j = 0; j < objectNames.length; j++) {
         const objName = objectNames[j];
         let object;
-        if (user.hasItem(objName)) {
-          object = user.inventory.getItem(objName);
-        } else {
-          object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
-        }
+        if (user.hasItem(objName)) object = user.inventory.getItem(objName);
+        else object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
+        
         if (object.possesable) {
           if (!user.hasItem(objName)) { // if not already possessed
             const takeAttemptData = {
@@ -197,10 +226,11 @@ class ActionExecuter {
           }
           if (!this.attemptMoveCloser(user, destinationObj, 1, false)) continue;
           const object = user.inventory.removeItem(objName);
-          // if a specific destination is specified, we need to be able to have more than 
+          // if a specific destination is specified, we need to be able to have more than
           // 2 things on a square?
           this.grid.dropOntoBoard({ searchOriginObj: destinationObj, droppedObject: object },
             Number.MAX_VALUE);
+          results.push({ objectName: object.name, destination: destinationObj.name });
         } else { // if we cant possess the object we have to try to move it
           const moveAttemptData = {
             userName: userName,
@@ -210,11 +240,12 @@ class ActionExecuter {
           this.executeMove(moveAttemptData);
         }
       }
-    }
+    } return { userName: user.name, action: 'place', result: results };
   }
 
   executeDestroy(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
   }
 
   executeAttack(data) {
@@ -230,7 +261,22 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.manuallyActivateable) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.activate();
+        }
+        if (subject instanceof Structure) results.push({ objectName: subject.name, successful: subject.activated });
+        else results.push({ objectName: subject.name, successful: false });
+      } else {
+        results.push({ objectName: '', successful: false });
+      }
+    });
+    return { userName: user.name, action: 'activate', result: results };
   }
 
   executeDeactivate(data) {
@@ -238,7 +284,20 @@ class ActionExecuter {
   }
 
   executeUse(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.use) {
+        if (this.functionMap[subject.use]) {
+          results.push(this.functionMap[subject.use].bind(this)(data));
+        }
+        else {
+          //TODO: Account for special use functions
+        }
+      }
+    });
+    return { userName: user.name, action: 'use', result: results };
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods

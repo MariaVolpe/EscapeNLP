@@ -6,7 +6,7 @@ class Agent extends BoardObject {
     super({
       name: null,
       id,
-      moveable: false,
+      moveable: true,
       possesable: false,
       transferable: false,
       usable: false,
@@ -17,7 +17,6 @@ class Agent extends BoardObject {
       objectType: 'Agent',
     });
     this.inventory = new Inventory();
-    this.spriteId = null;
   }
 
   // Checks if an agent has an item in their inventory
@@ -40,13 +39,21 @@ class Agent extends BoardObject {
     return true;
   }
 
-  // returns a list of all the items in this agent's inventory
+  getFormattedInventory() {
+    return this.inventory.getFormattedInventory();
+  }
+
+  // returns a list of all the items in this agent's inventory -- for BE testings
   getAllItems() {
     return this.inventory.flattenInventory();
   }
 
   getSpriteName() {
-    return this.spriteId;
+    if (this.id >= 5) {
+      return 'playerDefault';
+    }
+
+    return `player${this.id}`;
   }
 }
 

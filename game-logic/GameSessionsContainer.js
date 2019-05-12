@@ -17,7 +17,6 @@ class GameSessionsContainer {
   constructor() {
     this.games = new Map();
     this.gameIdCounter = 0;
-    this.playerIdCounter = 0;
   }
 
   getFormattedBoard(id) {
@@ -34,14 +33,27 @@ class GameSessionsContainer {
     this.games.get(id).startGame();
   }
 
+  performAction(gameId, message) {
+    return this.games.get(gameId).performAction(message);
+  }
+
   getAllSessions() {
     const games = [];
-    this.games.forEach(({ playerCount, id: gameId, name: gameName, inProgress }) => {
+    this.games.forEach(({
+      playerCount, id: gameId, name: gameName, inProgress,
+    }) => {
       games.push({
         gameId, gameName, playerCount, inProgress,
       });
     });
     return { data: games };
+  }
+
+  getFormattedPlayersList(id) {
+    if (!this.games.has(id)) {
+      return notFoundErr(id);
+    }
+    return this.games.get(id).getFormattedPlayersList();
   }
 
   // rename b/c there's nothing about this that would indicate
@@ -64,21 +76,20 @@ class GameSessionsContainer {
     this.games.get(gameId).setPlayerName(playerId, playerName);
   }
 
-  addPlayerToSession(gameId, loggedInPlayerId) {
+  addPlayerToSession(gameId) {
     if (!this.games.has(gameId)) {
       return notFoundErr(gameId);
     }
-    const playerId = loggedInPlayerId || this.playerIdCounter;
-    this.games.get(gameId).addPlayerToSession(playerId);
-    this.playerIdCounter++;
+
+    const playerId = this.games.get(gameId).addPlayerToSession();
     return { data: { playerId } };
   }
 
-  dropPlayerFromSession(gameId, playerId) {
-    if (!this.games.has(gameId)) {
-      return notFoundErr(gameId);
+  dropPlayerFromSession(gameId, playerName) {
+    this.games.get(gameId).dropPlayerFromSession(playerName);
+    if (this.games.get(gameId).playerCount <= 0) {
+      this.games.delete(gameId);
     }
-    return this.games.get(gameId).dropPlayerFromSession(playerId);
   }
 }
 

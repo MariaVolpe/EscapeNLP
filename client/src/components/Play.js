@@ -7,13 +7,14 @@ import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import TextInfo from './TextInfo';
 import Navigation from './Navigation';
+import ReportModal from './ReportModal';
 import '../styles/Play.css';
 
 class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPlayers: {},
+      allPlayers: [],
       board: [],
       gameComplete: false,
       message: '',
@@ -26,7 +27,11 @@ class Play extends Component {
       chatOption: 'chat',
       warningOpen: false,
       numberOfPlayers: 0,
-      timer: 0
+      timer: 0,
+      reportOpen: false,
+      reportedMessage: {},
+      reportHover: false,
+      reportIndex: 0
     }
 
     this.socket = socketIOClient('');
@@ -34,44 +39,60 @@ class Play extends Component {
     this.socket.on('chatMessage', (mess) => {
       let prevMessages = this.state.prevMessages;
       prevMessages.push(mess);
+      if (mess.mess === '/d20' && mess.commenter === this.state.playerName) {
+        const d20 = mess.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
+        const message = {
+          type: 'chat',
+          time: mess.time,
+          commenter: 'System',
+          mess: d20
+        }
+        this.socket.emit('chatMessage', message);
+      }
       this.setState({ message: '', command: '', prevMessages });
     });
 
-    this.socket.on('setNames', (players, playerNumbers) => {
-      let allPlayers = this.state.allPlayers;
-
-      players.forEach((player, i) => {
-        if (!allPlayers.hasOwnProperty(player.name)) {
-          allPlayers[player.name] = {
-            inventory: {},
-            ready: player.ready,
-            position: player.position,
-            hasLeftGame: player.hasLeftGame
-          };
-          console.log(allPlayers[player.name]);
-        } else {
-          allPlayers[player.name] = {
-            inventory: {},
-            ready: player.ready,
-            position: player.position,
-            hasLeftGame: player.hasLeftGame
-          };
-          console.log(allPlayers[player.name]);
-        }
-      });
-
+    this.socket.on('setNames', (allPlayers) => {
+      // let allPlayers = this.state.allPlayers;
+      //
+      // players.forEach((player, i) => {
+      //   if (!allPlayers.hasOwnProperty(player.name)) {
+      //     allPlayers[player.name] = {
+      //       inventory: [],
+      //       ready: player.ready,
+      //       position: player.position,
+      //       hasLeftGame: player.hasLeftGame,
+      //       iconName: player.iconName
+      //     };
+      //   } else {
+      //     allPlayers[player.name].position = player.position;
+      //     allPlayers[player.name].iconName = player.iconName;
+      //   }
+      // });
       this.setState({allPlayers});
     });
 
-    this.socket.on('updatePlayers', (allPlayers) => {
+    this.socket.on('updatePlayers', (players) => {
+      let allPlayers = this.state.allPlayers;
+      Object.keys(players).forEach((player) => {
+        if (allPlayers.hasOwnProperty(player)) {
+          allPlayers[player].inventory = player.inventory;
+          allPlayers[player].id = player.id;
+        }
+      });
       this.setState({allPlayers})
     });
 
     this.socket.on('readyUp', (playerInfo, allPlayersReady) => {
       let allPlayers = this.state.allPlayers;
-      if (allPlayers.hasOwnProperty(playerInfo.name)) {
-        allPlayers[playerInfo.name].ready = playerInfo.ready;
-      }
+      // if (allPlayers.hasOwnProperty(playerInfo.name)) {
+      //   allPlayers[playerInfo.name].ready = playerInfo.ready;
+      // }
+      allPlayers.forEach((player) => {
+        if (player.name === playerInfo.name) {
+          player.ready = playerInfo.ready;
+        }
+      });
 
       if (allPlayersReady) {
         this.socket.emit('startGame', this.state.board);
@@ -82,9 +103,16 @@ class Play extends Component {
 
     this.socket.on('removePlayer', (playerName) => {
       let allPlayers = this.state.allPlayers;
-      if (allPlayers.hasOwnProperty(playerName)) {
-        delete allPlayers[playerName];
-      }
+      let removeIndex = 0;
+      allPlayers.forEach((player, i) => {
+        if (player.name === playerName) {
+          removeIndex = i;
+        }
+      });
+      allPlayers = allPlayers.slice(removeIndex);
+      // if (allPlayers.hasOwnProperty(playerName)) {
+      //   delete allPlayers[playerName];
+      // }
 
       this.setState({allPlayers});
     });
@@ -124,14 +152,12 @@ class Play extends Component {
 
   componentDidMount = () => {
     if (window.sessionStorage.getItem('roomId') !== null) {
-      console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({board});
     } else {
-      console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');
     }
   }
@@ -150,7 +176,9 @@ class Play extends Component {
   createComment = (mess, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
-    let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes().toString() : date.getMinutes().toString();
+    let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds().toString() : date.getSeconds().toString();
+    let time = date.getHours() + ':' + minutes + ':' + seconds;
     const message = { commenter, time, mess, type };
     this.socket.emit('chatMessage', message);
   }
@@ -222,14 +250,35 @@ class Play extends Component {
     return playerInfo.name === this.state.playerName;
   }
 
+  isAlphaNumeric = (name) => {
+    for (let i=0; i<name.length; i++) {
+      if (name[i].match(/^[a-z0-9]+$/i) === null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
     let allPlayers = this.state.allPlayers;
     playerName = this.removeStartAndEndSpaces(playerName);
     this.setState({ playerName });
-    const takenName = allPlayers.hasOwnProperty(playerName);
-    if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
-      const playerInfo = { name: playerName, ready: false, position: 0, playerId: window.sessionStorage.getItem('playerId') };
+    //const takenName = allPlayers.hasOwnProperty(playerName);
+    let takenName = false;
+    allPlayers.forEach((player) => {
+      if (player.name === playerName) {
+        takenName = true;
+      }
+    })
+    if (playerName.length > 2 && !takenName && this.isAlphaNumeric(playerName)) {
+      let playerIcon;
+      if (window.sessionStorage.getItem('playerIcon') !== null) {
+        playerIcon = window.sessionStorage.getItem('playerIcon');
+      } else {
+        playerIcon = 'defaultIcon';
+      }
+      const playerInfo = { name: playerName, ready: false, position: 0, iconName: playerIcon, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
     }
@@ -241,7 +290,7 @@ class Play extends Component {
 
   onNameChange = (event) => {
     const playerName = event.target.value;
-    if (playerName.length < 25) {
+    if (playerName.length < 20) {
       this.setState({playerName});
     }
   }
@@ -261,21 +310,80 @@ class Play extends Component {
 
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
+    const reportedMessage = prevMessages[i];
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
+    this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
+  }
+
+  onMessageHover = (index) => {
+    this.setState({reportHover: true, reportIndex: index});
+  }
+
+  onMessageLeave = (index) => {
+    this.setState({reportHover: false, reportIndex: -1});
+  }
+
+  onReportToggle = (event) => {
+    this.setState({reportOpen: !this.state.reportOpen});
+    event.preventDefault();
+  }
+
+  onInterpretedClick = (index) => {
+    let prevMessages = this.state.prevMessages;
+    let latestInterpretation = '';
+    for (let i=prevMessages.length-1; i>=0; i--) {
+      if (latestInterpretation === '' && prevMessages[i].type === 'interpreted') {
+        latestInterpretation = prevMessages[i];
+      }
+    }
+    if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
+      prevMessages[index].checked = true;
+      let commenter = prevMessages[index].commenter;
+      let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
+      let date = new Date();
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      prevMessages.forEach((message, i) => {
+        if (message.type === 'new interpretation') {
+          prevMessages.splice(i, 1);
+        }
+      });
+      const message = { commenter, time, mess, type: 'new interpretation' };
+      prevMessages.splice(index+1, 0, message);
+      this.setState({prevMessages});
+    }
+  }
+
+  onNewInterpretationClick = (index, buttonType) => {
+    let prevMessages = this.state.prevMessages;
+    let reportOpen = false;
+    prevMessages.splice(index, 1);
+    if (buttonType === 'yes') {
+      reportOpen = true;
+    } else if (prevMessages[index-1].type === 'interpreted') {
+      delete prevMessages[index-1].checked;
+    }
+    this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
+  }
+
+  updatePlayerIcon = (iconName) => {
+    if (this.state.setName) {
+      this.socket.emit('updatePlayerIcon', iconName);
+    }
   }
 
   render() {
     const board = this.state.board;
     let allPlayers = [];
-    Object.keys(this.state.allPlayers).forEach((player, i) => {
-      let playerInfo = { name: player,
-                         inventory: this.state.allPlayers[player].inventory,
-                         ready: this.state.allPlayers[player].ready,
-                         position: this.state.allPlayers[player].position,
-                         hasLeftGame: this.state.allPlayers[player].hasLeftGame
-                       };
+    this.state.allPlayers.forEach((player, i) => {
+      // let playerInfo = { name: player,
+      //                    inventory: this.state.allPlayers[player].inventory,
+      //                    ready: this.state.allPlayers[player].ready,
+      //                    position: this.state.allPlayers[player].position,
+      //                    hasLeftGame: this.state.allPlayers[player].hasLeftGame,
+      //                    iconName: this.state.allPlayers[player].iconName
+      //                  };
       allPlayers.push(<PlayerInfo
-                        playerInfo={playerInfo}
+                        playerInfo={player}
                         allPlayersReady={this.state.allPlayersReady}
                         key={i}
                         className="row player-box"
@@ -327,7 +435,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <Navigation inGame={true} />
+        <Navigation inGame={true} updatePlayerIcon={this.updatePlayerIcon}/>
         {playerInfo}
         {gameInfo}
         <CreateNameModal
@@ -354,8 +462,19 @@ class Play extends Component {
             gameComplete={this.state.gameComplete}
             gameStart={this.state.allPlayersReady}
             onMessageClick={this.onMessageClick}
+            onMessageHover={this.onMessageHover}
+            onMessageLeave={this.onMessageLeave}
+            reportHover={this.state.reportHover}
+            reportIndex={this.state.reportIndex}
+            onInterpretedClick={this.onInterpretedClick}
+            onNewInterpretationClick={this.onNewInterpretationClick}
           />
         </div>
+        <ReportModal
+          isOpen={this.state.reportOpen}
+          message={this.state.reportedMessage}
+          onToggle={this.onReportToggle}
+        />
       </div>
     )
   }

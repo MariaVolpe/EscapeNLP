@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
-import playerIcon from '../images/playericon.png';
+import defaultIcon from '../images/playericon.png';
+import kirbyIcon from '../images/kirbyoutline.png';
+import dmc4Icon from '../images/dmc4logo.png';
+import pikachuIcon from '../images/pikachuicon.png';
+import segwayIcon from '../images/segwaypoloicon.png';
+
+const icons = {
+  'defaultIcon': defaultIcon,
+  'kirbyIcon': kirbyIcon,
+  'dmc4Icon': dmc4Icon,
+  'pikachuIcon': pikachuIcon,
+  'segwayIcon': segwayIcon
+}
 
 class PlayerInfo extends Component {
 
   render() {
     const inventory = this.props.playerInfo.inventory;
-    const itemsList = Object.keys(inventory);
-
-    const items = itemsList.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[item]}`} data-for="inv">
-                                               <div className="item-outline">
-                                                <img src='' alt='' className="item-pic" />
-                                               </div>
-                                             </div>);
+    let items = [];
+    if (inventory !== undefined) {
+      items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[i]}`} data-for="inv">
+                                                 <div className="item-outline">
+                                                  <img src='' alt='' className="item-pic" />
+                                                 </div>
+                                               </div>);
+    }
     for (let i = items.length; i < 6; i++) {
       items.push(<div className="item-slot" key={i}>
                    <div className="item-outline">
@@ -39,7 +52,7 @@ class PlayerInfo extends Component {
                      </div>
       }
     }
-    const playerCardStyle = "card player-box player" + this.props.playerInfo.position;
+    const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
 
     // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
@@ -57,20 +70,20 @@ class PlayerInfo extends Component {
     } else {
       let name;
       if (this.props.playerInfo.name === this.props.yourName && this.props.hasSetName) {
-        name = this.props.playerInfo.name;
+        name = this.props.playerInfo.name + ' (you)';
       } else {
         name = this.props.playerInfo.name;
       }
       return(
-        <div className={playerCardStyle}>
+        <div className="card player-box">
           <div className="content">
             <img
               className="left floated mini ui image"
-              src={playerIcon}
+              src={icons[this.props.playerInfo.iconName]}
               alt="user icon"
             />
 
-            <div className="right floated ui header player-name">
+            <div className={playerNameStyle}>
               {name}
             </div>
 
