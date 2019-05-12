@@ -277,7 +277,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         },
       ];
       // TODO: THIS IS INCORRRECTLY CLASSIFYING FIX LATER
-      //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+      // expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
 
@@ -342,5 +342,4 @@ describe('Natural Language (NLInterpreter) tests', () => {
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
-
 });
