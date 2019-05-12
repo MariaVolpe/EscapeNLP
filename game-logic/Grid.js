@@ -42,8 +42,8 @@ class Grid {
   }
 
   getFormattedGrid() {
-    const frontEndMatrix = Array.from({ length: this.matrix[0].length },
-      () => Array.from({ length: this.matrix.length },
+    const frontEndMatrix = Array.from({ length: this.matrix.length },
+      () => Array.from({ length: this.matrix[0].length },
         () => []));
 
     for (let i = 0; i < this.matrix.length; i++) {
@@ -233,11 +233,11 @@ class Grid {
     }
   }
 
-  addToNameToObjectsMap(object) {
-    const name = object.name.toLowerCase();
+  addToNameToObjectsMap(obj) {
+    const name = obj.name.toLowerCase();
     if (!this.nameToObjsList.has(name)) this.nameToObjsList.set(name, []);
 
-    this.nameToObjsList.get(name).push(object);
+    this.nameToObjsList.get(name).push(obj);
   }
 
   // gets all objects of type agent from the grid //

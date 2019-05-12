@@ -39,18 +39,21 @@ class Agent extends BoardObject {
     return true;
   }
 
-  // returns a list of all the items in this agent's inventory
+  getFormattedInventory() {
+    return this.inventory.getFormattedInventory();
+  }
+
+  // returns a list of all the items in this agent's inventory -- for BE testings
   getAllItems() {
     return this.inventory.flattenInventory();
   }
 
   getSpriteName() {
-    if (this.id >= 5){
+    if (this.id >= 5) {
       return 'playerDefault';
     }
-    else {
-      return `player${this.id}`;
-    }
+
+    return `player${this.id}`;
   }
 }
 

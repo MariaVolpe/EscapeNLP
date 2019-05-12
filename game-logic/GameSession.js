@@ -2,24 +2,27 @@ const Agent = require('./Agent');
 const { Grid } = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayoutBuild = require('./room-layouts/room-1');
+const NLInterpreter = require('../nlp/NLInterpreter');
 
 class GameSession {
   constructor(id, name) {
     this.puzzleManager = null;
     this.grid = null;
     this.agents = [];
-    this.puzzleManager = null;
     this.id = id;
     this.name = name;
+    this.playerIdCounter = 0;
     this.inProgress = false;
+    this.interpreter = null;
   }
 
   getFormattedBoard() {
     return this.grid.getFormattedGrid();
   }
 
-  addPlayerToSession(id) {
-    this.agents.push(new Agent(id));
+  addPlayerToSession() {
+    this.agents.push(new Agent(this.playerIdCounter));
+    return this.playerIdCounter++;
   }
 
   setPlayerName(playerId, playerName) {
@@ -30,19 +33,39 @@ class GameSession {
     });
   }
 
-  dropPlayerFromSession(id) {
-    const newAgents = this.agents.filter(agent => agent.id !== id);
-    if (newAgents.length === this.agents.length) {
-      return { error: { status: 404, source: 'playerId' } };
-    }
-
+  dropPlayerFromSession(playerName) {
+    const newAgents = this.agents.filter(agent => agent.name !== playerName);
     this.agents = newAgents;
-    return { error: null };
+  }
+
+  // formats players array into the object format used on frontend
+  // this object format may not be optimal but we'd have to rewrite
+  // a good chunk of the frontend to fix it
+  getFormattedPlayersList() {
+    const formattedObj = {};
+    const agentObjs = this.agents.map(agent => ({
+      name: agent.name,
+      id: agent.id,
+      inventory: agent.getFormattedInventory(),
+    }));
+
+    this.agents.forEach((agent, index) => {
+      formattedObj[agent.name] = agentObjs[index];
+    });
+
+    return formattedObj;
   }
 
   startGame() {
     this.inProgress = true;
     this.generateGame();
+  }
+
+  performAction(message) {
+    return this.interpreter.executeInput({
+      userName: message.commenter,
+      data: message.mess,
+    });
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
@@ -55,7 +78,7 @@ class GameSession {
     this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
-
+    this.interpreter = new NLInterpreter(this.grid);
     // todo: generate player starting locations
     this.addAgentsToMap();
   }

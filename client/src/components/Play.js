@@ -58,27 +58,32 @@ class Play extends Component {
       players.forEach((player, i) => {
         if (!allPlayers.hasOwnProperty(player.name)) {
           allPlayers[player.name] = {
-            inventory: {},
+            inventory: [],
             ready: player.ready,
             position: player.position,
             hasLeftGame: player.hasLeftGame
           };
-          console.log(allPlayers[player.name]);
         } else {
           allPlayers[player.name] = {
-            inventory: {},
+            inventory: [],
             ready: player.ready,
             position: player.position,
             hasLeftGame: player.hasLeftGame
           };
-          console.log(allPlayers[player.name]);
         }
       });
 
       this.setState({allPlayers});
     });
 
-    this.socket.on('updatePlayers', (allPlayers) => {
+    this.socket.on('updatePlayers', (players) => {
+      let allPlayers = this.state.allPlayers;
+      Object.keys(players).forEach((player) => {
+        if (allPlayers.hasOwnProperty(player)) {
+          allPlayers[player].inventory = player.inventory;
+          allPlayers[player].id = player.id;
+        }
+      });
       this.setState({allPlayers})
     });
 
@@ -139,14 +144,12 @@ class Play extends Component {
 
   componentDidMount = () => {
     if (window.sessionStorage.getItem('roomId') !== null) {
-      console.log(window.sessionStorage.getItem("roomId"));
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({board});
     } else {
-      console.log(window.sessionStorage.getItem("roomId"));
       window.location.replace('/browser');
     }
   }
@@ -239,13 +242,22 @@ class Play extends Component {
     return playerInfo.name === this.state.playerName;
   }
 
+  isAlphaNumeric = (name) => {
+    for (let i=0; i<name.length; i++) {
+      if (name[i].match(/^[a-z0-9]+$/i) === null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
     let allPlayers = this.state.allPlayers;
     playerName = this.removeStartAndEndSpaces(playerName);
     this.setState({ playerName });
     const takenName = allPlayers.hasOwnProperty(playerName);
-    if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
+    if (playerName.length > 2 && !takenName && this.isAlphaNumeric(playerName)) {
       const playerInfo = { name: playerName, ready: false, position: 0, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
@@ -258,7 +270,7 @@ class Play extends Component {
 
   onNameChange = (event) => {
     const playerName = event.target.value;
-    if (playerName.length < 25) {
+    if (playerName.length < 20) {
       this.setState({playerName});
     }
   }

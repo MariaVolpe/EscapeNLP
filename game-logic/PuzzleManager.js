@@ -20,7 +20,6 @@ class PuzzleManager {
     this.findPuzzles();
   }
 
-  // todo: set puzzles on this.puzzles, dynamically
   findPuzzles() {
     this.puzzles.push(Door);
     this.puzzles.push(Weight);
@@ -69,7 +68,10 @@ class PuzzleManager {
     if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
       return;
     }
-    switch (puzzleType) { // eslint-disable-line default-case
+    switch (puzzleType) {
+      case 'door':
+        const doorObj = this.puzzleProgress.get('door')[0];
+        doorObj.setPassable(true);
       case 'weight':
         this.grid.add(new Item('sword_blade'));
         break;

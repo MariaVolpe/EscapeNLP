@@ -134,6 +134,13 @@ class TextInfo extends Component {
       }
     });
 
+    let passIn;
+    if(this.props.chatOption === 'chat')
+      passIn = 'Toggle Action';
+    else {
+      passIn = 'Toggle Chat';
+    }
+
     return(
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
@@ -156,7 +163,7 @@ class TextInfo extends Component {
             onClick={this.props.onChatOptionChange}
             style={{width: '99.5%', marginLeft: '2.5%', marginTop: '0.75%'}}
           >
-            {this.props.chatOption}
+            {passIn}
           </button>
       </div>
     )

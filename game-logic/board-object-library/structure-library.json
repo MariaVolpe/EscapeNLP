@@ -7,6 +7,7 @@
         "speakable": false,
         "manuallyActivateable": true,
         "manuallyDeactivateable": true,
+        "usable": true,
         "use": "activate",
         "jumpable": false,
         "placeable": false,
@@ -20,6 +21,7 @@
         "speakable": false,
         "manuallyActivateable": true,
         "manuallyDeactivateable": false,
+        "usable": true,
         "use": "activate",
         "jumpable": null,
         "passable": false
@@ -32,6 +34,7 @@
         "speakable": false,
         "manuallyActivateable": true,
         "manuallyDeactivateable": true,
+        "usable": true,
         "use": "activate",   
         "jumpable": null,
         "passable": false
@@ -44,6 +47,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": true,
         "use": "move", 
         "jumpable": null,
         "passable": false
@@ -56,6 +60,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": true
@@ -70,6 +75,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null
     },
@@ -81,6 +87,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": true,
         "use": "activate",
         "jumpable": null,
         "passable": true
@@ -93,6 +100,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": false
@@ -105,6 +113,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": false
@@ -117,6 +126,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": false
@@ -129,6 +139,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": true,
         "use": "inspect",
         "jumpable": null,
         "passable": false
@@ -141,6 +152,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": false
@@ -153,6 +165,7 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
+        "usable": false,
         "use": null,
         "jumpable": null,
         "passable": false

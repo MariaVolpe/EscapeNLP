@@ -55,6 +55,10 @@ class BoardObject {
   isMovable() {
     return this.moveable;
   }
+
+  setName(name) {
+    this.name = name;
+  }
 }
 
 module.exports = BoardObject;
