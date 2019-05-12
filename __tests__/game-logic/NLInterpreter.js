@@ -209,7 +209,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
   });
 
   describe('Give', () => {
-    /*it('Should give an item already possessed to another agent', async () => {
+    it('Should give an item already possessed to another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const item = new Item('key', '6', null);
@@ -227,8 +227,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const grid = new Grid(startingMatrix);
       const interpreter = new NLInterpreter(grid);
       const input = {
-        userName: 'agent',
-        data: 'I give the key to dora',
+        userName: 'Swiper',
+        data: 'i give the key to dora',
       };
       const results = interpreter.executeInput(input);
       const expected = [
@@ -241,6 +241,6 @@ describe('Natural Language (NLInterpreter) tests', () => {
         },
       ];
       //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
-    });*/
+    });
   });
 });
