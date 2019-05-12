@@ -49,7 +49,12 @@ class Play extends Component {
         }
         this.socket.emit('chatMessage', message);
       }
-      this.setState({ message: '', command: '', prevMessages });
+      if (mess.commenter === this.state.playerName) {
+        this.setState({ message: '', command: '', prevMessages });
+      } else {
+        this.setState({ prevMessages });
+      }
+
     });
 
     this.socket.on('setNames', (allPlayers) => {
