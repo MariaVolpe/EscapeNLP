@@ -1,6 +1,6 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
-const { getDistance } = require('../game-logic/grid');
+const { getDistance } = require('../game-logic/Grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -87,7 +87,7 @@ class ActionExecuter {
       };
     }
     // if specified direct objects, look at that those objects
-    
+
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
       const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
@@ -117,7 +117,7 @@ class ActionExecuter {
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
           if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objectName, user); 
+          sourceObject.giveItem(objectName, user);
           taken.push({ objectName: objectName, source: sourceName });
         }
       } else { // take from the grid
@@ -213,7 +213,7 @@ class ActionExecuter {
           }
           if (!this.attemptMoveCloser(user, destinationObj, 1, false)) continue;
           const object = user.inventory.removeItem(objName);
-          // if a specific destination is specified, we need to be able to have more than 
+          // if a specific destination is specified, we need to be able to have more than
           // 2 things on a square?
           this.grid.dropOntoBoard({ searchOriginObj: destinationObj, droppedObject: object },
             Number.MAX_VALUE);
