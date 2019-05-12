@@ -29,7 +29,7 @@ import door_activated from '../images/door_activated.png'
 import forge from '../images/forge.png';
 import pot from '../images/pot.png';
 import exit from '../images/exit.png';
-
+import VictoryModal from './VictoryModal';
 
 const pictures = {
   'dragon': dragon,
@@ -62,67 +62,139 @@ const pictures = {
 }
 
 class GameInfo extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = { showVictoryModal: false };   // get real state from backend
+    this.stayOnPage = this.stayOnPage.bind(this);
+  }
+
+  stayOnPage = (event) => {
+    this.setState({showVictoryModal: !this.state.showVictoryModal});
+    event.preventDefault();
+  }
+
   render() {
     let board = this.props.board;
     let mapData = [];
-    for (let i=0; i<12; i++) {
-      for (let k=0; k<15; k++) {
-        if (k === 0) {
-          mapData.push(<div className="map one wide column" >
-                         {String.fromCharCode(i+65)}
+    let victory = false; // get real state from backend
+
+    if(victory){
+      for (let i=0; i<12; i++) {
+        for (let k=0; k<15; k++) {
+          if (k === 0) {
+            mapData.push(<div className="map one wide column" >
+                           {String.fromCharCode(i+65)}
+                         </div>);
+          }
+          if (board[0] === undefined) { }
+          else if (board[k][i][1] === undefined) {
+          mapData.push(<div className="map victory one wide column" data-tip="The Rare W" data-for="victory" >
+                         <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
                        </div>);
-        }
-        if (board[0] === undefined) { }
-        else if (board[k][i][1] === undefined) {
-        mapData.push(<div className="map tile one wide column" data-tip="" data-for="tile" >
-                       <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
-                     </div>);
-        }
-        else {
-        mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
-               <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
-               <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" />
-             </div>);
+          }
+          else {
+          mapData.push(<div className="map victory one wide column" data-tip={`The Rare W`} data-for="victory" >
+                 <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
+                 <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" />
+               </div>);
+          }
         }
       }
-    }
 
-    let seconds = Math.round(this.props.timer/1000);
-    let minutes = Math.round(seconds / 60);
-    seconds = seconds % 60;
-    minutes = minutes % 60;
-    let timerSeconds = '';
-    let timerMinutes = '';
-    if (seconds < 10) {
-      timerSeconds = '0' + seconds.toString();
+      let seconds = Math.round(this.props.timer/1000);
+      let minutes = Math.round(seconds / 60);
+      seconds = seconds % 60;
+      minutes = minutes % 60;
+      let timerSeconds = '';
+      let timerMinutes = '';
+      if (seconds < 10) {
+        timerSeconds = '0' + seconds.toString();
+      } else {
+        timerSeconds = seconds.toString();
+      }
+      if (minutes < 10) {
+        timerMinutes = '0' + minutes.toString();
+      } else {
+        timerMinutes = minutes.toString();
+      }
+
+      const time = `Timer ${timerMinutes}:${timerSeconds}`;
+
+      for (let i=0; i<16; i++) {
+        if (i !== 0) {
+         mapData.push(<div className="map one wide column" >
+                        {i}
+                      </div>);
+       } else {
+         mapData.push(<div className="map one wide column">
+                        <div className="timer">{time}</div>
+                      </div>);
+       }
+      }
+
+      mapData.push(<ReactTooltip id="victory" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     } else {
-      timerSeconds = seconds.toString();
-    }
-    if (minutes < 10) {
-      timerMinutes = '0' + minutes.toString();
-    } else {
-      timerMinutes = minutes.toString();
-    }
+      for (let i=0; i<12; i++) {
+        for (let k=0; k<15; k++) {
+          if (k === 0) {
+            mapData.push(<div className="map one wide column" >
+                           {String.fromCharCode(i+65)}
+                         </div>);
+          }
+          if (board[0] === undefined) { }
+          else if (board[k][i][1] === undefined) {
+          mapData.push(<div className="map tile one wide column" data-tip="" data-for="tile" >
+                         <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
+                       </div>);
+          }
+          else {
+          mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
+                 <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
+                 <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" />
+               </div>);
+          }
+        }
+      }
 
-    const time = `Timer ${timerMinutes}:${timerSeconds}`;
+      let seconds = Math.round(this.props.timer/1000);
+      let minutes = Math.round(seconds / 60);
+      seconds = seconds % 60;
+      minutes = minutes % 60;
+      let timerSeconds = '';
+      let timerMinutes = '';
+      if (seconds < 10) {
+        timerSeconds = '0' + seconds.toString();
+      } else {
+        timerSeconds = seconds.toString();
+      }
+      if (minutes < 10) {
+        timerMinutes = '0' + minutes.toString();
+      } else {
+        timerMinutes = minutes.toString();
+      }
 
-    for (let i=0; i<16; i++) {
-      if (i !== 0) {
-       mapData.push(<div className="map one wide column" >
-                      {i}
-                    </div>);
-     } else {
-       mapData.push(<div className="map one wide column">
-                      <div className="timer">{time}</div>
-                    </div>);
-     }
+      const time = `Timer ${timerMinutes}:${timerSeconds}`;
+
+      for (let i=0; i<16; i++) {
+        if (i !== 0) {
+         mapData.push(<div className="map one wide column" >
+                        {i}
+                      </div>);
+       } else {
+         mapData.push(<div className="map one wide column">
+                        <div className="timer">{time}</div>
+                      </div>);
+       }
+      }
+
+      mapData.push(<ReactTooltip id="tile" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     }
-
-    mapData.push(<ReactTooltip id="tile" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
 
     return(
       <div className="ui grid">
         {mapData}
+        <VictoryModal isOpen={this.state.showVictoryModal} stayOnPage={this.stayOnPage}/>
       </div>
     )
   }

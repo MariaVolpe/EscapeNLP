@@ -392,14 +392,26 @@ class Play extends Component {
                       />);
     });
 
-    let gameInfo = <div className='game-info'>
-                    <GameInfo
-                      board={board}
-                      allPlayersReady={this.state.allPlayersReady}
-                      onHoverOverTile={this.onHoverOverTile}
-                      timer={this.state.timer}
-                    />
-                   </div>;
+    // victory is a boolean retrieved from BE to indicate if game has been won, if true different map
+    // if(victory){
+    //   let gameInfo = <div className='game-info winner'>
+    //                   <GameInfo
+    //                     board={board}
+    //                     allPlayersReady={this.state.allPlayersReady}
+    //                     onHoverOverTile={this.onHoverOverTile}
+    //                     timer={this.state.timer}
+    //                   />
+    //                  </div>;
+    // } else {
+      let gameInfo = <div className='game-info'>
+                      <GameInfo
+                        board={board}
+                        allPlayersReady={this.state.allPlayersReady}
+                        onHoverOverTile={this.onHoverOverTile}
+                        timer={this.state.timer}
+                      />
+                     </div>;
+    // }
     let playerInfo;
     if (this.state.allPlayersReady) {
       playerInfo = <div className='player-info'>
