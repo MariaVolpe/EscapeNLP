@@ -71,19 +71,33 @@ io.on('connection', (socket) => {
       const gameComplete = false;
       const actionResults = await gameContainer.performAction(socket.gameId, message);
 
+      console.log(message.mess);
+      console.log(actionResults[0]);
       // set gameComplete to true if necessary
-      const action = {
-        type: 'interpreted',
-        time: message.time,
-        commenter: message.commenter,
-        mess: 'INTERPRETED ACTION',
-      };
-      io.in(socket.currentRoom).emit('chatMessage', action);
+
+      actionResults.forEach((action) => {
+        let interprettedMsg = `action: ${action.action}, `;
+        interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+
+        // quick n dirty string handling
+        action.result.forEach((result) => {
+          interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+        });
+        interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+
+        const actionMsg = {
+          type: 'interpreted',
+          time: message.time,
+          commenter: message.commenter,
+          mess: interprettedMsg,
+        };
+        io.in(socket.currentRoom).emit('chatMessage', actionMsg);
+      });
 
       if (actionResults[0].result) {
         actionResults[0].result.forEach((item) => {
           const flavorText = {
-            type: 'flavor',
+            type: 'interpreted',
             time: message.time,
             commenter: message.commenter,
             mess: item.inspectText, // this attribute will be renamed to just 'text'
