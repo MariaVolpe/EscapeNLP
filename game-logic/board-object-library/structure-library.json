@@ -26,7 +26,7 @@
         "jumpable": null,
         "passable": false
     },
-    "switch": {
+    "lever": {
         "moveable": false,
         "possesable": false,
         "destructable": false,
@@ -75,11 +75,10 @@
         "speakable": false,
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
-        "usable": false,
         "use": null,
         "jumpable": null
     },
-    "floor switch": {
+    "impression": {
         "moveable": false,
         "possesable": false,
         "destructable": false,

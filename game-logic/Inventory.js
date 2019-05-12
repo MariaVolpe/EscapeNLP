@@ -8,8 +8,8 @@ class Inventory {
   getFormattedInventory() {
     const inventoryArr = [];
     this.items.forEach((value, key) => {
-      value.forEach(() => {
-        inventoryArr.push(key);
+      value.forEach((item) => {
+        inventoryArr.push({ name: key, sprite: item.getSpriteName() });
       });
     });
     return inventoryArr;
@@ -38,13 +38,6 @@ class Inventory {
 
   inventoryHasItem(itemName) {
     return this.items.has(itemName);
-  }
-
-  // returns the reference to an item without removing it from inventory
-  getItem(itemName) {
-    if (!this.items.has(itemName)) return null;
-    const list = this.items.get(itemName);
-    return list[0];
   }
 
   // returns the reference to an item without removing it from inventory

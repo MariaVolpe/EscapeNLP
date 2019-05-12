@@ -23,6 +23,11 @@
   background-size: 100%;
 }
 
+.victory {
+  background-image: url('../images/theRareW.jpeg');
+  background-size: 100%;
+}
+
 .board-item {
   position: absolute;
   right: 0px;
