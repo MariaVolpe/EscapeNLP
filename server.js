@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
     if (message.type === 'action') {
       const gameComplete = false;
-      // await gameContainer.performAction(socket.gameId, message);
+      await gameContainer.performAction(socket.gameId, message);
       // set gameComplete to true if necessary
       const action = {
         type: 'interpreted',

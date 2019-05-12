@@ -2,6 +2,7 @@ const Agent = require('./Agent');
 const { Grid } = require('./Grid');
 const PuzzleManager = require('./PuzzleManager');
 const roomLayoutBuild = require('./room-layouts/room-1');
+const NLInterpreter = require('../nlp/NLInterpreter');
 
 class GameSession {
   constructor(id, name) {
@@ -12,6 +13,7 @@ class GameSession {
     this.name = name;
     this.playerIdCounter = 0;
     this.inProgress = false;
+    this.interpreter = null;
   }
 
   getFormattedBoard() {
@@ -59,6 +61,10 @@ class GameSession {
     this.generateGame();
   }
 
+  performAction(message) {
+
+  }
+
   // right now, it makes sense to generate the game AFTER all players have joined
   // to make sure the game is calibrated for the right number of players
   // however if the performance on this is poor, we can optimize by adding puzzles
@@ -69,7 +75,7 @@ class GameSession {
     this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
-
+    this.interpreter = new NLInterpreter(this.grid);
     // todo: generate player starting locations
     this.addAgentsToMap();
   }
