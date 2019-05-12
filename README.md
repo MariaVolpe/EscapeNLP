@@ -35,14 +35,7 @@ cat ./nlp-classifier/nlp-classifier.js > ./node_modules/node-nlp/lib/nlp/nlp-cla
 ```
 This extends Node NLP's functionality to allow some more magic for EscapeNLP.
 
-Once that is finished, let's start up the server by using the command 
-```
-npm start
-```
-
-Now the server is up, but we still have to start up the rest of the game. Start by opening up another terminal window or tab,
-while keeping the terminal that was used to start up the server open, and go back in the EscapeNLP directory. Now that you are
-the EscapeNLP directory in the second terminal window, go into the client directory by using the command
+Go into the client directory by using the command
 ```
 cd client/
 ```
@@ -52,9 +45,14 @@ Now that you are in the EscapeNLP/client/, use the command
 npm install
 ```
 
-Once that is finished, let's start up EscapeNLP by using the command 
+Once that is finished, go back to the main EscapeNLP directory:
 ```
-npm start
+cd ..
+```
+
+let's start up EscapeNLP by using the command 
+```
+npm run dev
 ```
 
 Lastly... ENJOY THE GAME!
