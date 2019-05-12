@@ -246,7 +246,7 @@ class ActionExecuter {
   }
 
   executeActivate(data) {
-    const user = this.grid.getObject({ identifier: data.user });
+    const user = this.grid.getObject({ identifier: data.userName });
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyActivateable) {
@@ -267,12 +267,12 @@ class ActionExecuter {
   }
 
   executeUse(data) {
-    const user = this.grid.getObject({ identifier: data.user });
+    const user = this.grid.getObject({ identifier: data.userName });
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.use) {
         if (this.functionMap[subject.use]) {
-          return this.functionMap[subject.use](data);
+          return this.functionMap[subject.use].bind(this)(data);
         }
         else {
           //TODO: Account for special use functions
