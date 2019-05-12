@@ -41,32 +41,43 @@ class ActionExecuter {
     let destinations = [];
     let movingObjectNames = [];
     const movingObjects = [];
-    // if there are indirect objects, use those as the destination
-    if (data.indirectObjects.length) {
+    const destinationObjects = [];
+    const results = [];
+    if (data.indirectObjects.length) { // if there are indirect objects, use those as the destination
       destinations = data.indirectObjects;
       movingObjectNames = data.directObjects;
-      // else: there are only direct objects, use those as the destination
-    } else { destinations = data.directObjects; }
-
+      movingObjectNames.push(user.name);
+    } else { // else: there are only direct objects, use those as the destination
+      movingObjects.push(user);
+      destinations = data.directObjects;
+    }
     // validate moving objects
     for (let i = 0; i < movingObjectNames.length; i++) {
       const objName = movingObjectNames[i]; // the name of the object
       const object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
-      // TODO: include pronoun caching
-      if (!object || !object.isMovable()) {
-        return false;
-      }
+      if (!object) continue;
       movingObjects.push(object);
     }
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      // TODO: include pronoun caching later
-      if (!this.grid.getObject({ searchOriginObj: user, identifier: dest })) { return false; }
+      const destinationObject = this.grid.getObject({ searchOriginObj: user, identifier: dest }); 
+      if (!destinationObject) continue;
+      destinationObjects.push(destinationObject);
     }
-    for (let i = 0; i < destinations.length; i++) {
-      this.grid.moveToObject(movingObjects, this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] }))
-    } return true;
+    for (let i = 0; i < destinationObjects.length; i++) {
+      const destinationObject = destinationObjects[i];//this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] })
+      const paths = this.grid.moveToObject(movingObjects, destinationObject);
+      for (let i = 0; i < movingObjects.length; i++) {
+        const movingObject = movingObjects[i];
+        results.push({
+          objectName: movingObject.name,
+          destination: destinationObject.name,
+          path: paths[i],
+        });
+      } 
+    }
+    return { userName: user.name, action: 'move', result: results }
   }
 
   executeLook(data) {
@@ -82,7 +93,7 @@ class ActionExecuter {
           && e.name != 'wall'
           && e.inspectText != '').map(e => ({
             objectName: e.name,
-            inspectText: e.inspect()
+            text: e.inspect()
         }))
       };
     }
@@ -97,7 +108,7 @@ class ActionExecuter {
       if (!this.attemptMoveCloser(user, object, 2)) continue;
       texts.push({
         objectName: name,
-        inspectText: object.inspect(),
+        text: object.inspect(),
       });
     } return { userName: user.name, action: 'look', result: texts };
   }

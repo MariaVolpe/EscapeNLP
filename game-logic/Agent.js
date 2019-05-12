@@ -6,7 +6,7 @@ class Agent extends BoardObject {
     super({
       name: null,
       id,
-      moveable: false,
+      moveable: true,
       possesable: false,
       transferable: false,
       usable: false,

@@ -8,6 +8,58 @@ const { stripNames } = require('./util');
 describe('ActionExecuter tests', () => {
   describe('Move', () => {
     it('Should move to destination object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const door = new Structure('door', '3', null);
+      const wall = new Structure('wall', '2', null);
+      const sonic = new Agent(0);
+      sonic.setName('Sonic');
+      const matrix = [
+        [[wall], [door], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, sonic], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [door], [wall]],
+        [[wall], [floor, sonic], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const g = new Grid(matrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeMove({
+        userName: 'sonic',
+        directObjects: ['door'],
+        indirectObjects: [],
+      });
+      expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
+    });
+
+    it('Should move an object to a destination', async () => {
+      const floor = new Structure('floor', '1', null);
+      const door = new Structure('door', '3', null);
+      const wall = new Structure('wall', '2', null);
+      const weight = new Structure('weight', '4', null);
+      const sonic = new Agent(0);
+      sonic.setName('Sonic');
+      const startingMatrix = [
+        [[wall], [floor, door], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, weight], [wall]],
+        [[wall], [floor, sonic], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [floor, door], [wall]],
+        [[wall], [floor, weight], [wall]],
+        [[wall], [floor, sonic], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeMove({
+        userName: 'sonic',
+        directObjects: ['weight'],
+        indirectObjects: ['door'],
+      });
+      expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
     });
 
     it('Should move in a direction', async () => {
@@ -32,7 +84,8 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).result.map(e => e.inspectText);
+        indirectObjects: [],
+      }).result.map(e => e.text);
       const expected = JSON.stringify([door.inspectText, weight.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -53,7 +106,8 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: ['door'],
-      }).result.map(e => e.inspectText);
+        indirectObjects: [],
+      }).result.map(e => e.text);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -75,7 +129,8 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).result.map(e => e.inspectText);
+        indirectObjects: [],
+      }).result.map(e => e.text);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
