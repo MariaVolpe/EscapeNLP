@@ -106,27 +106,26 @@ class ReportModal extends Component {
                     Use
                   </button>
                 </div>
-              </div>
-              <div className="ui grid centered" style={{marginLeft: '0%'}}>
-                <div className="six wide column">
+                <div className="four wide column">
                   <button
-                    className="ui button"
+                    className="tiny ui button"
                     onClick={this.props.onToggle}
-
                   >
                     Other
                   </button>
                 </div>
-                <div className="six wide column">
-                  <button
-                    className="ui button"
+              </div>
+              <FormGroup row style={{marginTop: '5%'}}>
+                <Col>
+                  <Button
+                    color="danger"
                     onClick={this.props.onToggle}
-
+                    style={{width: '25%'}}
                   >
                     Cancel
-                  </button>
-                </div>
-              </div>
+                  </Button>
+                </Col>
+              </FormGroup>
             </ModalBody>
           </Modal>
         </div>
