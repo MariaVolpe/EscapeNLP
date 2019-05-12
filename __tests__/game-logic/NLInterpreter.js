@@ -236,11 +236,110 @@ describe('Natural Language (NLInterpreter) tests', () => {
           userName: 'Swiper',
           action: 'give',
           result: [
-            { objectName: 'key', source: '' },
+            { objectName: 'key', recipient: 'Dora' },
           ],
         },
       ];
-      //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
+  describe('Place', () => {
+    it('Should place an item already possessed onto the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('floor switch', '3', null);
+      const idol = new Item('key', '6', null);
+      const indianaJones = new Agent(0);
+      idol.setName('idol');
+      indianaJones.setName('Indiana Jones');
+      floorSwitch.setName('impression');
+      indianaJones.takeItem(idol);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid);
+      const input = {
+        userName: 'Indiana Jones',
+        data: 'i put it down the idol on the impression',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Indiana Jones',
+          action: 'place',
+          result: [
+            { objectName: 'idol', destination: 'impression' },
+          ],
+        },
+      ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+  });
+
+  describe('Activate', () => {
+    it('Should activate the object and move the player', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const door = new Structure('door', '3', null);
+      const player = new Agent(0);
+      player.setName('Player');
+      const initMatrix = [
+        [[floor], [floor], [floor]],
+        [[player], [floor], [door]],
+        [[floor], [floor], [floor]],
+      ];
+      const grid = new Grid(initMatrix);
+      const interpreter = new NLInterpreter(grid);
+      const input = {
+        userName: 'Player',
+        data: 'I open the door',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Player',
+          action: 'activate',
+          result: [
+            { objectName: 'door', successful: true },
+          ],
+        },
+      ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+
+    it('Should NOT activate the object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const door = new Structure('door', '3', null);
+      const player = new Agent(0);
+      player.setName('Player');
+      const matrix = [
+        [[floor], [wall], [floor]],
+        [[player], [wall], [door]],
+        [[floor], [wall], [floor]],
+      ];
+      const grid = new Grid(matrix);
+      const interpreter = new NLInterpreter(grid);
+      const input = {
+        userName: 'Player',
+        data: 'I open the door',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Player',
+          action: 'activate',
+          result: [
+            { objectName: 'door', successful: false },
+          ],
+        },
+      ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+  });
+
 });
