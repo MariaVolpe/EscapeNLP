@@ -34,7 +34,7 @@ class GameSessionsContainer {
   }
 
   performAction(gameId, message) {
-    this.games.get(gameId).performAction(message);
+    return this.games.get(gameId).performAction(message);
   }
 
   getAllSessions() {

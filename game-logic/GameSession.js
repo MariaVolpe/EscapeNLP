@@ -62,7 +62,10 @@ class GameSession {
   }
 
   performAction(message) {
-
+    return this.interpreter.executeInput({
+      userName: message.commenter,
+      data: message.mess,
+    });
   }
 
   // right now, it makes sense to generate the game AFTER all players have joined
