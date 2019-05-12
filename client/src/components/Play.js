@@ -165,7 +165,9 @@ class Play extends Component {
   createComment = (mess, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
-    let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes().toString() : date.getMinutes().toString();
+    let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds().toString() : date.getSeconds().toString();
+    let time = date.getHours() + ':' + minutes + ':' + seconds;
     const message = { commenter, time, mess, type };
     this.socket.emit('chatMessage', message);
   }
