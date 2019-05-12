@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import '../styles/PictureModal.css';
 import defaultIcon from '../images/playericon.png';
 import kirbyIcon from '../images/kirbyoutline.png';
@@ -58,13 +58,16 @@ class PictureModal extends Component {
               <FormGroup row>
                 {playerIconList}
               </FormGroup>
-              <FormGroup row style={{marginLeft: '0%'}}>
-                <button
-                  data-dismiss="modal"
-                  className="ui button"
-                >
-                  Close
-                </button>
+              <FormGroup row style={{marginTop: '5%'}}>
+                <Col>
+                  <Button
+                    color="danger"
+                    data-dismiss="modal"
+                    style={{width: '25%'}}
+                  >
+                    Cancel
+                  </Button>
+                </Col>
               </FormGroup>
             </Form>
           </ModalBody>
