@@ -7,6 +7,7 @@ import PlayerInfo from './PlayerInfo';
 import GameInfo from './GameInfo';
 import TextInfo from './TextInfo';
 import Navigation from './Navigation';
+import ReportModal from './ReportModal';
 import '../styles/Play.css';
 
 class Play extends Component {
@@ -26,7 +27,11 @@ class Play extends Component {
       chatOption: 'chat',
       warningOpen: false,
       numberOfPlayers: 0,
-      timer: 0
+      timer: 0,
+      reportOpen: false,
+      reportedMessage: {},
+      reportHover: false,
+      reportIndex: 0
     }
 
     this.socket = socketIOClient('');
@@ -34,6 +39,16 @@ class Play extends Component {
     this.socket.on('chatMessage', (mess) => {
       let prevMessages = this.state.prevMessages;
       prevMessages.push(mess);
+      if (mess.mess === '/d20' && mess.commenter === this.state.playerName) {
+        const d20 = mess.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
+        const message = {
+          type: 'chat',
+          time: mess.time,
+          commenter: 'System',
+          mess: d20
+        }
+        this.socket.emit('chatMessage', message);
+      }
       this.setState({ message: '', command: '', prevMessages });
     });
 
@@ -153,7 +168,9 @@ class Play extends Component {
   createComment = (mess, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
-    let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes().toString() : date.getMinutes().toString();
+    let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds().toString() : date.getSeconds().toString();
+    let time = date.getHours() + ':' + minutes + ':' + seconds;
     const message = { commenter, time, mess, type };
     this.socket.emit('chatMessage', message);
   }
@@ -273,7 +290,57 @@ class Play extends Component {
 
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
+    const reportedMessage = prevMessages[i];
     console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
+    this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
+  }
+
+  onMessageHover = (index) => {
+    this.setState({reportHover: true, reportIndex: index});
+  }
+
+  onMessageLeave = (index) => {
+    this.setState({reportHover: false, reportIndex: -1});
+  }
+
+  onReportToggle = (event) => {
+    this.setState({reportOpen: !this.state.reportOpen});
+    event.preventDefault();
+  }
+
+  onInterpretedClick = (index) => {
+    let prevMessages = this.state.prevMessages;
+    let latestInterpretation = '';
+    for (let i=prevMessages.length-1; i>=0; i--) {
+      if (latestInterpretation === '' && prevMessages[i].type === 'interpreted') {
+        latestInterpretation = prevMessages[i];
+      }
+    }
+    if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
+      prevMessages[index].checked = true;
+      let commenter = prevMessages[index].commenter;
+      let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
+      let date = new Date();
+      let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      prevMessages.forEach((message, i) => {
+        if (message.type === 'new interpretation') {
+          prevMessages.splice(i, 1);
+        }
+      });
+      const message = { commenter, time, mess, type: 'new interpretation' };
+      prevMessages.push(message);
+      this.setState({prevMessages});
+    }
+  }
+
+  onNewInterpretationClick = (index, buttonType) => {
+    let prevMessages = this.state.prevMessages;
+    let reportOpen = false;
+    prevMessages.splice(index, 1);
+    if (buttonType === 'yes') {
+      reportOpen = true;
+    }
+    this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
   }
 
   render() {
@@ -354,8 +421,19 @@ class Play extends Component {
             gameComplete={this.state.gameComplete}
             gameStart={this.state.allPlayersReady}
             onMessageClick={this.onMessageClick}
+            onMessageHover={this.onMessageHover}
+            onMessageLeave={this.onMessageLeave}
+            reportHover={this.state.reportHover}
+            reportIndex={this.state.reportIndex}
+            onInterpretedClick={this.onInterpretedClick}
+            onNewInterpretationClick={this.onNewInterpretationClick}
           />
         </div>
+        <ReportModal
+          isOpen={this.state.reportOpen}
+          message={this.state.reportedMessage}
+          onToggle={this.onReportToggle}
+        />
       </div>
     )
   }

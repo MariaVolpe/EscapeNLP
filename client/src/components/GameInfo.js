@@ -23,6 +23,7 @@ import binary_switch from '../images/binary_switch.png';
 import binary_switch_activated from '../images/binary_switch_activated.png';
 import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
+import door_activated from '../images/door_activated.png'
 import forge from '../images/forge.png';
 import pot from '../images/pot.png';
 import exit from '../images/exit.png';
@@ -43,6 +44,7 @@ const pictures = {
   'binary_switch_activated' : binary_switch_activated,
   'bookshelf': bookshelf,
   'door': door,
+  'door_activated': door_activated,
   'forge': forge,
   'pot': pot,
   'exit': exit,
