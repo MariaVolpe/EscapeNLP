@@ -71,7 +71,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
-  
+
   describe('Look', () => {
     it('Should look around', async () => {
       const floor = new Structure('floor', '1', null);
@@ -169,7 +169,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
 
-    /*it('Should move to take an item off the grid', async () => {
+    /* it('Should move to take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const agent = new Agent(0);
@@ -205,7 +205,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         },
       ];
       //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
-    });*/
+    }); */
   });
 
   describe('Give', () => {

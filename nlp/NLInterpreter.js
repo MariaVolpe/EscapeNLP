@@ -8,11 +8,12 @@ class NLInterpreter {
     1) grid: wrapper object that contains BoardObjects and the grid that contains them
     2) agents: list of agents in the game
   */
-  constructor(grid) {
+  constructor(grid, puzzleManager) {
     this.grid = grid;
     this.actionQueue = []; // queue object that holds actions to be executed | MAY NOT NEED THIS IF TURN BASED
     this.nlp = new NLAnalyzer();
     this.actionExecuter = new ActionExecuter({ grid: grid });
+    this.puzzleManager = puzzleManager;
   }
 
   /*
@@ -37,6 +38,7 @@ class NLInterpreter {
     for (const classification of classifications) {
       const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
+      this.puzzleManager.evaluateAllPuzzles();
       if (result) { return result; } // else keep trying other actions
     }
   }

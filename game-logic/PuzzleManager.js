@@ -16,7 +16,6 @@ class PuzzleManager {
     this.puzzleProgress = new Map();
     this.puzzleRewardGranted = new Map();
     this.gameComplete = false;
-
     this.findPuzzles();
   }
 
@@ -63,6 +62,12 @@ class PuzzleManager {
     }
   }
 
+  evaluateAllPuzzles() {
+    this.puzzles.forEach( ({puzzle_type}) => {
+      this.evaluatePuzzleStatus(puzzle_type);
+    })
+  }
+
   evaluatePuzzleStatus(puzzleType) {
     // Leave if the Puzzle hasn't been completed, or if its reward has been granted already
     if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
@@ -92,12 +97,15 @@ class PuzzleManager {
     if (!puzzleType) {
       return false;
     }
-    this.puzzleProgress.get(puzzleType).forEach((obj) => {
-      if (!obj.activated) {
-        return false;
-      }
-    });
-    return true;
+    const managedObjs = this.puzzleProgress.get(puzzleType);
+      if(managedObjs) { 
+        managedObjs.forEach((obj) => {
+        if (!obj.activated) {
+          return false;
+        }
+      });
+      return true;
+    }
   }
 
   // This ensures puzzle logic isn't repeated once the puzzle is complete

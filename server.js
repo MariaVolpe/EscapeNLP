@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
     const prevRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
     prevRooms.forEach((room) => {
       socket.leave(room);
-    }); // force current socket to only belong to one room when they join a game
+    }); //force current socket to only belong to one room when they join a game
     socket.join(roomId);
     const roomSize = io.nsps['/'].adapter.rooms[roomId].length;
     socket.currentRoom = roomId;
@@ -67,20 +67,67 @@ io.on('connection', (socket) => {
 
   socket.on('chatMessage', async (message) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
+
     if (message.type === 'action') {
       const gameComplete = false;
       const actionResults = await gameContainer.performAction(socket.gameId, message);
 
+      console.log(message.mess);
+      console.log(actionResults[0]);
       // set gameComplete to true if necessary
-      const action = {
-        type: 'interpreted',
-        time: message.time,
-        commenter: message.commenter,
-        mess: 'INTERPRETED ACTION'
-      };
+
+      actionResults.forEach((action) => {
+        let interprettedMsg = '';
+        if (!action.action) {
+          const flavorMsg = {
+            type: 'chat',
+            time: message.time,
+            commenter: message.commenter,
+            mess: 'You can\'t do that.',
+          };
+          return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
+        }
+
+
+        interprettedMsg = `action: ${action.action}, `;
+
+        if (action.result) {
+          interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+
+          // quick n dirty string handling
+          action.result.forEach((result) => {
+            if (action.action === 'move') {
+              interprettedMsg = `${interprettedMsg}${result.destination}, `;
+            } else {
+              interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+            }
+          });
+          interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+        }
+
+        const actionMsg = {
+          type: 'interpreted',
+          time: message.time,
+          commenter: message.commenter,
+          mess: interprettedMsg,
+        };
+        io.in(socket.currentRoom).emit('chatMessage', actionMsg);
+      });
+
+      if (actionResults[0].result) {
+        actionResults[0].result.forEach((item) => {
+          const flavorText = {
+            type: 'chat',
+            time: message.time,
+            commenter: message.commenter,
+            mess: item.text,
+          };
+          io.in(socket.currentRoom).emit('chatMessage', flavorText);
+        });
+      }
+
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
-      io.in(socket.currentRoom).emit('chatMessage', action);
       io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
       io.in(socket.currentRoom).emit('updatePlayers', players);
     }
@@ -178,6 +225,13 @@ io.on('connection', (socket) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
 
+  socket.on('updatePlayerIcon', (iconName) => {
+    if (socket.playerInfo) {
+      socket.playerInfo.iconName = iconName;
+    }
+    updatePlayers('', socket.currentRoom, {});
+  });
+
   setInterval(() => {
     if (socket.currentRoom) {
       if (io.sockets.adapter.rooms[socket.currentRoom]) {
@@ -189,4 +243,5 @@ io.on('connection', (socket) => {
       }
     }
   }, 1000);
+
 });
