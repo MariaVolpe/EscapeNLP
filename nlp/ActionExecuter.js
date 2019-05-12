@@ -1,5 +1,6 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
+const Structure = require('../game-logic/Structure');
 const { getDistance } = require('../game-logic/Grid');
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -98,7 +99,6 @@ class ActionExecuter {
       };
     }
     // if specified direct objects, look at that those objects
-
     for (let i = 0; i < data.directObjects.length; i++) {
       const name = data.directObjects[i];
       const object = this.grid.getObject({ searchOriginObj: user, identifier: name });
@@ -194,12 +194,14 @@ class ActionExecuter {
     const objectNames = data.directObjects;
     const { userName } = data;
     const user = this.grid.getObject({ identifier: userName });
+    const results = [];
     if (!destinations.length) { // if no destinations specified
       for (let i = 0; i < objectNames.length; i++) {
         const objName = objectNames[i];
         if (user.hasItem(objName)) {
           const object = user.inventory.removeItem(objName);
           this.grid.dropOntoBoard({ searchOriginObj: user, droppedObject: object });
+          results.push({ objectName: object.name, destination: '' });
         }
       }
     }
@@ -210,11 +212,9 @@ class ActionExecuter {
       for (let j = 0; j < objectNames.length; j++) {
         const objName = objectNames[j];
         let object;
-        if (user.hasItem(objName)) {
-          object = user.inventory.getItem(objName);
-        } else {
-          object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
-        }
+        if (user.hasItem(objName)) object = user.inventory.getItem(objName);
+        else object = this.grid.getObject({ searchOriginObj: user, identifier: objName });
+        
         if (object.possesable) {
           if (!user.hasItem(objName)) { // if not already possessed
             const takeAttemptData = {
@@ -230,6 +230,7 @@ class ActionExecuter {
           // 2 things on a square?
           this.grid.dropOntoBoard({ searchOriginObj: destinationObj, droppedObject: object },
             Number.MAX_VALUE);
+          results.push({ objectName: object.name, destination: destinationObj.name });
         } else { // if we cant possess the object we have to try to move it
           const moveAttemptData = {
             userName: userName,
@@ -239,11 +240,12 @@ class ActionExecuter {
           this.executeMove(moveAttemptData);
         }
       }
-    }
+    } return { userName: user.name, action: 'place', result: results };
   }
 
   executeDestroy(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
   }
 
   executeAttack(data) {
@@ -260,6 +262,7 @@ class ActionExecuter {
 
   executeActivate(data) {
     const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyActivateable) {
@@ -267,12 +270,13 @@ class ActionExecuter {
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
         }
+        if (subject instanceof Structure) results.push({ objectName: subject.name, successful: subject.activated });
+        else results.push({ objectName: subject.name, successful: false });
+      } else {
+        results.push({ objectName: '', successful: false });
       }
-      else {
-        return false;
-      }
-    })
-    return true;
+    });
+    return { userName: user.name, action: 'activate', result: results };
   }
 
   executeDeactivate(data) {
@@ -281,19 +285,19 @@ class ActionExecuter {
 
   executeUse(data) {
     const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.use) {
         if (this.functionMap[subject.use]) {
-          return this.functionMap[subject.use].bind(this)(data);
+          results.push(this.functionMap[subject.use].bind(this)(data));
         }
         else {
           //TODO: Account for special use functions
         }
       }
-      return false;
-    })
-    return true;
+    });
+    return { userName: user.name, action: 'use', result: results };
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods
