@@ -74,6 +74,13 @@ io.on('connection', (socket) => {
 
       console.log(message.mess);
       console.log(actionResults[0]);
+      if (actionResults[0].action === 'move') {
+        console.log(actionResults[0].result[0].path);
+        if (actionResults[0].result[1]) {
+          console.log(actionResults[0].result[1].path);
+        }
+      }
+
       // set gameComplete to true if necessary
 
       actionResults.forEach((action) => {
@@ -116,13 +123,15 @@ io.on('connection', (socket) => {
 
       if (actionResults[0].result) {
         actionResults[0].result.forEach((item) => {
-          const flavorText = {
-            type: 'flavor',
-            time: message.time,
-            commenter: 'System',
-            mess: item.text,
-          };
-          io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          if (item.text) {
+            const flavorText = {
+              type: 'flavor',
+              time: message.time,
+              commenter: 'System',
+              mess: item.text,
+            };
+            io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          }
         });
       }
 
