@@ -98,7 +98,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
           action: 'look',
           result: [
             { objectName: 'door', text: 'It\'s a closed door.' },
-            { objectName: 'weight', text: 'The bottom of the block is locked into the floor switch now.' },
+            { objectName: 'weight', text: 'The bottom of the block is locked into the impression now.' },
           ],
         },
       ];
@@ -247,16 +247,16 @@ describe('Natural Language (NLInterpreter) tests', () => {
     it('Should place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor switch', '3', null);
+      const impression = new Structure('impression', '3', null);
       const idol = new Item('key', '6', null);
       const indianaJones = new Agent(0);
       idol.setName('idol');
       indianaJones.setName('Indiana Jones');
-      floorSwitch.setName('impression');
+      impression.setName('impression');
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch], [wall]],
+        [[wall], [impression], [wall]],
         [[wall], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];

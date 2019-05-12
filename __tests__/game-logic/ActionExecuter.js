@@ -397,7 +397,7 @@ describe('ActionExecuter tests', () => {
     it('Should place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor switch', '3', null);
+      const impression = new Structure('impression', '3', null);
       const idol = new Item('key', '6', null);
       idol.name = 'idol';
       const indianaJones = new Agent(0);
@@ -405,13 +405,13 @@ describe('ActionExecuter tests', () => {
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch], [wall]],
+        [[wall], [impression], [wall]],
         [[wall], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];
       const expectedMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch, idol], [wall]],
+        [[wall], [impression, idol], [wall]],
         [[wall], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];
@@ -421,7 +421,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executePlace({
         userName: 'indiana jones',
         directObjects: ['idol'],
-        indirectObjects: ['floor switch'],
+        indirectObjects: ['impression'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
@@ -436,7 +436,7 @@ describe('ActionExecuter tests', () => {
     it('Should move to place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor switch', '3', null);
+      const impression = new Structure('impression', '3', null);
       const indianaJones = new Agent(0);
       indianaJones.setName('Indiana Jones');
       const idol = new Item('key', '6', null);
@@ -444,13 +444,13 @@ describe('ActionExecuter tests', () => {
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch], [wall]],
+        [[wall], [impression], [wall]],
         [[wall], [floor], [wall]],
         [[wall], [floor, indianaJones], [wall]],
       ];
       const expectedMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch, idol], [wall]],
+        [[wall], [impression, idol], [wall]],
         [[wall], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];
@@ -460,7 +460,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executePlace({
         userName: 'indiana jones',
         directObjects: ['idol'],
-        indirectObjects: ['floor switch'],
+        indirectObjects: ['impression'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
@@ -475,20 +475,20 @@ describe('ActionExecuter tests', () => {
     it('Should move to place an item not already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor switch', '3', null);
+      const impression = new Structure('impression', '3', null);
       const indianaJones = new Agent(0);
       indianaJones.setName('Indiana Jones');
       const idol = new Item('key', '6', null);
       idol.setName('idol');
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch], [wall]],
+        [[wall], [impression], [wall]],
         [[floor, idol], [floor], [wall]],
         [[wall], [floor, indianaJones], [wall]],
       ];
       const expectedMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch, idol], [wall]],
+        [[wall], [impression, idol], [wall]],
         [[floor], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];
@@ -498,7 +498,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executePlace({
         userName: 'indiana jones',
         directObjects: ['idol'],
-        indirectObjects: ['floor switch'],
+        indirectObjects: ['impression'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);
@@ -514,19 +514,19 @@ describe('ActionExecuter tests', () => {
     /* it('Should place an item not possessable somewhere else on the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const floorSwitch = new Structure('floor switch', '3', null);
+      const impression = new Structure('impression', '3', null);
       const indianaJones = new Agent('Indiana Jones');
       const weight = new Structure('weight', '6', null);
       weight.name = 'weight';
       const startingMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch], [wall]],
+        [[wall], [impression], [wall]],
         [[floor, weight], [floor], [wall]],
         [[wall], [floor, indianaJones], [wall]],
       ];
       const expectedMatrix = [
         [[wall], [wall], [wall]],
-        [[wall], [floorSwitch, weight], [wall]],
+        [[wall], [impression, weight], [wall]],
         [[floor], [floor, indianaJones], [wall]],
         [[wall], [floor], [wall]],
       ];
@@ -536,7 +536,7 @@ describe('ActionExecuter tests', () => {
       actionExecuter.executePlace({
         user: indianaJones,
         directObjects: ['weight'],
-        indirectObjects: ['floor switch'],
+        indirectObjects: ['impression'],
       });
       const actualMatrix = stripNames(g.matrix);
       const expectedNamesMatrix = stripNames(expectedMatrix);

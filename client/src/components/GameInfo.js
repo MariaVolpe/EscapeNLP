@@ -6,8 +6,8 @@ import floor from '../images/dragonite.png';
 import button from '../images/dragonite.png';
 import block from '../images/dragonite.png';
 import wep from '../images/dragonite.png';
-import floor_switch from '../images/floor_switch.png'
-import floor_switch_activated from '../images/floor_switch_activated.png';
+import impression from '../images/impression.png'
+import impression_activated from '../images/impression_activated.png';
 import key from '../images/key.png';
 import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
@@ -36,8 +36,8 @@ const pictures = {
   'key': key,
   'weight': weight,
   'wall': wall,
-  'floor switch': floor_switch,
-  'floor_switch_activated': floor_switch_activated,
+  'impression': impression,
+  'impression_activated': impression_activated,
   'button': button,
   'block': block,
   'wep': wep,

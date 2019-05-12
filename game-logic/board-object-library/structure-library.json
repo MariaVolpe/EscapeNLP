@@ -79,7 +79,7 @@
         "use": null,
         "jumpable": null
     },
-    "floor switch": {
+    "impression": {
         "moveable": false,
         "possesable": false,
         "destructable": false,

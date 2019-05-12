@@ -54,7 +54,7 @@
         "inspectTextActive": "A switch. It's looks like it's in the 'on' position."
     },
     "weight": {
-        "moveFalseText": "The block is locked onto the floor switch now. You struggle to push it, but it won't budge.",
+        "moveFalseText": "The block is locked onto the impression now. You struggle to push it, but it won't budge.",
         "moveTrueText": "Using all your might, you move the block.",
         "takeFalseText": "The weight is too big and heavy to put into your bag.",
         "takeTrueText": null,
@@ -68,7 +68,7 @@
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-        "inspectTextInactive": "The bottom of the block is locked into the floor switch now.",
+        "inspectTextInactive": "The bottom of the block is locked into the impression now.",
         "inspectTextActive": "A really heavy block. Maybe you can move it somewhere..."
     },
     "floor": {
@@ -107,18 +107,18 @@
         "inspectTextInactive": "It's a wall with nothing special about it.",
         "inspectTextActive": null
     },
-    "floor switch": {
-        "moveFalseText": "The floor switch is staying where it is.",
+    "impression": {
+        "moveFalseText": "The impression is staying where it is.",
         "moveTrueText": null,
-        "takeFalseText": "The floor switch is staying where it is.",
+        "takeFalseText": "The impression is staying where it is.",
         "takeTrueText": null,
         "destroyFalseText": null,
         "destroyTrueText": null,
         "attackFalseText": null,
         "attackTrueText": null,
-        "speakFalseText": "You talk to the floor switch, but the floor switch doesn't have anything interesting to say back.",
+        "speakFalseText": "You talk to the impression, but the impression doesn't have anything interesting to say back.",
         "speakTrueText": null,
-        "activateTrueText": "The switch seems different now.",
+        "activateTrueText": "The impression seems different now.",
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
