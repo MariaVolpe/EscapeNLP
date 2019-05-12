@@ -225,13 +225,22 @@ class Play extends Component {
     return playerInfo.name === this.state.playerName;
   }
 
+  isAlphaNumeric = (name) => {
+    for (let i=0; i<name.length; i++) {
+      if (name[i].match(/^[a-z0-9]+$/i) === null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   onNameSubmit = (event) => {
     let playerName = this.state.playerName;
     let allPlayers = this.state.allPlayers;
     playerName = this.removeStartAndEndSpaces(playerName);
     this.setState({ playerName });
     const takenName = allPlayers.hasOwnProperty(playerName);
-    if (playerName.length > 2 && playerName.length <= 20 && !takenName) {
+    if (playerName.length > 2 && !takenName && this.isAlphaNumeric(playerName)) {
       const playerInfo = { name: playerName, ready: false, position: 0, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
       this.setState({setName: !this.state.setName});
@@ -244,7 +253,7 @@ class Play extends Component {
 
   onNameChange = (event) => {
     const playerName = event.target.value;
-    if (playerName.length < 25) {
+    if (playerName.length < 20) {
       this.setState({playerName});
     }
   }
