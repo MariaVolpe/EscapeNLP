@@ -74,6 +74,12 @@ io.on('connection', (socket) => {
 
       console.log(message.mess);
       console.log(actionResults[0]);
+      if (actionResults[0].action === 'move') {
+        console.log(actionResults[0].result[0].path);
+        if (actionResults[0].result[1]) {
+          console.log(actionResults[0].result[1].path);
+        }
+      }
       // set gameComplete to true if necessary
 
       actionResults.forEach((action) => {
