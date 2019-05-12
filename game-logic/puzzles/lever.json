@@ -1,0 +1,41 @@
+{
+    "puzzle_type": "lever",
+    "items_required": [
+        {
+            "name": "lever",
+            "id": "left_lever",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 1,
+                "y": 5
+            }
+        },
+        {
+            "name": "lever",
+            "id": "middle_lever",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 1,
+                "y": 3
+            }
+        },
+        {
+            "name": "lever",
+            "id": "right_lever",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "name": "poster",
+            "id": "lever_hint_poster",
+            "isManaged" : true,
+            "coordinates": {
+                "x": 3,
+                "y": 1
+            }
+        }
+    ]
+}
