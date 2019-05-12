@@ -137,7 +137,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
           ],
         },
       ];
-      //expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+      // expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
 });
