@@ -39,7 +39,7 @@ class Inventory {
   inventoryHasItem(itemName) {
     return this.items.has(itemName);
   }
-  
+
   // returns the reference to an item without removing it from inventory
   getItem(itemName) {
     if (!this.items.has(itemName)) return null;

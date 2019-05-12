@@ -78,9 +78,22 @@ io.on('connection', (socket) => {
         commenter: message.commenter,
         mess: 'INTERPRETED ACTION',
       };
+      io.in(socket.currentRoom).emit('chatMessage', action);
+
+      if (actionResults[0].result) {
+        actionResults[0].result.forEach((item) => {
+          const flavorText = {
+            type: 'flavor',
+            time: message.time,
+            commenter: message.commenter,
+            mess: item.inspectText, // this attribute will be renamed to just 'text'
+          };
+          io.in(socket.currentRoom).emit('chatMessage', flavorText);
+        });
+      }
+
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
-      io.in(socket.currentRoom).emit('chatMessage', action);
       io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
       io.in(socket.currentRoom).emit('updatePlayers', players);
     }
