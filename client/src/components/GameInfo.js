@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
 import dragon from '../images/dragonite.png';
-import key from '../images/dragonite.png';
 import floor from '../images/dragonite.png';
 import button from '../images/dragonite.png';
 import block from '../images/dragonite.png';
@@ -13,7 +12,6 @@ import key from '../images/key.png';
 import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
 import blade from '../images/blade.png';
-
 import player0 from '../images/pink.png';
 import player1 from '../images/red.png';
 import player2 from '../images/black.png';
@@ -52,7 +50,6 @@ const pictures = {
   'forge': forge,
   'pot': pot,
   'exit': exit,
-  'key': key,
   'sword': sword,
   'blade': blade,
   'hilt': hilt,
