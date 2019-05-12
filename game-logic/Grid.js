@@ -127,9 +127,9 @@ class Grid {
       if (!onTop && destinationObj.isPassable()) path.pop();
       // offset by how many things we are moving
       path = i + 1 <= path.length ? path.slice(0, path.length - i) : path.slice(0, 1);
-      //const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
+      // const lastPoint = i + 1 <= path.length ? path[path.length - i - 1] : path[0];
       const lastPoint = path[path.length - 1];
-      pathsTaken.push(path); //slice arrays and store the result
+      pathsTaken.push(path); // slice arrays and store the result
       // update matrix @ previous point //
       this.removeFromStack(movingObj);
       // update matrix @ current point //

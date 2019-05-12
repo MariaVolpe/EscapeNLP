@@ -80,13 +80,14 @@ io.on('connection', (socket) => {
         let interprettedMsg = '';
         if (!action.action) {
           const flavorMsg = {
-            type: 'flavor',
+            type: 'chat',
             time: message.time,
             commenter: message.commenter,
             mess: 'You can\'t do that.',
           };
           return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
         }
+
 
         interprettedMsg = `action: ${action.action}, `;
 
@@ -95,10 +96,15 @@ io.on('connection', (socket) => {
 
           // quick n dirty string handling
           action.result.forEach((result) => {
-            interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+            if (action.action === 'move') {
+              interprettedMsg = `${interprettedMsg}${result.destination}, `;
+            } else {
+              interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+            }
           });
           interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
         }
+
         const actionMsg = {
           type: 'interpreted',
           time: message.time,
@@ -111,10 +117,10 @@ io.on('connection', (socket) => {
       if (actionResults[0].result) {
         actionResults[0].result.forEach((item) => {
           const flavorText = {
-            type: 'interpreted',
+            type: 'chat',
             time: message.time,
             commenter: message.commenter,
-            mess: item.inspectText, // this attribute will be renamed to just 'text'
+            mess: item.text,
           };
           io.in(socket.currentRoom).emit('chatMessage', flavorText);
         });
