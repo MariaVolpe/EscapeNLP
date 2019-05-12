@@ -69,7 +69,7 @@ class TextInfo extends Component {
       }
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
-        entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+        entireMessage = <div className="message-body" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
                           {message.mess}
                         </div>;
       }

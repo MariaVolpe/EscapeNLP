@@ -316,7 +316,7 @@ class Play extends Component {
         }
       });
       const message = { commenter, time, mess, type: 'new interpretation' };
-      prevMessages.push(message);
+      prevMessages.splice(index+1, 0, message);
       this.setState({prevMessages});
     }
   }
@@ -327,6 +327,8 @@ class Play extends Component {
     prevMessages.splice(index, 1);
     if (buttonType === 'yes') {
       reportOpen = true;
+    } else if (prevMessages[index-1].type === 'interpreted') {
+      delete prevMessages[index-1].checked;
     }
     this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
   }
