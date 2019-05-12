@@ -31,10 +31,15 @@ class Play extends Component {
       reportOpen: false,
       reportedMessage: {},
       reportHover: false,
-      reportIndex: 0
+      reportIndex: 0,
+      userPath: {}
     }
 
     this.socket = socketIOClient('');
+
+    this.socket.on('moveAction', (userPath) => {
+      this.setState({userPath});
+    })
 
     this.socket.on('chatMessage', (mess) => {
       let prevMessages = this.state.prevMessages;

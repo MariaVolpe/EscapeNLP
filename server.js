@@ -104,6 +104,12 @@ io.on('connection', (socket) => {
           action.result.forEach((result) => {
             if (action.action === 'move') {
               interprettedMsg = `${interprettedMsg}${result.destination}, `;
+
+              const pathObj = {
+                userName: action.userName,
+                path: action.result[0].path,
+              }
+              io.in(socket.currentRoom).emit('moveAction', pathObj);
             } else {
               interprettedMsg = `${interprettedMsg}${result.objectName}, `;
             }
