@@ -20,7 +20,8 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      const agent = new Agent('James Bond');
+      const agent = new Agent(0);
+      agent.setName('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
         [[wall], [floor, agent], [wall]],
@@ -31,7 +32,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText, weight.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -40,7 +41,8 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      const agent = new Agent('James Bond');
+      const agent = new Agent(0);
+      agent.setName('James Bond');
       const matrix = [
         [[weight], [door], [wall]],
         [[wall], [floor, agent], [wall]],
@@ -51,7 +53,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: ['door'],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -60,7 +62,8 @@ describe('ActionExecuter tests', () => {
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
       const weight = new Structure('weight', '4', null);
-      const agent = new Agent('James Bond');
+      const agent = new Agent(0);
+      agent.setName('James Bond');
       const matrix = [
         [[weight], [wall], [wall]],
         [[wall], [door], [wall]],
@@ -72,7 +75,7 @@ describe('ActionExecuter tests', () => {
       const lookResponse = actionExecuter.executeLook({
         userName: 'james bond',
         directObjects: [],
-      }).filter(text => text !== '');
+      }).result.map(e => e.inspectText);
       const expected = JSON.stringify([door.inspectText]);
       expect(JSON.stringify(lookResponse)).toEqual(expected);
     });
@@ -99,8 +102,9 @@ describe('ActionExecuter tests', () => {
     it('Should take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Agent');
       const item = new Item('key', '5', null);
+      const agent = new Agent(0);
+      agent.setName('Agent');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, item], [wall]],
@@ -132,8 +136,9 @@ describe('ActionExecuter tests', () => {
     it('Should move to take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const agent = new Agent('Agent');
       const item = new Item('key', '5', null);
+      const agent = new Agent(0);
+      agent.setName('Agent');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, item], [wall]],
@@ -166,9 +171,11 @@ describe('ActionExecuter tests', () => {
     it('Should steal an item from another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const swiper = new Agent('Swiper');
-      const dora = new Agent('Dora');
       const key = new Item('key', '6', null);
+      const dora = new Agent(0);
+      const swiper = new Agent(-1);
+      dora.setName('Dora');
+      swiper.setName('Swiper');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, dora], [wall]],
@@ -208,9 +215,11 @@ describe('ActionExecuter tests', () => {
     it('Should give an item already possessed to another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const swiper = new Agent('Swiper');
-      const dora = new Agent('Dora');
       const item = new Item('key', '6', null);
+      const dora = new Agent(0);
+      const swiper = new Agent(-1);
+      dora.setName('Dora');
+      swiper.setName('Swiper');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, swiper], [wall]],
@@ -248,9 +257,11 @@ describe('ActionExecuter tests', () => {
     it('Should move to give an item already possessed to another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const swiper = new Agent('Swiper');
-      const dora = new Agent('Dora');
       const item = new Item('key', '6', null);
+      const dora = new Agent(0);
+      const swiper = new Agent(-1);
+      dora.setName('Dora');
+      swiper.setName('Swiper');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, swiper], [wall]],
@@ -288,9 +299,11 @@ describe('ActionExecuter tests', () => {
     it('Should move to pick up an item and give to another agent', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
-      const swiper = new Agent('Swiper');
-      const dora = new Agent('Dora');
       const item = new Item('key', '6', null);
+      const dora = new Agent(0);
+      const swiper = new Agent(-1);
+      dora.setName('Dora');
+      swiper.setName('Swiper');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floor, swiper], [wall]],
@@ -330,9 +343,10 @@ describe('ActionExecuter tests', () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor switch', '3', null);
-      const indianaJones = new Agent('Indiana Jones');
       const idol = new Item('key', '6', null);
       idol.name = 'idol';
+      const indianaJones = new Agent(0);
+      indianaJones.setName('Indiana Jones');
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -368,9 +382,10 @@ describe('ActionExecuter tests', () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor switch', '3', null);
-      const indianaJones = new Agent('Indiana Jones');
+      const indianaJones = new Agent(0);
+      indianaJones.setName('Indiana Jones');
       const idol = new Item('key', '6', null);
-      idol.name = 'idol';
+      idol.setName('idol');
       indianaJones.takeItem(idol);
       const startingMatrix = [
         [[wall], [wall], [wall]],
@@ -406,9 +421,10 @@ describe('ActionExecuter tests', () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor switch', '3', null);
-      const indianaJones = new Agent('Indiana Jones');
+      const indianaJones = new Agent(0);
+      indianaJones.setName('Indiana Jones');
       const idol = new Item('key', '6', null);
-      idol.name = 'idol';
+      idol.setName('idol');
       const startingMatrix = [
         [[wall], [wall], [wall]],
         [[wall], [floorSwitch], [wall]],
@@ -440,7 +456,7 @@ describe('ActionExecuter tests', () => {
     });
 
     // REVISIT THIS TEST WHEN MOVE METHOD TESTS ARE WRITTEN
-    /* it('Should place an item not possessable somewhere else on the board', async () => {
+    /*it('Should place an item not possessable somewhere else on the board', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const floorSwitch = new Structure('floor switch', '3', null);
@@ -471,7 +487,7 @@ describe('ActionExecuter tests', () => {
       const expectedNamesMatrix = stripNames(expectedMatrix);
       // Check that the item was placed correctly
       expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
-    }); */
+    });*/
   });
 
   describe('Destroy', () => {
@@ -479,53 +495,55 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Activate', () => {
-    it('Should activate the object and move the player', async() => {
+    it('Should activate the object and move the player', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
-      const player = new Agent('player')
+      const player = new Agent(0);
+      player.setName('Player');
       const initMatrix = [
-      [[floor], [floor], [floor]],
-      [[player], [floor], [door]],
-      [[floor], [floor], [floor]]
+        [[floor], [floor], [floor]],
+        [[player], [floor], [door]],
+        [[floor], [floor], [floor]],
       ];
       const finalMatrix = [
-      [[floor], [floor], [floor]],
-      [[], [floor, player], [door]],
-      [[floor], [floor], [floor]]
+        [[floor], [floor], [floor]],
+        [[], [floor, player], [door]],
+        [[floor], [floor], [floor]],
       ];
 
       const grid = new Grid(initMatrix);
-      const actionExecuter = new ActionExecuter({ grid: grid});
+      const actionExecuter = new ActionExecuter({ grid: grid });
       const activateResponse = actionExecuter.executeActivate({
         user: 'player',
-        directObjects: ['door']
+        directObjects: ['door'],
       });
 
       expect(door.activated).toEqual(true);
       expect(JSON.stringify(stripNames(grid.matrix))).toEqual(JSON.stringify(stripNames(finalMatrix)));
-    })
+    });
 
-    it('Should NOT activate the object', async() => {
+    it('Should NOT activate the object', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
       const door = new Structure('door', '3', null);
-      const player = new Agent('player')
+      const player = new Agent(0);
+      player.setName('Player');
       const matrix = [
-      [[floor], [wall], [floor]],
-      [[player], [wall], [door]],
-      [[floor], [wall], [floor]]
+        [[floor], [wall], [floor]],
+        [[player], [wall], [door]],
+        [[floor], [wall], [floor]],
       ];
 
       const grid = new Grid(matrix);
-      const actionExecuter = new ActionExecuter({ grid: grid});
+      const actionExecuter = new ActionExecuter({ grid: grid });
       const activateResponse = actionExecuter.executeActivate({
         user: 'player',
-        directObjects: ['door']
+        directObjects: ['door'],
       });
       expect(door.activated).toEqual(false);
       expect(JSON.stringify(stripNames(grid.matrix))).toEqual(JSON.stringify(stripNames(matrix)));
-    })
+    });
   });
 
   describe('Deactivate', () => {
