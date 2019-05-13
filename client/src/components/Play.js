@@ -17,6 +17,7 @@ class Play extends Component {
       allPlayers: [],
       board: [],
       gameComplete: false,
+      showVictoryModal: false,
       message: '',
       prevMessages: [],
       command: '',
@@ -128,7 +129,7 @@ class Play extends Component {
     })
 
     this.socket.on('updateBoard', (board, gameComplete) => {
-      this.setState({ board, gameComplete });
+      this.setState({ board, gameComplete, showVictoryModal: gameComplete });
     });
 
     this.socket.on('updateInventories', (inventories) => {
@@ -391,6 +392,11 @@ class Play extends Component {
     this.setState({message});
   }
 
+  stayOnPage = (event) => {
+    this.setState({showVictoryModal: !this.state.showVictoryModal});
+    event.preventDefault();
+  }
+
   render() {
     const board = this.state.board;
     let allPlayers = [];
@@ -431,6 +437,8 @@ class Play extends Component {
                         timer={this.state.timer}
                         onClick={this.onTileClick}
                         gameComplete={this.state.gameComplete}
+                        showVictoryModal={this.state.showVictoryModal}
+                        stayOnPage={this.stayOnPage}
                       />
                      </div>;
     // }
