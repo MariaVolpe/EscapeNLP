@@ -29,7 +29,7 @@
         "speakFalseText": "You whisper sweet nothings to the door. The door doesn't respond.",
         "speakTrueText": null,
         "activateTrueText": "The door unlocks! Freedom!",
-        "activateFalseText": null,
+        "activateFalseText": "It's locked. Maybe there's a key somewhere...",
         "deactivateTrueText": null,
         "deactivateFalseText": null,
         "inspectTextInactive": "It's a locked door.",
@@ -68,8 +68,8 @@
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-        "inspectTextInactive": "The bottom of the block is locked into the impression now.",
-        "inspectTextActive": "A really heavy block. Maybe you can move it somewhere..."
+        "inspectTextActive": "The bottom of the block is locked into the impression now.",
+        "inspectTextInactive": "A really heavy block. Maybe you can move it somewhere..."
     },
     "floor": {
         "moveFalseText": "You struggle to push on the wall, but it won't budge and you end up looking like a fool.",

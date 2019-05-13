@@ -80,6 +80,9 @@ class PuzzleManager {
           break;
         case 'weight':
           userObj.takeItem(new Item('blade'));
+          const forgeObj = this.puzzleProgress.get('forge')[0];
+          forgeObj.activate();
+          //Set forge to usable as well
           break;
         case 'lever':
           userObj.takeItem(new Item('hilt'));
@@ -110,6 +113,9 @@ class PuzzleManager {
       case 'lever':
         return this.checkLeverPuzzle("010");
         break;
+      case 'forge':
+        //TODO
+        return false;
       default:
         return this.checkAllManagedObjectsActivated(puzzleType);
     }
