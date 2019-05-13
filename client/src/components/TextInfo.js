@@ -4,15 +4,6 @@ import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
 
-  componentDidMount = () => {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom = () => {
-    let scrollElement = document.getElementsByClassName("text-box");
-    scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
-  }
-
   render() {
 
     const prevMessages = this.props.prevMessages;
