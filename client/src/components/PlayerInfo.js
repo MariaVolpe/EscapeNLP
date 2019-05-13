@@ -32,18 +32,16 @@ class PlayerInfo extends Component {
   render() {
     const inventory = this.props.playerInfo.inventory;
     let items = [];
-    let size = 0;
     if (inventory !== undefined) {
       items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${item.name}`} data-for="inv">
                                                  <div className="item-outline">
-                                                  <img src={inventoryIcons[item.sprite]} alt='' className="item-pic" />
+                                                  <img src={inventoryIcons[item.sprite]} alt='' className="item-pic" />          
                                                  </div>
+                                                 <ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                </div>);
-      items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
-      size = items.length-1;
     }
 
-    for (let i = size; i < 6; i++) {
+    for (let i = items.length; i < 6; i++) {
       items.push(<div className="item-slot" key={i}>
                    <div className="item-outline">
                     <img src='' alt='' className="item-pic" />
