@@ -188,6 +188,40 @@ describe('ActionExecuter tests', () => {
       const actualInventory = JSON.stringify(agent.getAllItems().map(e => e.name));
       expect(actualInventory).toEqual(expectedInventory);
     });
+    it('Should NOT take an structure off the grid', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const item = new Structure('pot', '5', null);
+      const agent = new Agent(0);
+      agent.setName('Agent');
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, item], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [wall], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, item], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [wall], [wall]],
+      ];
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeTake({
+        userName: 'agent',
+        directObjects: ['key'],
+        indirectObjects: [],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      // Check that the item was added to the user inventory
+      const expectedInventory = JSON.stringify([]);
+      const actualInventory = JSON.stringify(agent.getAllItems().map(e => e.name));
+      expect(actualInventory).toEqual(expectedInventory);
+    });
     it('Should move to take an item off the grid', async () => {
       const floor = new Structure('floor', '1', null);
       const wall = new Structure('wall', '2', null);
