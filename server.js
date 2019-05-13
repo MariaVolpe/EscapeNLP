@@ -72,7 +72,6 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
 
     if (message.type === 'action') {
-      const gameComplete = false;
       const actionResults = await gameContainer.performAction(socket.gameId, message);
 
       console.log(message.mess);
@@ -134,9 +133,19 @@ io.on('connection', (socket) => {
               mess: item.text,
             };
             io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          } else if (!item.text && item.successful === false) {
+            const flavorText = {
+              type: 'flavor',
+              time: message.time,
+              commenter: message.commenter,
+              mess: 'You can\'t do that.',
+            };
+            io.in(socket.currentRoom).emit('chatMessage', flavorText);
           }
         });
       }
+
+      const gameComplete = gameContainer.getIsGameCompleted(socket.gameId);
 
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);

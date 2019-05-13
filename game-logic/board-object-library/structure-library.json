@@ -24,7 +24,8 @@
         "usable": true,
         "use": "activate",
         "jumpable": null,
-        "passable": false
+        "passable": false,
+        "locked": true
     },
     "lever": {
         "moveable": false,
@@ -147,6 +148,7 @@
         "moveable": false,
         "possesable": false,
         "destructable": true,
+        "armored": true,
         "attackable": true,
         "speakable": false,
         "manuallyActivateable": false,

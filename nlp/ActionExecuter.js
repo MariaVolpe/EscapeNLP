@@ -4,7 +4,13 @@ const Structure = require('../game-logic/Structure');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
+<<<<<<< HEAD
 const { matchRegex, convertToIndices } = require('../game-logic/util');
+=======
+
+// Example of regex for detecting coordinate
+// /^1000(?<condition>\d{4})(?<instructionLocation>\d{24})$/
+>>>>>>> development
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -302,8 +308,13 @@ class ActionExecuter {
         continue;
       }
 
+<<<<<<< HEAD
       if (!targetObj.destructable) {
         text = StructText[targetName] ? StructText[targetName].destructableFalseText : null;
+=======
+      if (!targetObj.destructable || (targetObj.armored && !user.hasItem('sword'))){
+        text = StructText[targetName] ? StructText[targetName].destroyFalseText : null;
+>>>>>>> development
         results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
         continue;
       }
@@ -332,7 +343,7 @@ class ActionExecuter {
     const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
-      if (subject && subject.manuallyActivateable) {
+      if (subject && subject.manuallyActivateable && !(subject.locked && !user.hasItem('key'))) {
         this.grid.moveToObject([user], subject);
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
@@ -340,7 +351,8 @@ class ActionExecuter {
         if (subject instanceof Structure) results.push({ objectName: subject.name, successful: subject.activated });
         else results.push({ objectName: subject.name, successful: false });
       } else {
-        results.push({ objectName: '', successful: false });
+        const text = StructText[subject.name].activateFalseText;
+        results.push({ objectName: '', text: text, successful: false });
       }
     });
     return { userName: user.name, action: 'activate', result: results };

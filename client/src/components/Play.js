@@ -17,6 +17,7 @@ class Play extends Component {
       allPlayers: [],
       board: [],
       gameComplete: false,
+      showVictoryModal: false,
       message: '',
       prevMessages: [],
       command: '',
@@ -54,7 +55,7 @@ class Play extends Component {
       } else {
         this.setState({ prevMessages });
       }
-
+      this.scrollToBottom();
     });
 
     this.socket.on('setNames', (allPlayers) => {
@@ -128,7 +129,7 @@ class Play extends Component {
     })
 
     this.socket.on('updateBoard', (board, gameComplete) => {
-      this.setState({ board, gameComplete });
+      this.setState({ board, gameComplete, showVictoryModal: gameComplete });
     });
 
     this.socket.on('updateInventories', (inventories) => {
@@ -154,6 +155,7 @@ class Play extends Component {
     this.onCommandKeyPress = this.onCommandKeyPress.bind(this);
     this.onCommandChange = this.onCommandChange.bind(this);
     this.readyUp = this.readyUp.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount = () => {
@@ -166,6 +168,11 @@ class Play extends Component {
     } else {
       window.location.replace('/browser');
     }
+  }
+
+  scrollToBottom = () => {
+    let scrollElement = document.getElementsByClassName("text-box");
+    scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
   }
 
   removeStartAndEndSpaces = (value) => {
@@ -377,6 +384,19 @@ class Play extends Component {
     }
   }
 
+  onTileClick = (i, k) => {
+    i = String.fromCharCode(i+65);
+
+    let message = this.state.message;
+    message += " " + i + (k+1)+ "";
+    this.setState({message});
+  }
+
+  stayOnPage = (event) => {
+    this.setState({showVictoryModal: !this.state.showVictoryModal});
+    event.preventDefault();
+  }
+
   render() {
     const board = this.state.board;
     let allPlayers = [];
@@ -415,6 +435,10 @@ class Play extends Component {
                         allPlayersReady={this.state.allPlayersReady}
                         onHoverOverTile={this.onHoverOverTile}
                         timer={this.state.timer}
+                        onClick={this.onTileClick}
+                        gameComplete={this.state.gameComplete}
+                        showVictoryModal={this.state.showVictoryModal}
+                        stayOnPage={this.stayOnPage}
                       />
                      </div>;
     // }

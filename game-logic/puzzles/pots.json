@@ -1,5 +1,5 @@
 {
-    "puzzle_type": "door",
+    "puzzle_type": "pots",
     "items_required": [
         {
             "name": "pot",
