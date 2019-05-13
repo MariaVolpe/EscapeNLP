@@ -57,8 +57,12 @@ class TextInfo extends Component {
     prevMessages.forEach((message, i) => {
       let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
-      const isSystemMessage = message.type === 'interpreted' || message.type === 'new interpretation' || message.type === 'flavor';
-      let entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
+      let messageBody = "message-body"
+      if (!hoverOverMessage) {
+        messageBody = "full-message";
+      }
+      let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
                             {message.mess}
                           </div>;
       if (message.type === 'action') {
@@ -69,7 +73,7 @@ class TextInfo extends Component {
       }
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
-        entireMessage = <div className="message-body" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+        entireMessage = <div className={messageBody} data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
                           {message.mess}
                         </div>;
       }
@@ -81,7 +85,7 @@ class TextInfo extends Component {
       }
       else if (message.type === 'new interpretation') {
         textType = "text new-interpreted text-message";
-        entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+        entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
                           {message.mess}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
