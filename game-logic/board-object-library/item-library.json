@@ -2,25 +2,21 @@
     "sword": {
         "name": "sword",
         "id": "sword",
-        "useMethod": "attack",
-        "possesable": true
+        "useMethod": "attack"
     },
     "sword_blade": {
         "name": "sword blade",
         "id": "sword_blade",
-        "useMethod": "none",
-        "possesable": true
+        "useMethod": "none"
     },
     "sword_hilt": {
         "name": "sword hilt",
         "id": "sword_hilt",
-        "useMethod": "none",    
-        "possesable": true
+        "useMethod": "none"    
     },
     "key": {
         "name": "key",
         "id": "key",
-        "useMethod": "activate",
-        "possesable": true         
+        "useMethod": "activate"   
     }
 }
