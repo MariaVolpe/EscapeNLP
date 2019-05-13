@@ -74,6 +74,12 @@ class GameInfo extends Component {
     event.preventDefault();
   }
 
+  // this function will be called per click to get coordinates
+  // might have to send to diff component, find out tmw
+  onTileClick = (event) => {
+    console.log("coordinates should be returned");
+  }
+
   render() {
     let board = this.props.board;
     let mapData = [];
@@ -145,7 +151,7 @@ class GameInfo extends Component {
           if (board[0] === undefined) { }
           else if (board[k][i][1] === undefined) {
           mapData.push(<div className="map tile one wide column" data-tip="" data-for="tile" >
-                         <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
+                         <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={this.onTileClick}/>
                        </div>);
           }
           else if (board[k][i][0].sprite === 'floor' && board[k][i].length > 2) {
