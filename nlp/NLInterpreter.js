@@ -10,7 +10,7 @@ const _flattenOutput = (flatOutput, output) => {
   for (let i = 0; i < output.length; i++) {
     const o = output[i];
     if (o.action) { // if start of new action
-      _flattenOutput(flatOutput, o);
+      _flattenOutput(flatOutput, o.result);
       flatOutput.push(o);
     }
   }

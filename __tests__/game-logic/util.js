@@ -1,4 +1,4 @@
-const { matchRegex } = require('../../game-logic/util');
+const { matchRegex, convertToIndices } = require('../../game-logic/util');
 // File for test utility functions to clean up test code //
 
 const stripNames = (matrix) => {
@@ -19,6 +19,15 @@ describe('Regexp coordinate parsing', () => {
     expect(matchRegex(/(^[a-z])([0-9])?([0-9])$/g, input).join('')).toEqual('a20');
     const other = 'a2';
     expect(matchRegex(/(^[a-z])([0-9])?([0-9])$/g, other).join('')).toEqual('a2');
+  });
+});
+
+describe('Converting front-end coordinates', () => {
+  it('should convert a front-end coordiante to indices', async () => {
+    const input = 'a20';
+    const result = convertToIndices(input);
+    const expected = { x: 19, y: 0 };
+    expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
   });
 });
 

@@ -62,6 +62,65 @@ describe('ActionExecuter tests', () => {
       expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
     });
 
+    it('Should move to a coordinate', async () => {
+      const floor = new Structure('floor', '1', null);
+      const door = new Structure('door', '3', null);
+      const wall = new Structure('wall', '2', null);
+      const weight = new Structure('weight', '4', null);
+      const sonic = new Agent(0);
+      sonic.setName('Sonic');
+      const startingMatrix = [
+        [[floor], [floor, door], [floor]],
+        [[floor], [floor], [floor]],
+        [[floor], [floor], [floor]],
+        [[floor], [floor, sonic], [floor]],
+      ];
+      const expectedMatrix = [
+        [[floor, sonic], [floor, door], [floor]],
+        [[floor], [floor], [floor]],
+        [[floor], [floor], [floor]],
+        [[floor], [floor], [floor]],
+      ];
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeMove({
+        userName: 'sonic',
+        directObjects: ['a1'],
+        indirectObjects: [],
+      });
+      expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
+    });
+
+    it('Should move an object to a coordinate', async () => {
+      const floor = new Structure('floor', '1', null);
+      const door = new Structure('door', '3', null);
+      const weight = new Structure('weight', '4', null);
+      const sonic = new Agent(0);
+      sonic.setName('Sonic');
+      const startingMatrix = [
+        [[floor], [floor, door], [floor]],
+        [[floor], [floor], [floor]],
+        [[floor], [floor, weight], [floor]],
+        [[floor], [floor, sonic], [floor]],
+      ];
+      const expectedMatrix = [
+        [[floor], [floor, door], [floor]],
+        [[floor], [floor, weight], [floor]],
+        [[floor], [floor, sonic], [floor]],
+        [[floor], [floor], [floor]],
+      ];
+      //console.log(startingMatrix);
+      //console.log(expectedMatrix);
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeMove({
+        userName: 'sonic',
+        directObjects: ['weight'],
+        indirectObjects: ['a2'],
+      });
+      //expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
+    });
+
     it('Should move in a direction', async () => {
     });
   });

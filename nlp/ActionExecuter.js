@@ -4,9 +4,7 @@ const Structure = require('../game-logic/Structure');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
-
-// Example of regex for detecting coordinate
-// /^1000(?<condition>\d{4})(?<instructionLocation>\d{24})$/
+const { matchRegex, convertToIndices } = require('../game-logic/util');
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -16,6 +14,7 @@ class ActionExecuter {
   constructor({ grid }) {
     this.functionMap = this.createFunctionMap();
     this.grid = grid;
+
   }
 
   createFunctionMap() {
@@ -68,13 +67,17 @@ class ActionExecuter {
     // validate destinations
     for (let i = 0; i < destinations.length; i++) {
       const dest = destinations[i];
-      const destinationObject = this.grid.getObject({ searchOriginObj: user, identifier: dest }); 
+      const destinationObject = matchRegex(/(^[a-z])([0-9])?([0-9])$/g, dest)
+        ? convertToIndices(matchRegex(/(^[a-z])([0-9])?([0-9])$/g, dest)[0])
+        : this.grid.getObject({ searchOriginObj: user, identifier: dest }); 
       if (!destinationObject) continue;
       destinationObjects.push(destinationObject);
     }
     for (let i = 0; i < destinationObjects.length; i++) {
       const destinationObject = destinationObjects[i];//this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] })
-      const paths = this.grid.moveToObject(movingObjects, destinationObject);
+      const paths = destinationObject.x != undefined && destinationObject.y != undefined
+      ? this.grid.moveToCoordinates(movingObjects, destinationObject)
+      : this.grid.moveToObject(movingObjects, destinationObject);
       for (let i = 0; i < movingObjects.length; i++) {
         const movingObject = movingObjects[i];
         results.push({
