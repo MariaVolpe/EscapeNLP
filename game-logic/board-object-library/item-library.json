@@ -3,7 +3,7 @@
         "name": "sword",
         "id": "sword",
         "useMethod": "attack"
-        },
+    },
     "sword_blade": {
         "name": "sword blade",
         "id": "sword_blade",
@@ -17,6 +17,6 @@
     "key": {
         "name": "key",
         "id": "key",
-        "useMethod": "activate"          
+        "useMethod": "activate"   
     }
 }
