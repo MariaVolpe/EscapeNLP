@@ -62,18 +62,6 @@ const pictures = {
 }
 
 class GameInfo extends Component {
-  constructor(props){
-    super(props);
-
-    this.state = { showVictoryModal: false };   // get real state from backend
-    this.stayOnPage = this.stayOnPage.bind(this);
-  }
-
-  stayOnPage = (event) => {
-    this.setState({showVictoryModal: !this.state.showVictoryModal});
-    event.preventDefault();
-  }
-
   render() {
     let board = this.props.board;
     let mapData = [];
@@ -89,15 +77,10 @@ class GameInfo extends Component {
           }
           if (board[0] === undefined) { }
           else if (board[k][i][1] === undefined) {
-          mapData.push(<div className="map victory one wide column" data-tip="The Rare W" data-for="victory" >
-                         <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
-                       </div>);
+          mapData.push(<div className="map victory one wide column" data-tip="The Rare W" data-for="victory" />);
           }
           else {
-          mapData.push(<div className="map victory one wide column" data-tip={`The Rare W`} data-for="victory" >
-                 <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" />
-                 <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" />
-               </div>);
+          mapData.push(<div className="map victory one wide column" data-tip={`The Rare W`} data-for="victory" />);
           }
         }
       }
@@ -199,7 +182,7 @@ class GameInfo extends Component {
     return(
       <div className="ui grid">
         {mapData}
-        <VictoryModal isOpen={this.state.showVictoryModal} stayOnPage={this.stayOnPage}/>
+        <VictoryModal isOpen={this.props.showVictoryModal} stayOnPage={this.props.stayOnPage}/>
       </div>
     )
   }
