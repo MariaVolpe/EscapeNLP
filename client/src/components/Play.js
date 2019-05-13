@@ -421,6 +421,7 @@ class Play extends Component {
                         allPlayersReady={this.state.allPlayersReady}
                         onHoverOverTile={this.onHoverOverTile}
                         timer={this.state.timer}
+                        gameComplete={this.state.gameComplete}
                       />
                      </div>;
     // }
