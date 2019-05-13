@@ -194,7 +194,7 @@
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-        "inspectTextInactive": "It says: ",
+        "inspectTextInactive": "It says: 010",
         "inspectTextActive": null
     },
     "dragon": {

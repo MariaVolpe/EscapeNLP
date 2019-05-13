@@ -244,6 +244,22 @@ class Grid {
     this.nameToObjsList.get(name).push(obj);
   }
 
+  checkStackForObjectName(position, objName) {
+    const stack = this.matrix[position.x][position.y];
+    for (let i = 0; i < stack.length; ++i) {
+      if (stack[i].name === objName) return true;
+    }
+    return false;
+  }
+
+  getObjectFromStackByName(position, objName) {
+    const stack = this.matrix[position.x][position.y];
+    for (let i = 0; i < stack.length; ++i) {
+      if (stack[i].name === objName) return stack[i];
+    }
+    return null;
+  }
+
   // gets all objects of type agent from the grid //
   // NOT READY YET
   getAgents() {
