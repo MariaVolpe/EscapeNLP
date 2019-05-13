@@ -13,6 +13,7 @@ class GameSession {
     this.name = name;
     this.playerIdCounter = 0;
     this.inProgress = false;
+    this.isCompleted = false;
     this.interpreter = null;
   }
 
@@ -36,6 +37,10 @@ class GameSession {
   dropPlayerFromSession(playerName) {
     const newAgents = this.agents.filter(agent => agent.name !== playerName);
     this.agents = newAgents;
+  }
+
+  getIsGameCompleted() {
+    return this.isCompleted;
   }
 
   // formats players array into the object format used on frontend

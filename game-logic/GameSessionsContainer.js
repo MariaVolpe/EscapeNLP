@@ -56,6 +56,9 @@ class GameSessionsContainer {
     return this.games.get(id).getFormattedPlayersList();
   }
 
+  getIsGameCompleted(id) {
+    return this.games.get(id).getIsGameCompleted();
+  }
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame(name) {
