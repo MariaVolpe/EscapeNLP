@@ -1,7 +1,7 @@
 const socketio = require('socket.io');
 const { app, gameContainer } = require('./app');
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 const server = app.listen(PORT, () => {
   console.log(`EscapeNLP Server listening on port ${PORT}!`); // eslint-disable-line no-console
@@ -53,7 +53,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('confirmJoin', (roomInfo) => {
+    const gameStart = io.sockets.adapter.rooms[roomInfo].gameStart;
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
+      socket.emit('confirmJoin', false);
+    } else if (gameStart) {
       socket.emit('confirmJoin', false);
     } else {
       socket.emit('confirmJoin', true);
@@ -74,6 +77,13 @@ io.on('connection', (socket) => {
 
       console.log(message.mess);
       console.log(actionResults[0]);
+      if (actionResults[0].action === 'move') {
+        console.log(actionResults[0].result[0].path);
+        if (actionResults[0].result[1]) {
+          console.log(actionResults[0].result[1].path);
+        }
+      }
+
       // set gameComplete to true if necessary
 
       actionResults.forEach((action) => {
@@ -116,13 +126,15 @@ io.on('connection', (socket) => {
 
       if (actionResults[0].result) {
         actionResults[0].result.forEach((item) => {
-          const flavorText = {
-            type: 'chat',
-            time: message.time,
-            commenter: message.commenter,
-            mess: item.text,
-          };
-          io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          if (item.text) {
+            const flavorText = {
+              type: 'flavor',
+              time: message.time,
+              commenter: message.commenter,
+              mess: item.text,
+            };
+            io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          }
         });
       }
 

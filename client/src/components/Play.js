@@ -49,7 +49,12 @@ class Play extends Component {
         }
         this.socket.emit('chatMessage', message);
       }
-      this.setState({ message: '', command: '', prevMessages });
+      if (mess.commenter === this.state.playerName) {
+        this.setState({ message: '', command: '', prevMessages });
+      } else {
+        this.setState({ prevMessages });
+      }
+
     });
 
     this.socket.on('setNames', (allPlayers) => {
@@ -74,12 +79,13 @@ class Play extends Component {
 
     this.socket.on('updatePlayers', (players) => {
       let allPlayers = this.state.allPlayers;
-      Object.keys(players).forEach((player) => {
-        if (allPlayers.hasOwnProperty(player)) {
-          allPlayers[player].inventory = player.inventory;
-          allPlayers[player].id = player.id;
+      for (let i=0; i<allPlayers.length; i++) {
+        let name = allPlayers[i].name;
+        if (players.hasOwnProperty(name)) {
+          allPlayers[i].inventory = players[name].inventory;
+          allPlayers[i].id = players[name].id;
         }
-      });
+      }
       this.setState({allPlayers})
     });
 
@@ -339,7 +345,7 @@ class Play extends Component {
     if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
       prevMessages[index].checked = true;
       let commenter = prevMessages[index].commenter;
-      let mess = 'Was ' + prevMessages[index].mess + ' the wrong action?';
+      let mess = 'Was \'' + prevMessages[index].mess + '\' incorrect?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       prevMessages.forEach((message, i) => {
@@ -392,14 +398,26 @@ class Play extends Component {
                       />);
     });
 
-    let gameInfo = <div className='game-info'>
-                    <GameInfo
-                      board={board}
-                      allPlayersReady={this.state.allPlayersReady}
-                      onHoverOverTile={this.onHoverOverTile}
-                      timer={this.state.timer}
-                    />
-                   </div>;
+    // victory is a boolean retrieved from BE to indicate if game has been won, if true different map
+    // if(victory){
+    //   let gameInfo = <div className='game-info winner'>
+    //                   <GameInfo
+    //                     board={board}
+    //                     allPlayersReady={this.state.allPlayersReady}
+    //                     onHoverOverTile={this.onHoverOverTile}
+    //                     timer={this.state.timer}
+    //                   />
+    //                  </div>;
+    // } else {
+      let gameInfo = <div className='game-info'>
+                      <GameInfo
+                        board={board}
+                        allPlayersReady={this.state.allPlayersReady}
+                        onHoverOverTile={this.onHoverOverTile}
+                        timer={this.state.timer}
+                      />
+                     </div>;
+    // }
     let playerInfo;
     if (this.state.allPlayersReady) {
       playerInfo = <div className='player-info'>

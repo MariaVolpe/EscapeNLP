@@ -6,6 +6,11 @@ import kirbyIcon from '../images/kirbyoutline.png';
 import dmc4Icon from '../images/dmc4logo.png';
 import pikachuIcon from '../images/pikachuicon.png';
 import segwayIcon from '../images/segwaypoloicon.png';
+import sword from '../images/sword.png';
+import hilt from '../images/hilt.png';
+import blade from '../images/blade.png';
+import key from '../images/key.png';
+
 
 const icons = {
   'defaultIcon': defaultIcon,
@@ -15,26 +20,36 @@ const icons = {
   'segwayIcon': segwayIcon
 }
 
+const inventoryIcons = {
+  'sword': sword,
+  'hilt': hilt,
+  'blade': blade,
+  'key': key
+}
+
 class PlayerInfo extends Component {
 
   render() {
     const inventory = this.props.playerInfo.inventory;
     let items = [];
+    let size = 0;
     if (inventory !== undefined) {
-      items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${inventory[i]}`} data-for="inv">
+      items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${item.name}`} data-for="inv">
                                                  <div className="item-outline">
-                                                  <img src='' alt='' className="item-pic" />
+                                                  <img src={inventoryIcons[item.sprite]} alt='' className="item-pic" />
                                                  </div>
                                                </div>);
+      items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
+      size = items.length-1;
     }
-    for (let i = items.length; i < 6; i++) {
+
+    for (let i = size; i < 6; i++) {
       items.push(<div className="item-slot" key={i}>
                    <div className="item-outline">
                     <img src='' alt='' className="item-pic" />
                    </div>
                  </div>);
     }
-    items.push(<ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
     const allPlayersReady = this.props.allPlayersReady;
     let readyCheck;
 

@@ -55,9 +55,14 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
       const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
-      let entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+      let messageBody = "message-body"
+      if (!hoverOverMessage) {
+        messageBody = "full-message";
+      }
+      let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
                             {message.mess}
                           </div>;
       if (message.type === 'action') {
@@ -68,13 +73,19 @@ class TextInfo extends Component {
       }
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
-        entireMessage = <div className="message-body" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+        entireMessage = <div className={messageBody} data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+                          {message.mess}
+                        </div>;
+      }
+      else if (message.type === 'flavor') {
+        textType = "text text-message flavor-text";
+        entireMessage = <div className="message-body">
                           {message.mess}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
         textType = "text new-interpreted text-message";
-        entireMessage = <div className="message-body" data-tip={`${message.time}`} data-for="time">
+        entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
                           {message.mess}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
@@ -114,7 +125,7 @@ class TextInfo extends Component {
                             {message.commenter}
                           </span>
                           <div className="metadata">
-                            <span className="date">{message.time}</span>
+                            <span className="date">{timeOf}</span>
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
