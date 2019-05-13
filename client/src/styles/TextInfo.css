@@ -90,8 +90,16 @@
 }
 
 .interpreted > div {
-  font-style: italic;
+  font-style: oblique;
+  font-weight: 550;
   border: 3px solid white;
+}
+
+.flavor-text > div {
+  font-style: italic;
+  border: 3px solid #a8bddd;
+  background-color: #a8bddd;
+  color: #0f3675;
 }
 
 .interpreted:hover {
