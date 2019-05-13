@@ -10,8 +10,8 @@ const _flattenOutput = (flatOutput, output) => {
   for (let i = 0; i < output.length; i++) {
     const o = output[i];
     if (o.action) { // if start of new action
-      flatOutput = flatOutput.unshift(o);
       _flattenOutput(flatOutput, o);
+      flatOutput.push(o);
     }
   }
 }

@@ -1,3 +1,4 @@
+const { matchRegex } = require('../../game-logic/util');
 // File for test utility functions to clean up test code //
 
 const stripNames = (matrix) => {
@@ -12,9 +13,12 @@ const stripNames = (matrix) => {
   } return namesMatrix;
 };
 
-// this needs to be here to stop Jest from whining that theres no test in this file
-describe('', () => {
-  it('', async () => {
+describe('Regexp coordinate parsing', () => {
+  it('Should  a coordiate from a string', async () => {
+    const input = 'a20';
+    expect(matchRegex(/(^[a-z])([0-9])?([0-9])$/g, input).join('')).toEqual('a20');
+    const other = 'a2';
+    expect(matchRegex(/(^[a-z])([0-9])?([0-9])$/g, other).join('')).toEqual('a2');
   });
 });
 

@@ -1,7 +1,10 @@
 const compromise = require('compromise');
+const { matchRegex } = require('../../../game-logic/util');
 
 class Chunker {
-  constructor() { }
+  constructor() {
+    this.coordinateRegex = /(^[a-z])([0-9])?([0-9])$/g;
+  }
 
   // Returns a chunked version of the input given as verb phrases
   chunkInput(input) {
@@ -71,7 +74,12 @@ class Chunker {
         i += 1;
         continue;
       }
-
+      if (word && matchRegex(this.coordinateRegex, word)) { // if word is a coordinate
+        const coordinate = matchRegex(this.coordinateRegex, word)[0];
+        if (direct) directObjs.push(coordinate);
+        else indirectObjs.push(coordinate);
+        continue;
+      }
       if (tags.has('Determiner')) { // then the next word will be treated as a noun
         const result = words[++i];
         if (direct) directObjs.push(result);

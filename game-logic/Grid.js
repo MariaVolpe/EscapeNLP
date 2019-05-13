@@ -1,6 +1,7 @@
 const Point = require('./Point');
 const { PathFinder, getManhattanDistance } = require('./PathFinder');
 const Agent = require('./Agent');
+const { matchRegex } = require('./util');
 /*
  * Grid
  * 1) encapsulates positions of agents, items, walls in the environment
