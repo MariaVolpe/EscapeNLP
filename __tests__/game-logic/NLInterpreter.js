@@ -2,8 +2,11 @@ const NLInterpreter = require('../../nlp/NLInterpreter');
 const PuzzleManager = require('../../game-logic/PuzzleManager');
 const { Grid } = require('../../game-logic/Grid');
 const Structure = require('../../game-logic/Structure');
+const StructLib = require('../../game-logic/board-object-library/structure-library');
+const StructText = require('../../game-logic/board-object-library/structure-text');
 const Agent = require('../../game-logic/Agent');
 const Item = require('../../game-logic/Item');
+
 
 describe('Natural Language (NLInterpreter) tests', () => {
   describe('Move', () => {
@@ -160,10 +163,11 @@ describe('Natural Language (NLInterpreter) tests', () => {
       const results = interpreter.executeInput(input);
       const expected = [
         {
-          userName: 'Agent',
+          userID: agent.id,
+          userName: agent.name,
           action: 'take',
           result: [
-            { objectName: 'key', source: '' },
+            { id: item.id, objectName: item.name, source: 'grid', text: '', successful: true },
           ],
         },
       ];
@@ -183,7 +187,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor, agent], [wall]],
       ];
       const grid = new Grid(startingMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'agent',
         data: 'I take the key',
@@ -244,6 +248,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });
+
   describe('Place', () => {
     it('Should place an item already possessed onto the board', async () => {
       const floor = new Structure('floor', '1', null);
@@ -361,7 +366,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[wall], [floor], [wall]],
       ];
       const grid = new Grid(startingMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Indiana Jones',
         data: 'i put it down the idol on the impression',
@@ -394,7 +399,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[floor], [floor], [floor]],
       ];
       const grid = new Grid(initMatrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Player',
         data: 'I open the door',
@@ -424,7 +429,7 @@ describe('Natural Language (NLInterpreter) tests', () => {
         [[floor], [wall], [floor]],
       ];
       const grid = new Grid(matrix);
-      const interpreter = new NLInterpreter(grid);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
       const input = {
         userName: 'Player',
         data: 'I open the door',
@@ -439,6 +444,90 @@ describe('Natural Language (NLInterpreter) tests', () => {
           ],
         },
       ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+  });
+
+  describe('Destroy', () => {
+    it('Should destroy a nearby object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const pot = new Structure('pot', '4', null);
+      const agent = new Agent(0);
+      agent.setName('CrashBandicoot');
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, pot], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
+      const input = {
+        userName: 'CrashBandicoot',
+        data: 'I destroy the pot',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'CrashBandicoot',
+          action: 'destroy',
+          result: [
+            {
+              id: pot.id,
+              objectName: 'pot',
+              text: StructText[pot.name].destroyTrueText,
+              successful: true,
+              coordinates: pot.position,
+            },
+          ],
+        },
+      ];
+      expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+
+    it('Should move to destroy a nearby object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const pot = new Structure('pot', '4', null);
+      const agent = new Agent(0);
+      agent.setName('CrashBandicoot');
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, pot], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
+      const input = {
+        userName: agent.name,
+        data: `I destroy the ${pot.name}`,
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: agent.name,
+          action: 'move',
+          result: [
+            [{ objectName: agent.name, destination: pot.name, path: [{ x: 2, y: 1 }] }],
+          ],
+        },
+        {
+          userName: agent.name,
+          action: 'destroy',
+          result: [
+            {
+              id: pot.id,
+              objectName: pot.name,
+              text: StructText[pot.name].destroyTrueText,
+              successful: true,
+              coordinates: pot.position,
+            },
+          ],
+        },
+      ];
+      // REQUIRES FLATTENING INPUT HERE
       expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
     });
   });

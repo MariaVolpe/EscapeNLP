@@ -1,7 +1,13 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
 const Structure = require('../game-logic/Structure');
+const StructLib = require('../game-logic/board-object-library/structure-library');
+const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
+
+// Example of regex for detecting coordinate
+// /^1000(?<condition>\d{4})(?<instructionLocation>\d{24})$/
+
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
  */
@@ -124,38 +130,67 @@ class ActionExecuter {
       const sourceName = sources[i];
       const sourceObject = this.grid.getObject({ searchOriginObj: user, identifier: sourceName });
       if (!sourceObject) continue;
+      let sourceText = sourceName;
       if (sourceObject instanceof Agent) { // you can take items from other agents
+        let text = '';
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
-          if (!this.attemptMoveCloser(user, sourceObject, 1)) continue;
-          sourceObject.giveItem(objectName, user);
-          taken.push({ objectName: objectName, source: sourceName });
+          const object = sourceObject.inventory.getItem(objectName);
+          let successful = false;
+          this.attemptMoveCloser(user, sourceObject, 1)
+          if (object.possesable && getDistance(user, sourceObject) <= 1) {
+            text = StructText[object.name] ? StructText[object.name] : '';
+            successful = true;
+            sourceObject.giveItem(objectName, user);
+          } else if (!object.possesable)
+            text = StructText[object.name].takeTextFalse;
+          else text = `You are too far from the ${object.name}`;
+          taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
       } else { // take from the grid
         for (let j = 0; j < objectNames.length; j++) {
           const objectName = objectNames[j];
           const object = this.grid.getObject({ searchOriginObj: user, identifier: objectName });
-          if (!this.attemptMoveCloser(user, object, 1)) continue;
-          user.takeItem(object);
-          this.grid.removeFromBoard(object);
-          taken.push({ objectName: objectName, source: sourceName });
+          let successful = false;
+          this.attemptMoveCloser(user, object, 1);
+          if (object.possesable && getDistance(user, object) <= 1) {
+            text = StructText[object.name] ? StructText[object.name] : '';
+            successful = true;
+            user.takeItem(object);
+            this.grid.removeFromBoard(object);
+          } else if (!object.possesable)
+            text = StructText[object.name].takeTextFalse;
+          else text = `You are too far from the ${object.name}`;
+          taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
       }
     }
     // if there is not a source
     if (!sources.length) {
+      const sourceText = 'grid';
       // search for it in the grid | TODO: implement stealing if its not on the grid
       for (let j = 0; j < objectNames.length; j++) {
         const objectName = objectNames[j];
         const object = this.grid.getObject({ searchOriginObj: user, identifier: objectName });
-        if (!object) continue;
-        if (!this.attemptMoveCloser(user, object, 1)) continue;
-        user.takeItem(object);
-        this.grid.removeFromBoard(object);
-        taken.push({ objectName: objectName, source: '' });
+        let successful = false;
+        if (!object) {
+          taken.push({ id: null, objectName: null, source: sourceText, text: null, successful: successful });
+          continue;
+        }
+        let text = StructText[object.name] ? StructText[object.name] : '';
+        this.attemptMoveCloser(user, object, 1);
+          if (object.possesable && getDistance(user, object) <= 1) {
+            text = StructText[object.name] ? StructText[object.name] : '';
+            successful = true;
+            user.takeItem(object);
+            this.grid.removeFromBoard(object);
+          } else if (!object.possesable)
+            text = StructText[object.name].takeTextFalse;
+          else text = `You are too far from the ${object.name}`;;
+        taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
       }
     }
-    return { userName: user.name, action: 'take', result: taken };
+    return { userID: user.id, userName: user.name, action: 'take', result: taken };
   }
 
   executeGive(data) {
@@ -251,20 +286,38 @@ class ActionExecuter {
     for (let i = 0; i < targets.length; i++) {
       const targetName = targets[i];
       const targetObj = this.grid.getObject({ searchOriginObj: user, identifier: targetName });
-      if (!targetObj)
-        results.push({ objectName: targetName, successful: false });
-      if (getDistance(user, targetObj) > 1) {
-        results.push(this.executeMove());
+      let text = StructText[targetName] ? StructText[targetName].name : null; 
+      if (!targetObj) {
+        results.push({ id: null, objectName: targetName, text: null, successful: false });
+        continue;
       }
+      if (getDistance(user, targetObj) > 1) {
+        results.push(this.executeMove(data));
+      }
+      if (getDistance(user, targetObj) > 1) {
+        results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
+        continue;
+      }
+
+      if (!targetObj.destructable) {
+        text = StructText[targetName] ? StructText[targetName].destructableFalseText : null;
+        results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
+        continue;
+      }
+      targetObj.activated = true; // this indicates destroyed status
+      text = StructText[targetName] ? StructText[targetName].destroyTrueText : null;
+      this.grid.removeFromBoard(targetObj);
+      results.push({ id: targetObj.id, objectName: targetName, text: text, successful: true, coordinates: targetObj.position });
     }
+    return { userName: user.name, action: 'destroy', result: results };
   }
 
   executeAttack(data) {
-
+    return this.executeDestroy(data);
   }
 
   executeJump(data) {
-
+    return this.executeMove(data);
   }
 
   executeSpeak(data) {

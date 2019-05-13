@@ -4,19 +4,6 @@ import '../styles/TextInfo.css';
 
 class TextInfo extends Component {
 
-  componentDidMount = () => {
-    this.scrollToBottom();
-  }
-
-  componentDidUpdate = () => {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom = () => {
-    let scrollElement = document.getElementsByClassName("text-box");
-    scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
-  }
-
   render() {
 
     const prevMessages = this.props.prevMessages;
@@ -105,7 +92,7 @@ class TextInfo extends Component {
         comments.push(<div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            {!isSystemMessage && hoverOverMessage &&
+                            {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
@@ -129,7 +116,7 @@ class TextInfo extends Component {
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
-                            {!isSystemMessage && hoverOverMessage &&
+                            {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
                                                       onClick={() => this.props.onMessageClick(i)}
