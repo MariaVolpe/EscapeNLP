@@ -8,10 +8,6 @@ class TextInfo extends Component {
     this.scrollToBottom();
   }
 
-  componentDidUpdate = () => {
-    this.scrollToBottom();
-  }
-
   scrollToBottom = () => {
     let scrollElement = document.getElementsByClassName("text-box");
     scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
