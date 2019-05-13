@@ -22,7 +22,7 @@
         {
             "name": "impression",
             "id": "impression_A",
-            "isManaged" : false,
+            "isManaged" : true,
             "coordinates": {
                 "x": 13,
                 "y": 3
@@ -31,7 +31,7 @@
         {
             "name": "impression",
             "id" : "impression_B",
-            "isManaged" : false,
+            "isManaged" : true,
             "coordinates": {
                 "x": 13,
                 "y": 7

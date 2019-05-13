@@ -1,6 +1,21 @@
 const NLAnalyzer = require('./NLAnalyzer');
 const ActionExecuter = require('./ActionExecuter');
 
+const flattenOutput = (output) => {
+  const flatOutput = [];
+  return _flattenOutput(flatOutput, output);
+};
+
+const _flattenOutput = (flatOutput, output) => {
+  for (let i = 0; i < output.length; i++) {
+    const o = output[i];
+    if (o.action) { // if start of new action
+      flatOutput = flatOutput.unshift(o);
+      _flattenOutput(flatOutput, o);
+    }
+  }
+}
+
 class NLInterpreter {
   /*
     EscapeNLP receives user input, analyzes it, and executes actions on the game state
@@ -8,11 +23,12 @@ class NLInterpreter {
     1) grid: wrapper object that contains BoardObjects and the grid that contains them
     2) agents: list of agents in the game
   */
-  constructor(grid) {
+  constructor(grid, puzzleManager) {
     this.grid = grid;
     this.actionQueue = []; // queue object that holds actions to be executed | MAY NOT NEED THIS IF TURN BASED
     this.nlp = new NLAnalyzer();
     this.actionExecuter = new ActionExecuter({ grid: grid });
+    this.puzzleManager = puzzleManager;
   }
 
   /*
@@ -35,9 +51,10 @@ class NLInterpreter {
   doAction(data) {
     const classifications = data.classifications;
     for (const classification of classifications) {
-      // [ { actionResults, puzzleManagerResults }, {},  {}]
       const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
+      const user = this.grid.getObject({ identifier: data.userName});
+      this.puzzleManager.evaluateAllPuzzles(user);
       if (result) { return result; } // else keep trying other actions
     }
   }

@@ -53,7 +53,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('confirmJoin', (roomInfo) => {
+    const gameStart = io.sockets.adapter.rooms[roomInfo].gameStart;
     if (io.nsps['/'].adapter.rooms[roomInfo] && io.nsps['/'].adapter.rooms[roomInfo].length > 4) {
+      socket.emit('confirmJoin', false);
+    } else if (gameStart) {
       socket.emit('confirmJoin', false);
     } else {
       socket.emit('confirmJoin', true);
@@ -69,7 +72,6 @@ io.on('connection', (socket) => {
     io.in(socket.currentRoom).emit('chatMessage', message);
 
     if (message.type === 'action') {
-      const gameComplete = false;
       const actionResults = await gameContainer.performAction(socket.gameId, message);
 
       console.log(message.mess);
@@ -134,6 +136,8 @@ io.on('connection', (socket) => {
           }
         });
       }
+
+      const gameComplete = gameContainer.getIsGameCompleted(socket.gameId);
 
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);

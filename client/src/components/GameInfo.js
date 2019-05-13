@@ -77,7 +77,7 @@ class GameInfo extends Component {
   render() {
     let board = this.props.board;
     let mapData = [];
-    let victory = false; // get real state from backend
+    let victory = this.props.gameComplete; // get real state from backend
 
     if(victory){
       for (let i=0; i<12; i++) {

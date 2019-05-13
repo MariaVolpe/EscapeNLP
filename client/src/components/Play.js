@@ -49,7 +49,12 @@ class Play extends Component {
         }
         this.socket.emit('chatMessage', message);
       }
-      this.setState({ message: '', command: '', prevMessages });
+      if (mess.commenter === this.state.playerName) {
+        this.setState({ message: '', command: '', prevMessages });
+      } else {
+        this.setState({ prevMessages });
+      }
+      this.scrollToBottom();
     });
 
     this.socket.on('setNames', (allPlayers) => {
@@ -149,6 +154,7 @@ class Play extends Component {
     this.onCommandKeyPress = this.onCommandKeyPress.bind(this);
     this.onCommandChange = this.onCommandChange.bind(this);
     this.readyUp = this.readyUp.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount = () => {
@@ -161,6 +167,11 @@ class Play extends Component {
     } else {
       window.location.replace('/browser');
     }
+  }
+
+  scrollToBottom = () => {
+    let scrollElement = document.getElementsByClassName("text-box");
+    scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
   }
 
   removeStartAndEndSpaces = (value) => {
@@ -419,6 +430,7 @@ class Play extends Component {
                         onHoverOverTile={this.onHoverOverTile}
                         timer={this.state.timer}
                         onClick={this.onTileClick}
+                        gameComplete={this.state.gameComplete}
                       />
                      </div>;
     // }
