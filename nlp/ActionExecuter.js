@@ -4,13 +4,7 @@ const Structure = require('../game-logic/Structure');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
-<<<<<<< HEAD
 const { matchRegex, convertToIndices } = require('../game-logic/util');
-=======
-
-// Example of regex for detecting coordinate
-// /^1000(?<condition>\d{4})(?<instructionLocation>\d{24})$/
->>>>>>> development
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
