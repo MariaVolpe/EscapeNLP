@@ -302,13 +302,8 @@ class ActionExecuter {
         continue;
       }
 
-<<<<<<< HEAD
-      if (!targetObj.destructable) {
-        text = StructText[targetName] ? StructText[targetName].destructableFalseText : null;
-=======
       if (!targetObj.destructable || (targetObj.armored && !user.hasItem('sword'))){
         text = StructText[targetName] ? StructText[targetName].destroyFalseText : null;
->>>>>>> development
         results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
         continue;
       }
