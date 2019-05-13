@@ -27,6 +27,7 @@ import bookshelf from '../images/bookshelf.png';
 import door from '../images/door.png';
 import door_activated from '../images/door_activated.png'
 import forge from '../images/forge.png';
+import forge_activated from '../images/forge_activated.png'
 import pot from '../images/pot.png';
 import exit from '../images/exit.png';
 import VictoryModal from './VictoryModal';
@@ -48,6 +49,7 @@ const pictures = {
   'door': door,
   'door_activated': door_activated,
   'forge': forge,
+  'forge_activated': forge_activated,
   'pot': pot,
   'exit': exit,
   'sword': sword,
