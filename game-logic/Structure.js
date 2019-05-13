@@ -42,6 +42,7 @@ class Structure extends BoardObject {
     this.manuallyDeactivateable = StructLib[name].manuallyDeactivateable;
     this.speakable = StructLib[name].speakable;
     this.armored = StructLib[name].armored;
+    this.locked = StructLib[name].locked;
 
     this.activated = false;
 

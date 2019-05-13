@@ -24,7 +24,8 @@
         "usable": true,
         "use": "activate",
         "jumpable": null,
-        "passable": false
+        "passable": false,
+        "locked": true
     },
     "lever": {
         "moveable": false,

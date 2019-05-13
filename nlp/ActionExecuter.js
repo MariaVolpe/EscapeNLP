@@ -329,7 +329,7 @@ class ActionExecuter {
     const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
-      if (subject && subject.manuallyActivateable) {
+      if (subject && subject.manuallyActivateable && !(subject.locked && !user.hasItem('key'))) {
         this.grid.moveToObject([user], subject);
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
@@ -337,7 +337,8 @@ class ActionExecuter {
         if (subject instanceof Structure) results.push({ objectName: subject.name, successful: subject.activated });
         else results.push({ objectName: subject.name, successful: false });
       } else {
-        results.push({ objectName: '', successful: false });
+        const text = StructText[subject.name].activateFalseText;
+        results.push({ objectName: '', text: text, successful: false });
       }
     });
     return { userName: user.name, action: 'activate', result: results };

@@ -29,7 +29,7 @@
         "speakFalseText": "You whisper sweet nothings to the door. The door doesn't respond.",
         "speakTrueText": null,
         "activateTrueText": "The door unlocks! Freedom!",
-        "activateFalseText": null,
+        "activateFalseText": "It's locked. Maybe there's a key somewhere...",
         "deactivateTrueText": null,
         "deactivateFalseText": null,
         "inspectTextInactive": "It's a locked door.",
