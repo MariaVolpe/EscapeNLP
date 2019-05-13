@@ -372,6 +372,14 @@ class Play extends Component {
     }
   }
 
+  onTileClick = (i, k) => {
+    i = String.fromCharCode(i+65);
+
+    let message = this.state.message;
+    message += " " + i + (k+1)+ "";
+    this.setState({message});
+  }
+
   render() {
     const board = this.state.board;
     let allPlayers = [];
@@ -410,6 +418,7 @@ class Play extends Component {
                         allPlayersReady={this.state.allPlayersReady}
                         onHoverOverTile={this.onHoverOverTile}
                         timer={this.state.timer}
+                        onClick={this.onTileClick}
                       />
                      </div>;
     // }
