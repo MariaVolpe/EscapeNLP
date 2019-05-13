@@ -38,7 +38,7 @@ class Play extends Component {
     this.socket = socketIOClient('');
 
     this.socket.on('moveAction', (userPath) => {
-      this.setState({userPath});
+      this.setState({userPath: userPath.path});
     })
 
     this.socket.on('chatMessage', (mess) => {
