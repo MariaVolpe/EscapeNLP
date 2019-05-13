@@ -64,58 +64,55 @@ class PuzzleManager {
     }
   }
 
-  evaluateAllPuzzles() {
+  evaluateAllPuzzles(userObj) {
     this.puzzles.forEach(({ puzzle_type }) => {
-      this.evaluatePuzzleStatus(puzzle_type);
+      this.rewardSolvedPuzzle(puzzle_type, userObj);
     });
   }
 
-  evaluatePuzzleStatus(puzzleType) {
-    // Leave if the Puzzle hasn't been completed, or if its reward has been granted already
-    if (!this.checkPuzzleComplete(puzzleType) || this.checkRewardGranted(puzzleType)) {
-      return;
+  rewardSolvedPuzzle(puzzleType, userObj) {
+    // Check to see that the puzzle has been completed and that the reward hasn't been given.
+    if (this.checkPuzzleCompleted(puzzleType) && !this.checkRewardGranted(puzzleType)) {
+      switch (puzzleType) {
+        case 'door':
+          const doorObj = this.puzzleProgress.get('door')[0];
+          doorObj.setPassable(true);
+          break;
+        case 'weight':
+          userObj.takeItem(new Item('blade'));
+          break;
+        case 'lever':
+          userObj.takeItem(new Item('hilt'));
+          break;
+        case 'pots':
+          userObj.takeItem(new Item('key'));
+          // and return { id: name: spirte, coordinate }
+          break;
+        case 'goal':
+          this.gameComplete = true;
+          break;
+      }
+      this.puzzleRewardGranted.set(puzzleType, true);
     }
-    switch (puzzleType) {
-      case 'door':
-        const doorObj = this.puzzleProgress.get('door')[0];
-        doorObj.setPassable(true);
-      case 'weight':
-        this.grid.add(new Item('sword_blade'));
-        break;
-      case 'binary':
-        this.grid.add(new Item('sword_hilt'), {});
-        break;
-      case 'pots':
-        this.grid.add(new Item('key'));
-        // and return { id: name: spirte, coordinate }
-        break;
-      case 'goal':
-        this.gameComplete = true;
-        break;
-    }
-    this.puzzleRewardGranted.set(puzzleType, true);
   }
 
-  checkPuzzleComplete(puzzleType) {
-    if (!puzzleType) {
-      return false;
-    }
+  //Should just check that the right light switches have been activated
+  checkPuzzleCompleted(puzzleType) {
     const managedObjs = this.puzzleProgress.get(puzzleType);
+    let puzzleCompleted = true;
     if (managedObjs) {
       managedObjs.forEach((obj) => {
         if (!obj.activated) {
-          return false;
+          puzzleCompleted = false;
+          break;
         }
       });
-      return true;
     }
+    return puzzleCompleted;
   }
 
   // This ensures puzzle logic isn't repeated once the puzzle is complete
   checkRewardGranted(puzzleType) {
-    if (!puzzleType) {
-      return false;
-    }
     return this.puzzleRewardGranted.get(puzzleType);
   }
 

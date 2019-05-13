@@ -31,7 +31,7 @@
         {
             "name": "poster",
             "id": "lever_hint_poster",
-            "isManaged" : true,
+            "isManaged" : false,
             "coordinates": {
                 "x": 3,
                 "y": 1
