@@ -72,7 +72,7 @@ class PuzzleManager {
 
   rewardSolvedPuzzle(puzzleType, userObj) {
     // Check to see that the puzzle has been completed and that the reward hasn't been given.
-    if (this.checkPuzzleCompleted(puzzleType) && !this.checkRewardGranted(puzzleType)) {
+    if (!this.checkRewardGranted(puzzleType) && this.checkPuzzleCompleted(puzzleType)) {
       switch (puzzleType) {
         case 'door':
           const doorObj = this.puzzleProgress.get('door')[0];
@@ -105,7 +105,7 @@ class PuzzleManager {
   checkPuzzleCompleted(puzzleType) {
     switch (puzzleType) {
       case 'weight':
-        return false;
+        return this.checkWeightPuzzle();
         break;
       case 'lever':
         return this.checkLeverPuzzle("010");
@@ -140,6 +140,23 @@ class PuzzleManager {
       }
     }
     return matchingCombination;
+  }
+
+  checkWeightPuzzle() {
+    const impressions = this.puzzleProgress.get('weight');
+    let puzzleCompleted = true;
+    impressions.forEach( (impression) => {
+      if(!this.grid.checkStackForObjectName(impression.position, 'weight')) {
+        puzzleCompleted = false;
+      }
+      else { 
+        impression.activate();
+        const finishedWeight = this.grid.getObjectFromStackByName(impression.position, 'weight');
+        finishedWeight.setMovable(false);
+        impression.setPassable(false);
+      }
+    });
+    return puzzleCompleted;
   }
 
   checkGameComplete() {
