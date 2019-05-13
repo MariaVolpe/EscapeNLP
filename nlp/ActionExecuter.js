@@ -299,8 +299,8 @@ class ActionExecuter {
         continue;
       }
 
-      if (!targetObj.destructable) {
-        text = StructText[targetName] ? StructText[targetName].destructableFalseText : null;
+      if (!targetObj.destructable || (targetObj.armored && !user.hasItem('sword'))){
+        text = StructText[targetName] ? StructText[targetName].destroyFalseText : null;
         results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
         continue;
       }

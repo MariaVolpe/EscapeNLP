@@ -82,6 +82,7 @@ class PuzzleManager {
           userObj.takeItem(new Item('blade'));
           const forgeObj = this.puzzleProgress.get('forge')[0];
           forgeObj.activate();
+          //Set forge to usable as well
           break;
         case 'lever':
           userObj.takeItem(new Item('hilt'));
