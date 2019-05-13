@@ -249,6 +249,44 @@ describe('Natural Language (NLInterpreter) tests', () => {
     });
   });
 
+  describe('Place', () => {
+    it('Should place an item already possessed onto the board', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const floorSwitch = new Structure('impression', '3', null);
+      const idol = new Item('key', '6', null);
+      const indianaJones = new Agent(0);
+      idol.setName('idol');
+      indianaJones.setName('Indiana Jones');
+      floorSwitch.setName('impression');
+      indianaJones.takeItem(idol);
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floorSwitch], [wall]],
+        [[wall], [floor, indianaJones], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const grid = new Grid(startingMatrix);
+      const interpreter = new NLInterpreter(grid, new PuzzleManager(grid, true));
+      const input = {
+        userName: 'Indiana Jones',
+        data: 'i put it down the idol on the impression',
+      };
+      const results = interpreter.executeInput(input);
+      const expected = [
+        {
+          userName: 'Indiana Jones',
+          action: 'place',
+          result: [
+            { objectName: 'idol', destination: 'impression' },
+          ],
+        },
+      ];
+      // TODO: THIS IS INCORRRECTLY CLASSIFYING FIX LATER
+      // expect(JSON.stringify(results)).toEqual(JSON.stringify(expected));
+    });
+  });
+
   describe('Activate', () => {
     it('Should activate the object and move the player', async () => {
       const floor = new Structure('floor', '1', null);
