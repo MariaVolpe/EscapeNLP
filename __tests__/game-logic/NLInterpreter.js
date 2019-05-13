@@ -167,7 +167,9 @@ describe('Natural Language (NLInterpreter) tests', () => {
           userName: agent.name,
           action: 'take',
           result: [
-            { id: item.id, objectName: item.name, source: 'grid', text: '', successful: true },
+            {
+              id: item.id, objectName: item.name, source: 'grid', text: '', successful: true,
+            },
           ],
         },
       ];

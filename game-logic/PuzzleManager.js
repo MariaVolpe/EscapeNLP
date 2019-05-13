@@ -82,7 +82,7 @@ class PuzzleManager {
           userObj.takeItem(new Item('blade'));
           const forgeObj = this.puzzleProgress.get('forge')[0];
           forgeObj.activate();
-          //Set forge to usable as well
+          // Set forge to usable as well
           break;
         case 'lever':
           userObj.takeItem(new Item('hilt'));
@@ -104,24 +104,24 @@ class PuzzleManager {
     return this.puzzleRewardGranted.get(puzzleType);
   }
 
-  //Should just check that the right light switches have been activated
+  // Should just check that the right light switches have been activated
   checkPuzzleCompleted(puzzleType) {
     switch (puzzleType) {
       case 'weight':
         return this.checkWeightPuzzle();
         break;
       case 'lever':
-        return this.checkLeverPuzzle("010");
+        return this.checkLeverPuzzle('010');
         break;
       case 'forge':
-        //TODO
+        // TODO
         return false;
       default:
         return this.checkAllManagedObjectsActivated(puzzleType);
     }
   }
 
-  checkAllManagedObjectsActivated(puzzleType){
+  checkAllManagedObjectsActivated(puzzleType) {
     const managedObjs = this.puzzleProgress.get(puzzleType);
     let puzzleCompleted = true;
     if (managedObjs) {
@@ -137,7 +137,7 @@ class PuzzleManager {
   checkLeverPuzzle(combination) {
     const levers = this.puzzleProgress.get('lever');
     let matchingCombination = true;
-    for(let i = 0; i < levers.length; ++i) {
+    for (let i = 0; i < levers.length; ++i) {
       if (levers[i].activated && (combination[i] === '0')) {
         matchingCombination = false;
       }
@@ -151,11 +151,10 @@ class PuzzleManager {
   checkWeightPuzzle() {
     const impressions = this.puzzleProgress.get('weight');
     let puzzleCompleted = true;
-    impressions.forEach( (impression) => {
-      if(!this.grid.checkStackForObjectName(impression.position, 'weight')) {
+    impressions.forEach((impression) => {
+      if (!this.grid.checkStackForObjectName(impression.position, 'weight')) {
         puzzleCompleted = false;
-      }
-      else { 
+      } else {
         impression.activate();
         const finishedWeight = this.grid.getObjectFromStackByName(impression.position, 'weight');
         finishedWeight.setMovable(false);

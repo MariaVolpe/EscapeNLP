@@ -133,6 +133,14 @@ io.on('connection', (socket) => {
               mess: item.text,
             };
             io.in(socket.currentRoom).emit('chatMessage', flavorText);
+          } else if (!item.text && !item.successful) {
+            const flavorText = {
+              type: 'flavor',
+              time: message.time,
+              commenter: message.commenter,
+              mess: 'You can\'t do that.',
+            };
+            io.in(socket.currentRoom).emit('chatMessage', flavorText);
           }
         });
       }
