@@ -546,7 +546,66 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Destroy', () => {
-
+    it('Should destroy an object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const pot = new Structure('pot', '3', null);
+      const agent = new Agent(0);
+      agent.setName('CrashBandicoot');
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, pot], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeDestroy({
+        userName: 'crashbandicoot',
+        directObjects: ['pot'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      expect(pot.activated).toEqual(true);
+    });
+    it('Should not destroy an object', async () => {
+      const floor = new Structure('floor', '1', null);
+      const wall = new Structure('wall', '2', null);
+      const door = new Structure('door', '3', null);
+      const agent = new Agent(0);
+      agent.setName('CrashBandicoot');
+      const startingMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, door], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const expectedMatrix = [
+        [[wall], [wall], [wall]],
+        [[wall], [floor, door], [wall]],
+        [[wall], [floor, agent], [wall]],
+        [[wall], [floor], [wall]],
+      ];
+      const g = new Grid(startingMatrix);
+      const actionExecuter = new ActionExecuter({ grid: g });
+      actionExecuter.executeDestroy({
+        userName: 'crashbandicoot',
+        directObjects: ['door'],
+      });
+      const actualMatrix = stripNames(g.matrix);
+      const expectedNamesMatrix = stripNames(expectedMatrix);
+      // Check that the item was removed from the matrix
+      expect(JSON.stringify(actualMatrix)).toEqual(JSON.stringify(expectedNamesMatrix));
+      expect(door.activated).toEqual(false);
+    });
   });
 
   describe('Activate', () => {
