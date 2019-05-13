@@ -3,6 +3,8 @@
 ![Game Board](https://github.com/MariaVolpe/EscapeNLP/blob/development/client/src/images/game_board.jpeg "EscapeNLP")
 
 A text-based escape room web application for up to five player.
+[Play it here!](https://blooming-hamlet-79442.herokuapp.com/)
+
 It uses natural language processing to interpret player inputs to understand their intentions (put chat messages into actions on the game board)
 
 To play the game, join a lobby or create a lobby, then have every player inside the lobby press the ready button.
@@ -27,7 +29,7 @@ $ setup.sh
 ```
 This will make the bash script executable, and run it, which will then install all dependencies for you.
 
-Then you can run the game locally at `localhost:3000` in your browser using
+Then you can run the game at `localhost:3000` in your browser using
 ```
 $ npm run dev
 ```

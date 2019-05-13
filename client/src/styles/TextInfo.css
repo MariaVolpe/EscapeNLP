@@ -129,3 +129,8 @@
   float: left;
   width: 90%;
 }
+
+.full-message {
+  float: left;
+  width: 100%;
+}

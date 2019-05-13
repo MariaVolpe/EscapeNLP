@@ -17,6 +17,6 @@
     "key": {
         "name": "key",
         "id": "key",
-        "useMethod": "activate"          
+        "useMethod": "activate"   
     }
 }

@@ -1,6 +1,21 @@
 const NLAnalyzer = require('./NLAnalyzer');
 const ActionExecuter = require('./ActionExecuter');
 
+const flattenOutput = (output) => {
+  const flatOutput = [];
+  return _flattenOutput(flatOutput, output);
+};
+
+const _flattenOutput = (flatOutput, output) => {
+  for (let i = 0; i < output.length; i++) {
+    const o = output[i];
+    if (o.action) { // if start of new action
+      flatOutput = flatOutput.unshift(o);
+      _flattenOutput(flatOutput, o);
+    }
+  }
+}
+
 class NLInterpreter {
   /*
     EscapeNLP receives user input, analyzes it, and executes actions on the game state
