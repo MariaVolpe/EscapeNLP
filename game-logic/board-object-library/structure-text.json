@@ -188,13 +188,13 @@
         "destroyTrueText": null,
         "attackFalseText": null,
         "attackTrueText": null,
-        "speakFalseText": "You talk to the poster, but it doesn't say anything back. Maybe you should try reading it instead.",
+        "speakFalseText": "You talk to the poster, but it doesn't say anything back. Maybe you should try inspecting it instead.",
         "speakTrueText": null,
         "activateTrueText": null,
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-        "inspectTextInactive": "It says: ",
+        "inspectTextInactive": "It says: 010",
         "inspectTextActive": null
     },
     "dragon": {

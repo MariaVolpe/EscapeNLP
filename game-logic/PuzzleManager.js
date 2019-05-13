@@ -96,24 +96,50 @@ class PuzzleManager {
     }
   }
 
+  // This ensures puzzle logic isn't repeated once the puzzle is complete
+  checkRewardGranted(puzzleType) {
+    return this.puzzleRewardGranted.get(puzzleType);
+  }
+
   //Should just check that the right light switches have been activated
   checkPuzzleCompleted(puzzleType) {
+    switch (puzzleType) {
+      case 'weight':
+        return false;
+        break;
+      case 'lever':
+        return this.checkLeverPuzzle("010");
+        break;
+      default:
+        return this.checkAllManagedObjectsActivated(puzzleType);
+    }
+  }
+
+  checkAllManagedObjectsActivated(puzzleType){
     const managedObjs = this.puzzleProgress.get(puzzleType);
     let puzzleCompleted = true;
     if (managedObjs) {
       managedObjs.forEach((obj) => {
         if (!obj.activated) {
           puzzleCompleted = false;
-          break;
         }
       });
     }
     return puzzleCompleted;
   }
 
-  // This ensures puzzle logic isn't repeated once the puzzle is complete
-  checkRewardGranted(puzzleType) {
-    return this.puzzleRewardGranted.get(puzzleType);
+  checkLeverPuzzle(combination) {
+    const levers = this.puzzleProgress.get('lever');
+    let matchingCombination = true;
+    for(let i = 0; i < levers.length; ++i) {
+      if (levers[i].activated && (combination[i] === '0')) {
+        matchingCombination = false;
+      }
+      if (!levers[i].activated && (combination[i] === '1')) {
+        matchingCombination = false;
+      }
+    }
+    return matchingCombination;
   }
 
   checkGameComplete() {
