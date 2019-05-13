@@ -133,7 +133,7 @@ io.on('connection', (socket) => {
               mess: item.text,
             };
             io.in(socket.currentRoom).emit('chatMessage', flavorText);
-          } else if (!item.text && !item.successful === 'false') {
+          } else if (!item.text && item.successful === 'false') {
             const flavorText = {
               type: 'flavor',
               time: message.time,
