@@ -42,11 +42,18 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      if (prevName === message.commenter) {
+        sameName = true;
+      }
+      else if (prevName !== message.commenter) {
+        sameName = false;
+        prevName = message.commenter;
+      }
       let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
       const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
       let messageBody = "message-body"
-      if (!hoverOverMessage) {
+      if (!sameName) {
         messageBody = "full-message";
       }
       let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
@@ -80,16 +87,10 @@ class TextInfo extends Component {
                           </div>
                         </div>;
       }
-      if (prevName === message.commenter) {
-        sameName = true;
-      }
-      else if (prevName !== message.commenter) {
-        sameName = false;
-        prevName = message.commenter;
-      }
 
       if (sameName) {
-        comments.push(<div className="content" key={i} >
+        comments.push(<div className="comment text-container" >
+                        <div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
@@ -102,20 +103,21 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
+                          </div>
+                          <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                         </div>
-                        <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                       </div>);
       }
       else if (!sameName) {
-        comments.push(<div className="content message" key={i} >
-                          <span className="author">
+        comments.push(<div className="comment text-container" >
+                        <div className="content message" key={i} >
+                          <span className="author author-border">
                             {message.commenter}
                           </span>
                           <div className="metadata">
                             <span className="date">{timeOf}</span>
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
-                            {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
@@ -126,7 +128,9 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
+                            {entireMessage}
                           </div>
+                        </div>
                       </div>);
       }
     });
@@ -142,7 +146,7 @@ class TextInfo extends Component {
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
-          <div className="comment text-container" >{comments}</div>
+          {comments}
         </div>
           <form className="ui form">
             <textarea

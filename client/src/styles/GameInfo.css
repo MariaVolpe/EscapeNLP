@@ -23,6 +23,11 @@
   background-size: 100%;
 }
 
+.my-tile {
+  background-image: url('../images/yourtile.png');
+  background-size: 100%;
+}
+
 .victory {
   background-image: url('../images/theRareW.jpeg');
   background-size: 100%;
@@ -42,4 +47,8 @@
   font-size: 1.5vh;
   text-align: center;
   margin-left: -6.66px;
+}
+
+.author-border {
+  border-top: 10px;
 }
