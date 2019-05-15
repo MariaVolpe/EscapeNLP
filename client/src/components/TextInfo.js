@@ -53,7 +53,7 @@ class TextInfo extends Component {
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
       const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
       let messageBody = "message-body"
-      if (!sameName) {
+      if (!hoverOverMessage) {
         messageBody = "full-message";
       }
       let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
@@ -111,7 +111,7 @@ class TextInfo extends Component {
       else if (!sameName) {
         comments.push(<div className="comment text-container" >
                         <div className="content message" key={i} >
-                          <span className="author author-border">
+                          <span className="author">
                             {message.commenter}
                           </span>
                           <div className="metadata">
