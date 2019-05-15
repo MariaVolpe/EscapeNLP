@@ -10,12 +10,12 @@ import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
 import blade from '../images/blade.png';
 import key from '../images/key.png';
-import player0 from '../images/pink.png';
-import player1 from '../images/red.png';
-import player2 from '../images/black.png';
-import player3 from '../images/white.png';
-import player4 from '../images/blue.png';
-import playerDefault from '../images/yellow.png';
+import player0 from '../images/p0.png';
+import player1 from '../images/p1.png';
+import player2 from '../images/p2.png';
+import player3 from '../images/p3.png';
+import player4 from '../images/p4.png';
+import playerDefault from '../images/p5.png';
 
 const pictures = {
   'player1': player0,
