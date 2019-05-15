@@ -101,8 +101,8 @@ describe('Natural Language (NLInterpreter) tests', () => {
           userName: 'James Bond',
           action: 'look',
           result: [
-            { objectName: 'door', text: 'It\'s a closed door.' },
-            { objectName: 'weight', text: 'The bottom of the block is locked into the impression now.' },
+            { objectName: door.name, text: door.inspectText },
+            { objectName: weight.name, text: weight.inspectText },
           ],
         },
       ];

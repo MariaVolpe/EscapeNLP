@@ -109,16 +109,14 @@ describe('ActionExecuter tests', () => {
         [[floor], [floor, sonic], [floor]],
         [[floor], [floor], [floor]],
       ];
-      //console.log(startingMatrix);
-      //console.log(expectedMatrix);
       const g = new Grid(startingMatrix);
       const actionExecuter = new ActionExecuter({ grid: g });
       actionExecuter.executeMove({
         userName: 'sonic',
         directObjects: ['weight'],
-        indirectObjects: ['a2'],
+        indirectObjects: ['b1'],
       });
-      //expect(JSON.stringify(stripNames(g.matrix))).toEqual(JSON.stringify(stripNames(expectedMatrix)));
+      expect(JSON.stringify(weight.position)).toEqual(JSON.stringify({ x: 1, y: 1 }));
     });
 
     it('Should move in a direction', async () => {

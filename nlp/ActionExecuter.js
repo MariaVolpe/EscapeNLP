@@ -4,7 +4,7 @@ const Structure = require('../game-logic/Structure');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
-const { matchRegex, convertToIndices } = require('../game-logic/util');
+const { isCoordinate, matchRegex, convertToIndices } = require('../game-logic/util');
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -75,14 +75,14 @@ class ActionExecuter {
     }
     for (let i = 0; i < destinationObjects.length; i++) {
       const destinationObject = destinationObjects[i];//this.grid.getObject({ searchOriginObj: user, identifier: destinations[i] })
-      const paths = destinationObject.x != undefined && destinationObject.y != undefined
+      const paths = isCoordinate(destinationObject)
       ? this.grid.moveToCoordinates(movingObjects, destinationObject)
       : this.grid.moveToObject(movingObjects, destinationObject);
       for (let i = 0; i < movingObjects.length; i++) {
         const movingObject = movingObjects[i];
         results.push({
           objectName: movingObject.name,
-          destination: destinationObject.name,
+          destination: isCoordinate(destinationObject) ? destinationObject : destinationObject.name,
           path: paths[i],
         });
       } 

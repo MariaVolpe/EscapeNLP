@@ -1,3 +1,8 @@
+
+const isCoordinate = (obj) => {
+  return !(obj.x === undefined && obj.y === undefined);
+}
+
 const matchRegex = (regex, input) => {
   return input.match(regex);
 }
@@ -10,4 +15,4 @@ const convertToIndices = (coordinate) => {
   };
 }
 
-module.exports = { matchRegex, convertToIndices };
+module.exports = { isCoordinate, matchRegex, convertToIndices };
