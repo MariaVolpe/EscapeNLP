@@ -112,7 +112,7 @@ class PuzzleManager {
         return this.checkWeightPuzzle();
         break;
       case 'lever':
-        return this.checkLeverPuzzle('010');
+        return this.checkLeverPuzzle('101');
         break;
       case 'forge':
         // TODO
