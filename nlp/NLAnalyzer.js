@@ -61,9 +61,9 @@ class NLAnalyzer {
     return actionObjects;
   }
 
-  async trainNetwork() {
+  // Takes a path to a DIRECTORY ex: './folder/' where training data can be found
+  async trainNetwork(path) {
     // TODO grab verb and object training batches and sequentially run train
-    const path = './nlp/data/friends/training/verb-relations/';
     const batches = this.fs.getFilesInDir(path);
     for (const batchFile of batches) {
       const batch = this.fs.fileToObj(path + batchFile);
