@@ -133,15 +133,30 @@ class GameInfo extends Component {
                        </div>);
           }
           else if (board[k][i][0].sprite === 'floor' && board[k][i].length > 2) {
-            mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
-                   <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
-                   <img src={pictures[board[k][i][2].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
-                 </div>);
+            if (board[k][i][2].hint === this.props.currentPlayer || board[k][i][1].hint === this.props.currentPlayer) {
+              console.log(this.props.currentPlayer);
+              mapData.push(<div className="map my-tile one wide column" data-tip={`${board[k][i][2].hint} / ${board[k][i][1].hint}`} data-for="tile" >
+                             <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                             <img src={pictures[board[k][i][2].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                           </div>);
+            } else {
+              mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][2].hint} / ${board[k][i][1].hint}`} data-for="tile" >
+                             <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                             <img src={pictures[board[k][i][2].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                           </div>);
+            }
+          } else if ( this.props.currentPlayer && (board[k][i][1].hint === this.props.currentPlayer || board[k][i][0].hint === this.props.currentPlayer)) {
+            console.log(this.props.currentPlayer);
+            mapData.push(<div className="map my-tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
+                           <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                           <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                         </div>);
           } else {
-          mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
-                 <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
-                 <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
-               </div>);
+            console.log(this.props.currentPlayer + board[k][i][1].hint);
+            mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
+                           <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                           <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
+                         </div>);
           }
         }
       }

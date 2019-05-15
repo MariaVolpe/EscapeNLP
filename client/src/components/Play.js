@@ -441,6 +441,7 @@ class Play extends Component {
                         gameComplete={this.state.gameComplete}
                         showVictoryModal={this.state.showVictoryModal}
                         stayOnPage={this.stayOnPage}
+                        currentPlayer={this.state.playerName}
                       />
                      </div>;
     // }

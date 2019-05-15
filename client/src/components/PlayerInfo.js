@@ -10,6 +10,21 @@ import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
 import blade from '../images/blade.png';
 import key from '../images/key.png';
+import player0 from '../images/p0.png';
+import player1 from '../images/p1.png';
+import player2 from '../images/p2.png';
+import player3 from '../images/p3.png';
+import player4 from '../images/p4.png';
+import playerDefault from '../images/p5.png';
+
+const pictures = {
+  'player1': player0,
+  'player2': player1,
+  'player3': player2,
+  'player4': player3,
+  'player5': player4,
+  'playerDefault': playerDefault
+}
 
 
 const icons = {
@@ -35,7 +50,7 @@ class PlayerInfo extends Component {
     if (inventory !== undefined) {
       items = inventory.map((item, i) => <div className="item-slot" key={i} data-tip={`${item.name}`} data-for="inv">
                                                  <div className="item-outline">
-                                                  <img src={inventoryIcons[item.sprite]} alt='' className="item-pic" />          
+                                                  <img src={inventoryIcons[item.sprite]} alt='' className="item-pic" />
                                                  </div>
                                                  <ReactTooltip key="tooltip" id="inv" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                </div>);
@@ -66,6 +81,7 @@ class PlayerInfo extends Component {
       }
     }
     const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
+    const playerIcon = 'player' + this.props.playerInfo.position;
 
     // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
@@ -92,7 +108,7 @@ class PlayerInfo extends Component {
           <div className="content">
             <img
               className="left floated mini ui image"
-              src={icons[this.props.playerInfo.iconName]}
+              src={pictures[playerIcon]}
               alt="user icon"
             />
 
