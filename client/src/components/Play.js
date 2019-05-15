@@ -385,11 +385,13 @@ class Play extends Component {
   }
 
   onTileClick = (i, k) => {
-    i = String.fromCharCode(i+65);
+    if(this.state.allPlayersReady === true){
+      i = String.fromCharCode(i+65);
 
-    let message = this.state.message;
-    message += " " + i + (k+1)+ "";
-    this.setState({message});
+      let command = this.state.command;
+      command += " " + i + (k+1)+ "";
+      this.setState({command});
+    } 
   }
 
   stayOnPage = (event) => {

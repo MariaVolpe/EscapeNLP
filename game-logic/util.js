@@ -19,3 +19,4 @@ const convertToFECoordinate = (obj) => {
 };
 
 module.exports = { isCoordinate, matchRegex, convertToIndices, convertToFECoordinate };
+
