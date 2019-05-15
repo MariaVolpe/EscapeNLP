@@ -39,6 +39,10 @@ class Agent extends BoardObject {
     return true;
   }
 
+  removeItem(itemName) {
+    return this.inventory.removeItem(itemName);
+  }
+
   getFormattedInventory() {
     return this.inventory.getFormattedInventory();
   }
