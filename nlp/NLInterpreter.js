@@ -10,8 +10,8 @@ const _flattenOutput = (flatOutput, output) => {
   for (let i = 0; i < output.length; i++) {
     const o = output[i];
     if (o.action) { // if start of new action
-      flatOutput = flatOutput.unshift(o);
-      _flattenOutput(flatOutput, o);
+      _flattenOutput(flatOutput, o.result);
+      flatOutput.push(o);
     }
   }
 }
@@ -53,8 +53,7 @@ class NLInterpreter {
     for (const classification of classifications) {
       const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
-      const user = this.grid.getObject({ identifier: data.userName});
-      this.puzzleManager.evaluateAllPuzzles(user);
+      this.puzzleManager.evaluateAllPuzzles();
       if (result) { return result; } // else keep trying other actions
     }
   }

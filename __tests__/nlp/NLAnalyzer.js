@@ -35,4 +35,23 @@ describe('Natural Language Processing Tests', () => {
       }
     });
   });
+  describe('Direct and indirect object extraction with coordinates', () => {
+    const tests = {
+      move: { text: 'I move to a20', directObjects: 'a20', indirectObjects: '' },
+      place: { text: 'I throw the key to b2', directObjects: 'key', indirectObjects: 'b2' },
+      give: { text: 'I pass the key to c30', directObjects: 'key', indirectObjects: 'c30' },
+      move: { text: 'I move to a19', directObjects: 'a19', indirectObjects: '' },
+    };
+    it('Direct & indirect objects should be', async () => {
+      const testKeys = Object.keys(tests);
+      for (let i = 0; i < testKeys.length; i++) {
+        const key = testKeys[i];
+        const directObjects = tests[key].directObjects;
+        const indirectObjects = tests[key].indirectObjects;
+        const result = nlp.chunker.getObjectsOfSentence(tests[key].text);
+        expect(directObjects).toEqual(result.directObjs.join(' '));
+        expect(indirectObjects).toEqual(result.indirectObjs.join(' '));
+      }
+    });
+  });
 });
