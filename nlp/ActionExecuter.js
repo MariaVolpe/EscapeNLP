@@ -4,7 +4,7 @@ const Structure = require('../game-logic/Structure');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
-const { isCoordinate, matchRegex, convertToIndices } = require('../game-logic/util');
+const { isCoordinate, matchRegex, convertToIndices, convertToFECoordinate } = require('../game-logic/util');
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -82,7 +82,7 @@ class ActionExecuter {
         const movingObject = movingObjects[i];
         results.push({
           objectName: movingObject.name,
-          destination: isCoordinate(destinationObject) ? destinationObject : destinationObject.name,
+          destination: isCoordinate(destinationObject) ? convertToFECoordinate(destinationObject) : destinationObject.name,
           path: paths[i],
         });
       } 
