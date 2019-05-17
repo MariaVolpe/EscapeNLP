@@ -7,6 +7,13 @@ const server = app.listen(PORT, () => {
   console.log(`EscapeNLP Server listening on port ${PORT}!`); // eslint-disable-line no-console
 });
 
+const io = socketio(server);
+
+const getGames = () => {
+  const { data } = gameContainer.getAllSessions();
+  return data;
+};
+
 
 const safeGetAtIndex = (arr, index) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
@@ -14,7 +21,7 @@ const safeGetAtIndex = (arr, index) => {
   }
 };
 
-const parseActionResults = (io, socket, message, actionResults) => {
+const parseActionResults = (socket, message, actionResults) => {
   const failActionText = {
     type: 'flavor',
     time: message.time,
@@ -70,13 +77,6 @@ const parseActionResults = (io, socket, message, actionResults) => {
   });
 };
 
-const io = socketio(server);
-
-const getGames = () => {
-  const { data } = gameContainer.getAllSessions();
-  return data;
-};
-
 io.on('connection', (socket) => {
   console.log('connection established'); // eslint-disable-line no-console
 
@@ -120,7 +120,6 @@ io.on('connection', (socket) => {
     }
   });
 
-
   socket.on('getAllRooms', () => {
     socket.emit('refreshRoomsReceived', getGames());
   });
@@ -130,7 +129,7 @@ io.on('connection', (socket) => {
 
     if (message.type === 'action') {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
-      parseActionResults(io, socket, message, actionResults);
+      parseActionResults(socket, message, actionResults);
 
       const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
 
