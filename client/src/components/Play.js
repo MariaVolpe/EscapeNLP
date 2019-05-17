@@ -391,7 +391,7 @@ class Play extends Component {
       let command = this.state.command;
       command += " " + i + (k+1)+ "";
       this.setState({command});
-    } 
+    }
   }
 
   stayOnPage = (event) => {
