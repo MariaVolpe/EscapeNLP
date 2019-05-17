@@ -17,31 +17,33 @@ const parseResults = (io, socket, message, actionResults) => {
     }
   }
 
+  const failActionText = {
+    type: 'chat',
+    time: message.time,
+    commenter: message.commenter,
+    mess: 'You can\'t do that.',
+  };
+
   actionResults.forEach((action) => {
-    let interprettedMsg = '';
     if (!action.action) {
-      const flavorMsg = {
-        type: 'chat',
-        time: message.time,
-        commenter: message.commenter,
-        mess: 'You can\'t do that.',
-      };
-      return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
+      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
     }
 
+    let interprettedMsg = '';
     interprettedMsg = `action: ${action.action}, `;
 
     if (action.result) {
-      interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+      interprettedMsg += `${action.result.length > 1 ? 'targets:' : 'target:'} `;
 
       // quick n dirty string handling
       action.result.forEach((result) => {
-        if (action.action === 'move') {
-          interprettedMsg = `${interprettedMsg}${result.destination}, `;
-        } else {
-          interprettedMsg = `${interprettedMsg}${result.objectName}, `;
-        }
+        interprettedMsg += `${result.objectName}, `;
       });
+
+      if (action.action === 'move') {
+        interprettedMsg += `destination: ${action.result[0].destination}, `;
+      }
+
       interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
     }
 
@@ -65,13 +67,7 @@ const parseResults = (io, socket, message, actionResults) => {
         };
         io.in(socket.currentRoom).emit('chatMessage', flavorText);
       } else if (!item.text && item.successful === false) {
-        const flavorText = {
-          type: 'flavor',
-          time: message.time,
-          commenter: message.commenter,
-          mess: 'You can\'t do that.',
-        };
-        io.in(socket.currentRoom).emit('chatMessage', flavorText);
+        io.in(socket.currentRoom).emit('chatMessage', failActionText);
       }
     });
   }
