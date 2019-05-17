@@ -165,13 +165,13 @@ class Play extends Component {
     return words;
   }
 
-  createComment = (mess, type) => {
+  createComment = (text, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
     let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes().toString() : date.getMinutes().toString();
     let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds().toString() : date.getSeconds().toString();
     let time = date.getHours() + ':' + minutes + ':' + seconds;
-    const message = { commenter, time, mess, type };
+    const message = { commenter, time, text, type };
     this.socket.emit('chatMessage', message);
   }
 
@@ -331,7 +331,7 @@ class Play extends Component {
     if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
       prevMessages[index].checked = true;
       let commenter = prevMessages[index].commenter;
-      let mess = 'Was \'' + prevMessages[index].text + '\' incorrect?';
+      let text = 'Was \'' + prevMessages[index].text + '\' incorrect?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       prevMessages.forEach((message, i) => {
@@ -339,7 +339,7 @@ class Play extends Component {
           prevMessages.splice(i, 1);
         }
       });
-      const message = { commenter, time, mess, type: 'new interpretation' };
+      const message = { commenter, time, text, type: 'new interpretation' };
       prevMessages.splice(index+1, 0, message);
       this.setState({ prevMessages });
     }

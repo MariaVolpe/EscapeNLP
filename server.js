@@ -215,8 +215,8 @@ io.on('connection', (socket) => {
     if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-      const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = { commenter: time, time: '', mess };
+      const text = `${socket.playerInfo.name} has disconnected`;
+      const message = { commenter: time, time: '', text };
       gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
