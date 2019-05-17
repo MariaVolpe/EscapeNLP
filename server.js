@@ -8,13 +8,13 @@ const server = app.listen(PORT, () => {
 });
 
 
-const safeGetFromArr = (arr, index) => {
+const safeGetAtIndex = (arr, index) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
     return arr[index];
   }
 };
 
-const parseResults = (io, socket, message, actionResults) => {
+const parseActionResults = (io, socket, message, actionResults) => {
   const failActionText = {
     type: 'flavor',
     time: message.time,
@@ -22,20 +22,20 @@ const parseResults = (io, socket, message, actionResults) => {
     mess: 'You can\'t do that.',
   };
 
-  actionResults.forEach((action) => {
-    if (!action.action || !action.result) {
+  actionResults.forEach((actionObj) => {
+    if (!actionObj.action || !actionObj.result) {
       return io.in(socket.currentRoom).emit('chatMessage', failActionText);
     }
 
-    let interprettedMsg = `action: ${action.action}, `;
-    interprettedMsg += `${action.result.length > 1 ? 'targets:' : 'target:'} `;
+    let interprettedMsg = `action: ${actionObj.action}, `;
+    interprettedMsg += `${actionObj.result.length > 1 ? 'targets:' : 'target:'} `;
 
-    action.result.forEach((result) => {
+    actionObj.result.forEach((result) => {
       interprettedMsg += `${result.objectName}, `;
     });
 
-    if (action.action === 'move') {
-      interprettedMsg += `destination: ${safeGetFromArr(action.result, 0).destination}, `;
+    if (actionObj.action === 'move') {
+      interprettedMsg += `destination: ${safeGetAtIndex(actionObj.result, 0).destination}, `;
     }
 
     interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
@@ -46,9 +46,10 @@ const parseResults = (io, socket, message, actionResults) => {
       commenter: message.commenter,
       mess: interprettedMsg,
     };
+
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
 
-    action.result.forEach((item) => {
+    actionObj.result.forEach((item) => {
       if (item.text) {
         const flavorText = {
           type: 'flavor',
@@ -56,6 +57,7 @@ const parseResults = (io, socket, message, actionResults) => {
           commenter: message.commenter,
           mess: item.text,
         };
+
         io.in(socket.currentRoom).emit('chatMessage', flavorText);
       }
 
@@ -128,12 +130,13 @@ io.on('connection', (socket) => {
 
     if (message.type === 'action') {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
-      parseResults(io, socket, message, actionResults);
+      parseActionResults(io, socket, message, actionResults);
 
-      const gameComplete = gameContainer.getIsGameCompleted(socket.gameId);
+      const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
 
       const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
+
       io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
       io.in(socket.currentRoom).emit('updatePlayers', players);
     }
