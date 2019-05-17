@@ -15,17 +15,8 @@ const safeGetFromArr = (arr, index) => {
 };
 
 const parseResults = (io, socket, message, actionResults) => {
-  console.log(message.mess);
-  console.log(actionResults[0]);
-  if (actionResults[0].action === 'move') {
-    console.log(actionResults[0].result[0].path);
-    if (actionResults[0].result[1]) {
-      console.log(actionResults[0].result[1].path);
-    }
-  }
-
   const failActionText = {
-    type: 'chat',
+    type: 'flavor',
     time: message.time,
     commenter: message.commenter,
     mess: 'You can\'t do that.',
@@ -37,10 +28,8 @@ const parseResults = (io, socket, message, actionResults) => {
     }
 
     let interprettedMsg = `action: ${action.action}, `;
-
     interprettedMsg += `${action.result.length > 1 ? 'targets:' : 'target:'} `;
 
-    // quick n dirty string handling
     action.result.forEach((result) => {
       interprettedMsg += `${result.objectName}, `;
     });
@@ -68,7 +57,11 @@ const parseResults = (io, socket, message, actionResults) => {
           mess: item.text,
         };
         io.in(socket.currentRoom).emit('chatMessage', flavorText);
-      } else if (!item.text && item.successful === false) {
+      }
+
+      // 'successful' must be explicitly set to false
+      // or else the action should be assumed to be successful
+      if (!item.text && item.successful === false) {
         io.in(socket.currentRoom).emit('chatMessage', failActionText);
       }
     });
