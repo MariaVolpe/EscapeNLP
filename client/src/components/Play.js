@@ -378,12 +378,6 @@ class Play extends Component {
     this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
   }
 
-  updatePlayerIcon = (iconName) => {
-    if (this.state.setName) {
-      this.socket.emit('updatePlayerIcon', iconName);
-    }
-  }
-
   onTileClick = (i, k) => {
     if(this.state.allPlayersReady === true){
       i = String.fromCharCode(i+65);
@@ -468,7 +462,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <Navigation inGame={true} updatePlayerIcon={this.updatePlayerIcon}/>
+        <Navigation inGame={true}/>
         {playerInfo}
         {gameInfo}
         <CreateNameModal

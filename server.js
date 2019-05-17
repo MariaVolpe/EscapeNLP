@@ -233,13 +233,6 @@ io.on('connection', (socket) => {
     io.in(roomId).emit('updatePlayerCount', playerList);
   });
 
-  socket.on('updatePlayerIcon', (iconName) => {
-    if (socket.playerInfo) {
-      socket.playerInfo.iconName = iconName;
-    }
-    updatePlayers('', socket.currentRoom, {});
-  });
-
   setInterval(() => {
     if (socket.currentRoom) {
       if (io.sockets.adapter.rooms[socket.currentRoom]) {
