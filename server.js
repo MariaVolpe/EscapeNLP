@@ -26,7 +26,7 @@ const parseActionResults = (socket, message, actionResults) => {
     type: 'flavor',
     time: message.time,
     commenter: message.commenter,
-    mess: 'You can\'t do that.',
+    text: 'You can\'t do that.',
   };
 
   actionResults.forEach((actionObj) => {
@@ -51,7 +51,7 @@ const parseActionResults = (socket, message, actionResults) => {
       type: 'interpreted',
       time: message.time,
       commenter: message.commenter,
-      mess: interprettedMsg,
+      text: interprettedMsg,
     };
 
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
@@ -62,7 +62,7 @@ const parseActionResults = (socket, message, actionResults) => {
           type: 'flavor',
           time: message.time,
           commenter: message.commenter,
-          mess: item.text,
+          text: item.text,
         };
 
         io.in(socket.currentRoom).emit('chatMessage', flavorText);

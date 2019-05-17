@@ -40,13 +40,13 @@ class Play extends Component {
     this.socket.on('chatMessage', (mess) => {
       let prevMessages = this.state.prevMessages;
       prevMessages.push(mess);
-      if (mess.mess === '/d20' && mess.commenter === this.state.playerName) {
+      if (mess.text === '/d20' && mess.commenter === this.state.playerName) {
         const d20 = mess.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
         const message = {
           type: 'chat',
           time: mess.time,
           commenter: 'System',
-          mess: d20
+          text: d20
         }
         this.socket.emit('chatMessage', message);
       }
@@ -324,7 +324,7 @@ class Play extends Component {
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
     const reportedMessage = prevMessages[i];
-    console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
+    console.log(`Report ${prevMessages[i].text} written by ${prevMessages[i].commenter}`);
     this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
   }
 
@@ -352,7 +352,7 @@ class Play extends Component {
     if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
       prevMessages[index].checked = true;
       let commenter = prevMessages[index].commenter;
-      let mess = 'Was \'' + prevMessages[index].mess + '\' incorrect?';
+      let mess = 'Was \'' + prevMessages[index].text + '\' incorrect?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       prevMessages.forEach((message, i) => {
