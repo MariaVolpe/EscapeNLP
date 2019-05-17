@@ -9,7 +9,7 @@ const server = app.listen(PORT, () => {
 
 
 const safeGetFromArr = (arr, index) => {
-  if (Array.isArray(arr) && arr.length > index) {
+  if (arr && Array.isArray(arr) && arr.length > index) {
     return arr[index];
   }
 };
@@ -32,27 +32,24 @@ const parseResults = (io, socket, message, actionResults) => {
   };
 
   actionResults.forEach((action) => {
-    if (!action.action) {
+    if (!action.action || !action.result) {
       return io.in(socket.currentRoom).emit('chatMessage', failActionText);
     }
 
-    let interprettedMsg = '';
-    interprettedMsg = `action: ${action.action}, `;
+    let interprettedMsg = `action: ${action.action}, `;
 
-    if (action.result) {
-      interprettedMsg += `${action.result.length > 1 ? 'targets:' : 'target:'} `;
+    interprettedMsg += `${action.result.length > 1 ? 'targets:' : 'target:'} `;
 
-      // quick n dirty string handling
-      action.result.forEach((result) => {
-        interprettedMsg += `${result.objectName}, `;
-      });
+    // quick n dirty string handling
+    action.result.forEach((result) => {
+      interprettedMsg += `${result.objectName}, `;
+    });
 
-      if (action.action === 'move') {
-        interprettedMsg += `destination: ${safeGetFromArr(action.result, 0).destination}, `;
-      }
-
-      interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+    if (action.action === 'move') {
+      interprettedMsg += `destination: ${safeGetFromArr(action.result, 0).destination}, `;
     }
+
+    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
 
     const actionMsg = {
       type: 'interpreted',
@@ -61,10 +58,8 @@ const parseResults = (io, socket, message, actionResults) => {
       mess: interprettedMsg,
     };
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
-  });
 
-  if (actionResults[0].result) {
-    actionResults[0].result.forEach((item) => {
+    action.result.forEach((item) => {
       if (item.text) {
         const flavorText = {
           type: 'flavor',
@@ -77,7 +72,7 @@ const parseResults = (io, socket, message, actionResults) => {
         io.in(socket.currentRoom).emit('chatMessage', failActionText);
       }
     });
-  }
+  });
 };
 
 const io = socketio(server);
