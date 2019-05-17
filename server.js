@@ -7,6 +7,13 @@ const server = app.listen(PORT, () => {
   console.log(`EscapeNLP Server listening on port ${PORT}!`); // eslint-disable-line no-console
 });
 
+
+const safeGetFromArr = (arr, index) => {
+  if (Array.isArray(arr) && arr.length > index) {
+    return arr[index];
+  }
+};
+
 const parseResults = (io, socket, message, actionResults) => {
   console.log(message.mess);
   console.log(actionResults[0]);
@@ -41,7 +48,7 @@ const parseResults = (io, socket, message, actionResults) => {
       });
 
       if (action.action === 'move') {
-        interprettedMsg += `destination: ${action.result[0].destination}, `;
+        interprettedMsg += `destination: ${safeGetFromArr(action.result, 0).destination}, `;
       }
 
       interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
