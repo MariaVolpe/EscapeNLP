@@ -7,10 +7,75 @@ const server = app.listen(PORT, () => {
   console.log(`EscapeNLP Server listening on port ${PORT}!`); // eslint-disable-line no-console
 });
 
-// // probably need to configure cors here
-// const io = socketio(server, {
-//   origins: 'cors stuff'
-// });
+const parseResults = (io, socket, message, actionResults) => {
+  console.log(message.mess);
+  console.log(actionResults[0]);
+  if (actionResults[0].action === 'move') {
+    console.log(actionResults[0].result[0].path);
+    if (actionResults[0].result[1]) {
+      console.log(actionResults[0].result[1].path);
+    }
+  }
+
+  actionResults.forEach((action) => {
+    let interprettedMsg = '';
+    if (!action.action) {
+      const flavorMsg = {
+        type: 'chat',
+        time: message.time,
+        commenter: message.commenter,
+        mess: 'You can\'t do that.',
+      };
+      return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
+    }
+
+    interprettedMsg = `action: ${action.action}, `;
+
+    if (action.result) {
+      interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
+
+      // quick n dirty string handling
+      action.result.forEach((result) => {
+        if (action.action === 'move') {
+          interprettedMsg = `${interprettedMsg}${result.destination}, `;
+        } else {
+          interprettedMsg = `${interprettedMsg}${result.objectName}, `;
+        }
+      });
+      interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+    }
+
+    const actionMsg = {
+      type: 'interpreted',
+      time: message.time,
+      commenter: message.commenter,
+      mess: interprettedMsg,
+    };
+    io.in(socket.currentRoom).emit('chatMessage', actionMsg);
+  });
+
+  if (actionResults[0].result) {
+    actionResults[0].result.forEach((item) => {
+      if (item.text) {
+        const flavorText = {
+          type: 'flavor',
+          time: message.time,
+          commenter: message.commenter,
+          mess: item.text,
+        };
+        io.in(socket.currentRoom).emit('chatMessage', flavorText);
+      } else if (!item.text && item.successful === false) {
+        const flavorText = {
+          type: 'flavor',
+          time: message.time,
+          commenter: message.commenter,
+          mess: 'You can\'t do that.',
+        };
+        io.in(socket.currentRoom).emit('chatMessage', flavorText);
+      }
+    });
+  }
+};
 
 const io = socketio(server);
 
@@ -72,77 +137,7 @@ io.on('connection', (socket) => {
 
     if (message.type === 'action') {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
-
-      console.log(message.mess);
-      console.log(actionResults[0]);
-      if (actionResults[0].action === 'move') {
-        console.log(actionResults[0].result[0].path);
-        if (actionResults[0].result[1]) {
-          console.log(actionResults[0].result[1].path);
-        }
-      }
-
-      // set gameComplete to true if necessary
-
-      actionResults.forEach((action) => {
-        let interprettedMsg = '';
-        if (!action.action) {
-          const flavorMsg = {
-            type: 'chat',
-            time: message.time,
-            commenter: message.commenter,
-            mess: 'You can\'t do that.',
-          };
-          return io.in(socket.currentRoom).emit('chatMessage', flavorMsg);
-        }
-
-
-        interprettedMsg = `action: ${action.action}, `;
-
-        if (action.result) {
-          interprettedMsg = `${interprettedMsg}${action.result.length > 1 ? 'targets:' : 'target:'} `;
-
-          // quick n dirty string handling
-          action.result.forEach((result) => {
-            if (action.action === 'move') {
-              interprettedMsg = `${interprettedMsg}${result.destination}, `;
-            } else {
-              interprettedMsg = `${interprettedMsg}${result.objectName}, `;
-            }
-          });
-          interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
-        }
-
-        const actionMsg = {
-          type: 'interpreted',
-          time: message.time,
-          commenter: message.commenter,
-          mess: interprettedMsg,
-        };
-        io.in(socket.currentRoom).emit('chatMessage', actionMsg);
-      });
-
-      if (actionResults[0].result) {
-        actionResults[0].result.forEach((item) => {
-          if (item.text) {
-            const flavorText = {
-              type: 'flavor',
-              time: message.time,
-              commenter: message.commenter,
-              mess: item.text,
-            };
-            io.in(socket.currentRoom).emit('chatMessage', flavorText);
-          } else if (!item.text && item.successful === false) {
-            const flavorText = {
-              type: 'flavor',
-              time: message.time,
-              commenter: message.commenter,
-              mess: 'You can\'t do that.',
-            };
-            io.in(socket.currentRoom).emit('chatMessage', flavorText);
-          }
-        });
-      }
+      parseResults(io, socket, message, actionResults);
 
       const gameComplete = gameContainer.getIsGameCompleted(socket.gameId);
 
