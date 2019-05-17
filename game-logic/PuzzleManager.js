@@ -65,7 +65,7 @@ class PuzzleManager {
   }
 
   evaluateAllPuzzles(userName) {
-    const userObj = this.grid.getObject( {identifier: userName} )
+    const userObj = this.grid.getObject({ identifier: userName });
     this.puzzles.forEach(({ puzzle_type }) => {
       this.rewardSolvedPuzzle(puzzle_type, userObj);
     });
