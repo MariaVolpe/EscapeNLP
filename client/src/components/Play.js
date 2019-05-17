@@ -37,20 +37,20 @@ class Play extends Component {
 
     this.socket = socketIOClient('');
 
-    this.socket.on('chatMessage', (mess) => {
+    this.socket.on('chatMessage', (msg) => {
       let prevMessages = this.state.prevMessages;
-      prevMessages.push(mess);
-      if (mess.text === '/d20' && mess.commenter === this.state.playerName) {
-        const d20 = mess.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
+      prevMessages.push(msg);
+      if (msg.text === '/d20' && msg.commenter === this.state.playerName) {
+        const d20 = msg.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
         const message = {
           type: 'chat',
-          time: mess.time,
+          time: msg.time,
           commenter: 'System',
           text: d20
         }
         this.socket.emit('chatMessage', message);
       }
-      if (mess.commenter === this.state.playerName) {
+      if (msg.commenter === this.state.playerName) {
         this.setState({ message: '', command: '', prevMessages });
       } else {
         this.setState({ prevMessages });
