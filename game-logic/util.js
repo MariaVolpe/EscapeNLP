@@ -18,5 +18,6 @@ const convertToFECoordinate = (obj) => {
   return letter.toString() + number.toString();
 };
 
-module.exports = { isCoordinate, matchRegex, convertToIndices, convertToFECoordinate };
-
+module.exports = {
+  isCoordinate, matchRegex, convertToIndices, convertToFECoordinate,
+};
