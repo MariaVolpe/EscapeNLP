@@ -83,7 +83,6 @@ class PlayerInfo extends Component {
     const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
     const playerIcon = 'player' + this.props.playerInfo.position;
 
-    // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
       const name = this.props.playerInfo.name + " has disconnected.";
       return(
