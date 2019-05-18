@@ -57,7 +57,7 @@ class TextInfo extends Component {
         messageBody = "full-message";
       }
       let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
-                            {message.mess}
+                            {message.text}
                           </div>;
       if (message.type === 'action') {
         textType = "text command ";
@@ -68,19 +68,19 @@ class TextInfo extends Component {
       else if (message.type === 'interpreted') {
         textType = "text interpreted";
         entireMessage = <div className="full-message" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
-                          {message.mess}
+                          {message.text}
                         </div>;
       }
       else if (message.type === 'flavor') {
         textType = "text flavor-text";
         entireMessage = <div className="full-message">
-                          {message.mess}
+                          {message.text}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
         textType = "text new-interpreted";
         entireMessage = <div className="full-message" data-tip={`${message.time}`} data-for="time">
-                          {message.mess}
+                          {message.text}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'no')}>No</button>

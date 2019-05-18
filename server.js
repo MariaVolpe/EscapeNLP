@@ -26,7 +26,7 @@ const parseActionResults = (socket, message, actionResults) => {
     type: 'flavor',
     time: message.time,
     commenter: message.commenter,
-    mess: 'You can\'t do that.',
+    text: 'You can\'t do that.',
   };
 
   actionResults.forEach((actionObj) => {
@@ -51,7 +51,7 @@ const parseActionResults = (socket, message, actionResults) => {
       type: 'interpreted',
       time: message.time,
       commenter: message.commenter,
-      mess: interprettedMsg,
+      text: interprettedMsg,
     };
 
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
@@ -62,7 +62,7 @@ const parseActionResults = (socket, message, actionResults) => {
           type: 'flavor',
           time: message.time,
           commenter: message.commenter,
-          mess: item.text,
+          text: item.text,
         };
 
         io.in(socket.currentRoom).emit('chatMessage', flavorText);
@@ -215,8 +215,8 @@ io.on('connection', (socket) => {
     if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-      const mess = `${socket.playerInfo.name} has disconnected`;
-      const message = { commenter: time, time: '', mess };
+      const text = `${socket.playerInfo.name} has disconnected`;
+      const message = { commenter: time, time: '', text };
       gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
       io.in(socket.currentRoom).emit('chatMessage', message);
       io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
