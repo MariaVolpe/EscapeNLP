@@ -60,7 +60,6 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-          className="tiny ui button"
                     className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >

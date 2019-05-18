@@ -16,7 +16,6 @@ class Browser extends Component {
 
     this.socket = socketIOClient('');
 
-    // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
       const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
         if(inProgress === false){
