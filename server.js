@@ -179,7 +179,7 @@ io.on('connection', (socket) => {
 
   socket.on('getName', async (playerInfo) => {
     socket.playerInfo = playerInfo;
-    if (playerInfo !== '') {
+    if (playerInfo.name !== 'player is joining...') {
       const { playerId, name } = playerInfo;
       await gameContainer.setPlayerName(socket.gameId, playerId, name);
     }
