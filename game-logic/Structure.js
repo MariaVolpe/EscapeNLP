@@ -83,6 +83,10 @@ class Structure extends BoardObject {
     this.inspectText = this.inspectTextInactive;
   }
 
+  toggleActivation() {
+    this.activated ? (this.activated = false) : (this.activated = true);
+  }
+
   setPassable(boolean) {
     this.passable = boolean;
   }

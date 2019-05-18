@@ -32,6 +32,7 @@ class ActionExecuter {
       activate: this.executeActivate,
       deactivate: this.executeDeactivate,
       use: this.executeUse,
+      toggle: this.executeToggle,
       buildWeapon: this.executeBuildWeapon,
     };
     return functionMap;
@@ -351,6 +352,24 @@ class ActionExecuter {
 
   executeDeactivate(data) {
 
+  }
+
+  executeToggle(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    let actionString = 'activate'
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.toggleActivation();
+          subject.activated ? (actionString = 'activate') : (actionString = 'deactivate');
+        }
+        results.push({ objectName: subject.name, successful: true });
+      }
+    });
+    return { userName: user.name, action: actionString, result: results };    
   }
 
   executeUse(data) {
