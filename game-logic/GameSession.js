@@ -40,6 +40,7 @@ class GameSession {
   }
 
   getIsGameCompleted() {
+    this.isCompleted = this.puzzleManager.checkGameComplete();
     return this.isCompleted;
   }
 
