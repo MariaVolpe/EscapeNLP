@@ -79,7 +79,7 @@ class TextInfo extends Component {
       }
       else if (message.type === 'new interpretation') {
         textType = "text new-interpreted";
-        entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
+        entireMessage = <div className="full-message" data-tip={`${message.time}`} data-for="time">
                           {message.mess}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>

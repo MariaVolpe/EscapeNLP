@@ -142,27 +142,7 @@
   border: 3px solid #ecf0f1;
 } */
 
-.text.command:hover > div {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-}
-
-.text.chat:hover > div {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-}
-
-.text.interpreted:hover > div {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-}
-
-.text.flavor-text:hover > div {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-}
-
-.text.new-interpretation:hover > div {
+.text:hover > div {
   background-color: #ecf0f1;
   border: 3px solid #ecf0f1;
 }
