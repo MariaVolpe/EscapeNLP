@@ -211,15 +211,22 @@ io.on('connection', (socket) => {
       .emit('readyUp', socket.playerInfo, shouldStart);
   });
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
     if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const text = `${socket.playerInfo.name} has disconnected`;
       const message = { commenter: time, time: '', text };
-      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
+      await gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
+
+      const board = await gameContainer.getFormattedBoard(socket.gameId);
+      const players = await gameContainer.getFormattedPlayersList(socket.gameId);
+      const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
+
+      io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
+      io.in(socket.currentRoom).emit('updatePlayers', players);
       io.in(socket.currentRoom).emit('chatMessage', message);
-      io.in(socket.currentRoom).emit('removePlayer', socket.playerInfo.name);
+
       if (io.nsps['/'].adapter.rooms[socket.currentRoom].gameStart) {
         updatePlayers('disconnected', socket.currentRoom, socket.playerInfo);
       } else {

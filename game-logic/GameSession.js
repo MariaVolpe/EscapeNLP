@@ -35,6 +35,10 @@ class GameSession {
   }
 
   dropPlayerFromSession(playerName) {
+    const droppedAgent = this.agents.find(agent => agent.name === playerName);
+    this.grid.removeFromBoard(droppedAgent);
+    console.log(droppedAgent);
+
     const newAgents = this.agents.filter(agent => agent.name !== playerName);
     this.agents = newAgents;
   }
