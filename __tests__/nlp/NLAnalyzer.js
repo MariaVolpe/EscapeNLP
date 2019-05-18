@@ -54,4 +54,8 @@ describe('Natural Language Processing Tests', () => {
       }
     });
   });
+  describe('Design data testing', async () => {
+    const analyzer = new NLAnalyzer();
+    analyzer.tester.testNetworkByDirectory('./nlp/data/design/test/', analyzer.actionClassifier);
+  });
 });
