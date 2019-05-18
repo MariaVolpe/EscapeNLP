@@ -40,6 +40,7 @@ class GameSession {
   }
 
   getIsGameCompleted() {
+    this.isCompleted = this.puzzleManager.checkGameComplete();
     return this.isCompleted;
   }
 
@@ -69,7 +70,7 @@ class GameSession {
   performAction(message) {
     return this.interpreter.executeInput({
       userName: message.commenter,
-      data: message.mess,
+      data: message.text,
     });
   }
 

@@ -142,7 +142,7 @@ class ReportModal extends Component {
               <Form >
                 <FormGroup row>
                   <Label className="centered">
-                    {this.props.message.mess + ' writen by ' + this.props.message.commenter}
+                    {this.props.message.text + ' writen by ' + this.props.message.commenter}
                   </Label>
                 </FormGroup>
                 <FormGroup row style={{marginLeft: '0%'}}>

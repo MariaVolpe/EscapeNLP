@@ -43,10 +43,6 @@ class Browser extends Component {
     this.socket.emit('getAllRooms');
   }
 
-  onLobbyClick = (event) => {
-    console.log("clicked on lobby");
-  }
-
   onCreateClick = (event) => {
     this.setState({createLobbyIsOpen: !this.state.createLobbyIsOpen});
     event.preventDefault();

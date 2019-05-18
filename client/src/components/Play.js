@@ -37,20 +37,20 @@ class Play extends Component {
 
     this.socket = socketIOClient('');
 
-    this.socket.on('chatMessage', (mess) => {
+    this.socket.on('chatMessage', (msg) => {
       let prevMessages = this.state.prevMessages;
-      prevMessages.push(mess);
-      if (mess.mess === '/d20' && mess.commenter === this.state.playerName) {
-        const d20 = mess.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
+      prevMessages.push(msg);
+      if (msg.text === '/d20' && msg.commenter === this.state.playerName) {
+        const d20 = msg.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
         const message = {
           type: 'chat',
-          time: mess.time,
+          time: msg.time,
           commenter: 'System',
-          mess: d20
+          text: d20
         }
         this.socket.emit('chatMessage', message);
       }
-      if (mess.commenter === this.state.playerName) {
+      if (msg.commenter === this.state.playerName) {
         this.setState({ message: '', command: '', prevMessages });
       } else {
         this.setState({ prevMessages });
@@ -59,23 +59,7 @@ class Play extends Component {
     });
 
     this.socket.on('setNames', (allPlayers) => {
-      // let allPlayers = this.state.allPlayers;
-      //
-      // players.forEach((player, i) => {
-      //   if (!allPlayers.hasOwnProperty(player.name)) {
-      //     allPlayers[player.name] = {
-      //       inventory: [],
-      //       ready: player.ready,
-      //       position: player.position,
-      //       hasLeftGame: player.hasLeftGame,
-      //       iconName: player.iconName
-      //     };
-      //   } else {
-      //     allPlayers[player.name].position = player.position;
-      //     allPlayers[player.name].iconName = player.iconName;
-      //   }
-      // });
-      this.setState({allPlayers});
+      this.setState({ allPlayers });
     });
 
     this.socket.on('updatePlayers', (players) => {
@@ -92,9 +76,7 @@ class Play extends Component {
 
     this.socket.on('readyUp', (playerInfo, allPlayersReady) => {
       let allPlayers = this.state.allPlayers;
-      // if (allPlayers.hasOwnProperty(playerInfo.name)) {
-      //   allPlayers[playerInfo.name].ready = playerInfo.ready;
-      // }
+
       allPlayers.forEach((player) => {
         if (player.name === playerInfo.name) {
           player.ready = playerInfo.ready;
@@ -105,7 +87,7 @@ class Play extends Component {
         this.socket.emit('startGame', this.state.board);
       }
 
-      this.setState({allPlayers, allPlayersReady});
+      this.setState({ allPlayers, allPlayersReady });
     });
 
     this.socket.on('removePlayer', (playerName) => {
@@ -117,15 +99,12 @@ class Play extends Component {
         }
       });
       allPlayers = allPlayers.slice(removeIndex);
-      // if (allPlayers.hasOwnProperty(playerName)) {
-      //   delete allPlayers[playerName];
-      // }
 
-      this.setState({allPlayers});
+      this.setState({ allPlayers });
     });
 
     this.socket.on('playerIsJoining', (numberOfPlayers) => {
-      this.setState({numberOfPlayers});
+      this.setState({ numberOfPlayers });
     })
 
     this.socket.on('updateBoard', (board, gameComplete) => {
@@ -139,7 +118,7 @@ class Play extends Component {
           allPlayers.inventory = player.inventory;
         }
       });
-      this.setState({allPlayers});
+      this.setState({ allPlayers });
     });
 
     this.socket.on('updatePlayerCount', (playerList) => {
@@ -147,7 +126,7 @@ class Play extends Component {
     });
 
     this.socket.on('updateTimer', (timer) => {
-      this.setState({timer});
+      this.setState({ timer });
     })
 
     this.onMessageKeyPress = this.onMessageKeyPress.bind(this);
@@ -164,7 +143,7 @@ class Play extends Component {
       window.sessionStorage.removeItem("roomId");
       this.socket.emit('getName', '');
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
-      this.setState({board});
+      this.setState({ board });
     } else {
       window.location.replace('/browser');
     }
@@ -186,13 +165,13 @@ class Play extends Component {
     return words;
   }
 
-  createComment = (mess, type) => {
+  createComment = (text, type) => {
     let commenter = this.state.playerName;
     let date = new Date();
     let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes().toString() : date.getMinutes().toString();
     let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds().toString() : date.getSeconds().toString();
     let time = date.getHours() + ':' + minutes + ':' + seconds;
-    const message = { commenter, time, mess, type };
+    const message = { commenter, time, text, type };
     this.socket.emit('chatMessage', message);
   }
 
@@ -203,16 +182,16 @@ class Play extends Component {
       if (message[0] === '*' && !this.state.gameComplete && !this.state.commandDisabled && this.state.allPlayersReady) {
         message = message.slice(1);
         this.createComment(message, 'action');
-        this.setState({commandDisabled: true});
+        this.setState({ commandDisabled: true });
         setTimeout(() => {
-          this.setState({commandDisabled: false});
+          this.setState({ commandDisabled: false });
         }, 2000);
       } else {
         this.createComment(message, 'chat');
       }
     }
     else if (message.length === 0) {
-      this.setState({message: ''});
+      this.setState({ message: '' });
     }
     else if (event.key === ' ') {
       if (message[0] === '*' && message.length === 1) {
@@ -233,9 +212,9 @@ class Play extends Component {
     command = this.removeStartAndEndSpaces(command);
     if (event.key === 'Enter' && command.length > 0) {
       this.createComment(command, 'action');
-      this.setState({commandDisabled: true});
+      this.setState({ commandDisabled: true });
       setTimeout(() => {
-        this.setState({commandDisabled: false});
+        this.setState({ commandDisabled: false });
       }, 2000);
     }
     else if (command.length === 0) {
@@ -243,7 +222,7 @@ class Play extends Component {
     }
     else if (event.key === ' ') {
       if (command[0] === '*' && command.length === 1) {
-        this.setState({chatOption: 'chat', message: '', command: ''});
+        this.setState({ chatOption: 'chat', message: '', command: '' });
       }
     }
   }
@@ -277,7 +256,7 @@ class Play extends Component {
     let allPlayers = this.state.allPlayers;
     playerName = this.removeStartAndEndSpaces(playerName);
     this.setState({ playerName });
-    //const takenName = allPlayers.hasOwnProperty(playerName);
+
     let takenName = false;
     allPlayers.forEach((player) => {
       if (player.name === playerName) {
@@ -293,10 +272,10 @@ class Play extends Component {
       }
       const playerInfo = { name: playerName, ready: false, position: 0, iconName: playerIcon, playerId: window.sessionStorage.getItem('playerId') };
       this.socket.emit('getName', playerInfo);
-      this.setState({setName: !this.state.setName});
+      this.setState({ setName: !this.state.setName });
     }
     else {
-      this.setState({warningOpen: true});
+      this.setState({ warningOpen: true });
     }
     event.preventDefault();
   }
@@ -304,40 +283,40 @@ class Play extends Component {
   onNameChange = (event) => {
     const playerName = event.target.value;
     if (playerName.length < 20) {
-      this.setState({playerName});
+      this.setState({ playerName });
     }
   }
 
   onChatOptionChange = (event) => {
     const chatOption = this.state.chatOption;
     if (chatOption === 'chat') {
-      this.setState({chatOption: 'action', message: '', command: ''});
+      this.setState({ chatOption: 'action', message: '', command: '' });
     } else {
-      this.setState({chatOption: 'chat', message: '', command: ''});
+      this.setState({ chatOption: 'chat', message: '', command: '' });
     }
   }
 
   onWarningClose = (event) => {
-    this.setState({warningOpen: !this.state.warningOpen});
+    this.setState({ warningOpen: !this.state.warningOpen });
   }
 
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
     const reportedMessage = prevMessages[i];
-    console.log(`Report ${prevMessages[i].mess} written by ${prevMessages[i].commenter}`);
-    this.setState({reportOpen: !this.state.reportOpen, reportedMessage});
+    console.log(`Report ${prevMessages[i].text} written by ${prevMessages[i].commenter}`);
+    this.setState({ reportOpen: !this.state.reportOpen, reportedMessage });
   }
 
   onMessageHover = (index) => {
-    this.setState({reportHover: true, reportIndex: index});
+    this.setState({ reportHover: true, reportIndex: index });
   }
 
   onMessageLeave = (index) => {
-    this.setState({reportHover: false, reportIndex: -1});
+    this.setState({ reportHover: false, reportIndex: -1 });
   }
 
   onReportToggle = (event) => {
-    this.setState({reportOpen: !this.state.reportOpen});
+    this.setState({ reportOpen: !this.state.reportOpen });
     event.preventDefault();
   }
 
@@ -352,7 +331,7 @@ class Play extends Component {
     if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
       prevMessages[index].checked = true;
       let commenter = prevMessages[index].commenter;
-      let mess = 'Was \'' + prevMessages[index].mess + '\' incorrect?';
+      let text = 'Was \'' + prevMessages[index].text + '\' incorrect?';
       let date = new Date();
       let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       prevMessages.forEach((message, i) => {
@@ -360,9 +339,9 @@ class Play extends Component {
           prevMessages.splice(i, 1);
         }
       });
-      const message = { commenter, time, mess, type: 'new interpretation' };
+      const message = { commenter, time, text, type: 'new interpretation' };
       prevMessages.splice(index+1, 0, message);
-      this.setState({prevMessages});
+      this.setState({ prevMessages });
     }
   }
 
@@ -375,25 +354,27 @@ class Play extends Component {
     } else if (prevMessages[index-1].type === 'interpreted') {
       delete prevMessages[index-1].checked;
     }
-    this.setState({prevMessages, reportIndex: index-1, reportOpen, reportedMessage: prevMessages[index-1]});
-  }
-
-  updatePlayerIcon = (iconName) => {
-    if (this.state.setName) {
-      this.socket.emit('updatePlayerIcon', iconName);
-    }
+    
+    this.setState({
+      prevMessages,
+      reportIndex: index - 1,
+      reportOpen,
+      reportedMessage: prevMessages[index - 1]
+    });
   }
 
   onTileClick = (i, k) => {
-    i = String.fromCharCode(i+65);
+    if(this.state.allPlayersReady === true){
+      i = String.fromCharCode(i+65);
 
-    let message = this.state.message;
-    message += " " + i + (k+1)+ "";
-    this.setState({message});
+      let command = this.state.command;
+      command += " " + i + (k+1)+ "";
+      this.setState({ command });
+    } 
   }
 
   stayOnPage = (event) => {
-    this.setState({showVictoryModal: !this.state.showVictoryModal});
+    this.setState({ showVictoryModal: !this.state.showVictoryModal });
     event.preventDefault();
   }
 
@@ -439,6 +420,7 @@ class Play extends Component {
                         gameComplete={this.state.gameComplete}
                         showVictoryModal={this.state.showVictoryModal}
                         stayOnPage={this.stayOnPage}
+                        currentPlayer={this.state.playerName}
                       />
                      </div>;
     // }
@@ -465,7 +447,7 @@ class Play extends Component {
 
     return(
       <div className="play-page" >
-        <Navigation inGame={true} updatePlayerIcon={this.updatePlayerIcon}/>
+        <Navigation inGame={true}/>
         {playerInfo}
         {gameInfo}
         <CreateNameModal

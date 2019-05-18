@@ -114,7 +114,7 @@
         "manuallyActivateable": false,
         "manuallyDeactivateable": false,
         "usable": false,
-        "use": null,
+        "use": "buildWeapon",
         "jumpable": null,
         "passable": false
     },

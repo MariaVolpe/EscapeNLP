@@ -42,6 +42,13 @@ class TextInfo extends Component {
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
+      if (prevName === message.commenter) {
+        sameName = true;
+      }
+      else if (prevName !== message.commenter) {
+        sameName = false;
+        prevName = message.commenter;
+      }
       let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
       const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
@@ -50,7 +57,7 @@ class TextInfo extends Component {
         messageBody = "full-message";
       }
       let entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
-                            {message.mess}
+                            {message.text}
                           </div>;
       if (message.type === 'action') {
         textType = "text command text-message";
@@ -61,35 +68,29 @@ class TextInfo extends Component {
       else if (message.type === 'interpreted') {
         textType = "text interpreted text-message";
         entireMessage = <div className={messageBody} data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
-                          {message.mess}
+                          {message.text}
                         </div>;
       }
       else if (message.type === 'flavor') {
         textType = "text text-message flavor-text";
         entireMessage = <div className="message-body">
-                          {message.mess}
+                          {message.text}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
         textType = "text new-interpreted text-message";
         entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
-                          {message.mess}
+                          {message.text}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'no')}>No</button>
                           </div>
                         </div>;
       }
-      if (prevName === message.commenter) {
-        sameName = true;
-      }
-      else if (prevName !== message.commenter) {
-        sameName = false;
-        prevName = message.commenter;
-      }
 
       if (sameName) {
-        comments.push(<div className="content" key={i} >
+        comments.push(<div className="comment text-container" >
+                        <div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
@@ -102,12 +103,14 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
+                          </div>
+                          <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                         </div>
-                        <ReactTooltip key="tooltip" id="time" type="dark" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                       </div>);
       }
       else if (!sameName) {
-        comments.push(<div className="content message" key={i} >
+        comments.push(<div className="comment text-container" >
+                        <div className="content message" key={i} >
                           <span className="author">
                             {message.commenter}
                           </span>
@@ -115,7 +118,6 @@ class TextInfo extends Component {
                             <span className="date">{timeOf}</span>
                           </div>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
-                            {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
@@ -126,7 +128,9 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
+                            {entireMessage}
                           </div>
+                        </div>
                       </div>);
       }
     });
@@ -142,7 +146,7 @@ class TextInfo extends Component {
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
-          <div className="comment text-container" >{comments}</div>
+          {comments}
         </div>
           <form className="ui form">
             <textarea

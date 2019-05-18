@@ -11,4 +11,17 @@ const convertToIndices = (coordinate) => {
   };
 };
 
+<<<<<<< HEAD
 module.exports = { isCoordinate, matchRegex, convertToIndices };
+=======
+const convertToFECoordinate = (obj) => {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const letter = alphabet[obj.y];
+  const number = obj.x + 1;
+  return letter.toString() + number.toString();
+};
+
+module.exports = {
+  isCoordinate, matchRegex, convertToIndices, convertToFECoordinate,
+};
+>>>>>>> development

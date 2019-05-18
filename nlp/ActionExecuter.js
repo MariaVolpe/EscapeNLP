@@ -1,10 +1,11 @@
 const compromise = require('compromise');
 const Agent = require('../game-logic/Agent');
 const Structure = require('../game-logic/Structure');
+const Item = require('../game-logic/Item');
 const StructLib = require('../game-logic/board-object-library/structure-library');
 const StructText = require('../game-logic/board-object-library/structure-text');
 const { getDistance } = require('../game-logic/Grid');
-const { isCoordinate, matchRegex, convertToIndices } = require('../game-logic/util');
+const { isCoordinate, matchRegex, convertToIndices, convertToFECoordinate } = require('../game-logic/util');
 
 /*
   Action Executer methods take in metadata and return result objects with success/failure flags
@@ -31,6 +32,7 @@ class ActionExecuter {
       activate: this.executeActivate,
       deactivate: this.executeDeactivate,
       use: this.executeUse,
+      buildWeapon: this.executeBuildWeapon,
     };
     return functionMap;
   }
@@ -82,7 +84,7 @@ class ActionExecuter {
         const movingObject = movingObjects[i];
         results.push({
           objectName: movingObject.name,
-          destination: isCoordinate(destinationObject) ? destinationObject : destinationObject.name,
+          destination: isCoordinate(destinationObject) ? convertToFECoordinate(destinationObject) : destinationObject.name,
           path: paths[i],
         });
       } 
@@ -356,16 +358,26 @@ class ActionExecuter {
     const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
-      if (subject && subject.use) {
+      if (subject && subject.usable) {
         if (this.functionMap[subject.use]) {
           results.push(this.functionMap[subject.use].bind(this)(data));
-        }
-        else {
-          //TODO: Account for special use functions
         }
       }
     });
     return { userName: user.name, action: 'use', result: results };
+  }
+
+  executeBuildWeapon(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    if (user.hasItem('hilt') && user.hasItem('blade')) {
+      user.removeItem('hilt');
+      user.removeItem('blade');
+      user.takeItem(new Item('sword'));
+      return { text: 'From the fires of the forge come a brand new sword!', successful: true };
+    }
+    else {
+      return { text: "You try to build a sword, but it looks like you're missing a piece", successful: false };
+    }
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods

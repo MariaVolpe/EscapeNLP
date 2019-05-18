@@ -64,7 +64,8 @@ class PuzzleManager {
     }
   }
 
-  evaluateAllPuzzles(userObj) {
+  evaluateAllPuzzles(userName) {
+    const userObj = this.grid.getObject({ identifier: userName });
     this.puzzles.forEach(({ puzzle_type }) => {
       this.rewardSolvedPuzzle(puzzle_type, userObj);
     });
@@ -82,7 +83,7 @@ class PuzzleManager {
           userObj.takeItem(new Item('blade'));
           const forgeObj = this.puzzleProgress.get('forge')[0];
           forgeObj.activate();
-          // Set forge to usable as well
+          forgeObj.setUsable(true);
           break;
         case 'lever':
           userObj.takeItem(new Item('hilt'));
@@ -111,7 +112,7 @@ class PuzzleManager {
         return this.checkWeightPuzzle();
         break;
       case 'lever':
-        return this.checkLeverPuzzle('010');
+        return this.checkLeverPuzzle('101');
         break;
       case 'forge':
         // TODO
@@ -157,7 +158,7 @@ class PuzzleManager {
       } else {
         impression.activate();
         const finishedWeight = this.grid.getObjectFromStackByName(impression.position, 'weight');
-        finishedWeight.setMovable(false);
+        finishedWeight.setMoveable(false);
         impression.setPassable(false);
       }
     });

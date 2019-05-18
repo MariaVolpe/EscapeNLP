@@ -87,8 +87,12 @@ class Structure extends BoardObject {
     this.passable = boolean;
   }
 
-  setMovable(boolean) {
-    this.passable = boolean;
+  setMoveable(boolean) {
+    this.moveable = boolean;
+  }
+
+  setUsable(boolean) {
+    this.usable = boolean;
   }
 
   getSpriteName() {

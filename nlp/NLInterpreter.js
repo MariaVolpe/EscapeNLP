@@ -53,7 +53,7 @@ class NLInterpreter {
     for (const classification of classifications) {
       const actionType = classification.label;
       const result = this.actionExecuter.executeAction(actionType, data);
-      this.puzzleManager.evaluateAllPuzzles();
+      this.puzzleManager.evaluateAllPuzzles(data.userName);
       if (result) { return result; } // else keep trying other actions
     }
   }
