@@ -164,7 +164,7 @@ io.on('connection', (socket) => {
       disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     }
-
+    socket.broadcast.emit('refreshRoomsReceived', getGames());
     io.in(room).emit('setNames', allPlayerNames);
   };
 
