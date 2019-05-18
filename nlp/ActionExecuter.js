@@ -368,7 +368,7 @@ class ActionExecuter {
           results.push({
             objectName: subject.name,
             text: text,
-            successful: subject.activated
+            successful: !subject.activated
           });
         } else {
           text = StructText[subject.name].deactivateFalseText;
