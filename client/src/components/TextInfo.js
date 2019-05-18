@@ -89,7 +89,7 @@ class TextInfo extends Component {
       }
 
       if (sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="comment text-container" style={{marginTop: '5%'}}>
                         <div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
@@ -109,7 +109,7 @@ class TextInfo extends Component {
                       </div>);
       }
       else if (!sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="comment text-container" tyle={{marginTop: '5%'}}>
                         <div className="content message" key={i} >
                           <span className="author">
                             {message.commenter}
@@ -117,7 +117,7 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{timeOf}</span>
                           </div>
-                          <div className="ui divider"/>
+                          <div className="ui divider" style={{marginBottom: '3%'}}/>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
@@ -134,8 +134,6 @@ class TextInfo extends Component {
                         </div>
                       </div>);
       }
-      comments.push(<div className="ui divider"/>);
-      comments.push(<div className="ui divider"/>);
     });
 
     let passIn;
