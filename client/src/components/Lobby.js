@@ -101,7 +101,7 @@ class Lobby extends Component {
             Lobby Info
           </Col>
           <Col>
-            Player Count: {this.state.roomSize}/5
+            Player Count: {this.props.playerCount}/5
           </Col>
         </Row>
       </div>

@@ -17,7 +17,7 @@ class Browser extends Component {
     this.socket = socketIOClient('');
 
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
+      const lobbies = allRooms.map(({ gameName, gameId, inProgress, playerCount}) => {
         if(inProgress === false){
           return (
             <div className="five wide column" key={gameId}>
@@ -26,6 +26,7 @@ class Browser extends Component {
                 lobbyId={gameId}
                 className="lobby-box"
                 onLobbyClick={this.onLobbyClick}
+                playerCount={playerCount}
               />
             </div>
           );
