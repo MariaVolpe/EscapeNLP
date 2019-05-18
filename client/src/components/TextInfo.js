@@ -117,6 +117,7 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{timeOf}</span>
                           </div>
+                          <div className="ui clearing divider"/>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
