@@ -45,8 +45,14 @@ class GameSession {
   }
 
   getIsGameCompleted() {
-    this.isCompleted = this.puzzleManager.checkGameComplete();
+    if (this.inProgress) {
+      this.isCompleted = this.puzzleManager.checkGameComplete();
+    }
     return this.isCompleted;
+  }
+
+  getIsGameInProgress() {
+    return this.inProgress;
   }
 
   // formats players array into the object format used on frontend

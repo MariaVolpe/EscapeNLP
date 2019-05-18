@@ -219,11 +219,14 @@ io.on('connection', (socket) => {
       const message = { commenter: time, time: '', text };
       await gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
 
-      const board = await gameContainer.getFormattedBoard(socket.gameId);
       const players = await gameContainer.getFormattedPlayersList(socket.gameId);
-      const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
 
-      io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
+      if (gameContainer.getIsGameInProgress(socket.gameId)) {
+        const board = await gameContainer.getFormattedBoard(socket.gameId);
+        const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
+
+        io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
+      }
       io.in(socket.currentRoom).emit('updatePlayers', players);
       io.in(socket.currentRoom).emit('chatMessage', message);
 
