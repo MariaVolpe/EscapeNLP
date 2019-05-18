@@ -60,25 +60,25 @@ class TextInfo extends Component {
                             {message.mess}
                           </div>;
       if (message.type === 'action') {
-        textType = "text command ";
+        textType = "description command ";
       }
       else if (message.type === 'chat') {
-        textType = "text chat ";
+        textType = "description chat ";
       }
       else if (message.type === 'interpreted') {
-        textType = "text interpreted";
+        textType = "description interpreted";
         entireMessage = <div className="full-message" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
                           {message.mess}
                         </div>;
       }
       else if (message.type === 'flavor') {
-        textType = "text flavor-text";
+        textType = "description flavor-text";
         entireMessage = <div className="full-message">
                           {message.mess}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
-        textType = "text new-interpreted";
+        textType = "description new-interpreted";
         entireMessage = <div className="full-message" data-tip={`${message.time}`} data-for="time">
                           {message.mess}
                           <div>
@@ -89,7 +89,7 @@ class TextInfo extends Component {
       }
 
       if (sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="card text-container" >
                         <div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
@@ -109,15 +109,14 @@ class TextInfo extends Component {
                       </div>);
       }
       else if (!sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="card text-container" >
                         <div className="content message" key={i} >
-                          <span className="author">
+                          <span className="header">
                             {message.commenter}
                           </span>
-                          <div className="metadata">
-                            <span className="date">{timeOf}</span>
+                          <div className="meta">
+                            {timeOf}
                           </div>
-                          <div className="ui clearing divider"/>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
@@ -147,7 +146,9 @@ class TextInfo extends Component {
       <div className="ui minimal comments">
         <h3 className="chat-header ui dividing header" style={{marginTop: '1.5%'}}>Chat Box</h3>
         <div className="text-box"  >
-          {comments}
+          <div className="ui cards comment-cards">
+            {comments}
+          </div>
         </div>
           <form className="ui form">
             <textarea
