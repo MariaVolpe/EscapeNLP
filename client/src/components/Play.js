@@ -90,19 +90,6 @@ class Play extends Component {
       this.setState({ allPlayers, allPlayersReady });
     });
 
-    this.socket.on('removePlayer', (playerName) => {
-      let allPlayers = this.state.allPlayers;
-      let removeIndex = 0;
-      allPlayers.forEach((player, i) => {
-        if (player.name === playerName) {
-          removeIndex = i;
-        }
-      });
-      allPlayers = allPlayers.slice(removeIndex);
-
-      this.setState({ allPlayers });
-    });
-
     this.socket.on('playerIsJoining', (numberOfPlayers) => {
       this.setState({ numberOfPlayers });
     })
