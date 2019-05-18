@@ -103,7 +103,7 @@ class PlayerInfo extends Component {
 
           </div>
           <div className="floated ready">{readyCheck}</div>
-          <div className="ui horizontal divider inventory" >inventory</div>
+          <div className="ui horizontal divider inventory" style={{width: '95%', marginLeft: '2.5%'}}>inventory</div>
           <div className="item-box">
             {items}
           </div>

@@ -117,7 +117,7 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{timeOf}</span>
                           </div>
-                          <div className="ui divider" style={{marginBottom: '3%'}}/>
+                          <div className="ui divider" style={{marginBottom: '3%', width: '90%', marginLeft: '5%'}}/>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
