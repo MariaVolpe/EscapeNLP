@@ -46,8 +46,8 @@ const adhock = async () => {
 
   console.log('TRAINING 3rd Classifier');
   analyzer.loadClassifier('./nlp/classifier-model.nlp');
-  await analyzer.trainNetwork('./nlp/data/design/training/', './nlp/classifier-versions/classifier-model-v3');
-  analyzer.loadClassifier('./nlp/classifier-versions/classifier-model-v3');
+  await analyzer.trainNetwork('./nlp/data/design/training/', './nlp/classifier-versions/classifier-model-v4');
+  analyzer.loadClassifier('./nlp/classifier-versions/classifier-model-v4');
   console.log('THIRD CLASSIFIER');
   await analyzer.tester.testNetworkByDirectory('./nlp/data/friends/test/verb-relations/', analyzer.actionClassifier);
   analyzer.tester.printTest();
