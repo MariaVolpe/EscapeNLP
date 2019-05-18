@@ -64,10 +64,6 @@
   position: absolute;
 }
 
-.comment-cards {
-  width: 100%;
-}
-
 .text-box {
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -126,12 +122,12 @@
   cursor: pointer;
 }
 
-.description.text-message {
+.text.text-message {
   padding-left: 3%;
   padding-bottom: 3%;
 }
 
-.description.full-message {
+.text.full-message {
   padding-left: 3%;
   padding-bottom: 3%;
 }
@@ -146,7 +142,7 @@
   border: 3px solid #ecf0f1;
 } */
 
-.description:hover > div {
+.text:hover > div {
   background-color: #ecf0f1;
   border: 3px solid #ecf0f1;
 }
@@ -163,9 +159,13 @@
 .message-body {
   float: left;
   width: 90%;
+  margin-bottom: 10px;
+  margin-top: -6.66px;
 }
 
 .full-message {
   float: left;
   width: 100%;
+  margin-bottom: 10px;
+  margin-top: -6.66px;
 }
