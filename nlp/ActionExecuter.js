@@ -32,6 +32,7 @@ class ActionExecuter {
       activate: this.executeActivate,
       deactivate: this.executeDeactivate,
       use: this.executeUse,
+      toggle: this.executeToggle,
       buildWeapon: this.executeBuildWeapon,
     };
     return functionMap;
@@ -353,6 +354,24 @@ class ActionExecuter {
 
   }
 
+  executeToggle(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    let actionString = 'activate'
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.toggleActivation();
+          subject.activated ? (actionString = 'activate') : (actionString = 'deactivate');
+        }
+        results.push({ objectName: subject.name, successful: true });
+      }
+    });
+    return { userName: user.name, action: actionString, result: results };    
+  }
+
   executeUse(data) {
     const user = this.grid.getObject({ identifier: data.userName });
     const results = [];
@@ -360,7 +379,8 @@ class ActionExecuter {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.usable) {
         if (this.functionMap[subject.use]) {
-          results.push(this.functionMap[subject.use].bind(this)(data));
+          const subResult = (this.functionMap[subject.use].bind(this)(data)).result;
+          if (subResult) results.push(subResult[0]);
         }
       }
     });
@@ -369,15 +389,19 @@ class ActionExecuter {
 
   executeBuildWeapon(data) {
     const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
     if (user.hasItem('hilt') && user.hasItem('blade')) {
       user.removeItem('hilt');
       user.removeItem('blade');
       user.takeItem(new Item('sword'));
-      return { text: 'From the fires of the forge come a brand new sword!', successful: true };
+      results.push({ objectName: 'forge', text: StructText['executeBuildWeapon'].success , successful: true});
     }
     else {
-      return { text: "You try to build a sword, but it looks like you're missing a piece", successful: false };
+      results.push({ objectName: 'forge', text: StructText['executeBuildWeapon'].failure , successful: false});
     }
+    return { userName: user.name, action: 'use', result: results };
+
+
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods
