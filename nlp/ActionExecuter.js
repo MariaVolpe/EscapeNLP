@@ -350,7 +350,33 @@ class ActionExecuter {
   }
 
   executeDeactivate(data) {
-
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    data.directObjects.forEach( (directObj) => {
+      let text = '';
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.manuallyActivateable) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.activate();
+        }
+        if (subject instanceof Structure) {
+          text = StructText[subject.name].deactivateTrueText;
+          results.push({
+            objectName: subject.name,
+            text: text,
+            successful: subject.activated
+          });
+        } else {
+          text = StructText[subject.name].deactivateFalseText;
+          results.push({ objectName: subject.name, text: text, successful: false });
+        }
+      } else {
+        text = StructText[subject.name].deactivateFalseText;
+        results.push({ objectName: '', text: text, successful: false });
+      }
+    });
+    return { userName: user.name, action: 'activate', result: results };
   }
 
   executeUse(data) {
