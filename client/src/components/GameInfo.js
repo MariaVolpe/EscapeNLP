@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
 import dragon from '../images/dragonite.png';
-import floor from '../images/dragonite.png';
-import button from '../images/dragonite.png';
-import block from '../images/dragonite.png';
-import wep from '../images/dragonite.png';
 import impression from '../images/impression.png'
 import impression_activated from '../images/impression_activated.png';
 import key from '../images/key.png';
@@ -39,9 +35,6 @@ const pictures = {
   'wall': wall,
   'impression': impression,
   'impression_activated': impression_activated,
-  'button': button,
-  'block': block,
-  'wep': wep,
   'poster': poster,
   'lever': lever,
   'lever_activated' : lever_activated,
