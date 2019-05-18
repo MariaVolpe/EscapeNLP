@@ -135,6 +135,7 @@ class TextInfo extends Component {
                       </div>);
       }
       comments.push(<div className="ui divider"/>);
+      comments.push(<div className="ui divider"/>);
     });
 
     let passIn;

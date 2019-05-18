@@ -342,6 +342,7 @@ class Play extends Component {
       const message = { commenter, time, text, type: 'new interpretation' };
       prevMessages.splice(index+1, 0, message);
       this.setState({ prevMessages });
+      this.scrollToBottom()
     }
   }
 
@@ -354,7 +355,7 @@ class Play extends Component {
     } else if (prevMessages[index-1].type === 'interpreted') {
       delete prevMessages[index-1].checked;
     }
-    
+
     this.setState({
       prevMessages,
       reportIndex: index - 1,
@@ -370,7 +371,7 @@ class Play extends Component {
       let command = this.state.command;
       command += " " + i + (k+1)+ "";
       this.setState({ command });
-    } 
+    }
   }
 
   stayOnPage = (event) => {

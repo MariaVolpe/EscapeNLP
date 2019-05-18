@@ -161,13 +161,13 @@
 .message-body {
   float: left;
   width: 90%;
-  margin-bottom: 10px;
   margin-top: -6.66px;
+  margin-bottom: -13.37px;
 }
 
 .full-message {
   float: left;
   width: 100%;
-  margin-bottom: 10px;
   margin-top: -6.66px;
+  margin-bottom: -13.37px;
 }
