@@ -128,7 +128,8 @@ class Play extends Component {
     if (window.sessionStorage.getItem('roomId') !== null) {
       this.socket.emit('joinRoom', window.sessionStorage.getItem('roomId'));
       window.sessionStorage.removeItem("roomId");
-      this.socket.emit('getName', '');
+      const playerInfo = { name: 'player is joining...', ready: false, position: 0, playerId: window.sessionStorage.getItem('playerId') };
+      this.socket.emit('getName', playerInfo);
       const board = new Array(15).fill(null).map(() => new Array(12).fill(null).map(() => new Array(2).fill({sprite: '', hint: ''})));
       this.setState({ board });
     } else {
@@ -341,7 +342,7 @@ class Play extends Component {
     } else if (prevMessages[index-1].type === 'interpreted') {
       delete prevMessages[index-1].checked;
     }
-    
+
     this.setState({
       prevMessages,
       reportIndex: index - 1,
@@ -357,7 +358,7 @@ class Play extends Component {
       let command = this.state.command;
       command += " " + i + (k+1)+ "";
       this.setState({ command });
-    } 
+    }
   }
 
   stayOnPage = (event) => {
