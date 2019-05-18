@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/GameInfo.css';
 import dragon from '../images/dragonite.png';
-import floor from '../images/dragonite.png';
-import button from '../images/dragonite.png';
-import block from '../images/dragonite.png';
-import wep from '../images/dragonite.png';
 import impression from '../images/impression.png'
 import impression_activated from '../images/impression_activated.png';
 import key from '../images/key.png';
@@ -39,9 +35,6 @@ const pictures = {
   'wall': wall,
   'impression': impression,
   'impression_activated': impression_activated,
-  'button': button,
-  'block': block,
-  'wep': wep,
   'poster': poster,
   'lever': lever,
   'lever_activated' : lever_activated,
@@ -134,7 +127,6 @@ class GameInfo extends Component {
           }
           else if (board[k][i][0].sprite === 'floor' && board[k][i].length > 2) {
             if (board[k][i][2].hint === this.props.currentPlayer || board[k][i][1].hint === this.props.currentPlayer) {
-              console.log(this.props.currentPlayer);
               mapData.push(<div className="map my-tile one wide column" data-tip={`${board[k][i][2].hint} / ${board[k][i][1].hint}`} data-for="tile" >
                              <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
                              <img src={pictures[board[k][i][2].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
@@ -146,13 +138,11 @@ class GameInfo extends Component {
                            </div>);
             }
           } else if ( this.props.currentPlayer && (board[k][i][1].hint === this.props.currentPlayer || board[k][i][0].hint === this.props.currentPlayer)) {
-            console.log(this.props.currentPlayer);
             mapData.push(<div className="map my-tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
                            <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
                            <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
                          </div>);
           } else {
-            console.log(this.props.currentPlayer + board[k][i][1].hint);
             mapData.push(<div className="map tile one wide column" data-tip={`${board[k][i][1].hint}`} data-for="tile" >
                            <img src={pictures[board[k][i][0].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>
                            <img src={pictures[board[k][i][1].sprite]} alt='' className="board-item" onClick={()=>this.props.onClick(i,k)}/>

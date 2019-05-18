@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 import '../styles/PlayerInfo.css';
-import defaultIcon from '../images/playericon.png';
-import kirbyIcon from '../images/kirbyoutline.png';
-import dmc4Icon from '../images/dmc4logo.png';
-import pikachuIcon from '../images/pikachuicon.png';
-import segwayIcon from '../images/segwaypoloicon.png';
 import sword from '../images/sword.png';
 import hilt from '../images/hilt.png';
 import blade from '../images/blade.png';
@@ -24,15 +19,6 @@ const pictures = {
   'player4': player3,
   'player5': player4,
   'playerDefault': playerDefault
-}
-
-
-const icons = {
-  'defaultIcon': defaultIcon,
-  'kirbyIcon': kirbyIcon,
-  'dmc4Icon': dmc4Icon,
-  'pikachuIcon': pikachuIcon,
-  'segwayIcon': segwayIcon
 }
 
 const inventoryIcons = {
@@ -83,9 +69,8 @@ class PlayerInfo extends Component {
     const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
     const playerIcon = 'player' + this.props.playerInfo.position;
 
-    // real icon will be decided later, this serves as a temp
     if (this.props.playerInfo.hasLeftGame) {
-      const name = this.props.playerInfo.name + " has disconnected";
+      const name = this.props.playerInfo.name + " has disconnected.";
       return(
         <div className="card player-box">
           <div className="content">

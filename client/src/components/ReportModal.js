@@ -60,7 +60,6 @@ class ReportModal extends Component {
                 </div>
                 <div className="four wide column">
                   <button
-          className="tiny ui button"
                     className="tiny ui black basic button"
                     onClick={this.props.onToggle}
                   >
@@ -142,7 +141,7 @@ class ReportModal extends Component {
               <Form >
                 <FormGroup row>
                   <Label className="centered">
-                    {this.props.message.mess + ' writen by ' + this.props.message.commenter}
+                    {this.props.message.text + ' writen by ' + this.props.message.commenter}
                   </Label>
                 </FormGroup>
                 <FormGroup row style={{marginLeft: '0%'}}>
