@@ -93,6 +93,7 @@
 .command > div {
   background-color: #B9C1A3;
   border: 3px solid #B9C1A3;
+  border-radius: 5px;
 }
 
 .message {
@@ -116,6 +117,7 @@
   border: 3px solid #a8bddd;
   background-color: #a8bddd;
   color: #0f3675;
+  border-radius: 5px;
 }
 
 .interpreted:hover {
