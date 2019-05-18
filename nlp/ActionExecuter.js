@@ -355,10 +355,13 @@ class ActionExecuter {
     data.directObjects.forEach( (directObj) => {
       let text = '';
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
-      if (subject && subject.manuallyActivateable) {
-        this.grid.moveToObject([user], subject);
-        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
-          subject.activate();
+      if (subject && subject.manuallyDeactivateable) {
+        if (getDistance(user, subject) > 1){ //Check Agent is next to subject
+          results.push(this.executeMove(data));
+        }
+        const close = getDistance(user, subject) < 1;
+        if (close){ //Check Agent is next to subject
+          subject.deactivate();
         }
         if (subject instanceof Structure) {
           text = StructText[subject.name].deactivateTrueText;
