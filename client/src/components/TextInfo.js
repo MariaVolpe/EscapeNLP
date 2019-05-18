@@ -38,7 +38,6 @@ class TextInfo extends Component {
 
     let sameName = false;
     let prevName = "";
-    let numOfSames = 0;
     let textType = "text";
 
     prevMessages.forEach((message, i) => {

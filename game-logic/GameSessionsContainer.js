@@ -60,6 +60,10 @@ class GameSessionsContainer {
     return this.games.get(id).getIsGameCompleted();
   }
 
+  getIsGameInProgress(id) {
+    return this.games.get(id).getIsGameInProgress();
+  }
+
   // rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame(name) {

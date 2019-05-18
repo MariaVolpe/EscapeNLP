@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, FormGroup, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Form, Button, Modal, ModalBody } from 'reactstrap';
 import '../styles/ConfirmModal.css';
 
 class VictoryModal extends React.Component {
