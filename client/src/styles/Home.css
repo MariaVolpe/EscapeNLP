@@ -6,6 +6,7 @@
   color: #231166;
   width: 20%;
   height: auto;
+  opacity: 1;
 }
 
 .button {
@@ -13,4 +14,8 @@
   right: 7px;
   width: 100%;
   margin: 7px;
+}
+
+.App-header {
+  background-image: url('../images/background.jpeg');
 }
