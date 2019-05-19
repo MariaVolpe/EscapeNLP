@@ -149,7 +149,7 @@ class ActionExecuter {
             successful = true;
             sourceObject.giveItem(objectName, user);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -165,7 +165,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -191,7 +191,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;;
         taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
       }
