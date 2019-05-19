@@ -6,7 +6,7 @@ const getGames = () => {
   return data;
 };
 
-const safeGetAtIndex = (arr, index, attribute) => {
+const safeGetAttributeAtIndex = (arr, index, attribute) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
     return arr[index][attribute];
   }
@@ -21,7 +21,7 @@ const parseActionResults = (socket, message, actionResults) => {
   };
 
   actionResults.forEach((actionObj) => {
-    let interprettedMsg = `action: ${actionObj.action}, `;
+    let interpretedMsg = `action: ${actionObj.action}, `;
 
     let targetLabel;
     if (actionObj.result.length === 0) {
@@ -32,24 +32,24 @@ const parseActionResults = (socket, message, actionResults) => {
       targetLabel = 'targets: ';
     }
 
-    interprettedMsg += targetLabel;
+    interpretedMsg += targetLabel;
 
     actionObj.result.forEach((result) => {
-      interprettedMsg += `${result.objectName}, `;
+      interpretedMsg += `${result.objectName}, `;
     });
 
     if (actionObj.action === 'move') {
-      const destination = safeGetAtIndex(actionObj.result, 0, 'destination');
-      interprettedMsg += `destination: ${destination || 'none'}, `;
+      const destination = safeGetAttributeAtIndex(actionObj.result, 0, 'destination');
+      interpretedMsg += `destination: ${destination || 'none'}, `;
     }
 
-    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+    interpretedMsg = interpretedMsg.slice(0, interpretedMsg.length - 2);
 
     const actionMsg = {
       type: 'interpreted',
       time: message.time,
       commenter: message.commenter,
-      text: interprettedMsg,
+      text: interpretedMsg,
     };
 
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
