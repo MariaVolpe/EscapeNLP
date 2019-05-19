@@ -77,7 +77,7 @@ class Home extends Component {
                   src={whoCanAnswer}
                   alt="Who can play reveal"
                   className="ui small image"
-                  style={{marginLeft: '10.5%', borderRadius: '10px'}}
+                  style={{marginLeft: '10.25%', borderRadius: '10px'}}
                 />
               </div>
             </div>
