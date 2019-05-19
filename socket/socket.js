@@ -21,13 +21,11 @@ const parseActionResults = (socket, message, actionResults) => {
   };
 
   actionResults.forEach((actionObj) => {
-    console.log(actionObj);
-
     let interprettedMsg = `action: ${actionObj.action}, `;
 
     let targetLabel;
     if (actionObj.result.length === 0) {
-      targetLabel = 'target: None ';
+      targetLabel = 'target: none, ';
     } else if (actionObj.result.length === 1) {
       targetLabel = 'target: ';
     } else {
@@ -42,8 +40,10 @@ const parseActionResults = (socket, message, actionResults) => {
 
     if (actionObj.action === 'move') {
       const destination = safeGetAtIndex(actionObj.result, 0, 'destination');
-      interprettedMsg += `destination: ${destination || 'None'}, `;
+      interprettedMsg += `destination: ${destination || 'none'}, `;
     }
+
+    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
 
     const actionMsg = {
       type: 'interpreted',
@@ -51,8 +51,6 @@ const parseActionResults = (socket, message, actionResults) => {
       commenter: message.commenter,
       text: interprettedMsg,
     };
-
-    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
 
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
 
