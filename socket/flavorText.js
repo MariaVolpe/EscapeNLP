@@ -1,3 +1,5 @@
+const { io } = require('../server');
+
 const safeGetAttributeAtIndex = (arr, index, attribute) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
     return arr[index][attribute];
@@ -30,7 +32,7 @@ const interpretMsg = (actionObj) => {
   return interpretedMsg.slice(0, interpretedMsg.length - 2);
 };
 
-const parseActionResults = (io, socket, message, actionResults) => {
+const parseActionResults = (socket, message, actionResults) => {
   const failActionText = {
     type: 'flavor',
     time: message.time,
