@@ -1,71 +1,10 @@
 const { io } = require('../server');
 const { gameContainer } = require('../app');
+const { parseActionResults } = require('./flavorText');
 
 const getGames = () => {
   const { data } = gameContainer.getAllSessions();
   return data;
-};
-
-const safeGetAtIndex = (arr, index) => {
-  if (arr && Array.isArray(arr) && arr.length > index) {
-    return arr[index];
-  }
-};
-
-const parseActionResults = (socket, message, actionResults) => {
-  const failActionText = {
-    type: 'flavor',
-    time: message.time,
-    commenter: message.commenter,
-    text: 'You can\'t do that.',
-  };
-
-  actionResults.forEach((actionObj) => {
-    if (!actionObj.action || !actionObj.result) {
-      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
-    }
-
-    let interprettedMsg = `action: ${actionObj.action}, `;
-    interprettedMsg += `${actionObj.result.length > 1 ? 'targets:' : 'target:'} `;
-
-    actionObj.result.forEach((result) => {
-      interprettedMsg += `${result.objectName}, `;
-    });
-
-    if (actionObj.action === 'move') {
-      interprettedMsg += `destination: ${safeGetAtIndex(actionObj.result, 0).destination}, `;
-    }
-
-    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
-
-    const actionMsg = {
-      type: 'interpreted',
-      time: message.time,
-      commenter: message.commenter,
-      text: interprettedMsg,
-    };
-
-    io.in(socket.currentRoom).emit('chatMessage', actionMsg);
-
-    actionObj.result.forEach((item) => {
-      if (item.text) {
-        const flavorText = {
-          type: 'flavor',
-          time: message.time,
-          commenter: message.commenter,
-          text: item.text,
-        };
-
-        io.in(socket.currentRoom).emit('chatMessage', flavorText);
-      }
-
-      // 'successful' must be explicitly set to false
-      // or else the action should be assumed to be successful
-      if (!item.text && item.successful === false) {
-        io.in(socket.currentRoom).emit('chatMessage', failActionText);
-      }
-    });
-  });
 };
 
 io.on('connection', (socket) => {
@@ -120,7 +59,7 @@ io.on('connection', (socket) => {
 
     if (message.type === 'action') {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
-      parseActionResults(socket, message, actionResults);
+      parseActionResults(io, socket, message, actionResults);
 
       const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
 
@@ -164,7 +103,7 @@ io.on('connection', (socket) => {
       disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     }
-
+    socket.broadcast.emit('refreshRoomsReceived', getGames());
     io.in(room).emit('setNames', allPlayerNames);
   };
 
@@ -203,7 +142,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', async () => {
-    if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+    // if room doesn't exist, the last player has left the game
+    if (!io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
+      socket.broadcast.emit('refreshRoomsReceived', getGames());
+    } else if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const text = `${socket.playerInfo.name} has disconnected`;

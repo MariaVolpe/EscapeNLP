@@ -13,4 +13,4 @@ module.exports = {
   io,
 };
 
-require('./socket/socket');
+require('./socket/socketMain');
