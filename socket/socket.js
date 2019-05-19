@@ -203,7 +203,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', async () => {
-    if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+    // if room doesn't exist, the last player has left the game
+    if (!io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
+      socket.broadcast.emit('refreshRoomsReceived', getGames());
+    } else if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const text = `${socket.playerInfo.name} has disconnected`;
