@@ -10,6 +10,16 @@ const getGames = () => {
 io.on('connection', (socket) => {
   console.log('connection established'); // eslint-disable-line no-console
 
+  const updateBoard = async () => {
+    const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
+
+    const board = await gameContainer.getFormattedBoard(socket.gameId);
+    const players = await gameContainer.getFormattedPlayersList(socket.gameId);
+
+    io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
+    io.in(socket.currentRoom).emit('updatePlayers', players);
+  };
+
   socket.on('checkRoomSize', (roomInfo) => {
     if (io.nsps['/'].adapter.rooms[roomInfo]) {
       const roomSize = io.nsps['/'].adapter.rooms[roomInfo].length;
@@ -61,13 +71,7 @@ io.on('connection', (socket) => {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
       parseActionResults(io, socket, message, actionResults);
 
-      const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
-
-      const board = await gameContainer.getFormattedBoard(socket.gameId);
-      const players = await gameContainer.getFormattedPlayersList(socket.gameId);
-
-      io.in(socket.currentRoom).emit('updateBoard', board, gameComplete);
-      io.in(socket.currentRoom).emit('updatePlayers', players);
+      updateBoard();
     }
   });
 
