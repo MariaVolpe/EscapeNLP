@@ -36,46 +36,85 @@ class Home extends Component {
               onClick={this.onPlayClick}
               color="success"
               className="button"
-              style={{width: '10%', float: 'right', marginRight: '19%'}}
             >
               Find Game
             </Button>
         <h1 style={{marginLeft: '28%', color: 'white'}}>EscapeNLP</h1>
 
         <div className="App-header" style={{backgroundColor: '#283942'}}>
-          <img className="ui huge image" src={gameboard} alt="Game Board" style={{marginRight: '3%', marginTop: '1%'}}/>
+          <img className="ui huge image" src={gameboard} alt="Game Board" />
 
-          <div className="ui four column grid" style={{marginTop: '3%', marginBottom: '3%', marginRight: '0.25%'}}>
+          <div className="ui four column grid" >
             <div className="ui instant move reveal">
               <div className="visible content">
-                <img src={whatIs} alt="What is EscapeNLP?" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={whatIs}
+                  alt="What is EscapeNLP?"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={whatIsAnswer} alt="What is EscapeNLP Reveal" className="ui small image" style={{marginLeft: '10.5%', borderRadius: '10px'}} />
+                <img
+                  src={whatIsAnswer}
+                  alt="What is EscapeNLP Reveal"
+                  className="ui small image"
+                  style={{marginLeft: '10.5%', borderRadius: '10px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal">
               <div className="visible content">
-                <img src={whoCan} alt="Who can play?" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={whoCan}
+                  alt="Who can play?"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={whoCanAnswer} alt="Who can play reveal" className="ui small image" style={{marginLeft: '10.5%', borderRadius: '10px'}}/>
+                <img
+                  src={whoCanAnswer}
+                  alt="Who can play reveal"
+                  className="ui small image"
+                  style={{marginLeft: '10.5%', borderRadius: '10px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal">
               <div className="visible content">
-                <img src={rules} alt="Rules" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={rules}
+                  alt="Rules"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={rulesReveal} alt="Rules Reveal" className="ui small image" style={{marginLeft: '10.5%', borderRadius: '14px'}}/>
+                <img
+                  src={rulesReveal}
+                  alt="Rules Reveal"
+                  className="ui small image"
+                  style={{marginLeft: '10.5%', borderRadius: '14px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal">
               <div className="visible content">
-                <img src={bigRule} alt="Fun" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={bigRule}
+                  alt="Fun"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={bigRuleReveal} alt="Fun Reveal" className="ui small image" style={{marginLeft: '10.5%', borderRadius: '10px'}}/>
+                <img
+                  src={bigRuleReveal}
+                  alt="Fun Reveal"
+                  className="ui small image"
+                  style={{marginLeft: '10.5%', borderRadius: '10px'}}
+                />
               </div>
             </div>
           </div>

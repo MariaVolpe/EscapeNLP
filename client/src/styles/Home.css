@@ -1,8 +1,21 @@
 .button {
   position: relative;
   right: 7px;
-  width: 100%;
+  width: 10%;
   margin: 7px;
+  float: right;
+  margin-right: 19%;
+}
+
+.ui.huge.image {
+  margin-right: 3%;
+  margin-top: 1%;
+}
+
+.ui.four.column.grid {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-right: 0.25%;
 }
 
 .background {
