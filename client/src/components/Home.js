@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import whatIs from '../images/whatIs.png';
-import whatIsAnswer from '../images/whatIsAnswer.jpeg';
-import rules from '../images/rules.png';
-import rulesReveal from '../images/rulesReveal.jpeg';
-import whoCan from '../images/whoCan.png';
-import whoCanAnswer from '../images/whoCanAnswer.jpeg';
-import bigRule from '../images/bigRule.png';
-import bigRuleReveal from '../images/bigRuleReveal.jpeg';
+import whatIs from '../images/home/whatIs.png';
+import whatIsAnswer from '../images/home/whatIsAnswer.jpeg';
+import rules from '../images/home/rules.png';
+import rulesReveal from '../images/home/rulesReveal.jpg';
+import whoCan from '../images/home/whoCan.png';
+import whoCanAnswer from '../images/home/whoCanAnswer.jpeg';
+import bigRule from '../images/home/bigRule.png';
+import bigRuleReveal from '../images/home/bigRuleReveal.jpeg';
 import gameboard from '../images/game_board.jpeg';
 import '../styles/Home.css';
 
