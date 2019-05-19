@@ -327,7 +327,32 @@ class ActionExecuter {
   }
 
   executeSpeak(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    const targets = data.directObjects; // these are direct objects, for some reason
 
+    targets.forEach((targetName) => {
+      const targetObj = this.grid.getObject({ searchOriginObj: user, identifier: targetName });
+      let text;
+
+      if (!targetObj) {
+        return results.push({ id: null, objectName: targetName, text: null, successful: false });
+      }
+
+      if (getDistance(user, targetObj) > 1) {
+        results.push(this.executeMove(data).result[0]);
+      }
+
+      if (!targetObj.speakable){
+        text = StructText[targetName] ? StructText[targetName].speakFalseText : null;
+        results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
+      }
+
+      text = StructText[targetName] ? StructText[targetName].speakTrueText : null;
+      results.push({ id: targetObj.id, objectName: targetName, text: text, successful: true, coordinates: targetObj.position });
+    });
+
+    return { userName: user.name, action: 'speak', result: results };
   }
 
   executeActivate(data) {
