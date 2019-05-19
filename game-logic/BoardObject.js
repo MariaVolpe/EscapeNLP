@@ -38,7 +38,7 @@ class BoardObject {
     this.passable = passable;
     this.inspectable = inspectable;
     this.destructable = destructable;
-    this.speakable = speakable;    
+    this.speakable = speakable;
     this.puzzleType = puzzleType;
     this.objectType = objectType;
     this.position = new Point();

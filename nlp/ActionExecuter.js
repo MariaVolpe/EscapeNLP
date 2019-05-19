@@ -331,14 +331,14 @@ class ActionExecuter {
     const results = [];
     const targets = data.directObjects; // these are direct objects, for some reason
 
-    for (let i = 0; i < targets.length; i++) {
-      const targetName = targets[i];
+    targets.forEach((targetName) => {
       const targetObj = this.grid.getObject({ searchOriginObj: user, identifier: targetName });
       let text;
 
       if (!targetObj) {
-        results.push({ id: null, objectName: targetName, text: null, successful: false });
+        return results.push({ id: null, objectName: targetName, text: null, successful: false });
       }
+
       if (getDistance(user, targetObj) > 1) {
         this.executeMove(data);
       }
@@ -350,7 +350,8 @@ class ActionExecuter {
 
       text = StructText[targetName] ? StructText[targetName].speakTrueText : null;
       results.push({ id: targetObj.id, objectName: targetName, text: text, successful: true, coordinates: targetObj.position });
-    }
+    });
+
     return { userName: user.name, action: 'speak', result: results };
   }
 
