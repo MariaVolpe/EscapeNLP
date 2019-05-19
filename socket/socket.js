@@ -6,9 +6,9 @@ const getGames = () => {
   return data;
 };
 
-const safeGetAtIndex = (arr, index) => {
+const safeGetAtIndex = (arr, index, attribute) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
-    return arr[index];
+    return arr[index][attribute];
   }
 };
 
@@ -21,22 +21,29 @@ const parseActionResults = (socket, message, actionResults) => {
   };
 
   actionResults.forEach((actionObj) => {
-    if (!actionObj.action || !actionObj.result) {
-      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
-    }
+    console.log(actionObj);
 
     let interprettedMsg = `action: ${actionObj.action}, `;
-    interprettedMsg += `${actionObj.result.length > 1 ? 'targets:' : 'target:'} `;
+
+    let targetLabel;
+    if (actionObj.result.length === 0) {
+      targetLabel = 'target: None ';
+    } else if (actionObj.result.length === 1) {
+      targetLabel = 'target: ';
+    } else {
+      targetLabel = 'targets: ';
+    }
+
+    interprettedMsg += targetLabel;
 
     actionObj.result.forEach((result) => {
       interprettedMsg += `${result.objectName}, `;
     });
 
     if (actionObj.action === 'move') {
-      interprettedMsg += `destination: ${safeGetAtIndex(actionObj.result, 0).destination}, `;
+      const destination = safeGetAtIndex(actionObj.result, 0, 'destination');
+      interprettedMsg += `destination: ${destination || 'None'}, `;
     }
-
-    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
 
     const actionMsg = {
       type: 'interpreted',
@@ -45,7 +52,13 @@ const parseActionResults = (socket, message, actionResults) => {
       text: interprettedMsg,
     };
 
+    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
+
+    if (!actionObj.action || !actionObj.result || !actionObj.result.length) {
+      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
+    }
 
     actionObj.result.forEach((item) => {
       if (item.text) {
