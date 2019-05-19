@@ -32,6 +32,7 @@ class ActionExecuter {
       activate: this.executeActivate,
       deactivate: this.executeDeactivate,
       use: this.executeUse,
+      toggle: this.executeToggle,
       buildWeapon: this.executeBuildWeapon,
     };
     return functionMap;
@@ -148,7 +149,7 @@ class ActionExecuter {
             successful = true;
             sourceObject.giveItem(objectName, user);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -164,7 +165,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -190,7 +191,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;;
         taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
       }
@@ -326,7 +327,32 @@ class ActionExecuter {
   }
 
   executeSpeak(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    const targets = data.directObjects; // these are direct objects, for some reason
 
+    targets.forEach((targetName) => {
+      const targetObj = this.grid.getObject({ searchOriginObj: user, identifier: targetName });
+      let text;
+
+      if (!targetObj) {
+        return results.push({ id: null, objectName: targetName, text: null, successful: false });
+      }
+
+      if (getDistance(user, targetObj) > 1) {
+        this.executeMove(data);
+      }
+
+      if (!targetObj.speakable){
+        text = StructText[targetName] ? StructText[targetName].speakFalseText : null;
+        results.push({ id: null, objectName: targetName, text: text, successful: false, coordinates: null });
+      }
+
+      text = StructText[targetName] ? StructText[targetName].speakTrueText : null;
+      results.push({ id: targetObj.id, objectName: targetName, text: text, successful: true, coordinates: targetObj.position });
+    });
+
+    return { userName: user.name, action: 'speak', result: results };
   }
 
   executeActivate(data) {
@@ -343,14 +369,61 @@ class ActionExecuter {
         else results.push({ objectName: subject.name, successful: false });
       } else {
         const text = StructText[subject.name].activateFalseText;
-        results.push({ objectName: '', text: text, successful: false });
+        results.push({ objectName: subject.name, text: text, successful: false });
       }
     });
     return { userName: user.name, action: 'activate', result: results };
   }
 
   executeDeactivate(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    data.directObjects.forEach( (directObj) => {
+      let text = '';
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject && subject.manuallyDeactivateable) {
+        if (getDistance(user, subject) > 1){ //Check Agent is next to subject
+          results.push(this.executeMove(data));
+        }
+        const close = getDistance(user, subject) < 1;
+        if (close){ //Check Agent is next to subject
+          subject.deactivate();
+        }
+        if (subject instanceof Structure) {
+          text = StructText[subject.name].deactivateTrueText;
+          results.push({
+            objectName: subject.name,
+            text: text,
+            successful: !subject.activated
+          });
+        } else {
+          text = StructText[subject.name].deactivateFalseText;
+          results.push({ objectName: subject.name, text: text, successful: false });
+        }
+      } else {
+        text = StructText[subject.name].deactivateFalseText;
+        results.push({ objectName: subject.name, text: text, successful: false });
+      }
+    });
+    return { userName: user.name, action: 'activate', result: results };
+  }
 
+  executeToggle(data) {
+    const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
+    let actionString = 'activate'
+    data.directObjects.forEach( (directObj) => {
+      const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
+      if (subject) {
+        this.grid.moveToObject([user], subject);
+        if (getDistance(user, subject) < 2){ //Check Agent is next to subject
+          subject.toggleActivation();
+          subject.activated ? (actionString = 'activate') : (actionString = 'deactivate');
+        }
+        results.push({ objectName: subject.name, successful: true });
+      }
+    });
+    return { userName: user.name, action: actionString, result: results };    
   }
 
   executeUse(data) {
@@ -360,8 +433,11 @@ class ActionExecuter {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.usable) {
         if (this.functionMap[subject.use]) {
-          results.push(this.functionMap[subject.use].bind(this)(data));
+          const subResult = (this.functionMap[subject.use].bind(this)(data)).result;
+          if (subResult) { results.push(subResult[0]); }
         }
+      } else if (subject) {
+        results.push({ objectName: subject.name, successful: false });
       }
     });
     return { userName: user.name, action: 'use', result: results };
@@ -369,15 +445,19 @@ class ActionExecuter {
 
   executeBuildWeapon(data) {
     const user = this.grid.getObject({ identifier: data.userName });
+    const results = [];
     if (user.hasItem('hilt') && user.hasItem('blade')) {
       user.removeItem('hilt');
       user.removeItem('blade');
       user.takeItem(new Item('sword'));
-      return { text: 'From the fires of the forge come a brand new sword!', successful: true };
+      results.push({ objectName: 'forge', text: StructText['executeBuildWeapon'].success , successful: true});
     }
     else {
-      return { text: "You try to build a sword, but it looks like you're missing a piece", successful: false };
+      results.push({ objectName: 'forge', text: StructText['executeBuildWeapon'].failure , successful: false});
     }
+    return { userName: user.name, action: 'use', result: results };
+
+
   }
 
   /* util method that moves an object closer to a destination | called in executeMethods

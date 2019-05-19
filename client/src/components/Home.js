@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import whatIs from '../images/whatIs.png';
-import whatIsAnswer from '../images/whatIsAnswer.jpeg';
-import rules from '../images/rules.png';
-import rulesReveal from '../images/rulesReveal.jpeg';
-import whoCan from '../images/whoCan.png';
-import whoCanAnswer from '../images/whoCanAnswer.jpeg';
-import bigRule from '../images/bigRule.png';
-import bigRuleReveal from '../images/bigRuleReveal.jpeg';
+import whatIs from '../images/home/whatIs.png';
+import whatIsAnswer from '../images/home/whatIsAnswer.jpeg';
+import rules from '../images/home/rules.png';
+import rulesReveal from '../images/home/rulesReveal.jpg';
+import whoCan from '../images/home/whoCan.png';
+import whoCanAnswer from '../images/home/whoCanAnswer.jpeg';
+import bigRule from '../images/home/bigRule.png';
+import bigRuleReveal from '../images/home/bigRuleReveal.jpeg';
 import gameboard from '../images/game_board.jpeg';
 import '../styles/Home.css';
 
@@ -47,39 +47,78 @@ class Home extends Component {
             <div className="image-block">
             <div className="ui instant move reveal move-down">
               <div className="visible content">
-                <img src={whatIs} alt="What is EscapeNLP?" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={whatIs}
+                  alt="What is EscapeNLP?"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={whatIsAnswer} alt="What is EscapeNLP Reveal" className="ui small image" style={{borderRadius: '10px'}} />
+                <img src={whatIsAnswer}
+                     alt="What is EscapeNLP Reveal"
+                     className="ui small image"
+                     style={{borderRadius: '10px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal move-down">
               <div className="visible content">
-                <img src={whoCan} alt="Who can play?" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={whoCan}
+                  alt="Who can play?"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={whoCanAnswer} alt="Who can play reveal" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img src={whoCanAnswer}
+                     alt="Who can play reveal"
+                     className="ui small image"
+                     style={{borderRadius: '10px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal move-down">
               <div className="visible content">
-                <img src={rules} alt="Rules" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={rules}
+                  alt="Rules"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={rulesReveal} alt="Rules Reveal" className="ui small image" style={{borderRadius: '14px'}}/>
+                <img src={rulesReveal}
+                     alt="Rules Reveal"
+                     className="ui small image"
+                     style={{borderRadius: '14px'}}
+                />
               </div>
             </div>
             <div className="ui instant move reveal move-down">
               <div className="visible content">
-                <img src={bigRule} alt="Fun" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img
+                  src={bigRule}
+                  alt="Fun"
+                  className="ui small image"
+                  style={{borderRadius: '10px'}}
+                />
               </div>
               <div className="hidden content">
-                <img src={bigRuleReveal} alt="Fun Reveal" className="ui small image" style={{borderRadius: '10px'}}/>
+                <img src={bigRuleReveal}
+                     alt="Fun Reveal"
+                     className="ui small image"
+                     style={{borderRadius: '10px'}}
+                />
               </div>
             </div>
             </div>
           </div>
-          <p style={{textAlign: 'center', marginBottom: '3%', color: 'white'}}> Want More Information? <a href="/howto" onClick={this.onHowToClick} className="link"> Click Here </a></p>
+          <p style={{textAlign: 'center', marginBottom: '3%', color: 'white'}}>
+            Want More Information?
+            <a href="/howto" onClick={this.onHowToClick} className="link"> Click Here </a>
+          </p>
         </div>
       </div>
     );

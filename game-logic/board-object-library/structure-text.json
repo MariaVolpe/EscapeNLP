@@ -232,5 +232,9 @@
         "deactivateFalseText": null,
         "inspectTextInactive": "It's an inexpensive bookshelf.",
         "inspectTextActive": null
+    },
+    "executeBuildWeapon": {
+        "success": "From the fires of the forge come a brand new sword!",
+        "failure": "You try to build a sword, but it looks like you're missing a piece"
     }
 }
