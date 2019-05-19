@@ -1,12 +1,8 @@
+const getGames = require('./util/getGames');
 const { io } = require('../server');
 const { gameContainer } = require('../app');
 const registerGameListeners = require('./gameListeners');
 const registerPlayerListeners = require('./playerListeners');
-
-const getGames = () => {
-  const { data } = gameContainer.getAllSessions();
-  return data;
-};
 
 io.on('connection', (socket) => {
   console.log('connection established'); // eslint-disable-line no-console
@@ -22,7 +18,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('getAllRooms', () => {
-    socket.emit('refreshRoomsReceived', getGames());
+    socket.emit('refreshRoomsReceived', getGames(gameContainer));
   });
 
   socket.on('updatePlayerCount', (playerList, roomId) => {

@@ -6,7 +6,7 @@
         "attackable": false,
         "speakable": false,
         "manuallyActivateable": true,
-        "manuallyDeactivateable": true,
+        "manuallyDeactivateable": false,
         "usable": true,
         "use": "activate",
         "jumpable": false,
@@ -36,7 +36,7 @@
         "manuallyActivateable": true,
         "manuallyDeactivateable": true,
         "usable": true,
-        "use": "activate",   
+        "use": "toggle",   
         "jumpable": null,
         "passable": false
     },

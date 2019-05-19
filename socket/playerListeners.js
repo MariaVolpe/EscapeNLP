@@ -1,10 +1,6 @@
+const getGames = require('./util/getGames');
 const { io } = require('../server');
 const { gameContainer } = require('../app');
-
-const getGames = () => {
-  const { data } = gameContainer.getAllSessions();
-  return data;
-};
 
 module.exports = (socket) => {
   socket.on('joinRoom', (roomId) => {
@@ -17,7 +13,7 @@ module.exports = (socket) => {
     socket.currentRoom = roomId;
     socket.gameId = parseInt(roomId, 10);
     socket.playerNumber = roomSize;
-    socket.broadcast.emit('refreshRoomsReceived', getGames());
+    socket.broadcast.emit('refreshRoomsReceived', getGames(gameContainer));
     io.nsps['/'].adapter.rooms[roomId].timer = 0;
     io.in(socket.currentRoom).emit('playerIsJoining', roomSize);
   });
@@ -62,7 +58,7 @@ module.exports = (socket) => {
       disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     }
-    socket.broadcast.emit('refreshRoomsReceived', getGames());
+    socket.broadcast.emit('refreshRoomsReceived', getGames(gameContainer));
     io.in(room).emit('setNames', allPlayerNames);
   };
 
@@ -104,7 +100,7 @@ module.exports = (socket) => {
   // if room doesn't exist, the last player has left the game
     if (!io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
-      socket.broadcast.emit('refreshRoomsReceived', getGames());
+      socket.broadcast.emit('refreshRoomsReceived', getGames(gameContainer));
     } else if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;

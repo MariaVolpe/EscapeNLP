@@ -752,7 +752,25 @@ describe('ActionExecuter tests', () => {
   });
 
   describe('Deactivate', () => {
+    const floor = new Structure('floor', '1', null);
+    const wall = new Structure('wall', '2', null);
+    const door = new Structure('door', '3', null);
+    const player = new Agent(0);
+    player.setName('Player');
+    const matrix = [
+      [[floor], [wall], [floor]],
+      [[floor], [floor, player], [floor, door]],
+      [[floor], [wall], [floor]],
+    ];
 
+    const grid = new Grid(matrix);
+    const actionExecuter = new ActionExecuter({ grid });
+    const deactivateResponse = actionExecuter.executeDeactivate({
+      userName: 'player',
+      directObjects: ['door'],
+    });
+    expect(door.activated).toEqual(false);
+    expect(JSON.stringify(stripNames(grid.matrix))).toEqual(JSON.stringify(stripNames(matrix)));
   });
 
   describe('Use', () => {

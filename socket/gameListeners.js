@@ -1,3 +1,4 @@
+const getGames = require('./util/getGames');
 const { io } = require('../server');
 const { gameContainer } = require('../app');
 const { parseActionResults } = require('./flavorText');
@@ -7,6 +8,7 @@ module.exports = (socket) => {
     await gameContainer.startGame(socket.gameId);
     const board = await gameContainer.getFormattedBoard(socket.gameId);
     io.in(socket.currentRoom).emit('updateBoard', board, false);
+    socket.broadcast.emit('refreshRoomsReceived', getGames(gameContainer));
   });
 
   const updateBoard = async () => {
