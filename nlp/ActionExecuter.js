@@ -340,7 +340,7 @@ class ActionExecuter {
       }
 
       if (getDistance(user, targetObj) > 1) {
-        results.push(this.executeMove(data).result[0]);
+        this.executeMove(data);
       }
 
       if (!targetObj.speakable){
