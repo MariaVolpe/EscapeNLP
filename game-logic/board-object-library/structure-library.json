@@ -6,7 +6,7 @@
         "attackable": false,
         "speakable": false,
         "manuallyActivateable": true,
-        "manuallyDeactivateable": true,
+        "manuallyDeactivateable": false,
         "usable": true,
         "use": "activate",
         "jumpable": false,

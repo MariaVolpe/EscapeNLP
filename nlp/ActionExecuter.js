@@ -360,12 +360,12 @@ class ActionExecuter {
     const results = [];
     data.directObjects.forEach( (directObj) => {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
-      if (subject && subject.manuallyActivateable && !(subject.locked && !user.hasItem('key'))) {
+      if (subject && !subject.activated && subject.manuallyActivateable && !(subject.locked && !user.hasItem('key'))) {
         this.grid.moveToObject([user], subject);
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.activate();
         }
-        if (subject instanceof Structure) results.push({ objectName: subject.name, successful: subject.activated });
+        if (subject instanceof Structure) results.push({ objectName: subject.name, text: subject.activateTrueText, successful: subject.activated });
         else results.push({ objectName: subject.name, successful: false });
       } else {
         const text = StructText[subject.name].activateFalseText;
@@ -382,10 +382,10 @@ class ActionExecuter {
       let text = '';
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject && subject.manuallyDeactivateable) {
-        if (getDistance(user, subject) > 1){ //Check Agent is next to subject
+        if (getDistance(user, subject) > 2){ //Check Agent is next to subject
           results.push(this.executeMove(data));
         }
-        const close = getDistance(user, subject) < 1;
+        const close = getDistance(user, subject) < 2;
         if (close){ //Check Agent is next to subject
           subject.deactivate();
         }
@@ -405,7 +405,7 @@ class ActionExecuter {
         results.push({ objectName: subject.name, text: text, successful: false });
       }
     });
-    return { userName: user.name, action: 'activate', result: results };
+    return { userName: user.name, action: 'deactivate', result: results };
   }
 
   executeToggle(data) {
@@ -416,11 +416,13 @@ class ActionExecuter {
       const subject = this.grid.getObject({ searchOriginObj: user, identifier: directObj });
       if (subject) {
         this.grid.moveToObject([user], subject);
+        let flavorText = "";
         if (getDistance(user, subject) < 2){ //Check Agent is next to subject
           subject.toggleActivation();
           subject.activated ? (actionString = 'activate') : (actionString = 'deactivate');
+          subject.activated ? flavorText = (subject.activateTrueText) : (flavorText = subject.deactivateTrueText);
         }
-        results.push({ objectName: subject.name, successful: true });
+        results.push({ objectName: subject.name, text: flavorText, successful: true });
       }
     });
     return { userName: user.name, action: actionString, result: results };    
@@ -437,7 +439,7 @@ class ActionExecuter {
           if (subResult) { results.push(subResult[0]); }
         }
       } else if (subject) {
-        results.push({ objectName: subject.name, successful: false });
+        results.push({ objectName: subject.name, text: subject.activateFalseText, successful: false });
       }
     });
     return { userName: user.name, action: 'use', result: results };
