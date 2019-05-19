@@ -118,7 +118,10 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          <p style={{textAlign: 'center', marginBottom: '3%', color: 'white'}}> Want More Information? <a href="/howto" onClick={this.onHowToClick} className="link"> Click Here </a></p>
+          <p style={{textAlign: 'center', marginBottom: '3%', color: 'white'}}>
+            Want More Information?
+            <a href="/howto" onClick={this.onHowToClick} className="link"> Click Here </a>
+          </p>
         </div>
       </div>
     );
