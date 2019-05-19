@@ -8,14 +8,14 @@ class Tester {
   }
 
   // Uses a batch of test data in a directory to evaluate error rate of model
-  testNetworkByFile(path, classifier) {
+  async testNetworkByFile(path, classifier) {
     let errors = 0;
     let total = 0;
     const incorrect = [];
     const batch = this.fm.fileToObj(path);
     for (const label in batch) {
       for (const data of batch[label]) {
-        const classification = classifier.getBestClassification(data);
+        const classification = await classifier.getBestClassification(data);
         if (label != classification.label) {
           errors++;
           incorrect.push({
@@ -33,7 +33,7 @@ class Tester {
 
   // Uses batches of test data in a directory to evaluate error rate of model
   // test data path = './nlp/data/friends/test/verb-relations/';
-  testNetworkByDirectory(path, classifier) {
+  async testNetworkByDirectory(path, classifier) {
     const batches = this.fm.getFilesInDir(path);
     let errors = 0;
     let total = 0;
@@ -42,7 +42,7 @@ class Tester {
       const batch = this.fm.fileToObj(path + batchFile);
       for (const label in batch) {
         for (const data of batch[label]) {
-          const classification = classifier.getBestClassification(data);
+          const classification = await classifier.getBestClassification(data);
           if (label != classification.label) {
             errors++;
             incorrect.push({

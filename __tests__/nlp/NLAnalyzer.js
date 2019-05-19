@@ -4,9 +4,9 @@ describe('Natural Language Processing Tests', () => {
   const nlp = new NLAnalyzer();
   describe('Action classifier Test Accuracy', () => {
     it('Action classifier test error rate should be below 15%', async () => {
-      const errorRate = nlp.tester.testNetworkByDirectory('./nlp/data/friends/test/verb-relations/',
+      const errors = await nlp.tester.testNetworkByDirectory('./nlp/data/friends/test/verb-relations/',
         nlp.actionClassifier);
-      expect(errorRate).toBeLessThan(0.15);
+      expect(errors.errorRate).toBeLessThan(0.15);
     });
   });
   describe('Direct and indirect object extraction', () => {
@@ -53,5 +53,9 @@ describe('Natural Language Processing Tests', () => {
         expect(indirectObjects).toEqual(result.indirectObjs.join(' '));
       }
     });
+  });
+  describe('Design data testing', async () => {
+    const analyzer = new NLAnalyzer();
+    analyzer.tester.testNetworkByDirectory('./nlp/data/design/test/', analyzer.actionClassifier);
   });
 });

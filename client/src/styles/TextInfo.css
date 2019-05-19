@@ -14,25 +14,43 @@
   float: center;
 }
 
-@media only screen and (min-width: 1500px) {
-  .chat-change {
-    width: 22.5%;
+@media only screen and (min-height: 900px) {
+  .text-box {
+    height: 75vh;
+  }
+
+  .text-container {
+    bottom: -74.5vh;
   }
 }
 
-@media only screen and (max-width: 1500px) {
-  .talk-input {
-    width: 66.6%;
+@media only screen and (max-height: 900px) {
+  .text-box {
+    height: 70vh;
+  }
+
+  .text-container {
+    bottom: -69.5vh;
   }
 }
 
-@media only screen and (max-width: 1300px) {
-  .chat-change {
-    height: 27px;
+@media only screen and (max-height: 800px) {
+  .text-box {
+    height: 66.6vh;
   }
 
-  .talk-input {
-    height: 27px;
+  .text-container {
+    bottom: -66.1vh;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .text-box {
+    height: 60vh;
+  }
+
+  .text-container {
+    bottom: -59.5vh;
   }
 }
 
@@ -44,7 +62,6 @@
 .text-container {
   margin: auto;
   position: absolute;
-  bottom: -74.5vh;
 }
 
 .text-box {
@@ -55,8 +72,6 @@
   margin-top: -13.5px;
   bottom: 18px;
   width: 100%;
-  max-height: 75vh;
-  min-height: 75vh;
   overflow: scroll;
   overflow-x: hidden;
   background-color: white;
@@ -90,13 +105,14 @@
 }
 
 .interpreted > div {
-  font-style: oblique;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 550;
   border: 3px solid white;
 }
 
 .flavor-text > div {
   font-style: italic;
+  font-family: "Lucida Console", Monaco, monospace;
   border: 3px solid #a8bddd;
   background-color: #a8bddd;
   color: #0f3675;
@@ -111,7 +127,22 @@
   padding-bottom: 3%;
 }
 
-.text.text-message:hover > div{
+.text.full-message {
+  padding-left: 3%;
+  padding-bottom: 3%;
+}
+
+/* .text.text-message:hover {
+  background-color: #ecf0f1;
+  border: 3px solid #ecf0f1;
+}
+
+.text.full-message:hover {
+  background-color: #ecf0f1;
+  border: 3px solid #ecf0f1;
+} */
+
+.text:hover > div {
   background-color: #ecf0f1;
   border: 3px solid #ecf0f1;
 }

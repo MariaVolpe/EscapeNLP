@@ -158,6 +158,7 @@ class PuzzleManager {
       } else {
         impression.activate();
         const finishedWeight = this.grid.getObjectFromStackByName(impression.position, 'weight');
+        finishedWeight.activate();
         finishedWeight.setMoveable(false);
         impression.setPassable(false);
       }

@@ -6,9 +6,9 @@ const getGames = () => {
   return data;
 };
 
-const safeGetAtIndex = (arr, index) => {
+const safeGetAttributeAtIndex = (arr, index, attribute) => {
   if (arr && Array.isArray(arr) && arr.length > index) {
-    return arr[index];
+    return arr[index][attribute];
   }
 };
 
@@ -21,31 +21,42 @@ const parseActionResults = (socket, message, actionResults) => {
   };
 
   actionResults.forEach((actionObj) => {
-    if (!actionObj.action || !actionObj.result) {
-      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
+    let interpretedMsg = `action: ${actionObj.action}, `;
+
+    let targetLabel;
+    if (actionObj.result.length === 0) {
+      targetLabel = 'target: none, ';
+    } else if (actionObj.result.length === 1) {
+      targetLabel = 'target: ';
+    } else {
+      targetLabel = 'targets: ';
     }
 
-    let interprettedMsg = `action: ${actionObj.action}, `;
-    interprettedMsg += `${actionObj.result.length > 1 ? 'targets:' : 'target:'} `;
+    interpretedMsg += targetLabel;
 
     actionObj.result.forEach((result) => {
-      interprettedMsg += `${result.objectName}, `;
+      interpretedMsg += `${result.objectName}, `;
     });
 
     if (actionObj.action === 'move') {
-      interprettedMsg += `destination: ${safeGetAtIndex(actionObj.result, 0).destination}, `;
+      const destination = safeGetAttributeAtIndex(actionObj.result, 0, 'destination');
+      interpretedMsg += `destination: ${destination || 'none'}, `;
     }
 
-    interprettedMsg = interprettedMsg.slice(0, interprettedMsg.length - 2);
+    interpretedMsg = interpretedMsg.slice(0, interpretedMsg.length - 2);
 
     const actionMsg = {
       type: 'interpreted',
       time: message.time,
       commenter: message.commenter,
-      text: interprettedMsg,
+      text: interpretedMsg,
     };
 
     io.in(socket.currentRoom).emit('chatMessage', actionMsg);
+
+    if (!actionObj.action || !actionObj.result || !actionObj.result.length) {
+      return io.in(socket.currentRoom).emit('chatMessage', failActionText);
+    }
 
     actionObj.result.forEach((item) => {
       if (item.text) {
@@ -164,7 +175,7 @@ io.on('connection', (socket) => {
       disconnectedPlayer.hasLeftGame = true;
       allPlayerNames.push(disconnectedPlayer);
     }
-
+    socket.broadcast.emit('refreshRoomsReceived', getGames());
     io.in(room).emit('setNames', allPlayerNames);
   };
 
@@ -203,7 +214,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', async () => {
-    if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+    // if room doesn't exist, the last player has left the game
+    if (!io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
+      gameContainer.dropPlayerFromSession(socket.gameId, socket.playerInfo.name);
+      socket.broadcast.emit('refreshRoomsReceived', getGames());
+    } else if (io.nsps['/'].adapter.rooms[socket.currentRoom] && socket.playerInfo) {
       const date = new Date();
       const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
       const text = `${socket.playerInfo.name} has disconnected`;
