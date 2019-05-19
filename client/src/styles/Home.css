@@ -1,8 +1,8 @@
-.button {
-  position: relative;
-  right: 7px;
-  width: 100%;
-  margin: 7px;
+.play-button {
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 333px;
+  width: 180px;
 }
 
 .background {
@@ -16,6 +16,19 @@
 
 .App-header {
   background-color: #283942;
+}
+
+.image-block {
+  width: 190px;
+}
+
+.ui.six.column.grid {
+  align-items: center;
+  justify-content: center;
+}
+
+.move-down {
+  display: block;
 }
 
 h1 {
