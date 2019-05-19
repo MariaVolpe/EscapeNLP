@@ -27,7 +27,7 @@ const Point = require('./Point');
 class BoardObject {
   constructor({
     name, id, moveable, possesable, transferable,
-    usable, passable, inspectable, destructable, puzzleType, objectType,
+    usable, passable, inspectable, destructable, speakable, puzzleType, objectType,
   }) {
     this.name = name;
     this.id = id;
@@ -38,6 +38,7 @@ class BoardObject {
     this.passable = passable;
     this.inspectable = inspectable;
     this.destructable = destructable;
+    this.speakable = speakable;    
     this.puzzleType = puzzleType;
     this.objectType = objectType;
     this.position = new Point();
