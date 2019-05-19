@@ -149,7 +149,7 @@ class ActionExecuter {
             successful = true;
             sourceObject.giveItem(objectName, user);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -165,7 +165,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;
           taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
         }
@@ -191,7 +191,7 @@ class ActionExecuter {
             user.takeItem(object);
             this.grid.removeFromBoard(object);
           } else if (!object.possesable)
-            text = StructText[object.name].takeTextFalse;
+            text = StructText[object.name].takeFalseText;
           else text = `You are too far from the ${object.name}`;;
         taken.push({ id: object.id, objectName: objectName, source: sourceText, text: text, successful: successful });
       }
@@ -369,7 +369,7 @@ class ActionExecuter {
         else results.push({ objectName: subject.name, successful: false });
       } else {
         const text = StructText[subject.name].activateFalseText;
-        results.push({ objectName: '', text: text, successful: false });
+        results.push({ objectName: subject.name, text: text, successful: false });
       }
     });
     return { userName: user.name, action: 'activate', result: results };
@@ -402,7 +402,7 @@ class ActionExecuter {
         }
       } else {
         text = StructText[subject.name].deactivateFalseText;
-        results.push({ objectName: '', text: text, successful: false });
+        results.push({ objectName: subject.name, text: text, successful: false });
       }
     });
     return { userName: user.name, action: 'activate', result: results };
@@ -434,8 +434,10 @@ class ActionExecuter {
       if (subject && subject.usable) {
         if (this.functionMap[subject.use]) {
           const subResult = (this.functionMap[subject.use].bind(this)(data)).result;
-          if (subResult) results.push(subResult[0]);
+          if (subResult) { results.push(subResult[0]); }
         }
+      } else if (subject) {
+        results.push({ objectName: subject.name, successful: false });
       }
     });
     return { userName: user.name, action: 'use', result: results };
