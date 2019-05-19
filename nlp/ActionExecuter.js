@@ -437,7 +437,7 @@ class ActionExecuter {
           if (subResult) { results.push(subResult[0]); }
         }
       } else if (subject) {
-        results.push({ objectName: subject.name, successful: false });
+        results.push({ objectName: subject.name, text: subject.activateFalseText, successful: false });
       }
     });
     return { userName: user.name, action: 'use', result: results };
