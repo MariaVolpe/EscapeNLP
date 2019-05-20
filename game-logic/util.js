@@ -11,9 +11,6 @@ const convertToIndices = (coordinate) => {
   };
 };
 
-<<<<<<< HEAD
-module.exports = { isCoordinate, matchRegex, convertToIndices };
-=======
 const convertToFECoordinate = (obj) => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
   const letter = alphabet[obj.y];
@@ -24,4 +21,3 @@ const convertToFECoordinate = (obj) => {
 module.exports = {
   isCoordinate, matchRegex, convertToIndices, convertToFECoordinate,
 };
->>>>>>> development
