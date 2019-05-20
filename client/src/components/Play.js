@@ -311,13 +311,7 @@ class Play extends Component {
   onInterpretedClick = (index) => {
     let prevMessages = this.state.prevMessages;
     let latestInterpretation = '';
-    for (let i=prevMessages.length-1; i>=0; i--) {
-      if (latestInterpretation === '' && prevMessages[i].type === 'interpreted') {
-        latestInterpretation = prevMessages[i];
-      }
-    }
-    if (prevMessages[index].checked === undefined && prevMessages[index].commenter === this.state.playerName && prevMessages[index] === latestInterpretation) {
-      prevMessages[index].checked = true;
+    if (prevMessages[index].commenter === this.state.playerName) {
       let commenter = prevMessages[index].commenter;
       let text = 'Was \'' + prevMessages[index].text + '\' incorrect?';
       let date = new Date();
