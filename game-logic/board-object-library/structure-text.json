@@ -230,7 +230,7 @@
         "activateFalseText": null,
         "deactivateTrueText": null,
         "deactivateFalseText": null,
-        "inspectTextInactive": "It's an inexpensive bookshelf.",
+        "inspectTextInactive": "It's an inexpensive bookshelf. On one shelf is a book, \"How To Make a Sword\". It just says \"Use the forge, if you have the materials needed.\"",
         "inspectTextActive": null
     },
     "executeBuildWeapon": {
