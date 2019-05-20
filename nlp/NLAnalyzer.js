@@ -13,7 +13,7 @@ class NLAnalyzer {
     this.dataLabeler = new DataLabeler(queries, true);
     this.chunker = new Chunker();
     this.tester = new Tester();
-    const path = classifierPath || './nlp/classifier-model.nlp';
+    const path = './nlp/classifier-versions/classifier-model-v3';
     this.actionClassifier.load(path);
   }
 
@@ -82,7 +82,6 @@ class NLAnalyzer {
   loadClassifier(path) {
     this.actionClassifier.load(path);
   }
-
 }
 
 module.exports = NLAnalyzer;
