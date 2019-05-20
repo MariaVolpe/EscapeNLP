@@ -15,14 +15,6 @@ class Inventory {
     return inventoryArr;
   }
 
-  useItem(itemName) {
-    if (!this.items.has(itemName)) {
-      // todo: catch
-    }
-    // const item = this.removeItem();
-    // if (item) item.use();
-  }
-
   removeItem(itemName) {
     if (!this.items.has(itemName)) return null;
     const item = this.items.get(itemName).pop();
