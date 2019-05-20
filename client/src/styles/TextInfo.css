@@ -96,7 +96,7 @@
 }
 
 .message {
-  margin-bottom: -6.66px;
+  margin-bottom: 16.66px;
 }
 
 .chat > div {
@@ -105,7 +105,7 @@
 }
 
 .interpreted > div {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: 550;
   border: 3px solid white;
 }
