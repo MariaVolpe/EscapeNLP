@@ -20,7 +20,6 @@ const StructText = require('./board-object-library/structure-text');
 
 class Structure extends BoardObject {
   constructor(name, id, puzzleType) {
-    // moveable, passable, usable
     super({
       name,
       id,
@@ -66,12 +65,6 @@ class Structure extends BoardObject {
     this.inspectTextInactive = StructText[name].inspectTextInactive;
     this.inspectTextActive = StructText[name].inspectTextActive;
     this.inspectText = this.activated ? StructText[name].inspectTextActive : StructText[name].inspectTextInactive;
-    // this.inspectTextInactive = StructText[name].inspectTextInactive;
-    // this.inspectTextActive = StructText[name].inspectTextActive;
-    // this.useTextUsed = StructText[name].useTextUsed;
-    // this.useTextNotUsable = StructText[name].useTextNotUsable;
-    // this.useFunction = null;
-    // this.inspectText = this.inspectTextInactive; // initialize inspectText to this
   }
 
   activate() {

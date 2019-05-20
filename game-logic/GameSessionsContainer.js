@@ -64,7 +64,7 @@ class GameSessionsContainer {
     return this.games.get(id).getIsGameInProgress();
   }
 
-  // rename b/c there's nothing about this that would indicate
+  // todo rename b/c there's nothing about this that would indicate
   // that it returns the id
   addGame(name) {
     const game = new GameSession(this.gameIdCounter, name);

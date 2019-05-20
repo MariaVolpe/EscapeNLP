@@ -266,7 +266,7 @@ class Grid {
   }
 
   // gets all objects of type agent from the grid //
-  // NOT READY YET
+  // NOT READY YET, TODO
   getAgents() {
     const matrix = this.matrix; // eslint-disable-line prefer-destructuring
     const agents = [];
