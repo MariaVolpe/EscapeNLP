@@ -13,11 +13,11 @@ import player4 from '../images/p4.png';
 import playerDefault from '../images/p5.png';
 
 const pictures = {
-  'player1': player0,
-  'player2': player1,
-  'player3': player2,
-  'player4': player3,
-  'player5': player4,
+  'player0': player0,
+  'player1': player1,
+  'player2': player2,
+  'player3': player3,
+  'player4': player4,
   'playerDefault': playerDefault
 }
 
@@ -67,7 +67,8 @@ class PlayerInfo extends Component {
       }
     }
     const playerNameStyle = "right floated ui header player-name player" + this.props.playerInfo.position;
-    const playerIcon = 'player' + this.props.playerInfo.position;
+    const playerIndex = parseInt(this.props.playerInfo.playerId, 10) < 5 ? this.props.playerInfo.playerId : 'Default';
+    const playerIcon = 'player' + playerIndex;
 
     if (this.props.playerInfo.hasLeftGame) {
       const name = this.props.playerInfo.name + " has disconnected.";
