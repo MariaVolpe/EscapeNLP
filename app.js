@@ -17,7 +17,6 @@ app.use('/game', (req, res, next) => {
   next();
 }, gameSessionRouter);
 
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 

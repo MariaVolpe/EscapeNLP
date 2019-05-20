@@ -38,7 +38,6 @@ class TextInfo extends Component {
 
     let sameName = false;
     let prevName = "";
-    let numOfSames = 0;
     let textType = "text";
 
     prevMessages.forEach((message, i) => {
@@ -51,7 +50,7 @@ class TextInfo extends Component {
       }
       let timeOf = message.type === 'flavor' ? '' : message.time;
       const hoverOverMessage = this.props.reportHover && (i === this.props.reportIndex);
-      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation';
+      const isInterpretMessage = message.type === 'interpreted' || message.type === 'new interpretation' || message.type === 'flavor';
       let messageBody = "message-body"
       if (!hoverOverMessage) {
         messageBody = "full-message";
@@ -60,26 +59,26 @@ class TextInfo extends Component {
                             {message.text}
                           </div>;
       if (message.type === 'action') {
-        textType = "text command text-message";
+        textType = "text command ";
       }
       else if (message.type === 'chat') {
-        textType = "text chat text-message";
+        textType = "text chat ";
       }
       else if (message.type === 'interpreted') {
-        textType = "text interpreted text-message";
-        entireMessage = <div className={messageBody} data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
+        textType = "text interpreted";
+        entireMessage = <div className="full-message" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
                           {message.text}
                         </div>;
       }
       else if (message.type === 'flavor') {
-        textType = "text text-message flavor-text";
-        entireMessage = <div className="message-body">
+        textType = "text flavor-text";
+        entireMessage = <div className="full-message">
                           {message.text}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
-        textType = "text new-interpreted text-message";
-        entireMessage = <div className={messageBody} data-tip={`${message.time}`} data-for="time">
+        textType = "text new-interpreted";
+        entireMessage = <div className="full-message" data-tip={`${message.time}`} data-for="time">
                           {message.text}
                           <div>
                             <button onClick={() => this.props.onNewInterpretationClick(i, 'yes')}>Yes</button>
@@ -89,7 +88,7 @@ class TextInfo extends Component {
       }
 
       if (sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="comment text-container" style={{marginTop: '5%'}}>
                         <div className="content" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
@@ -109,7 +108,7 @@ class TextInfo extends Component {
                       </div>);
       }
       else if (!sameName) {
-        comments.push(<div className="comment text-container" >
+        comments.push(<div className="comment text-container" tyle={{marginTop: '5%'}}>
                         <div className="content message" key={i} >
                           <span className="author">
                             {message.commenter}
@@ -117,7 +116,9 @@ class TextInfo extends Component {
                           <div className="metadata">
                             <span className="date">{timeOf}</span>
                           </div>
+                          <div className="ui divider" style={{marginBottom: '3%', width: '90%', marginLeft: '5%'}}/>
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
+                            {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
                                                  <div className="report-button">
                                                    <i className="question circle icon"
@@ -128,7 +129,6 @@ class TextInfo extends Component {
                                                    <ReactTooltip key="tooltip" id="report" effect="solid" getContent={(dataTip) => `${dataTip}`}/>
                                                  </div>
                             }
-                            {entireMessage}
                           </div>
                         </div>
                       </div>);

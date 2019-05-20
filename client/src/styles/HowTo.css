@@ -1,24 +1,21 @@
 div {
   text-align: center;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
 .colors {
   background-color: #283942;
   color: white;
-  height: 100vh;
+  height: 100%;
 }
 
 .title {
-  margin-top: 3%;
+  margin-top: 1%;
+  text-decoration: underline;
 }
 
 p {
   margin-left: 25%;
   margin-right: 25%;
   font-size: 16px;
-}
-
-.ui.divider {
-  margin-left: 25%;
-  margin-right: 25%;
 }

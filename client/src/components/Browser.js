@@ -16,10 +16,9 @@ class Browser extends Component {
 
     this.socket = socketIOClient('');
 
-    // change needs to be made here to remove started games
     this.socket.on('refreshRoomsReceived', (allRooms) => {
-      const lobbies = allRooms.map(({ gameName, gameId, inProgress}) => {
-        if(inProgress === false){
+      const lobbies = allRooms.map(({ gameName, gameId, inProgress, playerCount}) => {
+        if(!inProgress && playerCount > 0){
           return (
             <div className="five wide column" key={gameId}>
               <Lobby
@@ -27,6 +26,7 @@ class Browser extends Component {
                 lobbyId={gameId}
                 className="lobby-box"
                 onLobbyClick={this.onLobbyClick}
+                playerCount={playerCount}
               />
             </div>
           );

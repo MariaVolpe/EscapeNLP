@@ -35,13 +35,24 @@ class GameSession {
   }
 
   dropPlayerFromSession(playerName) {
+    if (this.inProgress) {
+      const droppedAgent = this.agents.find(agent => agent.name === playerName);
+      this.grid.removeFromBoard(droppedAgent);
+    }
+
     const newAgents = this.agents.filter(agent => agent.name !== playerName);
     this.agents = newAgents;
   }
 
   getIsGameCompleted() {
-    this.isCompleted = this.puzzleManager.checkGameComplete();
+    if (this.inProgress) {
+      this.isCompleted = this.puzzleManager.checkGameComplete();
+    }
     return this.isCompleted;
+  }
+
+  getIsGameInProgress() {
+    return this.inProgress;
   }
 
   // formats players array into the object format used on frontend
