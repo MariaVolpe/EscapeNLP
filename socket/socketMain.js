@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
 
     if (message.type === 'action') {
       const actionResults = await gameContainer.performAction(socket.gameId, message);
-      parseActionResults(io, socket, message, actionResults);
+      parseActionResults(socket, message, actionResults);
 
       const gameComplete = await gameContainer.getIsGameCompleted(socket.gameId);
 
