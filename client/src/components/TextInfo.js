@@ -59,25 +59,25 @@ class TextInfo extends Component {
                             {message.text}
                           </div>;
       if (message.type === 'action') {
-        textType = "text command ";
+        textType = "text text-message command ";
       }
       else if (message.type === 'chat') {
-        textType = "text chat ";
+        textType = "text text-message chat ";
       }
       else if (message.type === 'interpreted') {
-        textType = "text interpreted";
+        textType = "text text-message interpreted";
         entireMessage = <div className="full-message" data-tip='Wrong action?' data-for="time" onClick={() => this.props.onInterpretedClick(i)}>
                           {message.text}
                         </div>;
       }
       else if (message.type === 'flavor') {
-        textType = "text flavor-text";
+        textType = "text text-message flavor-text";
         entireMessage = <div className="full-message">
                           {message.text}
                         </div>;
       }
       else if (message.type === 'new interpretation') {
-        textType = "text new-interpreted";
+        textType = "text text-message new-interpreted";
         entireMessage = <div className="full-message" data-tip={`${message.time}`} data-for="time">
                           {message.text}
                           <div>
@@ -89,7 +89,7 @@ class TextInfo extends Component {
 
       if (sameName) {
         comments.push(<div className="comment text-container" style={{marginTop: '5%'}}>
-                        <div className="content" key={i} >
+                        <div className="content message" key={i} >
                           <div className={textType} onMouseEnter={() => this.props.onMessageHover(i)} onMouseLeave={() => this.props.onMessageLeave(i)} >
                             {entireMessage}
                             {!isInterpretMessage && hoverOverMessage &&
