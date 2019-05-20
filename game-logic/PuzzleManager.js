@@ -1,6 +1,6 @@
 const Structure = require('./Structure');
 const Item = require('./Item');
-// todo: ...dont do it this way, since its not arbitrary puzzles but a random get
+// simple demo logic: require these puzzles specifically
 const Weight = require('./puzzles/weight');
 const Lever = require('./puzzles/lever');
 const Door = require('./puzzles/door');
@@ -117,10 +117,8 @@ class PuzzleManager {
     switch (puzzleType) {
       case 'weight':
         return this.checkWeightPuzzle();
-        break;
       case 'lever':
         return this.checkLeverPuzzle('101');
-        break;
       case 'forge':
         // TODO
         return false;

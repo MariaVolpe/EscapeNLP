@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:gameId/player', (req, res) => {
-  // todo: check if user is logged in
+  // stretch goal: check if user is logged in
   // if so grab from database
   // else for guests...:
   const results = req.gameContainer.addPlayerToSession(

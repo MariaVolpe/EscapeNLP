@@ -18,7 +18,6 @@ class Inventory {
   useItem(itemName) {
     if (!this.items.has(itemName)) {
       // todo: catch
-
     }
     // const item = this.removeItem();
     // if (item) item.use();

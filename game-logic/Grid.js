@@ -90,7 +90,6 @@ class Grid {
         }
       }
     }
-    // todo: handle if board is full
   }
 
   // Given destination coordinates, call pathfinder to find a suitable path towards it
