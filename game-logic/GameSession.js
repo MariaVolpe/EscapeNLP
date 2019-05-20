@@ -85,22 +85,15 @@ class GameSession {
     });
   }
 
-  // right now, it makes sense to generate the game AFTER all players have joined
-  // to make sure the game is calibrated for the right number of players
-  // however if the performance on this is poor, we can optimize by adding puzzles
-  // as each player joins, and if players leave, attempt to regen some parts
   generateGame() {
-    // const size = 12;
     const grid = roomLayoutBuild();
     this.grid = new Grid(grid);
     this.puzzleManager = new PuzzleManager(this.grid);
     this.puzzleManager.addPuzzlesToBoard();
     this.interpreter = new NLInterpreter(this.grid, this.puzzleManager);
-    // todo: generate player starting locations
     this.addAgentsToMap();
   }
 
-  // drop everyone onto map AFTER game starts, again unless performance is poor
   addAgentsToMap() {
     const spawnPoints = [
       { x: 1, y: 7 },
