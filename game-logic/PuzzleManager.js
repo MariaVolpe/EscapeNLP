@@ -66,12 +66,16 @@ class PuzzleManager {
 
   evaluateAllPuzzles(userName) {
     const userObj = this.grid.getObject({ identifier: userName });
+    const itemObtainedText = [];
     this.puzzles.forEach(({ puzzle_type }) => {
-      this.rewardSolvedPuzzle(puzzle_type, userObj);
+      const rewardText = this.rewardSolvedPuzzle(puzzle_type, userObj);
+      if (rewardText) itemObtainedText.push({ text: rewardText, success: true });
     });
+    return itemObtainedText;
   }
 
   rewardSolvedPuzzle(puzzleType, userObj) {
+    let rewardText = null;
     // Check to see that the puzzle has been completed and that the reward hasn't been given.
     if (!this.checkRewardGranted(puzzleType) && this.checkPuzzleCompleted(puzzleType)) {
       switch (puzzleType) {
@@ -81,22 +85,25 @@ class PuzzleManager {
           break;
         case 'weight':
           userObj.takeItem(new Item('blade'));
+          rewardText = `${userObj.name} found a sword's blade!`;
           const forgeObj = this.puzzleProgress.get('forge')[0];
           forgeObj.activate();
           forgeObj.setUsable(true);
           break;
         case 'lever':
           userObj.takeItem(new Item('hilt'));
+          rewardText = `${userObj.name} found a sword's hilt!`;
           break;
         case 'pots':
           userObj.takeItem(new Item('key'));
-          // and return { id: name: spirte, coordinate }
+          rewardText = `${userObj.name} found a key!`;
           break;
         case 'goal':
           this.gameComplete = true;
           break;
       }
       this.puzzleRewardGranted.set(puzzleType, true);
+      return rewardText;
     }
   }
 

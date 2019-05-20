@@ -35,7 +35,9 @@ const parseActionResults = (socket, message, actionResults) => {
     interpretedMsg += targetLabel;
 
     actionObj.result.forEach((result) => {
-      interpretedMsg += `${result.objectName}, `;
+      if (result.objectName) {
+        interpretedMsg += `${result.objectName}, `;
+      }
     });
 
     if (actionObj.action === 'move') {
