@@ -91,7 +91,11 @@ class GameInfo extends Component {
       for (let i=0; i<12; i++) {
         for (let k=0; k<16; k++) {
           const victoryClass = "map victory one wide column pic" + i.toString() + '-' + k.toString();
-          mapData.push(<div className={victoryClass} data-tip="CONGRATULATIONS" data-for="victory" />);
+          if (i===9 && k==2) {
+            mapData.push(<div className={victoryClass} data-tip="poyo!" data-for="victory" />);
+          } else {
+            mapData.push(<div className={victoryClass} data-tip="CONGRATULATIONS" data-for="victory" />);
+          }
         }
       }
 
