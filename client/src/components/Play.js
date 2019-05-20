@@ -39,9 +39,6 @@ class Play extends Component {
 
     this.socket.on('chatMessage', (msg) => {
       let prevMessages = this.state.prevMessages;
-      if (msg.type === 'action') {
-        msg.text = 'COMMAND: ' + msg.text;
-      }
       prevMessages.push(msg);
       if (msg.text === '/d20' && msg.commenter === this.state.playerName) {
         const d20 = msg.commenter + ' rolled a ' + Math.floor(Math.random() * Math.floor(21));
