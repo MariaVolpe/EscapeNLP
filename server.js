@@ -13,4 +13,8 @@ module.exports = {
   io,
 };
 
+<<<<<<< HEAD
 require('./socket/socketMain');
+=======
+require('./socket/socket');
+>>>>>>> development

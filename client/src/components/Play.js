@@ -330,6 +330,7 @@ class Play extends Component {
       const message = { commenter, time, text, type: 'new interpretation' };
       prevMessages.splice(index+1, 0, message);
       this.setState({ prevMessages });
+      this.scrollToBottom()
     }
   }
 

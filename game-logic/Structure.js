@@ -32,6 +32,7 @@ class Structure extends BoardObject {
       passable: StructLib[name].passable,
       inspectable: true,
       destructable: StructLib[name].destructable,
+      speakable: StructLib[name].speakable,
       puzzleType,
       objectType: 'Structure',
     });
@@ -81,6 +82,10 @@ class Structure extends BoardObject {
   deactivate() {
     this.activated = false;
     this.inspectText = this.inspectTextInactive;
+  }
+
+  toggleActivation() {
+    this.activated ? (this.activated = false) : (this.activated = true);
   }
 
   setPassable(boolean) {

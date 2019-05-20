@@ -13,7 +13,7 @@
         "activateTrueText": "You swing the door open.",
         "activateFalseText": "The door is already open. You can't open it again.",
         "deactivateTrueText": "You close the door, presumable to not let the draft in.",
-        "deactivateFalseText": "The door is already closed. You can't close it again.",
+        "deactivateFalseText": "It won't budge. It looks like you can't close it...",
         "inspectTextInactive": "It's a closed door.",
         "inspectTextActive": "It's an open door."
     },
@@ -232,5 +232,9 @@
         "deactivateFalseText": null,
         "inspectTextInactive": "It's an inexpensive bookshelf.",
         "inspectTextActive": null
+    },
+    "executeBuildWeapon": {
+        "success": "From the fires of the forge come a brand new sword!",
+        "failure": "You try to build a sword, but it looks like you're missing a piece"
     }
 }
