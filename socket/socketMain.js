@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
     await gameContainer.startGame(socket.gameId);
     const board = await gameContainer.getFormattedBoard(socket.gameId);
     io.in(socket.currentRoom).emit('updateBoard', board, false);
+    socket.broadcast.emit('refreshRoomsReceived', getGames());
   });
 
   const updatePlayers = (reason, room, disconnectedPlayer) => {
