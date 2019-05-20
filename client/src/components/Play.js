@@ -291,7 +291,6 @@ class Play extends Component {
   onMessageClick = (i) => {
     let prevMessages = this.state.prevMessages;
     const reportedMessage = prevMessages[i];
-    console.log(`Report ${prevMessages[i].text} written by ${prevMessages[i].commenter}`);
     this.setState({ reportOpen: !this.state.reportOpen, reportedMessage });
   }
 
@@ -310,7 +309,6 @@ class Play extends Component {
 
   onInterpretedClick = (index) => {
     let prevMessages = this.state.prevMessages;
-    let latestInterpretation = '';
     if (prevMessages[index].commenter === this.state.playerName) {
       let commenter = prevMessages[index].commenter;
       let text = 'Was \'' + prevMessages[index].text + '\' incorrect?';

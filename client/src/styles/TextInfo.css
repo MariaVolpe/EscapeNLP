@@ -132,16 +132,6 @@
   padding-bottom: 3%;
 }
 
-/* .text.text-message:hover {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-}
-
-.text.full-message:hover {
-  background-color: #ecf0f1;
-  border: 3px solid #ecf0f1;
-} */
-
 .text:hover > div {
   background-color: #ecf0f1;
   border: 3px solid #ecf0f1;
