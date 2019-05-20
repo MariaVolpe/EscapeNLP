@@ -6,14 +6,14 @@ const Chunker = require('./util/nlp/Chunker');
 const Tester = require('./util/nlp/Tester');
 
 class NLAnalyzer {
-  constructor(classifierPath) {
+  constructor() {
     this.fs = new DataFileManager();
     this.actionClassifier = new NlpClassifier({ language: 'en' });
     const queries = this.fs.readQueryFile('./nlp/data/verb_queries.json');
     this.dataLabeler = new DataLabeler(queries, true);
     this.chunker = new Chunker();
     this.tester = new Tester();
-    const path = classifierPath || './nlp/classifier-model.nlp';
+    const path = './nlp/classifier-versions/classifier-model-v3';
     this.actionClassifier.load(path);
   }
 
@@ -62,15 +62,15 @@ class NLAnalyzer {
     return actionObjects;
   }
 
-  // Takes a path to a DIRECTORY ex: './folder/' where training data can be found
-  async trainNetwork(path, savePath = null) {
+  async trainNetwork() {
     // TODO grab verb and object training batches and sequentially run train
+    const path = './nlp/data/friends/training/verb-relations/';
     const batches = this.fs.getFilesInDir(path);
     for (const batchFile of batches) {
       const batch = this.fs.fileToObj(path + batchFile);
       for (const key in batch) for (const val of batch[key]) this.actionClassifier.add(val, key);
       await this.actionClassifier.train(); // train by each batch
-      if (savePath) this.actionClassifier.save(savePath);
+      this.actionClassifier.save();
     }
   }
 
@@ -82,7 +82,6 @@ class NLAnalyzer {
   loadClassifier(path) {
     this.actionClassifier.load(path);
   }
-
 }
 
 module.exports = NLAnalyzer;
