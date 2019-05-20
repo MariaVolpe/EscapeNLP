@@ -56,7 +56,32 @@ const pictures = {
   'playerDefault': playerDefault
 }
 
+const congratsWord = 'CONGRATULATIONS';
+const victoryWord = 'WINNER WINNER';
+
 class GameInfo extends Component {
+
+  getTime = () => {
+    let seconds = Math.round(this.props.timer/1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let timerSeconds = '';
+    let timerMinutes = '';
+    if (seconds < 10) {
+      timerSeconds = '0' + seconds.toString();
+    } else {
+      timerSeconds = seconds.toString();
+    }
+    if (minutes < 10) {
+      timerMinutes = '0' + minutes.toString();
+    } else {
+      timerMinutes = minutes.toString();
+    }
+
+    const time = `Timer ${timerMinutes}:${timerSeconds}`;
+    return time;
+  }
+
   render() {
     let board = this.props.board;
     let mapData = [];
@@ -64,50 +89,10 @@ class GameInfo extends Component {
 
     if(victory){
       for (let i=0; i<12; i++) {
-        for (let k=0; k<15; k++) {
-          if (k === 0) {
-            mapData.push(<div className="map one wide column" >
-                           {String.fromCharCode(i+65)}
-                         </div>);
-          }
-          if (board[0] === undefined) { }
-          else if (board[k][i][1] === undefined) {
-          mapData.push(<div className="map victory one wide column" data-tip="The Rare W" data-for="victory" />);
-          }
-          else {
-          mapData.push(<div className="map victory one wide column" data-tip={`The Rare W`} data-for="victory" />);
-          }
+        for (let k=0; k<16; k++) {
+          const victoryClass = "map victory one wide column pic" + i.toString() + '-' + k.toString();
+          mapData.push(<div className={victoryClass} data-tip="CONGRATULATIONS" data-for="victory" />);
         }
-      }
-
-      let seconds = Math.round(this.props.timer/1000);
-      let minutes = Math.floor(seconds / 60);
-      seconds = seconds % 60;
-      let timerSeconds = '';
-      let timerMinutes = '';
-      if (seconds < 10) {
-        timerSeconds = '0' + seconds.toString();
-      } else {
-        timerSeconds = seconds.toString();
-      }
-      if (minutes < 10) {
-        timerMinutes = '0' + minutes.toString();
-      } else {
-        timerMinutes = minutes.toString();
-      }
-
-      const time = `Timer ${timerMinutes}:${timerSeconds}`;
-
-      for (let i=0; i<16; i++) {
-        if (i !== 0) {
-         mapData.push(<div className="map one wide column" >
-                        {i}
-                      </div>);
-       } else {
-         mapData.push(<div className="map one wide column">
-                        <div className="timer">{time}</div>
-                      </div>);
-       }
       }
 
       mapData.push(<ReactTooltip id="victory" effect="solid" getContent={(dataTip) => `${dataTip}`}/>);
@@ -151,24 +136,6 @@ class GameInfo extends Component {
         }
       }
 
-      let seconds = Math.round(this.props.timer/1000);
-      let minutes = Math.floor(seconds / 60);
-      seconds = seconds % 60;
-      let timerSeconds = '';
-      let timerMinutes = '';
-      if (seconds < 10) {
-        timerSeconds = '0' + seconds.toString();
-      } else {
-        timerSeconds = seconds.toString();
-      }
-      if (minutes < 10) {
-        timerMinutes = '0' + minutes.toString();
-      } else {
-        timerMinutes = minutes.toString();
-      }
-
-      const time = `Timer ${timerMinutes}:${timerSeconds}`;
-
       for (let i=0; i<16; i++) {
         if (i !== 0) {
          mapData.push(<div className="map one wide column" >
@@ -176,7 +143,7 @@ class GameInfo extends Component {
                       </div>);
        } else {
          mapData.push(<div className="map one wide column">
-                        <div className="timer">{time}</div>
+                        <div className="timer">{this.getTime()}</div>
                       </div>);
        }
       }
